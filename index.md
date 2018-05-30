@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: home
 title: Hello
 ---
-Hello! this is my post.
+Hello! this is my home post.
