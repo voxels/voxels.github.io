@@ -11,6 +11,31 @@ Michael is a Senior Engineer with five years of employment developing iOS applic
 He frequently collaborates on venture backed, agile teams with a professional mastery of research and authorship, economic analysis, UX design, desktop and laptop repair, retail customer service, and finished construction.  He pursues a passion for embedded hardware design combining real-time motion tracking and lighting control.  He attended the 
 Wharton School at the University of Pennsylvania as an undergraduate in the Joseph Wharton Scholars Program and holds a graduate degree from the Interactive Telecommunications Program at New York University.
 
+<table style="width:100%" cellpadding="10">
+	<thead><tr><td></td><td><b>iOS Application SDK and Vendor Experience</b></td></tr></thead>
+	<tr><td valign="top"><em>Storage</em></td><td>GraphQL, Parse API, Firebase,Core Data, Keychain,
+UserDefaults, Filemaker, Access</td></tr>
+	<tr><td valign="top"><em>Networking</em></td><td>Node.js, NSURLSession, AFNetworking, Alamofire,
+WebKit,Reachability, MultipeerConnectivity</td></tr>
+	<tr><td valign="top"><em>Analytics</em></td><td>mParticle, Parse, Fabric, Kissmetrics, Facebook, Google
+Analytics, Optimizely, Bugsnag, BeautifulSoup, NLTK,
+SPSS, ArcGIS,Proprietary</td></tr>
+	<tr><td valign="top"><em>Animation</em></td><td>CoreAnimation, CoreGraphics, CoreImage, SceneKit,
+SpriteKit, GamePlayKit,CoreMotion, Processing, Unity,
+Cinder, OpenFrameworks, OpenGL, GLSL</td></tr>
+	<tr><td valign="top"><em>Multimedia</em></td><td>Notification Center, Kahuna, Photos, SDWebImage, Google
+Maps, Apple Maps,GoNative, QT</td></tr>
+	<tr><td valign="top"><em>Authentication</em></td><td>Parse, Facebook, OAuth, Digits</td></tr>
+	<tr><td valign="top"><em>Purchasing</em></td><td>StoreKit, CardIO, RMStore</td></tr>
+	<tr><td valign="top"><em>Testing</em></td><td>XCTest, OCMock</td></tr>
+	<tr><td valign="top"><em>Toolchain</em></td><td>XCode, Visual Studio, Cocoapods, Carthage, Git, Node
+Package Manager, CMake, Bitrise, Jenkins</td></tr>
+	<tr><td valign="top"><em>Design</em></td><td>Illustrator, Photoshop, InDesign, After Effects, Premier
+Pro, Final Cut Pro, SketchUp</td></tr>
+	<tr><td valign="top"><em>Embedded</em></td><td>Arduino, MQTT, TCP/IP, UDP, Serial, I2C,
+SPI,CoreBluetooth, iBeacon</td></tr>
+</table>
+<br>
 <table style="width:100%">
 	<thead><tr><td><h5>Application Engineering Experience *</h5></td><td></td></tr></thead>
 		<tr><td><a href="/professional_experience_0606018#homer-learning">Homer Learning</a></td><td align="right">March 2017 - Present</td></tr>
@@ -41,7 +66,7 @@ Wharton School at the University of Pennsylvania as an undergraduate in the Jose
 <br>
 <table style="width:100%">
 	<thead><tr><td><h5>Fabrication Experience</h5></td><td></td></tr></thead>
-		<tr><td>Disorient</td><td align="right">2012-2015</td></tr>
+		<tr><td>Disorient</td><td align="right">2012 – 2015</td></tr>
 		<tr><td>Tom Edgcumbe Interiors</td><td align="right">May 2003 – August 2005</td></tr>
 </table>
 <br>
