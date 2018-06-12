@@ -23,6 +23,42 @@ description: About Michael Edgcumbe
 ```
 
 ```
+
+<hr>
+
+```
+
+```
+
+<table style="width:100%" cellpadding="10">
+	<thead><tr><td></td><td><b>iOS Application SDK and Vendor Experience</b></td></tr></thead>
+	<tr><td valign="top"><em>Storage</em></td><td>GraphQL, Parse API, Firebase,Core Data, Keychain,
+UserDefaults, Filemaker, Access</td></tr>
+	<tr><td valign="top"><em>Networking</em></td><td>Node.js, NSURLSession, AFNetworking, Alamofire,
+WebKit,Reachability, MultipeerConnectivity</td></tr>
+	<tr><td valign="top"><em>Analytics</em></td><td>mParticle, Parse, Fabric, Kissmetrics, Facebook, Google
+Analytics, Optimizely, Bugsnag, BeautifulSoup, NLTK,
+SPSS, ArcGIS,Proprietary</td></tr>
+	<tr><td valign="top"><em>Animation</em></td><td>CoreAnimation, CoreGraphics, CoreImage, SceneKit,
+SpriteKit, GamePlayKit,CoreMotion, Processing, Unity,
+Cinder, OpenFrameworks, OpenGL, GLSL</td></tr>
+	<tr><td valign="top"><em>Multimedia</em></td><td>Notification Center, Kahuna, Photos, SDWebImage, Google
+Maps, Apple Maps,GoNative, QT</td></tr>
+	<tr><td valign="top"><em>Authentication</em></td><td>Parse, Facebook, OAuth, Digits</td></tr>
+	<tr><td valign="top"><em>Purchasing</em></td><td>StoreKit, CardIO, RMStore</td></tr>
+	<tr><td valign="top"><em>Testing</em></td><td>XCTest, OCMock</td></tr>
+	<tr><td valign="top"><em>Toolchain</em></td><td>XCode, Visual Studio, Cocoapods, Carthage, Git, Node
+Package Manager, CMake, Bitrise, Jenkins</td></tr>
+	<tr><td valign="top"><em>Design</em></td><td>Illustrator, Photoshop, InDesign, After Effects, Premier
+Pro, Final Cut Pro, SketchUp</td></tr>
+	<tr><td valign="top"><em>Embedded</em></td><td>Arduino, MQTT, TCP/IP, UDP, Serial, I2C,
+SPI,CoreBluetooth, iBeacon</td></tr>
+</table>
+<br>
+
+```
+
+```
 <hr>
 ```
 
