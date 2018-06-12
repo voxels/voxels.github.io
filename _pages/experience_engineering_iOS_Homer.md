@@ -1,9 +1,3 @@
----
-layout: page
-title: Homer Learning
-description: iOS Engineering Experience
----
-
 ## Senior Engineer
 
 ### March 2017 – June 2018
