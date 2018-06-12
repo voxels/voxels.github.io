@@ -1,14 +1,8 @@
----
-layout: page
-title: Crush & Lovely
-description: iOS Engineering Experience
----
-
 ## Contracted Senior iOS Engineer
 
 ### January 2016 – May 2016
 
-http://www.mtv.com/news/
+[http://www.mtv.com/news](http://www.mtv.com/news)
 
 _MTV News was an iPhone and iPad application designed to wrap the content of www.mtv.com/news with a native navigation container and a single social feature. The client intercepted the inbound web content and modified the source code in transit to support a native navigation experience using the GoNative SDK. The user was encouraged to take screenshots of the content and share it with friends through many social network APIs. The client hired Crush & Lovely (http://crushlovely.com) to implement the design and Crush needed a subcontractor to develop the iOS client. The MTV team knew at the outset that their chosen solution was a temporary fix to a larger branding challenge, and the MTV News app was removed from the App Store in late 2017._
 

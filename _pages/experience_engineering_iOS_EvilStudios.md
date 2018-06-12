@@ -1,14 +1,8 @@
----
-layout: page
-title: I/AC
-description: iOS Engineering Experience
----
-
 ## Contracted Senior iOS Engineer
 
 ### April 2016 – December 2016
 
-http://evilapples.com
+[http://evilapples.com](http://evilapples.com)
 
 _Evil Apples is an iPad and iPhone card game based on the premise of Cards Against Humanity. Five players compete in a seven or more rounds. In each round, one player acts as a judge and the remaining players select cards to complete a sentence. Evil Apples supports several discovery mechanisms including friends-only and stranger mode. It uses in-app currency to limit the rate of play and expand the content a player can use. It serves more than 300,000 monthly active users and retained a 99.7% crash free rate over the course of 2016._
 

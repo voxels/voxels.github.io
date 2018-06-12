@@ -1,14 +1,8 @@
----
-layout: page
-title: Samsung Research of America
-description: iOS Engineering Experience
----
-
 ## Senior Engineer
 
 ### December 2014 – August 2015
 
-http://www.samsungnext.com
+[http://www.samsungnext.com](http://www.samsungnext.com)
 
 _Yarn was a cross platform photos service developed at the Samsung Accelerator in New York City. The product was designed to transfer the photos from storage such as iCloud, Dropbox, etc. into a proprietary analytical pipeline.
 The user was encouraged to tag photos with hashtags about people, places, and interests, and the Yarn application server would automatically, periodically return a collection of photos grouped together by topic. The goal of the work at the Accelerator was to integrate the service as a default in Samsung Nexus devices, and the first release was designed and built for iOS, Android, and web clients. The Yarn iOS application was released into production, with several subsequent maintenance releases, and roughly 5,000 users were accepted into the beta. The Accelerator did not choose to acquire the IP, and the client was eventually removed from the App Store. Apple's native Photos client released an identical service shortly before Yarn was disbanded._

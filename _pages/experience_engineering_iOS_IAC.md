@@ -1,14 +1,8 @@
----
-layout: page
-title: I/AC
-description: iOS Engineering Experience
----
-
 ## Senior iOS Engineer
 
 ### December 2013 – May 2014
 
-http://www.weatherwhiskers.com
+[http://www.weatherwhiskers.com](http://www.weatherwhiskers.com)
 
 _Weather Whiskers and Smiley Central were designed by IAC's Mindspark group, aka Ask Applications, to gather behavior tracking data on iOS usage. Smiley Central was a sticker app that sent custom Smileys through text messages and other channels. Weather Whiskers was a weather app that delivered the forecast with large photos of cats. Both clients implemented a custom behavior tracking analytics service used by Mindspark to track long term value against cost per acquisition. Mindspark needed an emergency fix in the in-app purchasing system before Christmas, and the work developed into a full-time role that ended in recruitment into a higher paying start-up environment at Beautified._
 

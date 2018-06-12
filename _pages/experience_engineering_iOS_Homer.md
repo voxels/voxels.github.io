@@ -2,7 +2,7 @@
 
 ### March 2017 – June 2018
 
-https://www.learnwithhomer.com
+[https://www.learnwithhomer.com](https://www.learnwithhomer.com)
 
 _Homer Learning is a cross-platform application designed to teach elementary reading to toddlers between the ages of 2 and 8. Homer uses stories, songs, and mini games to gradually present letters and words. Simple personalization is used to engage a child's interest. Homer retains more than 250,000 subscription-based monthly active parent and teacher users._
 

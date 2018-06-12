@@ -1,9 +1,3 @@
----
-layout: page
-title: Beautified
-description: iOS Engineering Experience
----
-
 ## Senior iOS Engineer
 
 ### May 2014 – November 2014
