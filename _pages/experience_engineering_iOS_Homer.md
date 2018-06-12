@@ -1,6 +1,6 @@
 <table style="width:100%"> 
 	<tr>
-		<td valign="baseline"> <h2>Homer Learning</h2></td><td align="right" valign="baseline"> <a href="https://www.learnwithhomer.com">https://www.learnwithhomer.com</a></td>
+		<td valign="baseline"><a name="homer-learning"><h2>Homer Learning</h2></a></td><td align="right" valign="baseline"> <a href="https://www.learnwithhomer.com">https://www.learnwithhomer.com</a></td>
 	</tr>
 </table>
 <table style="width:100%"> 
@@ -10,7 +10,6 @@
 </table>
 
 <br>
-
 
 _Homer Learning is a cross-platform application designed to teach elementary reading to toddlers between the ages of 2 and 8. Homer uses stories, songs, and mini games to gradually present letters and words. Simple personalization is used to engage a child's interest. Homer retains more than 250,000 subscription-based monthly active parent and teacher users._
 
@@ -30,4 +29,3 @@ At Homer, a team of as large as seven iOS engineers collaborated on the iPhone a
 - Converting the XCode project and unit tests to support Swift frameworks in Cocoapods
 - Developing new mini game templates and view controllers
 - Building a proof of concept for a state machine that improves orientation and handles deep links to any page
-

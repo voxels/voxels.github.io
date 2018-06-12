@@ -1,6 +1,6 @@
 <table style="width:100%"> 
 	<tr>
-		<td valign="baseline"> <h2>Evil Studios</h2></td><td align="right" valign="baseline"> <a href="http://evilapples.com">http://evilapples.com</a></td>
+		<td valign="baseline"><a name="evil-studios"><h2>Evil Studios</h2></a></td><td align="right" valign="baseline"> <a href="http://evilapples.com">http://evilapples.com</a></td>
 	</tr>
 </table>
 <table style="width:100%"> 

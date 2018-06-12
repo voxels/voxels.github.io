@@ -1,6 +1,6 @@
 <table style="width:100%"> 
 	<tr>
-		<td valign="baseline"> <h2>Samsung Research of America</h2></td><td align="right" valign="baseline"> <a href="http://www.samsungnext.com">http://www.samsungnext.com</a></td>
+		<td valign="baseline"><a name="samsung"><h2>Samsung Research of America</h2></a></td><td align="right" valign="baseline"> <a href="http://www.samsungnext.com">http://www.samsungnext.com</a></td>
 	</tr>
 </table>
 <table style="width:100%"> 

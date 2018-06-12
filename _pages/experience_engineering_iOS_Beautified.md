@@ -1,6 +1,6 @@
 <table style="width:100%"> 
 	<tr>
-		<td valign="baseline"> <h2>Beautified</h2></td><td align="right" valign="baseline"></td>
+		<td valign="baseline"><a name="beautified"><h2>Beautified</h2></a></td><td align="right" valign="baseline"></td>
 	</tr>
 </table>
 <table style="width:100%"> 

@@ -1,6 +1,6 @@
 <table style="width:100%"> 
 	<tr>
-		<td valign="baseline"> <h2>Crush and Lovely</h2></td><td align="right" valign="baseline"> <a href="http://crushlovely.com">http://crushlovely.com</a></td>
+		<td valign="baseline"><a name="crush-and-lovely"><h2>Crush and Lovely</h2></a></td><td align="right" valign="baseline"> <a href="http://crushlovely.com">http://crushlovely.com</a></td>
 	</tr>
 </table>
 <table style="width:100%"> 
