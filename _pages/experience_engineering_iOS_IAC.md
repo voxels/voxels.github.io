@@ -15,29 +15,22 @@ The development of Mindspark's app relied on a product owner, project manager, t
 
 ## Weather Whiskers Screenshots
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/0.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/1.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/2.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/3.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/4.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/5.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/6.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/7.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/8.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/9.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/10.png" width="360">
+| | |
+|:---:|:---:|
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/0.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/1.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/2.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/3.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/4.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/5.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/6.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/7.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/8.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/9.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_weather_whiskers/10.png" width="360">|
 
 
 ## Smiley Central Screenshots
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/feed/0.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/0.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/1.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/2.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/3.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/4.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/5.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/6.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/7.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/8.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/9.png" width="360">
+| | |
+|:---:|:---:|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/feed/0.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/0.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/1.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/2.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/3.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/4.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/5.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/6.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/7.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/8.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2013_smiley_central/store/9.png" width="360">|

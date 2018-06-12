@@ -19,21 +19,14 @@ The development of Beautified included three product owners, two back-end Ruby d
 [beautified.m4v](https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/video/beautified.m4v)
 
 ## Screenshots
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/0.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/1.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/2.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/3.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/4.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/5.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/6.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/7.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/8.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/9.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/10.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/11.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/12.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/13.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/14.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/15.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/16.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/17.png" width="360">
+| | |
+|:---:|:---:|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/0.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/1.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/2.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/3.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/4.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/5.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/6.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/7.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/8.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/9.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/10.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/11.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/12.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/13.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/14.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/15.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/16.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/v2/17.png" width="360">|

@@ -18,5 +18,7 @@ Instagram, Facebook, Twitter, Pinterest, and WhatsApp
 
 ## Screenshots
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2016_MTV_news/0.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2016_MTV_news/1.png" width="360">
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2016_MTV_news/2.png" width="360">
+| | |
+|:---:|:---:|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2016_MTV_news/0.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2016_MTV_news/1.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2016_MTV_news/2.png" width="360">| |

@@ -25,18 +25,13 @@ The development of Yarn was managed by a product owner, Chief Technology Officer
 
 ## Screenshots
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/0.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/1.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/2.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/3.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/4.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/5.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/6.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/7.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/8.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/9.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/10.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/11.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/12.png" width="360"> <img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/13.png" width="360">
-
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/14.png" width="360">
+| | |
+|:---:|:---:|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/0.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/1.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/2.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/3.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/4.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/5.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/6.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/7.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/8.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/9.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/10.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/11.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/12.png" width="360">|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/13.png" width="360">|
+|<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/14.png" width="360">| |
