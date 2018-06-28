@@ -4,7 +4,7 @@ title:  "Generating Interactive Particle Systems in OpenCV and SpriteKit"
 date:   2018-06-01 00:00:03 -0000
 ---
 
-[This page is a Work in Progress...]
+[This page is a Work in Progress...]<!--break-->
 
 Infrared cameras produce color information that is consumed by OpenCV.
 

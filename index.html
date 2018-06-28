@@ -13,7 +13,10 @@ layout: default
         &nbsp;&nbsp; &middot; &nbsp;&nbsp;
         <span><i>{{ post.duration }}</i> </span>
       </div>
-      <p>{{ post.content | strip_html | truncatewords:50 }}</p>
+      <p>{{ post.content | split:'<!--break-->' | first }}
+         {% if post.content contains '<!--break-->' %}
+             <a href="{{ post.url }}"></a>
+         {% endif %}</p>
 	  </div>
 
     {% endfor %}

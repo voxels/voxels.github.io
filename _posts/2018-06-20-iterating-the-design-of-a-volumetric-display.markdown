@@ -4,7 +4,7 @@ title:  "Iterating the Design of a Volumetric Display"
 date:   2018-06-01 00:00:04 -0000
 ---
 
-[This page is a Work in Progress...]
+[This page is a Work in Progress...]<!--break-->
 
 Volumetric displays can be built with off-the-shelf materials.
 

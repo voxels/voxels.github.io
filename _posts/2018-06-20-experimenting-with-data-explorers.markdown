@@ -4,7 +4,7 @@ title:  "Experimenting with Data Explorers"
 date:   2018-06-01 00:00:01 -0000
 ---
 
-[This page is a Work in Progress...]
+[This page is a Work in Progress...]<!--break-->
 
 Interactive data explorers can help refine questions for better collection.
 

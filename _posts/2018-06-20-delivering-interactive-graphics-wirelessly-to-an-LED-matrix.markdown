@@ -4,7 +4,7 @@ title:  "Delivering Interactive Graphics Wirelessly to an LED Matrix"
 date:   2018-06-01 00:00:05 -0000
 ---
 
-[This page is a Work in Progress...]
+[This page is a Work in Progress...]<!--break-->
 
 Off the shelf displays can be driven by embedded hardware.
 

@@ -4,7 +4,7 @@ title:  "Detecting Gestures from the Motion of the Body in Relation to Itself"
 date:   2018-06-01 00:00:02 -0000
 ---
 
-[This page is a Work in Progress...]
+[This page is a Work in Progress...]<!--break-->
 
 Measuring the motion of a skeleton's joints in relation to each other generates signals that can be recognized as gestures.
 
