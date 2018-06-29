@@ -10,7 +10,7 @@ description: About Michael Edgcumbe
 #### iOS Application Engineering *
 
 <table style="width:100%">
-<tr><td><a href="#homer-learning">Homer Learning</a></td><td align="right">March 2017 - Present</td></tr>
+<tr><td><a href="#homer-learning">Homer Learning</a></td><td align="right">March 2017 - June 2018</td></tr>
 <tr><td><a href="#evil-studios">Evil Studios</a></td><td align="right">April 2016 - December 2017</td></tr>
 <tr><td><a href="#crush-and-lovely">Crush & Lovely</a></td><td align="right">January 2016 – May 2016</td></tr>
 <tr><td><a href="#liquor-cabinet">The Liquor Cabinet</a></td><td align="right">September 2015 – February 2016</td></tr>
