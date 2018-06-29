@@ -28,5 +28,6 @@ Data explorers can not only be useful but also graceful.  In the explorer below,
 
 {% include youtubePlayer.html id="KP4pgTmJO-U" %}
 
+<br>
 The fluidity of the behavior lends some personality to the agents, and self-organization of flocking systems is a trait that might be further refined.  Since we recognize relatively motion almost as well as we see color, position, and size, agent-based behavior might be an untapped resource for mixed reality visualization.  Every so often, I expect to come back to this topic to see where technology and art can produce a more natural interface for data exploration.
 
