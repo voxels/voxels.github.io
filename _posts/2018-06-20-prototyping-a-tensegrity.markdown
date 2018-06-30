@@ -4,9 +4,7 @@ title:  "Prototyping with Tensegrity"
 date:   2018-06-01 00:00:00 -0000
 ---
 
-'Tensional integrity' describes compressed components balanced with tensioned components into a stable self-equilibrated state.  One can think of bones and muscles in the skeletal system as demonstrating a similar type of balance. 
-
-<!--break-->
+'Tensional integrity' describes compressed components balanced with tensioned components into a stable self-equilibrated state.  One can think of bones and muscles in the skeletal system as demonstrating a similar type of balance. <!--break-->
 
 The image below shows a simple structure that exhibits [tensegrity](http://www.tensegriteit.nl/e-well-known.html):
 
