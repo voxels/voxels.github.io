@@ -50,7 +50,7 @@ Two challenges came up in this design.  The first challenge was that I had a sma
 
 The second iteration's display was in the shape of a sphere, based on some LED strips I bought from Adafruit.  I mounted a pair of identical strips on two round mirrors mounted inside crochet frames.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/+spherical_display.jpg" width="320" alt="Spherical Display">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/+spherical_display.jpg" width="640" alt="Spherical Display">
 
 The videos below show the test pattern running before the mounts were attached to the hanging and in the first run of the rotation.  
 
