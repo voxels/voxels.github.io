@@ -14,9 +14,9 @@ In a first attempt at building with WS2812B strips, Kirill Shevyakov, Alex Savic
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/driver/archive/DSC08455.jpg" width="640" alt="Alter">
 
-Based on guidance from Leo Villereal and the other founders of Disorient, we worked with Viktor Getmanchuk to build the Disorient sign for Burningman.
-
 {% include youtubePlayer.html id="YZmgi2YkHQM" %}
+
+Based on guidance from Leo Villereal and the other founders of Disorient, we worked with Viktor Getmanchuk to build the Disorient sign for Burningman.
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/matrix_displays/disorient_sign.jpg" width="640" alt="Disorient Sign with Viktor Getmanchuk">
 
