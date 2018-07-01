@@ -38,6 +38,6 @@ The content for this table was generated in a SceneKit instance on an iPad, samp
 
 {% include youtubePlayer.html id="pguY782UVUk" %}
 
-The coffee table was a proof of concept for using an iPad to drive ambient displays.  This project will fold back in to an exploration of volumetric displays in order to drive the displays wirelessly from roaming depth cameras such as those in the iPhone X.
+The coffee table was a proof of concept for using an iPad to drive ambient displays.  This project will fold back in to an exploration of [volumetric displays](https://voxels.github.io/iterating-the-design-of-a-volumetric-display) in order to drive the displays wirelessly from roaming depth cameras such as those in the iPhone X.
 
 {% include youtubePlayer.html id="-PAhgJRkSvs" %}
