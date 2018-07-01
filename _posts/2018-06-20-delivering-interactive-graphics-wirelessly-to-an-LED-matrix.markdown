@@ -24,17 +24,19 @@ The Disorient sign has since been adopted by the fine folks at [NYC Resistor](ht
 
 ### Driving LED content from an iOS device
 
-Mobile devices such as the iPhone are fast enough to drive interactive displays like an LED matrix.  Essentially, color information can be sent to a device communicating with Serial, TCP/IP, UDP or another protocol to an Arduino driving the LEDs.
+Mobile devices such as the iPhone are fast enough to drive displays like an LED matrix interactively.  One bottneck to overcome involves choosing the communication protocol and network hardware.  Color information can be sent to a device communicating with Serial, TCP/IP, UDP or another protocol to an Arduino driving the LEDs.  Ethernet connection, serial connections, and wireless connection can be directed through fast [routers](https://www.ubnt.com/edgemax/edgerouter/).
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/application/archive/table/DSC08718.JPG" width="640" alt="iPad Driving LED Disk">
 
-Sampling the framebuffer of an iPad rendering content in SceneKit, or any other game engine, allows a user to interact with an iPad and affect the matrix in real time.  In the image below, an iPad is sending live content to LED rings.
+Sampling the framebuffer of an iPad rendering content in SceneKit, or any other game engine, allows a user to interact with an iPad by affecting the matrix in real time.  In the image below, an iPad is sending live content to LED rings through a wired connection.
 
 {% include youtubePlayer.html id="riJR49ga8fw" %}
 
 After several attempts of trying out different protocols, I discovered that the MQTT protocol can support delivering brightness values with low latency.  I built a coffee table from some white APA104 strips embedded in plexi tunes and diffused with some custom cut plexi panels.  
 
-The content for this table was generated in a SceneKit instance on an iPad, sampled from the framebuffer, sent wirelessly through a router into a wired Teensy controller.  In the video below, the iPad's test software is started up to wirelessly drive the diffused LED matrix. 
+The content for this table was generated in a SceneKit instance on an iPad, sampled from the framebuffer, sent wirelessly to a router connected through ethernet to a Teensy 3.2 microcontroller.  
+
+In the video below, the iPad's test software is started up to wirelessly drive the diffused LED matrix. 
 
 {% include youtubePlayer.html id="pguY782UVUk" %}
 
