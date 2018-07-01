@@ -4,30 +4,40 @@ title:  "Delivering Interactive Graphics Wirelessly to an LED Matrix"
 date:   2018-06-01 00:00:05 -0000
 ---
 
-[This page is a Work in Progress...]<!--break-->
+This project is a multi-year effort to drive interactive graphics from the GPU of a mobile device to a matrix of LEDs.
 
-Off the shelf displays can be driven by embedded hardware.
+<!--break-->
+
+There are a number of alternatives when choosing a set of components to drive an LED matrix.  The controllers can be a variety of embedded devices, Arduino or otherwise, and the strips can be chosen from alternative protocols, such as WS2812B vs APA104.
+
+In a first attempt at building with WS2812B strips, Kirill Shevyakov, Alex Savich, Fixx Invictus, and I built some columns housing WS2812B strips driven by wired connection to a [FadeCandy](https://github.com/scanlime/fadecandy/).
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/driver/archive/DSC08455.jpg" width="640" alt="Alter">
+
+Based on guidance from Leo Villereal and the other founders of Disorient, we worked with Viktor Getmanchuk to build the Disorient sign for Burningman.
 
 {% include youtubePlayer.html id="YZmgi2YkHQM" %}
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/matrix_displays/disorient_sign.jpg" width="640" alt="Disorient Sign with Viktor Getmanchuk">
 
-Mobile devices such as the iPhone are fast enough to drive interactive displays like an LED matrix.
+The Disorient sign has since been adopted by the fine folks at [NYC Resistor](https://www.nycresistor.com).
+
+### Driving LED content from an iOS device
+
+Mobile devices such as the iPhone are fast enough to drive interactive displays like an LED matrix.  Essentially, color information can be sent to a device communicating with Serial, TCP/IP, UDP or another protocol to an Arduino driving the LEDs.
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/application/archive/table/DSC08718.JPG" width="640" alt="iPad Driving LED Disk">
 
-Sampling the framebuffer of a SpriteKit rendering pipeline can generate color values.
+Sampling the framebuffer of an iPad rendering content in SceneKit, or any other game engine, allows a user to interact with an iPad and affect the matrix in real time.  In the image below, an iPad is sending live content to LED rings.
 
 {% include youtubePlayer.html id="riJR49ga8fw" %}
 
-The MQTT protocol can support delivering brightness values wirelessly to the embedded microcontroller of the display.
+After several attempts of trying out different protocols, I discovered that the MQTT protocol can support delivering brightness values with low latency.  I built a coffee table from some white APA104 strips embedded in plexi tunes and diffused with some custom cut plexi panels.  
+
+The content for this table was generated in a SceneKit instance on an iPad, sampled from the framebuffer, sent wirelessly through a router into a wired Teensy controller.  In the video below, the iPad's test software is started up to wirelessly drive the diffused LED matrix. 
 
 {% include youtubePlayer.html id="pguY782UVUk" %}
 
-An unencumbered router can help reduce latency.
-
-Diffusion helps blend a low density of LEDs.
+The coffee table was a proof of concept for using an iPad to drive ambient displays.  This project will fold back in to an exploration of volumetric displays in order to drive the displays wirelessly from roaming depth cameras such as those in the iPhone X.
 
 {% include youtubePlayer.html id="-PAhgJRkSvs" %}
