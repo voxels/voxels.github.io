@@ -14,7 +14,7 @@ The first piece of software I wrote professionally was a data explorer built for
 
 The Career and Technical Education Explorer compared the vocational programs found in Philadelphia's school system to the number of jobs projected to be available for graduates inside the metropolitan statistical area over a ten year time span.  The explorer could be modified on several dimensions including subject matter, geography, and high school.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2009_PWIB/3.jpg" width="640" alt="Career and Technical Education Explorer">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2009_PWIB/3.jpg" width="320" alt="Career and Technical Education Explorer">
 
 In the image above, two Philadelphia high schools are compared to see which school prepares students for the highest wages inside of the Philadelphia County.
 
@@ -25,9 +25,9 @@ Behavior tracking is common in almost all iOS applications.  In addition to atta
 
 Every user session in the collection is presented on a time based axis that flows around the origin.  Each step in the purchase flow is presented in a different color, at a different radius, so that a trip from the outer circle to the inner circle shows how far a single user penetrated into discovering and then buying a product.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/researcher/behavior_tracking/2014_UserAcquisitionAndBehavior_Legend.png" width="640" alt="User Acquisition and Behavior Legend">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/researcher/behavior_tracking/2014_UserAcquisitionAndBehavior_Legend.png" width="320" alt="User Acquisition and Behavior Legend">
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/researcher/behavior_tracking/2014_UserAcquisitionAndBehavior_Filter.png" width="640" alt="User Acquisition and Behavior Filtered">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/researcher/behavior_tracking/2014_UserAcquisitionAndBehavior_Filter.png" width="320" alt="User Acquisition and Behavior Filtered">
 
 The product owners could use the explorer to develop a sense of how well the design was pushing users across the purchase flow over the course of a single session.
 

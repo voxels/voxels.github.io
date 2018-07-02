@@ -12,13 +12,13 @@ There are a number of alternatives when choosing a set of components to drive an
 
 In one of my first attempts at building with WS2812B strips, I worked with Kirill Shevyakov, Alex Savich, and Fixx Invictus to construct some columns housing WS2812B strips controlled through a wired connection to a [FadeCandy](https://github.com/scanlime/fadecandy/).
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/driver/archive/DSC08455.jpg" width="640" alt="Alter">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/driver/archive/DSC08455.jpg" width="320" alt="Alter">
 
 {% include youtubePlayer.html id="YZmgi2YkHQM" %}
 
 In a follow up project, based on design guidance from Leo Villereal and the other founders of Disorient, we worked with Viktor Getmanchuk and Jason Cipriani to build the Disorient sign for Burningman.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/matrix_displays/disorient_sign.jpg" width="640" alt="Disorient Sign with Viktor Getmanchuk">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/matrix_displays/disorient_sign.jpg" width="320" alt="Disorient Sign with Viktor Getmanchuk">
 
 Content for the sign is generated in Processing, and a single Beaglebone Black drives the entire matrix. The Disorient sign has since been adopted by the fine folks at [NYC Resistor](https://www.nycresistor.com).  They provided the really awesome power and communication distribution boards in the initial build.
 
@@ -28,7 +28,7 @@ Mobile devices such as the iPhone are fast enough to drive displays like an LED 
 
 Color information for a single light is typically four bytes that can be sent to a device communicating via Serial, TCP/IP, UDP or other protocols to a microcontroller driving the LEDs.  Latency can be reduced by working with a fast [router](https://www.ubnt.com/edgemax/edgerouter/).
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/application/archive/table/DSC08718.JPG" width="640" alt="iPad Driving LED Disk">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/ResonanceMirror/Components/application/archive/table/DSC08718.JPG" width="320" alt="iPad Driving LED Disk">
 
 Sampling the framebuffer of an iPad rendering content in SceneKit, or any other game engine, allows a user to affect the matrix in real time.  In the image below, an iPad is sending live content to LED rings through a wired connection:
 

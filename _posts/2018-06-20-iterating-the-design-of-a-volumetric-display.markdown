@@ -14,7 +14,7 @@ The video below shows our first attempt at seeing what kind of visual we could g
 
 In our next rig, Eric came up with a nice wiring configuration for a Teensy strapped to four foot rod rotated by a corded drill.  We had to replace the rod we bought from Home Depot with one we got from McMaster in order to get less variation in the straightness of the stainless steel.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/off_the_shelf_hardware.jpg" width="640" alt="Teensy">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/off_the_shelf_hardware.jpg" width="320" alt="Teensy">
 
 Our first iterations just had loose LED strips attached to the rod with zip ties.  We found that the shock from the rotation was killing LEDs.  Backing the strips with a rigid material, like cut up strips of window frames, helps protect the LEDs from broken connections.  Eric rigged up a servo motor to hold down the drill's trigger in a nice bit of hacking.
 
@@ -42,17 +42,17 @@ Eric coded up an iOS app that let us change the LED color data.  We took the dis
 
 A few years after our first attempt, I bought some robotics components from ServoCity and Fry's Electronics to construct a new motor housing for a hanging version of the display.  I was interested in trying to see if a smaller display, with a different shape, might minimize some of the problems we experienced with the first design.  The sketch below shows the original SketchUp screenshot for the second iteration:
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/robotics_components_design.jpg" width="640" alt="Robotics Design">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/robotics_components_design.jpg" width="320" alt="Robotics Design">
 
 Two challenges came up in this design.  The first challenge was that I had a smaller slip ring that did not have a bore hole through the center, so I was forced to mount the slip ring outside of the rotating components. I needed to use a hollow rod to take the wires down to the LED strips.  The hollow rod I got from Amazon was imprecisely manufactured, and I shaved down the entire surface of the rod with a Dremel so that it would fit inside the bearings.  
 
 The second challenge was attaching all the wires inside of the rotating components.  The lengths were not idea for connections and wrapping.  I did end up using CAT5 cable for most of the connections, and I would do this again when working at this scale.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/robotics_components.jpg" width="640" alt="Robotics Components">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/robotics_components.jpg" width="320" alt="Robotics Components">
 
 The second iteration's display was in the shape of a sphere, based solely on some LED strips I found on [Adafruit](http://adafruit.com).  I mounted a pair of identical rings on two round mirrors mounted inside crochet frames so that light would be emitted on both sides of the rotating surface.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/+spherical_display.jpg" width="640" alt="Spherical Display">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/+spherical_display.jpg" width="320" alt="Spherical Display">
 
 The videos below show the test pattern running before the mounts were attached to the hanging and in the first run of the rotation.  
 
@@ -62,11 +62,11 @@ The videos below show the test pattern running before the mounts were attached t
 
 For kicks, I attached some material during the test to see what diffusion might look like:
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/spherical_tracing.jpg" width="640" alt="Spherical Tracing">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/spherical_tracing.jpg" width="320" alt="Spherical Tracing">
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/spherical_diffusion.jpg" width="640" alt="Spherical Diffusion">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/spherical_diffusion.jpg" width="320" alt="Spherical Diffusion">
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/spherical_diffusion_2.jpg" width="640" alt="Spherical Diffusion 2">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/spherical_diffusion_2.jpg" width="320" alt="Spherical Diffusion 2">
 
 ### Increasing the density of the display
 
@@ -74,7 +74,7 @@ In the third iteration of the design, I am primarily concerned with the density 
 
 {% include youtubePlayer.html id="5-3eNz1TS7I" %}
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/high_density_panels.jpg" width="640" alt="High Density Panels">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/high_density_panels.jpg" width="320" alt="High Density Panels">
 
 {% include youtubePlayer.html id="l2Ghu0QWy1o" %}
 
