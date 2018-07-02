@@ -4,7 +4,7 @@ title:  "Iterating the Design of a Volumetric Display"
 date:   2018-06-01 00:00:04 -0000
 ---
 
-Eric Mika and I started in on a project to make a cylidrical volumetric display using off the shelf hardware like a drill and a long steel rod from Home Depot.  The project evolved into several iterations designed around first transferring LED data through a slip ring, then trying to minimize the harmonic vibration in the rig, and finally trying to experiment with the shape of the display and increase the density of the filaments.
+Eric Mika and I started in on a project to make a cylidrical volumetric display using off the shelf hardware like a drill and a long steel rod from Home Depot.  The project evolved into  iterations designed around first transferring LED data through a slip ring, then trying to minimize the harmonic vibration in the rig by changing the size and the shape of the display, and recently, increasing the density of the lights along with networking drivers together.
 
 <!--break-->
 
@@ -24,7 +24,7 @@ Even though we bought a precisely manufactured rod, leaving one end of the rotat
 
 {% include youtubePlayer.html id="EMkDjR-ZdeM" %}
 
-The LEDs need a fast refresh rate to create the smallest arcs possible.  Changing the speed of the rotation along with the duration of the runloop for the LED driver affects the lengths of the arcs of the strip.  We did not achieve pinpointed light in this iteration, but we were able to achieve some consistency.
+The LEDs need a fast refresh rate to create the smallest arcs possible.  Changing the speed of the rotation along with the duration of the runloop for the LED driver affects the lengths of the arcs of the strip.  We did not achieve pinpointed light in this iteration, but we were able to achieve some interesting patterns.
 
 {% include youtubePlayer.html id="2fc0eFDiKQo" %}
 
@@ -40,15 +40,17 @@ Eric coded up an iOS app that let us change the LED color data.  We took the dis
 
 ### Using Robotics Components
 
-A few years later, I bought some robotics components from ServoCity and Fry's Electronics to construct a new motor housing for a hanging version of the display.  I was interested in trying to see if a smaller display, with a different shape, might minimize some of the problems we experienced with the first design.  The sketch below shows the original SketchUp screenshot for the second iteration:
+A few years after our first attempt, I bought some robotics components from ServoCity and Fry's Electronics to construct a new motor housing for a hanging version of the display.  I was interested in trying to see if a smaller display, with a different shape, might minimize some of the problems we experienced with the first design.  The sketch below shows the original SketchUp screenshot for the second iteration:
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/robotics_components_design.jpg" width="640" alt="Robotics Design">
 
-Two challenges came up in this design.  The first challenge was that I had a smaller slip ring that did not have a bore hole through the center, so I was forced to mount the slip ring outside of the rotating components, and needed to use a hollow rod to take the wires down to the LED strips.  The hollow rod was imprecisely manufactured, and I had to use a Dremel to shave down the entire surface of the rod so that it would fit inside the bearings.  The second challenge was attaching all the wires inside of the rotating components.  The lengths were not idea for connections and wrapping.  I did end up using CAT5 cable for most of the connections, and I would do this again when working at this scale.
+Two challenges came up in this design.  The first challenge was that I had a smaller slip ring that did not have a bore hole through the center, so I was forced to mount the slip ring outside of the rotating components. I needed to use a hollow rod to take the wires down to the LED strips.  The hollow rod I got from Amazon was imprecisely manufactured, and I shaved down the entire surface of the rod with a Dremel so that it would fit inside the bearings.  
+
+The second challenge was attaching all the wires inside of the rotating components.  The lengths were not idea for connections and wrapping.  I did end up using CAT5 cable for most of the connections, and I would do this again when working at this scale.
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/robotics_components.jpg" width="640" alt="Robotics Components">
 
-The second iteration's display was in the shape of a sphere, based on some LED strips I bought from Adafruit.  I mounted a pair of identical strips on two round mirrors mounted inside crochet frames.
+The second iteration's display was in the shape of a sphere, based solely on some LED strips I found on [Adafruit](http://adafruit.com).  I mounted a pair of identical rings on two round mirrors mounted inside crochet frames so that light would be emitted on both sides of the rotating surface.
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/volumetric_display/+spherical_display.jpg" width="640" alt="Spherical Display">
 
@@ -68,7 +70,7 @@ For kicks, I attached some material during the test to see what diffusion might 
 
 ### Increasing the density of the display
 
-In the third iteration of the design, I am primarily concerned with the density of the display, and how to achieve control out of synchronized, network drivers.  These panels are not fast enough to get a good volumetric image, but they will be good enough to prototype this display's size, shape, and control.
+In the third iteration of the design, I am primarily concerned with the density of the display, and how to achieve control out of synchronized, network drivers.  These panels are not fast enough to get a good volumetric image, but they will be good enough to prototype this display's size, shape, and networking synchronization.
 
 {% include youtubePlayer.html id="5-3eNz1TS7I" %}
 
