@@ -14,6 +14,9 @@ In the video below, the 1.0 version of a toy photo gallery shows that scrolling 
 
 {% include youtubePlayer.html id="SjJ66Wl4tI8" %}
 
+<p>
+
+</p>
 ### Resize the Assets Before Doing Anything Else...
 
 I also was unhappy with the compression and resizing of the images in the thumbnails in version 1.0. Before checking into XCode's [Time Profiler](https://help.apple.com/instruments/mac/current/#/dev44b2b437) instrument, I optimized my collection view image cells and the assets stored on S3.  I wanted to make sure that the change in the lift would be measured between the unmodified code using the newly sized assets and the final refactoring for v1.1.
@@ -59,6 +62,10 @@ This should, in theory, slow things down even more because the download sizes ar
 
 <img src="https://s3.amazonaws.com/com-federalforge-repository/public/resources_portfolio/posts/toyphotogallery_instruments/high_quality_thumbnails.png" width="320" alt="Optimized Thumbnails">
 
+<p>
+
+</p>
+
 ### Breaking out the Time Profiler
 
 I found a few decent reference articles about the Time Profiler:
@@ -94,17 +101,20 @@ About 17 percent of the weight was located in Parse:
 
 Given the results above, it seemed like I needed to do some refactoring of the image cell model, the image cell view, and check into Parse.
 
+<p>
+
+</p>
+
 ### Refactoring for Better Performance
 
 I found some tutorials online that helped me understand some [gotchas](https://medium.com/capital-one-developers/smooth-scrolling-in-uitableview-and-uicollectionview-a012045d77f) about collection views. 
 
 In order to improve the collection view scrolling, I did some work on the following:
 
-1. Move fetching and configuration out of the cell
-2. Avoid UIColor clear and shadows.
-3. Simplify the gallery collection view controller model to use ImageResources directly instead of a wrapper 
-for a generic cell model.
-4. Audit the dispatchqueues
+1. Move fetching and configuration of the thumbnail images out of the cell
+2. Avoid UIColor.clear and layer shadows in the cells
+3. Simplify the gallery collection view controller model array
+4. Audit the DispatchQueues
 
 Emptying the images out of the cell's views changed the heaviest stack trace:
 
@@ -122,7 +132,7 @@ This is no good because we had more model work to do on a background thread befo
 
 Debugging the DispatchQueues for parse and adding some safety around when to fetch and how to update the collection view resulted in a much better Time Profiler trace:
 
-<img src="Refactored Time Profiler Trace with No Scrolling" width="640" alt="https://s3.amazonaws.com/com-federalforge-repository/public/resources_portfolio/posts/toyphotogallery_instruments/toyphotogallery_instruments_v1.1_noscroll.png">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/resources_portfolio/posts/toyphotogallery_instruments/toyphotogallery_instruments_v1.1_noscroll.png" width="640" alt="Refactored Time Profiler Trace with No Scrolling">
 
 In version 1.1, the launch completes in under **8 seconds**.  We only have 37 percent of our work happening on the main thread.
 
@@ -140,6 +150,10 @@ The images below show the CPU and Memory dashboards in Xcode showing how well th
 CPU time spikes at launch and then remains pretty modest.  Memory usage never climbs above 35 Mb even after all the images are loaded
 and lots of high intensity scrolling is thrown at the gallery and preview collection view layouts.
 
+<p>
+
+</p>
+
 ### Comparing v1.0 and v1.1
 
 In version 1.0, the toy photo gallery demonstrated pauses during scrolling, unoptimized thumbnails, and unrefined transition animations:
@@ -154,6 +168,11 @@ In version 1.1, the photo gallery has smooth scrolling, optimized thumbnails, an
 
 {% include youtubePlayer.html id="xiR5rvbiRDo" %}
 
-Overall the scrolling performance is much better after using the Time Profiler:
+
+<p>
+
+</p>
+
+**Overall, the scrolling performance is much better after using the Time Profiler**
 
 {% include youtubePlayer.html id="iXQq7ciXVUc" %}
