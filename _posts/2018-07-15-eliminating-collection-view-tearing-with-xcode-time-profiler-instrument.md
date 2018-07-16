@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Eliminating Collection View Tearing with XCode's Time Profiler Instrument"
+title:  "Eliminating Collection View Tearing with Xcode's Time Profiler Instrument"
 date:   2018-07-15 22:30:00 -0000
 ---
 
@@ -19,7 +19,7 @@ In the video below, the 1.0 version of a toy photo gallery shows that scrolling 
 </p>
 ### Resize the Assets Before Doing Anything Else...
 
-I also was unhappy with the compression and resizing of the images in the thumbnails in version 1.0. Before checking into XCode's [Time Profiler](https://help.apple.com/instruments/mac/current/#/dev44b2b437) instrument, I optimized my collection view image cells and the assets stored on S3.  I wanted to make sure that the change in the lift would be measured between the unmodified code using the newly sized assets and the final refactoring for v1.1.
+I also was unhappy with the compression and resizing of the images in the thumbnails in version 1.0. Before checking into Xcode's [Time Profiler](https://help.apple.com/instruments/mac/current/#/dev44b2b437) instrument, I optimized my collection view image cells and the assets stored on S3.  I wanted to make sure that the change in the lift would be measured between the unmodified code using the newly sized assets and the final refactoring for v1.1.
 
 I determined the correct thumbnail size using [iosres.com](http://iosres.com). Our largest thumbnails will potentially take up 2/3 of the width of the screen.  The logical width of our largest iPhone screen is 414.  414 * 2 / 3 == 276 points. Our images need to be @3x scale to fill each pixel on that width, so 276 * 3 = 828 pixels wide.  
 
@@ -162,17 +162,10 @@ In version 1.0, the toy photo gallery demonstrated pauses during scrolling, unop
 
 {% include youtubePlayer.html id="AzOr3a0rP64" %}
 
-In version 1.1, the photo gallery has smooth scrolling, optimized thumbnails, and refined transition animations:
+In version 1.1, the photo gallery has smooth scrolling, optimized thumbnails, and refined transition animations thanks to the **Time Profiler**.
 
-{% include youtubePlayer.html id="-qtwFixZq9I" %}
+{% include youtubePlayer.html id="iXQq7ciXVUc" %}
 
 {% include youtubePlayer.html id="xiR5rvbiRDo" %}
 
 
-<p>
-
-</p>
-
-**Overall, the scrolling performance is much better after using the Time Profiler**
-
-{% include youtubePlayer.html id="iXQq7ciXVUc" %}
