@@ -4,7 +4,7 @@ title:  "Eliminating Collection View Tearing with XCode's Time Profiler Instrume
 date:   2018-07-15 22:30:00 -0000
 ---
 
-**TL;DR**: *Using the Time Profiler to refactor collection view cell model image fetching and pull Parse's return call off the main thread enables [smooth scrolling]()*.
+*Using the Time Profiler to refactor collection view cell model image fetching and pull Parse's return call off the main thread enables smooth scrolling*.
 
 <!--break-->
 
