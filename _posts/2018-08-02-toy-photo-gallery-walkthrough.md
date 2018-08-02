@@ -143,12 +143,7 @@ Achieving a high frame rate that drops in high-fidelity images as quickly as pos
 
 A complicated animation process is kicked off when the GalleryViewController receives a signal that the user has tapped on a gallery thumbnail image.  Rather than pushing to a new, separate view controller, a child view controller containing the preview's button controls seamlessly appears, and the gallery collection view is re-purposed to scroll horizontally across the larger images.
 
-Changing the collection view layout class instead of pushing to a new view controller allows us to depend on Apple's support for custom animations changing the appearance of the cells.  In this iteration, we not only change the layout class but also swap out the collection view for a new instance in order to provide independent animations during the swap between collection views.
-
-<img src="http://secretatomics.com/resources/toyphotogallery_1.jpeg" width="320" alt="GalleryViewController Screenshot">
-
 ```
-
 
 ```
 
@@ -169,8 +164,11 @@ Changing the collection view layout class instead of pushing to a new view contr
 
 ```
 
-
 ```
+
+Changing the collection view layout class instead of pushing to a new view controller allows us to depend on Apple's support for custom animations changing the appearance of the cells.  In this iteration, we not only change the layout class but also swap out the collection view for a new instance in order to provide independent animations during the swap between collection views.
+
+<img src="http://secretatomics.com/resources/toyphotogallery_1.jpeg" width="320" alt="GalleryViewController Screenshot">
 
 The animation code is presented below:
 
