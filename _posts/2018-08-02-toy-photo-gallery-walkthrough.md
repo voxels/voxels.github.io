@@ -97,8 +97,9 @@ Collection views scroll more quickly when they reuse dequeued cells.  In v1.0 of
 A small fade-in animation is applied after a brief delay to give each cell the appearance of arriving in the collection view with a graceful purpose.
 
 ```
-DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(Int(appearance.fadeDuration))) {
-    cell.show(imageView:cell.thumbnailImageView, with:appearance)
+DispatchQueue.main.asyncAfter(deadline: .now() + 
+	DispatchTimeInterval.seconds(Int(appearance.fadeDuration))) {
+    	cell.show(imageView:cell.thumbnailImageView, with:appearance)
 }
 ```
 {% include youtubePlayer.html id="iXQq7ciXVUc" %}
@@ -141,6 +142,4 @@ A slow motion preview of the animation is included below:
 <img src="http://secretatomics.com/resources/toyphotogallery_2.jpeg" width="320" alt="GalleryViewController Screenshot">
 
 ### Unit Testing
-
-### Code Techniques
 
