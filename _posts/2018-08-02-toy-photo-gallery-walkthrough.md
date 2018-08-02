@@ -30,10 +30,10 @@ The demo was built over a week of intensive development and a subsequent week of
 Expecting an initial set of photos to be immediately available after a short launch time is a reasonable user expectation.  Achieving the shortest path to a visible screen that has image assets populated puts specific demand on the launch process to be efficient and fail-safe in the event of no connectivity.  The ToyPhotoGallery uses a **LaunchController** to ensure that the subsystems required by the app are activated in tandem and available before moving past the launch screen while also providing a mechanism to abort into a number of different destinations that reflect the state of the device and user account.
 
 Before launch completes, the controller handles the necessary API keys, which are embedded using [obfuscating code](https://github.com/voxels/ToyPhotoGallery#api-key-obfuscation), that begin the following services:
-- non-fatal error handling with [Bugsnag]()
-- remote store control with [Parse]()
-- remote bucket handling with [AWS]()
-- network session interfacing using [URLSession]()
+- non-fatal error handling with [Bugsnag](https://www.bugsnag.com)
+- remote store control with [Parse](https://parseplatform.org)
+- remote bucket handling with [AWS S3](https://www.google.com/aclk?sa=l&ai=DChcSEwiNgLuq_s7cAhVFXw0KHfxTCFkYABAAGgJxYg&sig=AOD64_1l9qMik9VnO0QwCki9Tpto43zy7Q&q=&ved=2ahUKEwjhiLWq_s7cAhWE3FMKHZZqAk8Q0Qx6BAgEEAI&adurl=)
+- network session interfacing using [AWSMobileClient](https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html) [URLSession](https://developer.apple.com/documentation/foundation/urlsession)
 - local resource model control
 
 The Launch controller is backed by a number of protocols which allows extending launch control into an arbitrary number of required or optional launch services.  For example, adding an analytics handler such as [mParticle]() would simply require adding a few keys and an SDK wrapper.
