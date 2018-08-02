@@ -101,8 +101,7 @@ DispatchQueue.main.asyncAfter(deadline: .now() + DispatchTimeInterval.seconds(In
     cell.show(imageView:cell.thumbnailImageView, with:appearance)
 }
 ```
-
-[Scrolling Animation]()
+{% include youtubePlayer.html id="iXQq7ciXVUc" %}
 
 Achieving a high frame rate that drops in high-fidelity images as quickly as possible is the setup for achieving a seamless transition to a preview window.  Without determining the mechanisms to create this user flow, a deployed solution could become a disappointment for users before they ever reach the new transition.
 
@@ -135,7 +134,7 @@ The animation code is presented below:
 
 A slow motion preview of the animation is included below:
 
-[Preview video]()
+{% include youtubePlayer.html id="xiR5rvbiRDo" %}
 
 ### Transforming with Gestures
 
