@@ -76,7 +76,7 @@ ToyPhotoGallery employs a [time-limited DispatchGroup and concurrent DispatchQue
 
 After all of the launch services have notified the launch controller that they are available, and after the manifest has been fetched and as many of the images resources have been retrieved as possible, the resource model controller will [update its delegate](https://github.com/voxels/ToyPhotoGallery#launch-control-with-dispatchgroup), the launch controller, and the launch controller will present a **GalleryViewController** containing a collection view of the thumbnail images.
 
-![GalleryViewController Screenshot](http://secretatomics.com/resources/toyphotogallery_1.jpeg) 
+<img src="http://secretatomics.com/resources/toyphotogallery_3.jpeg" width="320" alt="GalleryViewController Screenshot">
 
 ### Scrolling and Refreshing the Collection View
 
@@ -109,7 +109,7 @@ Achieving a high frame rate that drops in high-fidelity images as quickly as pos
 
 A complicated animation process is kicked off when the GalleryViewController receives a signal that the user has tapped on a gallery thumbnail image.  Rather than pushing to a new, separate view controller, a child view controller containing the preview's button controls seamelessly appears, and the gallery collection view is re-purposed to scroll horizontally across the larger images.
 
-![Preview Screenshot](http://secretatomics.com/resources/toyphotogallery_2.jpeg)
+<img src="http://secretatomics.com/resources/toyphotogallery_1.jpeg" width="320" alt="GalleryViewController Screenshot">
 
 Changing the collection view layout class instead of pushing to a new view controller allows us to depend on Apple's support for custom animations changing the appearance of the cells.  In this iteration, we not only change the layout class but also swap out the collection view for a new instance in order to provide independent animations during the swap between collection views.
 
@@ -138,7 +138,7 @@ A slow motion preview of the animation is included below:
 
 ### Transforming with Gestures
 
-![UIImageView Transform](http://secretatomics.com/resources/toyphotogallery_3.jpeg)
+<img src="http://secretatomics.com/resources/toyphotogallery_2.jpeg" width="320" alt="GalleryViewController Screenshot">
 
 ### Unit Testing
 
