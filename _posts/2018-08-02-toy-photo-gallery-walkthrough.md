@@ -13,7 +13,7 @@ The ToyPhotoGallery code base is an example of native iOS development techniques
 <center><iframe width="360" height="240" src="https://www.youtube.com/embed/iXQq7ciXVUc" frameborder="0" allowfullscreen></iframe></center> 
 
 <p>
-	
+
 </p>
 
 **Contents**
@@ -113,7 +113,7 @@ The **GalleryCollectionViewModel** is responsible for checking how deeply scroll
 
 The collection view model is also responsible for calculating the item size for the **GalleryCollectionViewLayout**, a subclass of *UICollectionViewFlowLayout*, that is used for both the vertical, thumbnail-sized scrolling configuration as well as the horizontal, preview-sized scrolling configuration.  
 
-*The ToyPhotoGallery could be extended to include a custom layout class providing even more control over the transition's animation, however, for the purposes of this brief, the flow layout parent class was used because it was the quickest path to satisfying the requirements.*
+>*The ToyPhotoGallery could be extended to include a custom layout class providing even more control over the transition's animation, however, for the purposes of this brief, the flow layout parent class was used because it was the quickest path to satisfying the requirements.*
 
 #### Updating the Cell Images
 
@@ -184,9 +184,9 @@ The brief contained a secondary requirement to improve animation across the scro
 
 Using a child view controller for the preview configuration would allow us to use an even more advanced scrolling animation if SceneKit was used as the context for the replicating the collection view.  
 
-*In the next iteration, shader transformations like Gaussian blurs, mesh deformations, and subtle material lighting would punch up the design each cell.*
-
 <img src="http://secretatomics.com/resources/toyphotogallery_2.jpeg" width="320" alt="GalleryViewController Screenshot">
+
+>*In the next iteration, shader transformations like Gaussian blurs, mesh deformations, and subtle material lighting would punch up the design each cell.*
 
 ### <a name="UnitTesting">Unit Testing</a>
 
