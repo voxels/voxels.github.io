@@ -117,6 +117,8 @@ The collection view model is also responsible for calculating the item size for 
 
 #### Updating the Cell Images
 
+{% include youtubePlayer.html id="iXQq7ciXVUc" %}
+
 Each cell contains two image views for the thumbnail and the preview.  The pair of *UIImageView* cross-fades from the thumbnail view in vertically scrolling mode to the preview view in the horizontally scrolling mode. Using two image assets ensures that the large asset will not bog down the gallery view and the small asset will not limit clarity when swiping through individual, full-width, preview images.  
 
 Collection views scroll more quickly when they reuse dequeued cells.  In v1.0 of the ToyPhotoGallery, each cell was responsible for fetching its own image asset, however, the complicated nature of making requests and clearing requests while scrolling through reusable cells prompted a change in v1.1 to make the collection view model responsible for fetching image assets before providing new cells to the collection view.  
@@ -134,8 +136,6 @@ DispatchQueue.main.asyncAfter(deadline: .now() +
 </p>
 
 Achieving a high frame rate that drops in high-fidelity images as quickly as possible is the setup for achieving a seamless transition to a preview window.  Without determining the mechanisms to create this user flow, a deployed solution could become a disappointment for users before they ever reach the new transition.
-
-{% include youtubePlayer.html id="iXQq7ciXVUc" %}
 
 ### <a name="AnimatingPreview">Animating into the Preview</a>
 
