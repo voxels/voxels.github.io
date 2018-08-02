@@ -5,7 +5,6 @@ date:   2018-08-02 00:00:00 -0000
 ---
 
 {% include base.html %}
-{% include anchor_headings.html html=content %}
 
 The ToyPhotoGallery codebase is an example of native iOS development techniques that satisfy common needs among cloud-backed and resource-heavy user experiences.  The application fetches a manifest of resource locations from Parse; retrieves thumbnail and optimized preview image assets from an S3 bucket; presents the thumbnails in a fluidly scrolling, auto-refreshing collection view; and animates into a child view controller designed to scroll across gesture-backed transformations of high-fidelity preview images.
 
