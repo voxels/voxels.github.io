@@ -179,7 +179,7 @@ The animation code is presented below:
 
 ### <a name="TransformingGestures">Transforming with Gestures</a>
 
-The brief contained a secondary requirement to improve animation across the scroll view.  Changing the scale of the cell using a CAAffineTransform is one of the simplest ways to transform cells using the offset data provided by the scroll view during the implicit gesture recognition.  
+The brief contained a secondary requirement to improve animation when swiping across the horizontal, preview configuration.  Changing the scale of the cell using a *CGAffineTransform* is one of the simplest ways to transform cells using the offset data provided by the scroll view during the implicit gesture recognition.  
 
 {% gist ce00e917533c17ae4202cf2da7ecc429 %}
 
