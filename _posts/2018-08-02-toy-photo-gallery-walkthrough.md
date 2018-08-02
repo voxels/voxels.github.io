@@ -147,10 +147,6 @@ Changing the collection view layout class instead of pushing to a new view contr
 
 <img src="http://secretatomics.com/resources/toyphotogallery_1.jpeg" width="320" alt="GalleryViewController Screenshot">
 
-The animation code is presented below:
-
-{% gist e89587ecfa9a4445bb766e03cf27f120 %}
-
 ```
 
 
@@ -175,6 +171,11 @@ The animation code is presented below:
 
 
 ```
+
+The animation code is presented below:
+
+{% gist e89587ecfa9a4445bb766e03cf27f120 %}
+
 
 ### <a name="TransformingGestures">Transforming with Gestures</a>
 
