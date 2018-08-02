@@ -36,13 +36,13 @@ Before launch completes, the controller handles the necessary API keys, which ar
 - network session interfacing using [AWSMobileClient](https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html) [URLSession](https://developer.apple.com/documentation/foundation/urlsession)
 - local resource model control
 
-The Launch controller is backed by a number of protocols which allows extending launch control into an arbitrary number of required or optional launch services.  For example, adding an analytics handler such as [mParticle]() would simply require adding a few keys and an SDK wrapper.
+The Launch controller is backed by a number of protocols which allows extending launch control into an arbitrary number of required or optional launch services.  For example, adding an analytics handler such as [mParticle](https://www.mparticle.com) would simply require adding a few keys and an SDK wrapper.
 
 The controller begins each service; determines if it should wait for a response before allowing launch to proceed; waits for asynchronous responses that confirm the subsystem is available; handles errors encountered during launch; and finally signals a successful or failed launch to the AppDelegate.  The app delegate asks the launch controller to complete launch by forwarding into the gallery view controller, or a safety-net view controller that should direct to some gentle user messaging about failures or reachability problems.
 
 #### Fetching the Manifest
 
-The launch controller is responsible for the first attempt at fetching the manifest of image resources for the user.  Presumably, there would be some onboarding component for setting up user accounts that direct to the appropriate records, however that is not handled here given the scope of the brief.  The Parse API is used to [fetch]() a default number of records that must be significantly fewer than the full manifest of all assets.  
+The launch controller is responsible for the first attempt at fetching the manifest of image resources for the user.  Presumably, there would be some onboarding component for setting up user accounts that direct to the appropriate records, however that is not handled here given the scope of the brief.  The Parse API is used to [fetch](https://github.com/voxels/ToyPhotoGallery#remote-store) a default number of records that must be significantly fewer than the full manifest of all assets.  
 
 *Fetching the full manifest at launch is rarely an option in the field.*
 
@@ -60,7 +60,7 @@ While images could be served from Parse, using an alternative service such as cu
 
 ##### Optimizing the Images
 
-Before upload, each image needs to be sized and compressed so that they will arrive on device as fast as possible while retaining a justifyiable fidelity.  The images are optimized using the Mozilla [JPEG encoder](https://github.com/kornelski/mozjpeg/releases).  A description of the asset generation and uploading process can be found in the project's <a href='{{ base }}{% link toy_photo_gallery_readme.md %}'>README.md</a> file.  ToyPhotoGallery only uses two versions of an image asset to satisfy the current brief.  It would easily accommodate a request to include full-sized image assets for some new feature by simply adding a column to the manifest, uploading the image assets, and adding a few keys to the fetch requests.
+Before upload, each image needs to be sized and compressed so that they will arrive on device as fast as possible while retaining a justifyiable fidelity.  The images are optimized using the Mozilla [JPEG encoder](https://github.com/kornelski/mozjpeg/releases).  A description of the asset generation and uploading process can be found in the project's [README.md](https://github.com/voxels/ToyPhotoGallery/blob/master/README.md) file.  ToyPhotoGallery only uses two versions of an image asset to satisfy the current brief.  It would easily accommodate a request to include full-sized image assets for some new feature by simply adding a column to the manifest, uploading the image assets, and adding a few keys to the fetch requests.
 
 The resource model controller waits for a response from the remote store controller containing the list of image assets it needs to go fetch.  Once the callback is returned succesfully, the model controller then extracts the information from the manifest using a [generic extraction method](https://github.com/voxels/ToyPhotoGallery#non-fatal-error-handling) and returns an existential container for [generic protocol] that the model controller can use refer to asset locations.  
 
@@ -76,7 +76,7 @@ ToyPhotoGallery employs a [time-limited DispatchGroup and concurrent DispatchQue
 
 After all of the launch services have notified the launch controller that they are available, and after the manifest has been fetched and as many of the images resources have been retrieved as possible, the resource model controller will [update its delegate](https://github.com/voxels/ToyPhotoGallery#launch-control-with-dispatchgroup), the launch controller, and the launch controller will present a **GalleryViewController** containing a collection view of the thumbnail images.
 
-![GalleryViewController Screenshot]() 
+![GalleryViewController Screenshot](http://secretatomics.com/resources/toyphotogallery_1.jpeg) 
 
 ### Scrolling and Refreshing the Collection View
 
@@ -110,7 +110,7 @@ Achieving a high frame rate that drops in high-fidelity images as quickly as pos
 
 A complicated animation process is kicked off when the GalleryViewController receives a signal that the user has tapped on a gallery thumbnail image.  Rather than pushing to a new, separate view controller, a child view controller containing the preview's button controls seamelessly appears, and the gallery collection view is re-purposed to scroll horizontally across the larger images.
 
-[Preview Screenshot]()
+![Preview Screenshot](http://secretatomics.com/resources/toyphotogallery_2.jpeg)
 
 Changing the collection view layout class instead of pushing to a new view controller allows us to depend on Apple's support for custom animations changing the appearance of the cells.  In this iteration, we not only change the layout class but also swap out the collection view for a new instance in order to provide independent animations during the swap between collection views.
 
@@ -139,7 +139,7 @@ A slow motion preview of the animation is included below:
 
 ### Transforming with Gestures
 
-
+![UIImageView Transform](http://secretatomics.com/resources/toyphotogallery_3.jpeg)
 
 ### Unit Testing
 
