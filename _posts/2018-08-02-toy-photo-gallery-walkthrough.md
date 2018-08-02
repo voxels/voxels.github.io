@@ -11,7 +11,7 @@ The ToyPhotoGallery codebase is an example of native iOS development techniques 
 
 <!--break-->
 
-<center><iframe width="480" height="267" src="https://www.youtube.com/embed/iXQq7ciXVUc" frameborder="0" allowfullscreen></iframe></center> 
+<center><iframe width="360" height="240" src="https://www.youtube.com/embed/iXQq7ciXVUc" frameborder="0" allowfullscreen></iframe></center> 
 
 **Contents**
 
