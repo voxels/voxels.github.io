@@ -5,6 +5,7 @@ date:   2018-08-02 00:00:00 -0000
 ---
 
 {% include base.html %}
+{% include anchor_headings.html html=content %}
 
 The ToyPhotoGallery codebase is an example of native iOS development techniques that satisfy common needs among cloud-backed and resource-heavy user experiences.  The application fetches a manifest of resource locations from Parse; retrieves thumbnail and optimized preview image assets from an S3 bucket; presents the thumbnails in a fluidly scrolling, auto-refreshing collection view; and animates into a child view controller designed to scroll across gesture-backed transformations of high-fidelity preview images.
 
@@ -12,7 +13,23 @@ The ToyPhotoGallery codebase is an example of native iOS development techniques 
 
 <center><iframe width="480" height="267" src="https://www.youtube.com/embed/iXQq7ciXVUc" frameborder="0" allowfullscreen></iframe></center> 
 
-### Design Philosophy
+**Contents**
+
+- <a href="#DesignPhilosophy">Design Philosophy</a>
+- <a href="#LaunchingApp">Launching the App</a>
+	- <a href="#FetchingManifest">Fetching the Manifest</a>
+	- <a href="#RetrievingResources">Retrieving the Resources</a>
+- <a href="#ScrollingCollection">Scrolling and Refreshing the Collection View</a>
+- <a href="#TransformingGestures">Transforming with Gestures</a>
+- <a href="#UnitTesting">Unit Testing</a>
+
+```
+
+
+
+```
+
+### <a name="DesignPhilosophy">Design Philosophy</a>
 
 Very few iOS apps operate independently of some cloud-backed service that require asynchronous calls through spotty cellular connections.  Frequently, at least one of the services delivers resources, such as images, that need to be optimized in a number of ways to reduce the bandwidth that the resource consumes and the time that a customer waits for the asset to arrive.  
 
@@ -25,7 +42,7 @@ This article walks through the ToyPhotoGallery infrastructure at a high level to
 
 The demo was built over a week of intensive development and a subsequent week of light instrumentation and bugfixing.  A more technical analysis of the application's [v1.0 object map](https://voxels.github.io/codesamples_toyphotogallery_diagram) and an article covering [debugging a threading issue](https://voxels.github.io/eliminating-collection-view-tearing-with-xcode-time-profiler-instrument) with instruments is located on [voxels.github.io](https://voxels.github.io).
 
-### Launching the App
+### <a name="LaunchingApp">Launching the App<a/
 
 Expecting an initial set of photos to be immediately available after a short launch time is a reasonable user expectation.  Achieving the shortest path to a visible screen that has image assets populated puts specific demand on the launch process to be efficient and fail-safe in the event of no connectivity.  The ToyPhotoGallery uses a **LaunchController** to ensure that the subsystems required by the app are activated in tandem and available before moving past the launch screen while also providing a mechanism to abort into a number of different destinations that reflect the state of the device and user account.
 
@@ -40,7 +57,7 @@ The Launch controller is backed by a number of protocols which allows extending 
 
 The controller begins each service; determines if it should wait for a response before allowing launch to proceed; waits for asynchronous responses that confirm the subsystem is available; handles errors encountered during launch; and finally signals a successful or failed launch to the AppDelegate.  The app delegate asks the launch controller to complete launch by forwarding into the gallery view controller, or a safety-net view controller that should direct to some gentle user messaging about failures or reachability problems.
 
-#### Fetching the Manifest
+#### <a name="FetchingManifest">Fetching the Manifest</a>
 
 The launch controller is responsible for the first attempt at fetching the manifest of image resources for the user.  Presumably, there would be some onboarding component for setting up user accounts that direct to the appropriate records, however that is not handled here given the scope of the brief.  The Parse API is used to [fetch](https://github.com/voxels/ToyPhotoGallery#remote-store) a default number of records that must be significantly fewer than the full manifest of all assets.  
 
@@ -54,7 +71,7 @@ If the remote store controller encounters an error while attempting to fetch the
 
 *ToyPhotoGallery uses **throw** throughout this process and most others in order to gracefully handle failures that could destroy the fragile perception of quality conveyed by any commercial app.*
 
-#### Retrieving the Resources
+#### <a name="RetrievingResources">Retrieving the Resources</a>
 
 While images could be served from Parse, using an alternative service such as custom CMS backed by an AWS S3 bucket is a more typical representation of how companies will deploy a backend.  In this case, we fill in the need by uploading optimized image assets directly to S3.  
 
@@ -78,7 +95,7 @@ After all of the launch services have notified the launch controller that they a
 
 <img src="http://secretatomics.com/resources/toyphotogallery_3.jpeg" width="320" alt="GalleryViewController Screenshot">
 
-### Scrolling and Refreshing the Collection View
+### <a name="ScrollingCollection">Scrolling and Refreshing the Collection View</a>
 
 The Gallery view controller requires a number of optimization so that it can present thumbnail image assets while fluidly scrolling across the available data and seamlessly triggering an asynchronous fetch for additional records.  
 
@@ -88,7 +105,7 @@ The collection view model is also responsible for calculating the item size for 
 
 *The ToyPhotoGallery could be extended to include a custom layout class providing even more control over the transition's animation, however, for the purposes of this brief, the flow layout parent class was used because it was the quickest path to satisfying the requirements.*
 
-##### Updating the Cell Images
+#### Updating the Cell Images
 
 Each cell contains two image views for the thumbnail and the preview.  The image views cross-fade from the thumbnail view in vertically scrolling mode to the preview view in the horizontally scrolling mode so that the large asset will not bog down the gallery view and the small asset will not degrade clarity when swiping through individual, full-width, preview images.  
 
@@ -106,7 +123,9 @@ DispatchQueue.main.asyncAfter(deadline: .now() +
 
 Achieving a high frame rate that drops in high-fidelity images as quickly as possible is the setup for achieving a seamless transition to a preview window.  Without determining the mechanisms to create this user flow, a deployed solution could become a disappointment for users before they ever reach the new transition.
 
-### Animating into the Preview
+### <a name="AnimatingPreview">Animating into the Preview</a>
+
+{% include youtubePlayer.html id="xiR5rvbiRDo" %}
 
 A complicated animation process is kicked off when the GalleryViewController receives a signal that the user has tapped on a gallery thumbnail image.  Rather than pushing to a new, separate view controller, a child view controller containing the preview's button controls seamelessly appears, and the gallery collection view is re-purposed to scroll horizontally across the larger images.
 
@@ -133,13 +152,19 @@ The animation code is presented below:
 - If not, the method hides the close button and shifts the heading label to it original state
 12. The transaction is completed
 
-A slow motion preview of the animation is included below:
-
-{% include youtubePlayer.html id="xiR5rvbiRDo" %}
-
-### Transforming with Gestures
+### <a name="TransformingGestures">Transforming with Gestures</a>
 
 <img src="http://secretatomics.com/resources/toyphotogallery_2.jpeg" width="320" alt="GalleryViewController Screenshot">
 
-### Unit Testing
+The brief contained a secondary requirement to improve animation across the scroll view.  Changing the scale of the cell using a CAAffineTransform is one of the simplest ways to transform cells using the offset data provided by the scroll view during the implicit gesture reconition.  
+
+{% gist ce00e917533c17ae4202cf2da7ecc429 %}
+
+Using a child view controller for the preview configuration would allow us to use an even more advanced scrolling animation if SceneKit was used as the context for the replicating the collection view.  
+
+*In the next iteration, shader transformations like gaussian blurs, mesh deformations, and subtle material lighting would punch up the design each cell.*
+
+### <a name="UnitTesting">Unit Testing</a>
+
+The complicated model of the photo gallery is a good candidate for [unit testing](https://github.com/voxels/ToyPhotoGallery#unit-testing), in order to ensure that regressions are not encountered from swapping out SDKs or adding to the model's components.  
 
