@@ -58,7 +58,10 @@ While images could be served from Parse, using an alternative service such as cu
 
 ##### Optimizing the Images
 
-Before upload, each image needs to be sized and compressed so that they will arrive on device as fast as possible while retaining a justifyiable fidelity.  The images are optimized using the Mozilla [JPEG encoder](https://github.com/kornelski/mozjpeg/releases).  A description of the asset generation and uploading process can be found in the project's [README.md]() file.  ToyPhotoGallery only uses two versions of an image asset to satisfy the current brief.  It would easily accommodate a request to include full-sized image assets for some new feature by simply adding a column to the manifest, uploading the image assets, and adding a few keys to the fetch requests.
+Before upload, each image needs to be sized and compressed so that they will arrive on device as fast as possible while retaining a justifyiable fidelity.  The images are optimized using the Mozilla [JPEG encoder](https://github.com/kornelski/mozjpeg/releases).  A description of the asset generation and uploading process can be found in the project's 
+
+{% include base.html %}
+<a href='{{ base }}{% link toy_photo_gallery_readme.md %}'>README.md</a> file.  ToyPhotoGallery only uses two versions of an image asset to satisfy the current brief.  It would easily accommodate a request to include full-sized image assets for some new feature by simply adding a column to the manifest, uploading the image assets, and adding a few keys to the fetch requests.
 
 The resource model controller waits for a response from the remote store controller containing the list of image assets it needs to go fetch.  Once the callback is returned succesfully, the model controller then extracts the information from the manifest using a [generic extraction method](https://github.com/voxels/ToyPhotoGallery#non-fatal-error-handling) and returns an existential container for [generic protocol] that the model controller can use refer to asset locations.  
 
