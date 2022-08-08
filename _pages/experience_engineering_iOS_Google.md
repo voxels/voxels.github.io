@@ -5,9 +5,9 @@
 </table>
 <table style="width:100%"> 
 	<tr>
-		<td> <h4>Senior UX Engineer</h4> </td><td align="right"> <h4><em>April 2021 - Present</em></h4> </td>
-		<td> <h4>UX Engineer</h4> </td><td align="right"> <h4><em>September 2018 - March 2021</em></h4> </td>
-	</tr>
+		<td> <h4>Senior UX Engineer</h4> </td><td align="right"> <h4><em>April 2021 - Present</em></h4> </td>	</tr>
+	<tr>
+		<td> <h4>UX Engineer</h4> </td><td align="right"> <h4><em>September 2018 - March 2021</em></h4> </td> </tr>
 </table>
 
 <br>
