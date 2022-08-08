@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "About the Author"
-date:   2018-06-01 00:00:00 -0000
+date:   2022-08-08 00:00:00 -0000
 ---
 
 Michael is a Senior UX Engineer at Google with eight years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.<!--break--> 
