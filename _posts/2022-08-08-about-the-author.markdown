@@ -4,24 +4,22 @@ title:  "About the Author"
 date:   2018-06-01 00:00:00 -0000
 ---
 
-Michael is a Senior Engineer with five years of employment developing iOS applications, data explorers, interactive installations, and games.<!--break--> 
+Michael is a Senior UX Engineer at Google with eight years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.<!--break--> 
 
-He has been a Project Manager with over fifteen years of experience helping launch new products with early stage and venture backed entrepreneurs.  He has shipped more than nine applications to the App Store for clients and employers, serving hundreds of thousands of monthly active users. 
-
-He frequently collaborates on venture backed, agile teams with a professional mastery of research and authorship, economic analysis, UX design, desktop and laptop repair, retail customer service, and finished construction.  He pursues a passion for embedded hardware design combining real-time motion tracking and lighting control.  He attended the 
-Wharton School at the University of Pennsylvania as an undergraduate in the Joseph Wharton Scholars Program and holds a graduate degree from the Interactive Telecommunications Program at New York University.
+He collaborates with agile teams on research and documentation, UX design, hardware development, and custom fabrication. As an artist, he pursues a passion for natural interfaces combining real-time motion tracking and lighting control. He attended the Wharton School at the University of Pennsylvania as an undergraduate in the Joseph Wharton Scholars Program and holds a graduate degree from the Interactive Telecommunications Program at New York University. He was awarded a National Merit Scholarship and is an Eagle Scout in the Boy Scouts of America.
 
 Link to: [Curriculum Vitae](http://secretatomics.com/curriculum_vitae.pdf)
 
 <table style="width:100%">
 	<thead><tr><td><h5>Application Engineering Experience *</h5></td><td></td></tr></thead>
-		<tr><td><a href="/professional_experience_0606018#homer-learning">Homer Learning</a></td><td align="right">March 2017 - Present</td></tr>
-		<tr><td><a href="/professional_experience_0606018#evil-studios">Evil Studios</a></td><td align="right">April 2016 - December 2017</td></tr>
-		<tr><td><a href="/professional_experience_0606018#crush-and-lovely">Crush & Lovely</a></td><td align="right">January 2016 – May 2016</td></tr>
-		<tr><td><a href="/professional_experience_0606018#liquor-cabinet">The Liquor Cabinet</a></td><td align="right">September 2015 – February 2016</td></tr>
-		<tr><td><a href="/professional_experience_0606018#samsung">Samsung Research of America</a></td><td align="right">December 2014 – August 2015</td></tr>
-		<tr><td><a href="/professional_experience_0606018#beautified">Beautified</a></td><td align="right">May 2014 – November 2014</td></tr>
-		<tr><td><a href="/professional_experience_0606018#mindspark">Mindspark</a></td><td align="right">December 2013 – May 2014</td></tr>
+		<tr><td><a href="/professional_experience_08082022#google-maps">Google Maps</a></td><td align="right">September 2018 - Present</td></tr>
+		<tr><td><a href="/professional_experience_08082022#homer-learning">Homer Learning</a></td><td align="right">March 2017 - June 2018</td></tr>
+		<tr><td><a href="/professional_experience_08082022#evil-studios">Evil Studios</a></td><td align="right">April 2016 - December 2017</td></tr>
+		<tr><td><a href="/professional_experience_08082022#crush-and-lovely">Crush & Lovely</a></td><td align="right">January 2016 – May 2016</td></tr>
+		<tr><td><a href="/professional_experience_08082022#liquor-cabinet">The Liquor Cabinet</a></td><td align="right">September 2015 – February 2016</td></tr>
+		<tr><td><a href="/professional_experience_08082022#samsung">Samsung Research of America</a></td><td align="right">December 2014 – August 2015</td></tr>
+		<tr><td><a href="/professional_experience_08082022#beautified">Beautified</a></td><td align="right">May 2014 – November 2014</td></tr>
+		<tr><td><a href="/professional_experience_08082022#mindspark">Mindspark</a></td><td align="right">December 2013 – May 2014</td></tr>
 		<tr><td>National Oceanographic and Atmospheric Administration</td><td align="right">May 1996 – July 1997</td></tr>
 		<tfoot><tr><td></td><td align="right"><sub>* Excludes sub-contracted development</sub></td></tr></tfoot>
 </table>
