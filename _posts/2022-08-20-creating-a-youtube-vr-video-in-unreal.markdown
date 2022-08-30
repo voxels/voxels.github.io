@@ -8,7 +8,7 @@ I have been setting up an environment that I can render into Youtube VR from Unr
 
 <!--break-->
 
-One preceding exploration included how to use Cesium to create a path over a landscape and animate the camera using Unreal's Sequencer.  I tried exporting this video to 8K at 60fps, but Youtube did not recognize my source material even though I tried converting the file to Youtube's preferred format, webM.  My next step is to try exporting image sequences and using Premier Pro to render the file instead of Unreal.
+One preceding exploration included how to use Cesium to create a path over a landscape and animate the camera using a mouse generated heading in Unreal's Sequencer.  I tried exporting this video to 8K at 60fps, but Youtube did not recognize my source material even though I tried converting the file to Youtube's preferred format, webM.  My next step is to try exporting image sequences and using Premier Pro to render the file instead of Unreal.
 
 {% include youtubePlayer.html id="ZvvnyjEen-o" %}
 
@@ -18,8 +18,19 @@ I used Unreal Engine's sequencer to create a camera path through my simulated la
 
 {% include youtubePlayer.html id="pVUsu2OgKfw" %}
 
-After generating the landscape and camera sequence, the next step was to use the Panorama Camera Plugin to generate the image sequence for a stereoscopic view of the camera, and take the results into Premier Pro to render the video.
+I lost all this initial work when OneDrive overwrote my documents folder.  Here are the steps I took to rebuild a new landscape:
 
-I've also been working on transferring the VR pawn from the VRTemplate sample project into my own projects.  I'm starting off by rendering the basic third person shooter sample project in VR to find out what is contained in the template's blueprints, and then I want to drop the VR pawn into my virtual landscape to see if the Oculus can render the Quixel assets (in the sample projects it seems like they maybe can't.)
+Importing the heightmap for the landscape
+Adding a camera sequence
+Adding a VR Hand Tracking pawn
+Add landmass custom brush material
+Adding an ocean component
+Adding a sky sphere blueprint
+Adding volumetric clouds
+Adding exponential height fog
+Adding a post processing volume for auto exposure
+Creating a blend material from Quixel textures
+Creating procedural foliage from Quixel models
 
-I learned along the way that the docs for Oculus are wrong..  you need to use VS 2019 instead of 2017, and I also learned that you can't run the Oculus repo from an external USB drive or copy it from one place to another.  The only way it builds and runs is to clone the repo to the internal drive and build with VS 2019.  
+A detailed look at the steps and settings I took can be found in [this post](https://voxels.github.io/rebuilding-a-vr-landscape).
+
