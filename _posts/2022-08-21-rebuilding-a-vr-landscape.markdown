@@ -4,6 +4,29 @@ title:  "Rebuilding a VR Landscape"
 date:   2022-08-21 00:00:05 -0000
 ---
 
+I took the steps below to set up a landscape environment for VR:
+
+- Importing the heightmap for the landscape
+- Adding a VR Hand Tracking pawn
+- Compiling for the Oculus
+- Add hand tracking to the pawn
+- Add teleportation to the controllers
+- Add a VR movement sequence
+- Set up the landscape with Quixel materials
+- Adding blueprint brushes to the landscape
+- Painting the landscape
+- Adding an ocean component
+- Adding a sky sphere blueprint
+- Adding volumetric clounds (and then removing them because of Oculus rendering issues)
+- Adding post processing for auto exposure
+- Adding exponential height fog
+- Adding areas for foliage
+- Creating procedural foliage from Quixel models
+- Painting Foliage
+
+<!--break-->
+
+
 ### Looking at the landscape on Oculus Quest 2
 
 I've been working on transferring the VR pawn from the VRTemplate sample project into my own projects.  I'm starting off by rendering the basic third person shooter sample project in VR to find out what is contained in the template's blueprints, and then I want to drop the VR pawn into my virtual landscape to see if the Oculus can render the Quixel assets (in the sample projects it seems like they maybe can't.)

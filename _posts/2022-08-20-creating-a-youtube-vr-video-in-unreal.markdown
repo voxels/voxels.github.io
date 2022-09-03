@@ -20,17 +20,26 @@ I used Unreal Engine's sequencer to create a camera path through my simulated la
 
 I lost all this initial work when OneDrive overwrote my documents folder.  Here are the steps I took to rebuild a new landscape:
 
-Importing the heightmap for the landscape
-Adding a camera sequence
-Adding a VR Hand Tracking pawn
-Add landmass custom brush material
-Adding an ocean component
-Adding a sky sphere blueprint
-Adding volumetric clouds
-Adding exponential height fog
-Adding a post processing volume for auto exposure
-Creating a blend material from Quixel textures
-Creating procedural foliage from Quixel models
+- Importing the heightmap for the landscape
+- Adding a VR Hand Tracking pawn
+- Compiling for the Oculus
+- Add hand tracking to the pawn
+- Add teleportation to the controllers
+- Add a VR movement sequence
+- Set up the landscape with Quixel materials
+- Adding blueprint brushes to the landscape
+- Painting the landscape
+- Adding an ocean component
+- Adding a sky sphere blueprint
+- Adding volumetric clounds (and then removing them because of Oculus rendering issues)
+- Adding post processing for auto exposure
+- Adding exponential height fog
+- Adding areas for foliage
+- Creating procedural foliage from Quixel models
+- Painting Foliage
 
 A detailed look at the steps and settings I took can be found in [this post](https://voxels.github.io/rebuilding-a-vr-landscape).
 
+Here's a demo of the fully painted background:
+
+{% include youtubePlayer.html id="mSR5ATSRPwg" %}
