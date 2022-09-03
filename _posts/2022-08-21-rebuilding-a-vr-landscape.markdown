@@ -63,7 +63,7 @@ First, open the plugins and enable Oculus VR plugin if it isn't already.  Then, 
 
 [Project Settings - Android SDK]
 
-Then turn off support armv7 and turn on support armv64.  Turn off Open GL and turn on Vulkan.  Then add a package for oculus mobile devices to Oculus Quest 2 and enable remove oculus signature files from distribution APK.
+Then turn off support armv7 and turn on support armv64.  Turn off Open GL and turn on Vulkan.  Then add a package for oculus mobile devices to Oculus Quest 2 and enable remove oculus signature files from distribution APK. Also turn off Mobile HDR and enable forward shading and set the MSAA to 4.
 
 [Project Settings - Build and Packaging]
 
@@ -174,11 +174,151 @@ And once that was done, I moved the VRCharacter (and preserved it's rotation) al
 
 So from here I have a way to move around my environment and create paths that fly me from one place to the other across the landscape.
 
-### Add landmass custom brush material
+### Setting up the landscape with Quixel materials
+
+In order to paint my landscape, I created a material that blends together other materials that I downloaded from Quixel.
+
+This video shows how to create the blend material:
+
+{% include youtubePlayer.html id="X0MN9xWr-iI" %}
+
+Since Quixel materials come with a displacement map, I followed along with this video to add a displacement to my landscape material:
+
+{% include youtubePlayer.html id="6IsNLX321YI" %}
+
+I created my own blend material with 8 different surfaces by connecting up albedo, normal, displacement, and roughness to a layer blend.  Then I went to the landscape paint mode and created my layer info objects.  I got a warning about my texture streaming pool size, so I changed all my texture asset max texture sizes as described [here](https://stefanperales.com/blog/ue5-quick-tip-texture-streaming-pool-over-budget/).  I set all my tiling for each texture and set the displacement value I wanted for each.
+
+Here's an example of the world with a single landscape material:
+
+{% include youtubePlayer.html id="S5dUobaThko" %}
+
+I found a problem painting landscape materials with the Oculus engine that didn't exist in the default 4.27 engine.  My landscape material disappeared when I used the Oculus engine, so I copied my project over to the default engine to keep working.
+
+I also found a problem in the regular engine using more than 8 different kinds of textures in my landscape material.  When I tried to add 10, my landscape stopped rendering my fill layer.  When I took it back to 8, the layer rendered again (even with texture compression).  So rather than fight with it, I chose to limit what I could paint to the landscape to 8.
+
+I chose gravel as my base layer, since it has the least about of patterning at a high level.
+
+### Adding blueprint brushes to the landscape
+
+In order to add some landmass displacement, I enabled the Landmass plugin, went into landscape mode, and added a blueprint brush of type CustomBrush_MaterialOnly.  
+
+In 4.27, the material only brush was giving me an empty blueprint with no components.  At this point, I uninstalled 4.27 and installed UE5 just to confirm it wasn't the engine.  I also wanted to try out my project in UE5 to see if it would convert.  I also converted my project with the fixed material back to the Oculus version of 4.27, to see if the Oculus engine still had a problem.  The landscape rendered correctly, but the landmass blueprint brushes had no components below the root component.  When I enabled the landmass plugin with the Oculus engine, and rebuilt UE4 and the project, they both built successfully, but the project complained that it could not find files in the content folder, so it would not open.  (I made the mistake of trying to convert in place.)
+
+In order to get UE5 to convert the project, I had to install DotNET 3.1.  I also had to add a line to my HandsVisualizationSwitcher.cpp:  	
+
+#include "Components/InstancedStaticMeshComponent.h"
+
+I copied over my content and source folders and reset all the project settings from before in a new UE5 project.  That seemed to make everything work again.
+
+So, now I have my project running in UE5, but I'm still not seeing any components in the blueprint brushes when I drag them out.  To be sure, I tried this in another C++ empty template project.  Same issue there.  For some reason blueprint brushes are broken in all versions right now, or I've missed something by looking at the docs.
+
+When I tried to run the project as a VRPreview in UE5, the editor crashed with a exception related to hand tracking.  So, I was forced to downgrade again, back to the Oculus 4.27 engine, by copying the content and source folders to a new project and resetting all my project settings (inputs, maps and modes, android, oculus VR) and plugins.
+
+I tried the blueprint brushes one more time, carefully stepping through the actions in this [video](https://www.youtube.com/watch?v=GK3KAevUy8E), but when I clicked on the landscape with a landmass blueprint brush, my editor crashed twice with this [error](https://forums.unrealengine.com/t/crash-when-using-tiled-landscape-in-map-h/155300).
+
+Since I couldn't get the blueprint brushes to work, I checked for the crash in VRPreview again in 4.27.  After reloading the engine from scratch and opening my project in 4.27 (not Oculus), the landscape painting and blueprint brushes started to work again.  I finally added the material only brush to add some dimension to the landscape.
+
+I also added in some macro variation textures into the landscape materials to break up some of the flatness.
+
+### Painting the landscape
+
+After adding a a few materials, I tried out the navigation.  It works better on flat surfaces, so I decided to add in a few floors, and move the endpoint of my movement spline to a different vantage point.  Here's a video of all the rock and mud materials, no vegetation, with a view that takes you from the top to the midpoint.
+
+{% include youtubePlayer.html id="3HumfKd3Aa0" %}
+
 ### Adding an ocean component
+
+To add water, I enabled the Water plugin and places a Water Body Ocean actor on my scene.  then set the scale of the ocean actor, then the tile extent of the ocean mesh actor, then changed the boundaries of the water to fit around my landscape.  I then had to realign my landscape and other dependent actors in the z axis because my water wasn't showing up below a certain point.
+
+{% include youtubePlayer.html id="r57jR4HAxc4" %}
+
+At this point, I added another two vantage points, so you could see the water up close.
+
+{% include youtubePlayer.html id="3YBNZ7djnrY" %}
+
 ### Adding a sky sphere blueprint
+
+The base level came with a sky sphere blueprint, but the sky is missing some dimension.  
+
+I set my sky sphere bp scale to 10 on every axis, and set the horizon and zenith color to black.  I turned off clouds determined by sun position.
+
+I added a sky atmosphere.  I added a sky light and disabled the lower hemisphere is solid color.  I enabled cloud ambient occlusion and changed the ambient occlusion extent.
+
+I set my directional light to moveable.  Checked that atmosphere sun light was enabled.  Enabled cast cloud shadows.  Turned on light shaft occlusion and light shaft bloom.
+
+Then I spent a few minutes placing my sun in the atmosphere.  I wanted to create some contrast between day and night, and specifically create some darkness around the spots I've landed my camera in.
+
+
+{% include youtubePlayer.html id="CDwHsY9oD7Y" %}
+
 ### Adding volumetric clouds
-### Adding exponential height fog
+
+The next thing I added was volumetric clouds.  I tweaked some of the settings to make them more visible.  I noticed that they are moving in a different direction than the background clouds, but I didn't see a setting to change the wind direction, so I left it alone.  I  found that the left and right eye were not rendering the same distance for the clouds.  The left was much shorter.  I set the tracing start max distance to 140 to bring the rendering back to a level where the eyes were cutting the rendering of the clouds around the same point.  At low elevations, one eye was rendering the clouds through the landscape.  I tried to fix this by raising the lower level of the clouds.  But ultimately I could not get the volumetric cloud to render behind the landscape in the right eye, so i removed it from the build.
+
+
+{% include youtubePlayer.html id="WP69R4nAzZ0" %}
+
+
 ### Adding a post processing volume for auto exposure
-### Creating a blend material from Quixel textures
+
+I think that the Quest doesn't have post processing based on what I remember from a video, but I'm not certain.  For the preview, I added a post processing volume and set the min and max brightness to 1.0.  I also set the scale and made it an infinite extent.  This shows the model with the post process volume and no volumetric clouds.  
+
+{% include youtubePlayer.html id="aKHbfYgse_M" %}
+
+### Adding exponential height fog
+
+The last bit of atmosphere I added is the exponential height fog.  It blends out at the horizon and adds some depth to your your lower terrain.  I set the fog density and changed the in scattering color to black.  I also turned on my project setting for support sky atmosphere affecting height fog and restarted my project.  When I did this, what seems like all of my shaders recompiled.
+
+I noticed at the end of this video that again one eye was producing a shadow that the other one wasn't.  I chose not to delete the offending shadow because you only see it at the shore line.
+
+{% include youtubePlayer.html id="qNA_xWTV0Zo" %}
+
+
+### Adding areas for foliage
+
+I painted grassy soil, uncut grass, and ferns across the lower parts of my landscape.  Then I outlined the area in beach pebbles along the shoreline.  I had a problem with some of my components rendering until I checked my material and found some texture samples that were not set to Shared:Wrap.  Fixing that blended all of my landscape materials correctly after my shaders compiled again.
+
+
+{% include youtubePlayer.html id="oq_9Wp_jALc" %}
+
+
 ### Creating procedural foliage from Quixel models
+
+From here, I want to add in procedural meshes on top of my landscape materials to give the landscape some textures.  I opened my material and added and landscape grass output, with a grass type for each layer in my landscape material.  Then I created landscape layer samples for each layer and connected it to the grass output.  Then I downloaded the material assets I wanted in my foliage from Quixel.
+
+First I set up my GrassySoil landscape grass type with a type for each of the grass meshes plus one taro and one palm.  I set the density at 10 to start with for all, and for all I turned off casts dynamic shadow.
+
+Here's a test of grass types for ferns, wild grass, and taro:
+
+{% include youtubePlayer.html id="t4Gi06U0a24" %}
+
+Tweaking these paramaters created a lot of waiting for shaders to compile.
+
+
+I found that my boulders were not showing a material, so I deleted the megascans plugin and reinstalled it and deleted the Saved and Intermediates folder and reopened the project.  That didn't solve the problem.  My default master material had none of its nodes hooked up.  So I deleted the plugin again and deleted the plugin source install folder and tried again.  Then I opened a new project and saw I had the same problem.  After following the instructions [here](https://help.quixel.com/hc/en-us/community/posts/360014460617-Exporting-Surfaces-to-Unreal-Engine-Showing-Black-texture-instead-of-actual-texture-), I found that I still had the same problem in a new project.  So, on a whim I tried copying the whole MS_Presets folder from Quixel Megascans plugin folder to the Content folder of my new project.  That fixed the material problem I had.  I migrated the MSPreset folder back into my landscape project.  I only had to fix one of my plant assets to ge tmy foliage to look the way it was when I noticed the problem.  I re-exported the rock megascans assets to my project.  This time the material instances were present and the assets had the right textures on them.
+
+I painted everything but the sand.  I had some nice coral for underwater but my textures were already pushing the limit and I still need to add trees.
+
+{% include youtubePlayer.html id="SOi_58z6bH0" %}
+
+At the end you can see some of my rocks floating in the air.  I unchecked align to surface on that asset and it seemed to put them back on the ground.
+
+### Painting foliage
+
+Quixel does have some good tree assets, if you're doing a european environment, but mine is not.
+
+{% include youtubePlayer.html id="QK5gaeEAig" %}
+
+I went to the marketplace and downloaded some Quixel and paid-for assets for my scene.
+
+I made foliage types for each of my static meshes by dragging the static mesh into the foliage paint tool and painted about about 3-10 meshes per biome in my landscape.
+
+After painting two of the four landscapes, I tested the meshes in VR.  I should have done this earlier.  The frame rate was very low.  I went back through and deleted half my meshes.  I tried it again, and found that hand tracking was not stable even with half the meshes, so I went back in and deleted the meshes in places you could not see from the destinations.  I tried that and my editor crashed.  So, I tried reapplying the meshes with a cull distance that was not 0, and that returned my presentation back to a playable framerate.  I also noticed that the hand tracking lost my hands when they were in direct sunlight, so I closed my curtains and the hand tracking got better.
+
+I decided to opt out of the floor since it was competing with the terrain.  I had to move my paths to new locations to get them closer together so you don't have to go as far.  I tried adding collision to my procedural materials but it didn't work, so rather than looking into it I just moved on.  I had to get used to the editor crashing and recompiling shaders when I moved something, so I tried to remember to save before attempting to play the level.
+
+Here's a demo of the fully painted background with all the paths adjusted:
+
+{% include youtubePlayer.html id="mSR5ATSRPwg" %}
+
+
