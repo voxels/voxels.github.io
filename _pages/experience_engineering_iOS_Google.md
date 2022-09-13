@@ -17,7 +17,7 @@ I am the lead UXE for iOS development on my team in Geo providing design solutio
 - Documenting and pitching new concepts to executives to acquire sponsorship for short term design directions and long term R&D research investigations
 - Blending Google Maps, StreetView, Live View, Immersive View, Earth Engine, ARKit, AVFoundation, MLKit, Firebase and other supporting frameworks into demonstrations of new capabilities in Maps across device ecosystems
 - Investigating mixed media experiences including combinations of Unreal, ARKit, SceneKit, UIKit and SpriteKit with large language model (LaMDA) and Google Assistant generated summaries
-Demonstrating alternative choices for the design consensus around the IA of Google Maps entry points 
+- Demonstrating alternative choices for the design consensus around the IA of Google Maps entry points 
 - Embedding on a team to do a a multi-quarter deep dive into the place sheet framework
 - Connecting iOS prototypes to a development cluster streaming Unreal Engine driven content and designing Unreal and Earth Engine camera paths and controller interactions to evaluate design proposals
 - Connecting iOS apps to serial interfaces such as embedded IMUs and using the tracking sensors of AirPods to drive gestural interfaces
