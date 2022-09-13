@@ -44,10 +44,12 @@ Here's a demo of the fully painted background in a capture with hand tracking fr
 
 {% include youtubePlayer.html id="mSR5ATSRPwg" %}
 
-And here's a 4K camera rig rail attached to a timeline:
+And here's a sequence rendered to a 4K camera attached to a timeline:
 
 {% include youtubePlayer.html id="PoAqnRDY94U" %}
 
-And finally, a VR youtube video that can be viewed from inside the Oculus.
+To render out the sequence to VR, I used the panoramic capture tool to stereo images and took those into Premier Pro to render for Youtube.
+
+Finally, the VR youtube video that can be viewed from inside the Oculus:
 
 {% include youtubePlayer.html id="mSR5ATSRPwg" %}
