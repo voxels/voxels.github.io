@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Creating a Youtube VR video in Unreal"
-date:   2022-08-20 00:00:05 -0000
+date:   2022-09-13 00:00:05 -0000
 ---
 
 I have been setting up an environment that I can render into Youtube VR from Unreal.  In order to get something that is representative of a high fidelity environment, I first took time to create a landscape, paint it with blended layers, and add assets and textures downloaded from Quixel.
