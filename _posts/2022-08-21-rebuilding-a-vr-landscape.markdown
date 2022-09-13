@@ -41,13 +41,14 @@ Below are some screenshots and recordings of each step I took.
 
 First, download the heightmap grayscale file from the US government.  USGS National Map Downloader (https://apps.nationalmap.gov/downloader/) is a good resource. I select all the elevation data sets, put an extent on the area I'm trying to download, and select the data sets with the highest resolution.
 
-[USGS Data Source Screenshot]
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/USGS_Data_Source.png" width="640" alt="USGS Data Source">
 
 Then I take the files into an application which will open GeoTiff and export PNG.  The application I use is free and called [QGIS](https://www.qgis.org/en/site/index.html).  It's pretty simple.  You add your tif as a data source from Layer > Data Source Manager and then export to png from File > Import/Export.
 
 From there I take my pngs into Photoshop and join together the landscapes that are next to each other.  There is an issue where the greyscale doesn't match from one side to the other, but rather than blend it out in photoshop, I choose to do that in Unreal.
 
-[Photoshop Elevation Map]
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/Photop_Elevation_TIF.png" width="640" alt="QGIS">
+
 
 ### Creating a new Unreal project
 
@@ -65,15 +66,18 @@ I add a landscape using the png I have from above as the heightmap by going to t
 
 From there I put the player start camera on top of the highest elevation
 
-[Landscape Player Start Location]
+
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/Landscape_Player_Start_Location.png" width="640" alt="Player Start Location">
 
 From here I save and close the project.  The pawn I want to use comes out of the VR Handtracking Sample in Oculus Samples.  I closed my project temporarily and opened the handtracking sample from Oculus.  From here I migrate the VRCharacter pawn and then go to the input project settings and export those to a file.  Then I go back to my Unreal project and open the level with my landscape.  I create a new game mode blueprint and set the default pawn class to VRCharacter.  
+
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/Game_Mode_VR_Character.png" width="640" alt="Game Mode - VR Character">
 
 [Game Mode - VR Character]
 
 Compile and save the blueprint, then open the project settings maps and modes.  Then change the defaut game mode to VRGameMode and the startup map and default map to VRLandscape.
 
-[Project Settings Maps and Modes]
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/Project_Settings_Maps_and_Modes.png" width="640" alt="Project Settings Maps and Modes">
 
 After building the lighting, I hit the play in editor button to see if everything is opening the way I want.  
 
@@ -84,14 +88,13 @@ In project settings, there are a number of things to change in order to build fo
 
 First, open the plugins and enable Oculus VR plugin if it isn't already.  Then, open the Android Project settings and click the configure button, then change minimum SDK to 29, package game data inside sdk enabled, allow large OBB files enabled. 
 
-[Project Settings - Android SDK]
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/Project_Settings_Android_SDK.png" width="640" alt="Project Settings - Android SDK">
 
 Then turn off support armv7 and turn on support armv64.  Turn off Open GL and turn on Vulkan.  Then add a package for oculus mobile devices to Oculus Quest 2 and enable remove oculus signature files from distribution APK. Also turn off Mobile HDR and enable forward shading and set the MSAA to 4.
 
-[Project Settings - Build and Packaging]
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/Project_Settings_Build_and_Packaging.png" width="640" alt="Project Settings - Build and Packaging">
 
 For a full list of settings to optimize for the Quest, watch this video.
-
 
 {% include youtubePlayer.html id="y3xFZF9Nyt4" %}
 
