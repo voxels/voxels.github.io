@@ -40,6 +40,14 @@ I lost all this initial work when OneDrive overwrote my documents folder.  Here 
 
 A detailed look at the steps and settings I took can be found in [this post](https://voxels.github.io/rebuilding-a-vr-landscape).
 
-Here's a demo of the fully painted background:
+Here's a demo of the fully painted background in a capture with hand tracking from an Oculus headset:
+
+{% include youtubePlayer.html id="mSR5ATSRPwg" %}
+
+And here's a 4K camera rig rail attached to a timeline:
+
+{% include youtubePlayer.html id="PoAqnRDY94U" %}
+
+And finally, a VR youtube video that can be viewed from inside the Oculus.
 
 {% include youtubePlayer.html id="mSR5ATSRPwg" %}
