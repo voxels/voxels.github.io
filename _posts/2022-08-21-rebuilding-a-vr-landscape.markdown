@@ -47,7 +47,7 @@ Then I take the files into an application which will open GeoTiff and export PNG
 
 From there I take my pngs into Photoshop and join together the landscapes that are next to each other.  There is an issue where the greyscale doesn't match from one side to the other, but rather than blend it out in photoshop, I choose to do that in Unreal.
 
-<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/Photop_Elevation_TIF.png" width="640" alt="QGIS">
+<img src="https://s3.amazonaws.com/com-federalforge-repository/public/artist/vr_landscape/QGIS.png" width="640" alt="QGIS">
 
 
 ### Creating a new Unreal project
