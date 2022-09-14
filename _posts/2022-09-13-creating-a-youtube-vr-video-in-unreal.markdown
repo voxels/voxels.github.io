@@ -6,6 +6,12 @@ date:   2022-09-13 00:00:05 -0000
 
 I have been setting up an environment that I can render into Youtube VR from Unreal.  In order to get something that is representative of a high fidelity environment, I first took time to create a landscape, paint it with blended layers, and add assets and textures downloaded from Quixel.
 
+### Tldr:
+
+I made this landscape for the Oculus and Youtube in 4k and VR:
+
+{% include youtubePlayer.html id="PoAqnRDY94U" %}
+
 <!--break-->
 
 One preceding exploration included how to use Cesium to create a path over a landscape and animate the camera using a mouse generated heading in Unreal's Sequencer.  I tried exporting this video to 8K at 60fps, but Youtube did not recognize my source material even though I tried converting the file to Youtube's preferred format, webM.  My next step is to try exporting image sequences and using Premier Pro to render the file instead of Unreal.
