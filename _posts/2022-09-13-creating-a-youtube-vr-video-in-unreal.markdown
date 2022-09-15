@@ -56,4 +56,6 @@ And here's a sequence rendered to a 4K camera attached to a timeline:
 
 To render out the sequence to VR, I used the panoramic capture tool to stereo images and took those into Premier Pro to render for Youtube.
 
-At 6K resolution with 16 bit color depth stereo images, my laptop exported about 8 seconds of video frames every 12 hours. For a 90 second video, that's a 4 day render time. When my current render finishes, I will post the update here. 
+At 6K resolution with 16 bit color depth stereo images, my laptop exported about 8 seconds of video frames every 12 hours. For a 90 second video, that's a 4 day render time.  At 4K resolution with 8 bit color depth stereo images, my laptop exported about 2 seconds of video in 7 hours.  I had about 13 seconds overnight, so here is a clip of a 360 video uploaded to youtube:
+
+{% include youtubePlayer.html id="BTBjqj57Iu4" %}
