@@ -5,12 +5,12 @@ description: About Michael Edgcumbe
 ---
 
 <a name="summary"></a>
-<p>Michael is a Senior UX Engineer at Google with eight years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.</p>
+<p>Michael is a freelance developerat Secret Atomics with nine years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.</p>
 
 #### iOS Application Engineering *
 
 <table style="width:100%">
-<tr><td><a href="#google-maps">Google Maps</a></td><td align="right">September 2018 - Present</td></tr>
+<tr><td><a href="#google-maps">Google Maps</a></td><td align="right">September 2018 - March 2023</td></tr>
 <tr><td><a href="#homer-learning">Homer Learning</a></td><td align="right">March 2017 - June 2018</td></tr>
 <tr><td><a href="#evil-studios">Evil Studios</a></td><td align="right">April 2016 - December 2017</td></tr>
 <tr><td><a href="#crush-and-lovely">Crush & Lovely</a></td><td align="right">January 2016 – May 2016</td></tr>
