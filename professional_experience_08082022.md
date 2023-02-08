@@ -5,7 +5,7 @@ description: About Michael Edgcumbe
 ---
 
 <a name="summary"></a>
-<p>Michael is a freelance developerat Secret Atomics with nine years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.</p>
+<p>Michael is a freelance developer at Secret Atomics with nine years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.</p>
 
 #### iOS Application Engineering *
 
