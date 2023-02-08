@@ -31,3 +31,26 @@ But there is a use case for packaging into an APK, and that is best done in an e
 From now on I should always scope a VR project with apk distribution to include a second lighting and material model.
 
 Here are some screenshots from SM5:
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0074.png" width="320" alt="NYB">
+
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0156.png" width="320" alt="NYB">
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0210.png" width="320" alt="NYB">
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0276.png" width="320" alt="NYB">
+
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0474.png" width="320" alt="NYB">
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0570.png" width="320" alt="NYB">
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0647.png" width="320" alt="NYB">
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0676.png" width="320" alt="NYB">
+
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0821.png" width="320" alt="NYB">
+
+<img src="https://com-federalforge-repository.s3.amazonaws.com/public/resources_portfolio/posts/vr_renderer_comparison/NYB_v2.0879.png" width="320" alt="NYB">

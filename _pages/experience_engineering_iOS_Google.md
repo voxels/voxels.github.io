@@ -5,14 +5,14 @@
 </table>
 <table style="width:100%"> 
 	<tr>
-		<td> <h4>Senior UX Engineer</h4> </td><td align="right"> <h4><em>April 2021 - Present</em></h4> </td>	</tr>
+		<td> <h4>Senior UX Engineer</h4> </td><td align="right"> <h4><em>April 2021 - March 2023</em></h4> </td>	</tr>
 	<tr>
 		<td> <h4>UX Engineer</h4> </td><td align="right"> <h4><em>September 2018 - March 2021</em></h4> </td> </tr>
 </table>
 
 <br>
 
-I am the lead UXE for iOS development on my team in Geo providing design solutions and production data-backed proofs of concept built on iOS for review by cross-functional collaborators, mission directors, and executive sponsors.  I collaborate with UXD partners to architect, author, maintain, and distribute a monolithic prototype demonstrating ~35 separate end to end user journeys framed for 1-2 year timelines following PM and Eng OKRs and 3-5 year projections of UX and PM strategies.  I manage the scope and schedule for delivering prototypes to partners by spending no more than 2 weeks on a single feature and finishing most incremental design asks within 1-2 days.  I work with L6-L7 designers and project managers to conceptualize and implement user journeys that will attract executive-level sponsorship. Notable tasks include:
+I was the lead UXE for iOS development on my team in Geo providing design solutions and production data-backed proofs of concept built on iOS for review by cross-functional collaborators, mission directors, and executive sponsors.  I collaborated with UXD partners to architect, author, maintain, and distribute a monolithic prototype demonstrating ~35 separate end to end user journeys framed for 1-2 year timelines following PM and Eng OKRs and 3-5 year projections of UX and PM strategies.  I managed the scope and schedule for delivering prototypes to partners by spending no more than 2 weeks on a single feature and finishing most incremental design asks within 1-2 days.  I worked with L6-L7 designers and project managers to conceptualize and implement user journeys that will attract executive-level sponsorship. Notable tasks included:
 
 - Documenting and pitching new concepts to executives to acquire sponsorship for short term design directions and long term R&D research investigations
 - Blending Google Maps, StreetView, Live View, Immersive View, Earth Engine, ARKit, AVFoundation, MLKit, Firebase and other supporting frameworks into demonstrations of new capabilities in Maps across device ecosystems
