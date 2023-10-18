@@ -1,10 +1,10 @@
 ---
 layout: post
 title:  "About the Author"
-date:   2022-08-08 00:00:00 -0000
+date:   2023-02-08 00:00:00 -0000
 ---
 
-Michael is a Senior UX Engineer at Google with eight years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.<!--break--> 
+Michael is a contract developer at Secret Atomics with nine years of employment developing iOS applications, data explorers, interactive installations, and games, and he has over twenty years of experience helping launch new products with venture-backed startups and companies like Google, Samsung, and Apple.<!--break--> 
 
 He collaborates with agile teams on research and documentation, UX design, hardware development, and custom fabrication. As an artist, he pursues a passion for natural interfaces combining real-time motion tracking and lighting control. He attended the Wharton School at the University of Pennsylvania as an undergraduate in the Joseph Wharton Scholars Program and holds a graduate degree from the Interactive Telecommunications Program at New York University. He was awarded a National Merit Scholarship and is an Eagle Scout in the Boy Scouts of America.
 
@@ -12,7 +12,7 @@ Link to: [Curriculum Vitae](http://secretatomics.com/curriculum_vitae.pdf)
 
 <table style="width:100%">
 	<thead><tr><td><h5>Application Engineering Experience *</h5></td><td></td></tr></thead>
-		<tr><td><a href="/professional_experience_08082022#google-maps">Google Maps</a></td><td align="right">September 2018 - Present</td></tr>
+		<tr><td><a href="/professional_experience_08082022#google-maps">Google Maps</a></td><td align="right">September 2018 - March 2023</td></tr>
 		<tr><td><a href="/professional_experience_08082022#homer-learning">Homer Learning</a></td><td align="right">March 2017 - June 2018</td></tr>
 		<tr><td><a href="/professional_experience_08082022#evil-studios">Evil Studios</a></td><td align="right">April 2016 - December 2017</td></tr>
 		<tr><td><a href="/professional_experience_08082022#crush-and-lovely">Crush & Lovely</a></td><td align="right">January 2016 – May 2016</td></tr>
