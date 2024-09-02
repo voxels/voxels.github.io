@@ -14,16 +14,29 @@
 
 I was the lead UXE for iOS development on my team in Geo providing design solutions and production data-backed proofs of concept built on iOS for review by cross-functional collaborators, mission directors, and executive sponsors.  I collaborated with UXD partners to architect, author, maintain, and distribute a monolithic prototype demonstrating ~35 separate end to end user journeys framed for 1-2 year timelines following PM and Eng OKRs and 3-5 year projections of UX and PM strategies.  I managed the scope and schedule for delivering prototypes to partners by spending no more than 2 weeks on a single feature and finishing most incremental design asks within 1-2 days.  I worked with L6-L7 designers and project managers to conceptualize and implement user journeys that will attract executive-level sponsorship. Notable tasks included:
 
-- Documenting and pitching new concepts to executives to acquire sponsorship for short term design directions and long term R&D research investigations
-- Blending Google Maps, StreetView, Live View, Immersive View, Earth Engine, ARKit, AVFoundation, MLKit, Firebase and other supporting frameworks into demonstrations of new capabilities in Maps across device ecosystems
-- Investigating mixed media experiences including combinations of Unreal, ARKit, SceneKit, UIKit and SpriteKit with large language model (LaMDA) and Google Assistant generated summaries
-- Demonstrating alternative choices for the design consensus around the IA of Google Maps entry points 
-- Embedding on a team to do a a multi-quarter deep dive into the place sheet framework
-- Connecting iOS prototypes to a development cluster streaming Unreal Engine driven content and designing Unreal and Earth Engine camera paths and controller interactions to evaluate design proposals
-- Connecting iOS apps to serial interfaces such as embedded IMUs and using the tracking sensors of AirPods to drive gestural interfaces
-- Performing tests of photogrammetry, facial tracking, and skeleton tracking using iPhone and iPad depth cameras
-- Developing an Apple Watch proof of concept and designing iMessage extensions
-- Translating the Google Vector Tile API into a SceneKit demo that shows searching in 3D
-- Authoring and documenting a personalization engine built on MLKit that relies on PII signals validated by internal users
-- Developing and distributing to dogfood from google3 using production CI servers
-- Configuring authorization servers and authoring Javascript endpoints and Swift model objects to connect iOS prototypes to production and development services and storage using URLSession and gRPC
+- Led rapid prototyping eﬀorts to iterate and refine concepts quickly, ensuring innovative solutions for iOS
+development on Google Maps.
+- Collaborated with UXD partners to create a monolithic prototype demonstrating 35 end-to-end user journeys,
+guiding PM and Eng OKRs 1-2 years ahead of development and launch.
+- Developed and patented experience concepts that set the design direction and defined engineering OKRs for
+engineering teams.
+- Integrated custom implementations of Google Maps technologies with Unreal Engine, ARKit, AVFoundation, MLKit,
+and Firebase into live-data proofs of concept.
+<p>
+Additional Skills and Experience
+</p>
+- Demonstrated advanced proficiency in iOS app development, with extensive experience working with key
+frameworks such as UIKit, CoreData, and CoreAnimation to deliver high-performance applications.
+- Specialized in deploying large language models (LLMs) and custom generative AI models, including Llamda, Vision, and CoreML, to enhance application functionality and user experience.
+- Streamlined development processes and created eﬃcient workflows using internal sequencing tools, ensuring high-quality deliverables and opRmized performance.
+- Designed and implemented robust end-to-end pipelines and soUware architectures to support scalable and
+maintainable applicaRon development.
+- Expertly leveraged Google Cloud Platform for deploying machine learning models and scalable iOS solutions,
+ensuring seamless integration with cloud services.
+- Developed and integrated RESTful APIs, utilizing JSON, Bonjour discovery, and data compression techniques for
+eﬃcient and reliable data exchange between services.
+- Collaborated closely with cross-functional teams to develop and validate proof of concepts (POCs), leading to
+innovative solutions and successful project execution.
+- Delivered clear and eﬀecRve communication to stakeholders at all levels, ensuring alignment and understanding of project goals and technical challenges.
+- Developed familiarity with AI agents and model orchestration, enhancing the capabilities and intelligence of
+deployed iOS applications through advanced machine learning techniques.
