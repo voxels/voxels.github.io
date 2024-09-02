@@ -5,12 +5,9 @@ description: About Michael Edgcumbe
 ---
 
 <a name="summary"></a>
-<p>Accomplished Product Design and Engineering Lead with over 10 years of experience in full-stack iOS development.
-Specialize in designing, developing, and launching innovaRve user experiences, most recently for visionOS. ExperRse in
-immersive technologies like AR/VR, integraRng SwiUUI, RealityKit, and Unreal Engine into cuYng-edge soluRons. Skilled
-in user-centered design, rapid prototyping, cross-funcRonal collaboraRon, and data-driven decision-making.</p>
+<p>Accomplished Product Design and Engineering Lead with over 10 years of experience in full-stack iOS development. Specializes in designing, developing, and launching innovative user experiences, most recently for visionOS. Expertise in immersive technologies like AR/VR, integrating SwiftUI, RealityKit, and Unreal Engine into cutting-edge solutions. Skilled in user-centered design, rapid prototyping, cross-functional collaboration, and data-driven decision-making.</p>
 
-#### iOS Application Engineering *
+#### Product Design and Application Engineering for Apple's App Store*
 
 <table style="width:100%">
 <tr><td><a href="secret-atomics">Secret Atomics</a></td><td align="right">March 2023 - Present</td></tr>
