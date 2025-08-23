@@ -1,6 +1,6 @@
 <table style="width:100%"> 
 	<tr>
-		<td valign="baseline"><a name="google-maps"><h2>Secret Atomics</h2></a></td><td align="right" valign="baseline"> <a href="https://secretatomics.com">https://secretatomics.com</a></td>
+		<td valign="baseline"><a name="google-maps"><h2>Snap</h2></a></td><td align="right" valign="baseline"> <a href="https://snapchat.com">https://snapchat.com</a></td>
 	</tr>
 </table>
 <table style="width:100%"> 
