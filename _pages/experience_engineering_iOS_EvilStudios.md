@@ -11,16 +11,9 @@
 
 <br>
 
-_Evil Apples is an iPad and iPhone card game based on the premise of Cards Against Humanity. Five players compete in a seven or more rounds. In each round, one player acts as a judge and the remaining players select cards to complete a sentence. Evil Apples supports several discovery mechanisms including friends-only and stranger mode. It uses in-app currency to limit the rate of play and expand the content a player can use. It serves more than 300,000 monthly active users and retained a 99.7% crash free rate over the course of 2016._
-
-The Evil Apples development team consists of the co-founder and project manager who performed back-end development, one Android engineer, and one iOS engineer. Responsibilities included:
-
-- Executing sprints around maintenance issues with performance, stability, and security
-- Adjusting the distribution of in-app currency and pop up advertisements
-- Enhancing the chat room content, main menu, backgrounds, and deck collection views
-- Building auto-layout views for new device sizes
-- Refactoring the in-app purchase store layout and model
-- Delivering a proof of concept refactor for the main navigation controller to a tab-based system
+- Executed maintenance and feature development sprints for a popular social gaming app with over 300,000 MAUs, maintaining a 99.7% crash-free rate.
+- Refactored the in-app purchase store and enhanced core UI components using Auto-Layout.
+- Adjusted the distribution of in-app currency and pop-up advertisements to optimize monetization.
 
 #### Screenshots
 

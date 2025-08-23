@@ -11,19 +11,11 @@
 
 <br>
 
-_Beautified was an on-demand client for making beauty service appointments in the New York and Los Angeles markets. The app was designed to extend the lifestyle brand of a well-known millennial celebrity. Women used Beautified to locate recommended shops for haircuts, blowouts, nails, massages, etc. and book a last-minute appointment on their phone. The vendors were suggested based on location and time through a feed. Beautified gained traction through marketing in publications such as Vanity Fair, Teen Vogue and Elle, but the founders came to a disagreement about management that resulted in mutual lawsuits and a shuttering of the business._
+- Led a complete rewrite of the client interface to implement a new design for an on-demand booking application.
+- Integrated multiple third-party SDKs for push notifications (Kahuna), analytics (mParticle), and credit card transactions.
+- Produced and presented a data visualization of the purchase funnel to co-founders to inform user flow design.
 
-The development of Beautified included three product owners, two back-end Ruby developers, a native iOS developer, and a contracted product design consultancy. The native iOS developer and back-end developers worked closely to develop API integrations. Responsibilities included:
-
-- Fully rewriting the client interface to implement the design created by the product consultant
-- Writing collection view content in auto-layout
-- Integrating the Kahuna push notification marketing service
-- Integrating custom behavior tracking analytics events with mParticle
-- Integrating a credit card transaction SDKs
-- Producing a data explorer of the purchase funnel events to evaluate the user flow design
-- Presenting an analysis of the purchase flow visualization to the co-founders
-
-#### Screencast
+#### Video
 
 [beautified.m4v](https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2014_beautified/video/beautified.m4v)
 

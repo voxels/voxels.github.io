@@ -11,18 +11,11 @@
 
 <br>
 
-_Yarn was a cross platform photos service developed at the Samsung Accelerator in New York City. The product was designed to transfer the photos from storage such as iCloud, Dropbox, etc. into a proprietary analytical pipeline.
-The user was encouraged to tag photos with hashtags about people, places, and interests, and the Yarn application server would automatically, periodically return a collection of photos grouped together by topic. The goal of the work at the Accelerator was to integrate the service as a default in Samsung Nexus devices, and the first release was designed and built for iOS, Android, and web clients. The Yarn iOS application was released into production, with several subsequent maintenance releases, and roughly 5,000 users were accepted into the beta. The Accelerator did not choose to acquire the IP, and the client was eventually removed from the App Store. Apple's native Photos client released an identical service shortly before Yarn was disbanded._
+- Designed and implemented core architecture for a cross-platform photo service, including the network client, CoreData model (MVVM), and a custom gallery layout algorithm.
+- Developed a system to fetch photos from first-party and third-party repositories in both foreground and background processes.
+- Built custom interfaces in Auto-Layout, including a card-based memory feed and collage editing view
 
-The development of Yarn was managed by a product owner, Chief Technology Officer, machine learning and back-end developer, front-end web developer, native iOS developer, native Android developer, remote iOS contractors, and a succession of UX designers and product consultants. The team followed an agile development process. The Accelerator required the product owner to present progress monthly to the executive team in order to continue funding for development. The remote iOS contractors were focused on delivering content for the presentation's meeting while the in- house developer was focused on long term production code. Responsibilities included:
-  
-- Design and implementation of a network client to fetch photos from first-party and third-party repositories within foreground and background processes
-- Design and implementation of a Model View, View Model design pattern
-- Design and implementation of a parent/child CoreData model for fetching and storing assets and metadata
-- Design and implementation of a gallery layout algorithm
-- Implementation of a card-based memory feed, gallery presentation view, gallery editing view, collage editing view, photo tagging view, and other custom interfaces in auto-layout
-
-#### Screencast
+#### Video
 
 [yarn.m4v](https://s3.amazonaws.com/com-federalforge-repository/public/engineer/2015_yarn/video/yarn.m4v)
 

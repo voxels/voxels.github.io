@@ -11,14 +11,9 @@
 
 <br>
 
-_The Liquor Cabinet is an iPhone application that presents mixology variations of classic alcoholic drink recipes. Each recipe includes ingredients, instructions, tools and variations. The client needed a single engineer to handle backend database deployment and native iOS development for the prototype and first version release._
-
-The development of The Liquor Cabinet included the product owner/client, a designer, and a single engineer with a contracted project manager. The budget and timeline were limited by the client's resources; however, the client was singularly focused on pixel perfect design. Responsibilities included:
-- Creating a Parse instance
-- Authoring an administrative tool to upload and join the database tables
-- Implementing authentication with Parse; implementing card layout designs and seamless transitions
-- Implementing a filtering system based on ingredients, skills, and flavors
-- Implementing a search function
+- Acted as the sole engineer, handling both backend (Parse) and native iOS development to launch the initial product from scratch.
+- Implemented a pixel-perfect design with a focus on seamless transitions and a custom card layout.
+- Authored an administrative tool for database management.
 
 #### Screencast
 
