@@ -5,7 +5,7 @@
 </table>
 <table style="width:100%"> 
 	<tr>
-		<td> <h4>Product Design and visionOS Engineering Lead</h4> </td><td align="right"> <h4><em>March 2023 - Present</em></h4> </td>	</tr>
+		<td> <h4>Product Design and visionOS Engineering Lead</h4> </td><td align="right"> <h4><em>March 2023 - December 2024</em></h4> </td>	</tr>
 </table>
 
 <br>
