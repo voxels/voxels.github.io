@@ -10,7 +10,7 @@
 
 <br>
 
-- Architected and replaced a legacy Abstract Syntax Tree (AST) ranking engine with a modern, cross-platform executor, improving system maintainability and performance.
-- Achieved a 41% reduction in P90 latency (from 616ms to <380ms) for a core product feature, directly improving the user experience for millions of daily active users.
-- Own and analyze performance metrics to drive data-informed engineering decisions for a large-scale, consumer-facing mobile product.
-- Collaborated daily with product, design, and analytics teams to translate user needs into tangible performance improvements.
+* Architected and replaced a legacy Abstract Syntax Tree (AST) ranking engine with a modern, cross-platform executor, improving system maintainability and performance.
+* Achieved a 41% reduction in P90 latency (from 616ms to <380ms) for a core product feature, directly improving the user experience for millions of daily active users.
+* Own and analyze performance metrics to drive data-informed engineering decisions for a large-scale, consumer-facing mobile product.
+* Collaborated daily with product, design, and analytics teams to translate user needs into tangible performance improvements.

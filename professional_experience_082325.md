@@ -56,25 +56,133 @@ SPI, CoreBluetooth, iBeacon</td></tr>
 <br>
 
 
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_Snapchat.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_Snapchat.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_SecretAtomics.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_SecretAtomics.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_Google.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_Google.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_Homer.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_Homer.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_EvilStudios.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_EvilStudios.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_Crush.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_Crush.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_LiquorCabinet.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_LiquorCabinet.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_Samsung.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_Samsung.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_Beautified.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_Beautified.md %}
+
+```
+
+```
+
 <hr>
-<p>{% include_relative _pages/experience_engineering_iOS_IAC.md %}</p>
+
+```
+
+```
+
+{% include_relative _pages/experience_engineering_iOS_IAC.md %}
+
+```
+
+```
+
 <hr>
-<p></p>
+
+```
+
+```
