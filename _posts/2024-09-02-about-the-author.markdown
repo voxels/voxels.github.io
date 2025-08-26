@@ -17,7 +17,7 @@ Link to: [LinkedIn](https://linkedin.com/in/voxels)
 
 <table style="width:100%">
 	<thead><tr><td><h5>Product Design and Application Engineering Experience *</h5></td><td></td></tr></thead>
-		<tr><td><a href="/professional_experience_082325#snapchat">Secret Atomics</a></td><td align="right">December 2024 - August 2025</td></tr>
+		<tr><td><a href="/professional_experience_082325#snapchat">Snapchat</a></td><td align="right">December 2024 - August 2025</td></tr>
 		<tr><td><a href="/professional_experience_082325#secret-atomics">Secret Atomics</a></td><td align="right">March 2023 - December 2024</td></tr>
 		<tr><td><a href="/professional_experience_082325#google-maps">Google Maps</a></td><td align="right">September 2018 - March 2023</td></tr>
 		<tr><td><a href="/professional_experience_082325#homer-learning">Homer Learning</a></td><td align="right">March 2017 - June 2018</td></tr>
