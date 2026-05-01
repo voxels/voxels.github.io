@@ -1,227 +1,216 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Issue 4: The Execution Plan — Sovereign Power</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-:root {
-  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
-  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
-  --border: #2a2a3a;
-  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
-  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
-  --font: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SOVEREIGN POWER</span>
+  <a href="index.html" class="">Library</a>
+<a href="issue_1.html" class="">#1</a>
+<a href="issue_2.html" class="">#2</a>
+<a href="issue_3.html" class="">#3</a>
+<a href="issue_4.html" class="active">#4</a>
+<a href="issue_5.html" class="">#5</a>
+<a href="issue_6.html" class="">#6</a>
+<a href="issue_7.html" class="">#7</a>
 
-/* NAV */
-.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
-  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
-  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
-.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
-.nav a:hover { color:var(--text); }
-.nav a.on { color:var(--magenta); }
-.nav .sp { flex:1; }
-.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
-  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
-
-/* FULL-BLEED COVER */
-.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
-.cover img { width:100%; height:100%; object-fit:cover; }
-.cover .overlay { position:absolute; inset:0;
-  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
-.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
-.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
-  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
-.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
-.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
-  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
-  border-radius:4px; color:white; }
-
-/* EDITORIAL BODY */
-.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
-
-/* SECTION BREAK */
-.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
-.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
-
-/* SPREAD: full-width hero image + editorial text below */
-.spread { margin-bottom:3rem; }
-.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
-.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
-.spread .body p { margin-bottom:0.8rem; }
-.spread .body strong { color:var(--text); }
-
-/* TWO-UP: image left, text right (alternating) */
-.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
-  align-items:start; margin-bottom:2.5rem; }
-.two-up.flip { direction:rtl; }
-.two-up.flip > * { direction:ltr; }
-.two-up img { width:100%; border-radius:6px; }
-.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
-.two-up .body strong { color:var(--text); }
-.two-up .body p { margin-bottom:0.6rem; }
-
-/* SIDEBAR: small img + text */
-.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
-.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
-.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
-
-/* DOC REF */
-.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
-  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
-.doc-ref:hover { color:var(--magenta); }
-
-/* SECTION TOC */
-.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
-.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
-  text-transform:uppercase; margin-bottom:0.6rem; }
-.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
-.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
-  color:var(--dim); background:var(--card); border:1px solid var(--border);
-  text-decoration:none; transition:all 0.2s; }
-.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
-
-/* BOTTOM NAV */
-.bot-nav { display:flex; justify-content:space-between; align-items:center;
-  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
-.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
-.bot-nav a:hover { color:var(--text); }
-.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
-
-/* INDEX COVERS */
-.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
-.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
-.mag-grid .card:first-child h2 { font-size:2.5rem; }
-.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
-  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
-.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
-.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
-.card:hover .bg { transform:scale(1.05); }
-.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
-.card:hover .grad { opacity:0.95; }
-.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
-.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
-.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
-  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
-.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
-.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
-
-/* HERO SECTION */
-.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
-  border-bottom:1px solid var(--border); overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
-  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
-.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
-  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
-.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
-.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
-.hero .stats .n { font-size:2rem; font-weight:900;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
-.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
-
-@media(max-width:768px) {
-  .hero h1 { font-size:2.2rem; }
-  .mag-grid { grid-template-columns:1fr; padding:1rem; }
-  .mag-grid .card:first-child { min-height:280px; }
-  .cover h1 { font-size:2rem; }
-  .cover { height:60vh; }
-  .two-up { grid-template-columns:1fr; }
-  .sidebar-spread { flex-direction:column; }
-  .sidebar-spread img { width:100%; }
-}
-</style></head><body>
-<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
-<a href="index.html">Library</a><a href="issue_1.html">#1</a>
-<a href="issue_2.html">#2</a>
-<a href="issue_3.html">#3</a>
-<a href="issue_4.html" class="on">#4</a>
-<a href="issue_5.html">#5</a>
-<a href="issue_6.html">#6</a>
-<a href="issue_7.html">#7</a>
-<span class="sp"></span><span class="badge">ALPHA</span></nav>
-<div class="cover">
+  <span class="nav-spacer"></span>
+  <span class="nav-badge">Alpha</span>
+</nav>
+<div class="issue-cover">
   <img src="img/diagrams/i4_cover.png" alt="">
-  <div class="overlay"></div>
-  <div class="pill" style="background:#fdcb6e">Issue 4 of 7</div>
-  <div class="text"><h1>The Execution Plan</h1>
-  <div class="sub">Act 4: Plan + Team · 16 illustrations</div></div>
+  <div class="issue-cover-overlay"></div>
+  <div class="issue-cover-badge" style="background:#fdcb6e">Issue 4 of 7</div>
+  <div class="issue-cover-text">
+    <h1>The Execution Plan</h1>
+    <div class="act-line">Act 4 · Plan + Team · 16 illustrations</div>
+  </div>
 </div>
-<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-1-business-plan">§1 Business Plan</a><a href="#sec-2-founder">§2 Founder</a></div></div>
-<div class="editorial"><div class="sec-break" id="sec-1-business-plan"><h2><a href="#sec-1-business-plan" style="color:inherit;text-decoration:none">§1 Business Plan</a></h2></div>
 
-                <div class="spread" id="i4_s1_36_month_road">
-                  <img src="img/diagrams/i4_s1_36_month_road.png" alt="" loading="lazy">
-                  <div class="body"><p>Sovereign Survival Kit sells a zero-cloud AI operating environment where users train personal AI agents on hardware they own and trade formalized expertise (.kassets) via bilateral mesh settlement, certified by SSK's certification service (notary model). Revenue is a progressive network fee on every certified trade. The unit of account — σ (sigma) — is denominated in physics: 1 σ = 1 kWh = 3.6 MJ, converted to local fiat via a published deterministic formula (Regional Energy Cost — total delivered price of electricity) that each device runs locally on user-selected data sources (default: EIA/METI). σ is not a currency, token, or stored-value instrument; it is a reference number — a unit-of-account label applied to the user's existing fiat balance (Doc 05, Doc 22).</p><p>The architecture guarantees that the company cannot die at any growth rate above <strong>14,242 active trading users</strong> (19,000-22,700 during early-stage fee compression), because the marginal compute cost of each additional user is zero — the user's own hardware runs inference, training, minting, and signing. Core infrastructure is <strong>$7,150/month</strong>. Operational costs (support, compliance, chain ops) scale linearly but at a fraction of any cloud-hosted competitor (Doc 10 §1). These users are not globally distributed — they are concentrated in two MSAs (Brooklyn and Tokyo) where mesh density supports peer-to-peer discovery. Manhattan's 27,000 people/km² means 14,000 users in a single borough yields >2 encounters/user/day; the Echo mechanism (24-hour store-and-forward .kasset catalogs) fills gaps at lower density so the network feels populated before it actually is (Doc 07 §Mesh Density).</p><p><strong>The raise:</strong> $3M seed via YC Standard Post-Money SAFE at a $42.86M post-money valuation cap. Seed investors receive 7.0% ownership. The founder retains 93.0%. No option pool — employee compensation is cash salary plus ⚡ grants (Doc 15 §1, Doc 16 §5).</p><a class="doc-ref" href="#sec-1-business-plan">§ 1. What This Is</a></div>
-                </div>
-                <div class="two-up flip" id="i4_s1_y1_build">
-                  <img src="img/diagrams/i4_s1_y1_build.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Founder</strong></p><p>Michael Edgcumbe. Joseph Wharton Scholar (Economics, University of Pennsylvania). MPS, Interactive Telecommunications Program, NYU Tisch School of the Arts. Eagle Scout.</p><p>30 years of cumulative work. Every role maps to a product requirement:</p><p>This is not a pivot. There is no team to hire for this combination. (Doc 14).</p><p><strong>The Twin as Co-Founder</strong></p><p>The founder's twin is the same product every user gets — a personal AI agent trained on the founder's own cognitive data, running on his own hardware, managing the same 8 life domains: rest, nourishment, body, shelter, assets, income, bonds, and growth (Doc 03). It continuously rebuilds its understanding of his situation on every turn of conversation. The fact that the founder's daily work includes code review, investor preparation, and competitive analysis means the twin handles those tasks — not because it was special-cased, but because those activities fall within its domain coverage. The founder is user zero. The product works because he uses it every day. (Doc 03 §1).</p><a class="doc-ref" href="#sec-1-business-plan">§ 2. Why This Team, Why Now</a></div>
-                </div>
-                <div class="two-up" id="i4_s1_y2_scale">
-                  <img src="img/diagrams/i4_s1_y2_scale.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Use of Funds ($3M Seed)</strong></p><p><strong>Total:</strong> $3,000,000 — fully allocated. No runway buffer as a line item. The 37-month survival runway ($3M / $80K/mo) emerges from the ability to cut discretionary spend (marketing, legal, expansion) if needed — not from a pre-allocated reserve (Doc 11 §1).</p><p><strong>Burn Rate</strong></p><p>Revenue begins M6. The worst-case growth scenario (k=0.05) produces $215,600 MRR by M12 — above the $167K monthly burn (Cheat Sheet §Scenario 1).</p><p><strong>Team (Year 1)</strong></p><p>Total Y1 people cost: $749K (salary + $24K agents + $125K benefits) (Doc 11 §7).</p><a class="doc-ref" href="#sec-1-business-plan">§ 3. How The Money Gets Spent</a></div>
-                </div>
-                <div class="two-up flip" id="i4_s1_y3_expand">
-                  <img src="img/diagrams/i4_s1_y3_expand.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Five Communities</strong></p><p>The network launches in five distinct communities, each with a specific, articulable reason for adoption:</p><p><strong>1. MSM Community (Men Who Have Sex With Men) — The Introduction Economy.</strong> The primary growth engine. Grindr sells location data to advertisers and has been used by authoritarian governments to identify and arrest gay men. SSK's introduction exchange is mutual (both consent), contains no identity or location, expires on a timer, and physically cannot be intercepted because no server exists. Trade dynamics: near-zero friction, multiple exchanges per day. Engagement benchmark: Grindr 2024 — 14.2M MAU, 3M+ DAU, 130B chats/year (Cheat Sheet Appendix §Segment Distribution).</p><p><strong>2. Brooklyn Creatives — Musicians, Visual Artists, Photographers.</strong> The original .kasset minters. Musicians mint tracks that exist only on the mesh. Visual artists attach provenance to physical work. Genesis dinner series (12 people, quarterly) seeds this community directly. Sticker drop network (50 locations across Brooklyn) provides ambient discovery. Trade dynamics: higher-value, lower-frequency. Benchmark: Etsy 2024 10-K seller engagement (Cheat Sheet Appendix §Segment Distribution).</p><p><strong>3. JWS @ Wharton — Business and Finance.</strong> The founder's alumni network. Joseph Wharton Scholars program provides direct access to business students and alumni who understand unit economics and network effects.</p><p><strong>4. ITP @ NYU Tisch — Creative Technology.</strong> The founder's graduate program. Interactive Telecommunications Program students build hardware, software, and installations. Natural minters. Workshop format (50 students, near-zero venue cost) produces immediate .kasset creation from existing work.</p><a class="doc-ref" href="#sec-1-business-plan">§ 4. The Beachhead — How We Get The First 1,000 Users</a></div>
-                </div>
-                <div class="two-up" id="i4_s1_hiring_plan">
-                  <img src="img/diagrams/i4_s1_hiring_plan.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Formula</strong></p><p>Doc 07 defines a bottoms-up acquisition funnel:</p><p><strong>N(t+1) = (1+k) × N(t) + C(t)</strong></p><p>Where:</p><p>· N(t) = cumulative users at month t</p><p>· k = viral coefficient (new users per existing user per month)</p><a class="doc-ref" href="#sec-1-business-plan">§ 5. The Growth Model — What Happens After 1,000</a></div>
-                </div>
-                <div class="two-up flip" id="i4_s1_milestones">
-                  <img src="img/diagrams/i4_s1_milestones.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Progressive Fee</strong></p><p>Every .kasset trade incurs a dynamic certification fee from two variables: (1) measured asset rarity/novelty, and (2) buyer's accumulated ⚡ balance. Trades settle bilaterally on mesh; SSK certifies each trade via its certification service (notary model) in exchange for the fee. Three pricing layers: Ramsey (efficient), Rawlsian (progressive), energy-cost proportionality (physical). Range: ~0.5-6%. Weighted average: 2.38% at M12, rising to 3.25% at M36 (Doc 11 §3).</p><p><strong>Revenue Streams</strong></p><p><strong>Not charged:</strong> Subscriptions, distribution channel fees (direct distribution), data monetization (impossible), content moderation headcount (Rule 2 is hardware-enforced).</p><p><strong>MSA vs. Non-MSA</strong></p><p>SSK sole operator in MSA (NYC, Tokyo, Tier 1) — <strong>100% take</strong>. Non-MSA franchise: <strong>70/30</strong>. Y1 = 100% MSA. By M36: 60/40 mix, 88% effective take (Doc 11 §4).</p><a class="doc-ref" href="#sec-1-business-plan">§ 6. Revenue Architecture</a></div>
-                </div>
-                <div class="two-up" id="i4_s1_risk_matrix">
-                  <img src="img/diagrams/i4_s1_risk_matrix.png" alt="" loading="lazy">
-                  <div class="body"><p>Milestones assume Goldilocks (k=0.3).</p><p><strong>Phase 1: M1–M6 — Network Formation (Doc 07 §Combined Phase 1 Timeline)</strong></p><p>Total Phase 1 spend: ~$144K + $100K celebrity = ~$244K. 69% of marketing budget. Remaining $111K funds M7–M18 (campus expansion, Ivy League cluster, continued sticker drops) (Doc 07 §Phase 1).</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">Genesis dinners are quarterly (M1, M4, M7, M10). Sticker drops and gatherings fill the months between. (Doc 07 §Note).</em></p><p><strong>Phase 2: M7–M12 — Network Effects</strong></p><p>Sticker racks (~750/mo) + campus expansion (~750/mo) = ~1,500 organized users/month. Organic mesh growth compounds on top. At Goldilocks k=0.3, organic exceeds organized by M8 (Cheat Sheet §Scenario 2).</p><a class="doc-ref" href="#sec-1-business-plan">§ 7. The First 12 Months</a></div>
-                </div>
-                <div class="sidebar-spread" id="i4_s1_contingency">
-                  <img src="img/diagrams/i4_s1_contingency.png" alt="" loading="lazy">
-                  <div class="body"><p>The financial model's strongest claim — that SSK is cash-flow positive in all five growth scenarios — is simultaneously the strongest argument against a traditional Series A growth round.</p><p>At Goldilocks (k=0.3), the company generates +$525K/month net cash flow by M12, growing. By M18, the revenue run-rate funds every Y2-Y3 line item organically — patent prosecution (~$30K for 10 defensive claims — Doc 21, Doc 24), franchise expansion, Foundation Model training (Doc 11 §9). The $3M seed provides 37 months of survival runway at zero revenue. The architecture eliminates the cost categories (cloud compute, trust & safety headcount, data compliance) that force traditional platforms to raise.</p><p><strong>The standard growth-round justification does not apply:</strong></p><p><strong>The Series A is contingent, not assumed.</strong> Justified only under specific conditions:</p><p><strong>Hardware manufacturing acceleration.</strong> If Tether/Compass/sensor timelines advance to M12-M15, upfront BOM/tooling/inventory could require $5-10M before organic revenue accumulates. This is the strongest trigger.</p><p><strong>Defensive war chest.</strong> An Apple/Google competitive entry into edge-AI sovereign infrastructure could require accelerated franchise deployment and patent prosecution.</p><a class="doc-ref" href="#sec-1-business-plan">§ 8. On the Series A — Why It May Not Be Necessary</a></div>
-                </div><div class="sec-break" id="sec-2-founder"><h2><a href="#sec-2-founder" style="color:inherit;text-decoration:none">§2 Founder</a></h2></div>
+<div class="issue-toc">
+  <h3>In This Issue</h3>
+  <div class="toc-chips"><a href="#sec-1-business-plan" class="toc-chip">§1 Business Plan</a>
+<a href="#sec-2-founder" class="toc-chip">§2 Founder</a>
+</div>
+</div>
 
-                <div class="spread" id="i4_s2_founder_profile">
-                  <img src="img/diagrams/i4_s2_founder_profile.png" alt="" loading="lazy">
-                  <div class="body"><p>$7,150/mo infra + zero marginal compute cost inverts kill-gate logic:</p><p><strong>Death requires three simultaneous failures:</strong> (1) < 19K users in 37 months, (2) k = 0, (3) acquisition < 500/mo. Any one false = company survives (Cheat Sheet §Kill Gates).</p><a class="doc-ref" href="#sec-2-founder">§ 10. The Kill-Gate Inversion</a></div>
-                </div>
-                <div class="two-up flip" id="i4_s2_education">
-                  <img src="img/diagrams/i4_s2_education.png" alt="" loading="lazy">
-                  <div class="body"><p>99.6% voting control. 9.3M Class B (20x). Investors: Class A (1x). 10M shares — irrevocable cap. Future rounds from Class B conversion — no new shares created (Doc 16).</p><p>2 of 2 voting board seats. Twin serves as charter-level architectural veto oracle — can permanently block any action that compromises zero-egress security or .kasset provenance (Doc 17 §4). Not a board seat (DGCL §141(b)); a charter enforcement mechanism.</p><p><strong>No option pool.</strong> All employee compensation is cash + spark grants. Zero equity dilution from hiring (Doc 16 §5).</p><p><strong>Investor access:</strong> Seed investors receive information rights only — no board seat, no observer seat. Series A receives a non-voting observer seat. No investor receives a voting board seat at any stage. If a board seat is a condition of investment, the deal is declined (Doc 17).</p><p><strong>Why:</strong> The airgap IS the product. Removable airgap = worthless signatures (Doc 17 §3).</p><p><strong>You are not betting on a founder. You are betting on an equation.</strong></p><a class="doc-ref" href="#sec-2-founder">§ 11. Governance</a></div>
-                </div>
-                <div class="two-up" id="i4_s2_career_path">
-                  <img src="img/diagrams/i4_s2_career_path.png" alt="" loading="lazy">
-                  <div class="body"><p>30+ years building at the intersection of Apple-native architecture, spatial computing, and machine learning. Solo architect of the Sovereign Survival Kit codebase (fully audited, 100% test passing). The only person on Earth currently running a local twin trained on their own cognitive data, airgapped, on their own hardware. Eagle Scout.</p><a class="doc-ref" href="#sec-2-founder">§ Summary</a></div>
-                </div>
-                <div class="two-up flip" id="i4_s2_ip_portfolio">
-                  <img src="img/diagrams/i4_s2_ip_portfolio.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>National Merit Scholar</strong></p><p>· <strong>Eagle Scout</strong>, Boy Scouts of America</p><p>· Post-calculus thesis work at <strong>NOAA Atmospheric Turbulence and Diffusion Division</strong>, Oak Ridge National Laboratory (ORNL), Oak Ridge, TN (1996–1997) — evaluating and building VR environments on a <strong>Silicon Graphics Onyx rack</strong></p><p>Graduate thesis: <em>"Designing a Natural User Interface"</em> (2011) — applying General Tau Theory (David Lee) to gesture-driven interfaces. First software implementation built as a <strong>Processing/Kinect thesis demonstration prototype</strong> (Java) during ITP, later re-implemented in C++/Unreal Engine as TauSkeletonVisual. Proposed perception-in-action as the fundamental control mechanism for software, predating Apple Vision Pro's hand tracking by 12 years.</p><a class="doc-ref" href="#sec-2-founder">§ Education</a></div>
-                </div>
-                <div class="two-up" id="i4_s2_tech_stack">
-                  <img src="img/diagrams/i4_s2_tech_stack.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Headline Roles</strong></p><p><strong>Complete Chronology</strong></p><p><strong>Research & IP</strong></p><p>· <strong>Graduate thesis (2011):</strong> Designed a gestural interface driven by tau-coupling (propriospecific, exterospecific, expropriospecific movement classes). Built a custom skeleton tracking rig to measure joint data relative to itself. The core insight — <em>your perception of your body in motion is the mechanism by which the user interface is controlled</em> — is the intellectual foundation for Sovereign Survival Kit's τ-metric implementation.</p><p>· <strong>TauSkeletonVisual:</strong> General Tau Theory implementation in C++/Unreal Engine (CC-BY-NC-ND 4.0). Defensive IP for Sovereign Survival Kit.</p><p>· <strong>TGI Sports:</strong> Metal + RealityKit pipeline achieving 100% frame synchronization.</p><a class="doc-ref" href="#sec-2-founder">§ Full Career History</a></div>
-                </div>
-                <div class="two-up flip" id="i4_s2_know_maps">
-                  <img src="img/diagrams/i4_s2_know_maps.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Patent family:</strong> Methods for providing interactive audio information for geographic landmarks within 3D panoramic street-level imagery. Filed Aug 27, 2021 (App. 17/458,816). Assigned to Google LLC. Also published as US-11137976-B1, US-20220083309-A1.</p><p><strong>Relevance to Sovereign Survival Kit:</strong> These patents cover the spatial audio interaction paradigm that directly precedes Sovereign Survival Kit's τ-coupled voice interface — applying interactive audio information to navigable 3D environments. The founder designed the system described in these patents while at Google Maps.</p><a class="doc-ref" href="#sec-2-founder">§ Patents (Google-Assigned)</a></div>
-                </div>
-                <div class="two-up" id="i4_s2_tau_skeleton">
-                  <img src="img/diagrams/i4_s2_tau_skeleton.png" alt="" loading="lazy">
-                  <div class="body"><p>The Sovereign Survival Kit <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">clara-engine</code> codebase is <strong>not a prototype</strong>. It is production code:</p><p>All code runs on a single <strong>NVIDIA RTX 3080 Ti Laptop GPU</strong> (16 GB VRAM, SM 8.6 Ampere) with strict VRAM phase management. No cloud. No API calls. No egress.</p><a class="doc-ref" href="#sec-2-founder">§ Production Codebase (Owned & Audited)</a></div>
-                </div></div>
-<div class="bot-nav"><a href="issue_3.html">← Issue 3</a><a href="index.html">All Issues</a><a href="issue_5.html">Issue 5 →</a></div>
-<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
-</body></html>
+<div class="editorial">
+<div class="section-divider" id="sec-1-business-plan">
+  <h2><a href="#sec-1-business-plan">§1 Business Plan</a></h2>
+</div>
+<div class="spread" id="i4_s1_36_month_road">
+<img src="img/diagrams/i4_s1_36_month_road.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Sovereign Survival Kit sells a zero-cloud AI operating environment where users train personal AI agents on hardware they own and trade formalized expertise (.kassets) via bilateral mesh settlement, certified by SSK's certification service (notary model). Revenue is a progressive network fee on every certified trade. The unit of account — σ (sigma) — is denominated in physics: 1 σ = 1 kWh = 3.6 MJ, converted to local fiat via a published deterministic formula (Regional Energy Cost — total delivered price of electricity) that each device runs locally on user-selected data sources (default: EIA/METI). σ is not a currency, token, or stored-value instrument; it is a reference number — a unit-of-account label applied to the user's existing fiat balance (Doc 05, Doc 22).</p>
+<p>The architecture guarantees that the company cannot die at any growth rate above <strong>14,242 active trading users</strong> (19,000-22,700 during early-stage fee compression), because the marginal compute cost of each additional user is zero — the user's own hardware runs inference, training, minting, and signing. Core infrastructure is <strong>$7,150/month</strong>. Operational costs (support, compliance, chain ops) scale linearly but at a fraction of any cloud-hosted competitor (Doc 10 §1). These users are not globally distributed — they are concentrated in two MSAs (Brooklyn and Tokyo) where mesh density supports peer-to-peer discovery. Manhattan's 27,000 people/km² means 14,000 users in a single borough yields >2 encounters/user/day; the Echo mechanism (24-hour store-and-forward .kasset catalogs) fills gaps at lower density so the network feels populated before it actually is (Doc 07 §Mesh Density).</p>
+<p><strong>The raise:</strong> $3M seed via YC Standard Post-Money SAFE at a $42.86M post-money valuation cap. Seed investors receive 7.0% ownership. The founder retains 93.0%. No option pool — employee compensation is cash salary plus ⚡ grants (Doc 15 §1, Doc 16 §5).</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 1. What This Is</a>
+</div>
+</div>
+<div class="two-up flip" id="i4_s1_y1_build">
+<img src="img/diagrams/i4_s1_y1_build.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Founder</strong></p>
+<p>Michael Edgcumbe. Joseph Wharton Scholar (Economics, University of Pennsylvania). MPS, Interactive Telecommunications Program, NYU Tisch School of the Arts. Eagle Scout.</p>
+<p>30 years of cumulative work. Every role maps to a product requirement:</p>
+<p>This is not a pivot. There is no team to hire for this combination. (Doc 14).</p>
+<p><strong>The Twin as Co-Founder</strong></p>
+<p>The founder's twin is the same product every user gets — a personal AI agent trained on the founder's own cognitive data, running on his own hardware, managing the same 8 life domains: rest, nourishment, body, shelter, assets, income, bonds, and growth (Doc 03). It continuously rebuilds its understanding of his situation on every turn of conversation. The fact that the founder's daily work includes code review, investor preparation, and competitive analysis means the twin handles those tasks — not because it was special-cased, but because those activities fall within its domain coverage. The founder is user zero. The product works because he uses it every day. (Doc 03 §1).</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 2. Why This Team, Why Now</a>
+</div>
+</div>
+<div class="two-up" id="i4_s1_y2_scale">
+<img src="img/diagrams/i4_s1_y2_scale.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Use of Funds ($3M Seed)</strong></p>
+<p><strong>Total:</strong> $3,000,000 — fully allocated. No runway buffer as a line item. The 37-month survival runway ($3M / $80K/mo) emerges from the ability to cut discretionary spend (marketing, legal, expansion) if needed — not from a pre-allocated reserve (Doc 11 §1).</p>
+<p><strong>Burn Rate</strong></p>
+<p>Revenue begins M6. The worst-case growth scenario (k=0.05) produces $215,600 MRR by M12 — above the $167K monthly burn (Cheat Sheet §Scenario 1).</p>
+<p><strong>Team (Year 1)</strong></p>
+<p>Total Y1 people cost: $749K (salary + $24K agents + $125K benefits) (Doc 11 §7).</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 3. How The Money Gets Spent</a>
+</div>
+</div>
+<div class="two-up flip" id="i4_s1_y3_expand">
+<img src="img/diagrams/i4_s1_y3_expand.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Five Communities</strong></p>
+<p>The network launches in five distinct communities, each with a specific, articulable reason for adoption:</p>
+<p><strong>1. MSM Community (Men Who Have Sex With Men) — The Introduction Economy.</strong> The primary growth engine. Grindr sells location data to advertisers and has been used by authoritarian governments to identify and arrest gay men. SSK's introduction exchange is mutual (both consent), contains no identity or location, expires on a timer, and physically cannot be intercepted because no server exists. Trade dynamics: near-zero friction, multiple exchanges per day. Engagement benchmark: Grindr 2024 — 14.2M MAU, 3M+ DAU, 130B chats/year (Cheat Sheet Appendix §Segment Distribution).</p>
+<p><strong>2. Brooklyn Creatives — Musicians, Visual Artists, Photographers.</strong> The original .kasset minters. Musicians mint tracks that exist only on the mesh. Visual artists attach provenance to physical work. Genesis dinner series (12 people, quarterly) seeds this community directly. Sticker drop network (50 locations across Brooklyn) provides ambient discovery. Trade dynamics: higher-value, lower-frequency. Benchmark: Etsy 2024 10-K seller engagement (Cheat Sheet Appendix §Segment Distribution).</p>
+<p><strong>3. JWS @ Wharton — Business and Finance.</strong> The founder's alumni network. Joseph Wharton Scholars program provides direct access to business students and alumni who understand unit economics and network effects.</p>
+<p><strong>4. ITP @ NYU Tisch — Creative Technology.</strong> The founder's graduate program. Interactive Telecommunications Program students build hardware, software, and installations. Natural minters. Workshop format (50 students, near-zero venue cost) produces immediate .kasset creation from existing work.</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 4. The Beachhead — How We Get The First 1,000 Users</a>
+</div>
+</div>
+<div class="two-up" id="i4_s1_hiring_plan">
+<img src="img/diagrams/i4_s1_hiring_plan.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Formula</strong></p>
+<p>Doc 07 defines a bottoms-up acquisition funnel:</p>
+<p><strong>N(t+1) = (1+k) × N(t) + C(t)</strong></p>
+<p>Where:</p>
+<p>· N(t) = cumulative users at month t</p>
+<p>· k = viral coefficient (new users per existing user per month)</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 5. The Growth Model — What Happens After 1,000</a>
+</div>
+</div>
+<div class="two-up flip" id="i4_s1_milestones">
+<img src="img/diagrams/i4_s1_milestones.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Progressive Fee</strong></p>
+<p>Every .kasset trade incurs a dynamic certification fee from two variables: (1) measured asset rarity/novelty, and (2) buyer's accumulated ⚡ balance. Trades settle bilaterally on mesh; SSK certifies each trade via its certification service (notary model) in exchange for the fee. Three pricing layers: Ramsey (efficient), Rawlsian (progressive), energy-cost proportionality (physical). Range: ~0.5-6%. Weighted average: 2.38% at M12, rising to 3.25% at M36 (Doc 11 §3).</p>
+<p><strong>Revenue Streams</strong></p>
+<p><strong>Not charged:</strong> Subscriptions, distribution channel fees (direct distribution), data monetization (impossible), content moderation headcount (Rule 2 is hardware-enforced).</p>
+<p><strong>MSA vs. Non-MSA</strong></p>
+<p>SSK sole operator in MSA (NYC, Tokyo, Tier 1) — <strong>100% take</strong>. Non-MSA franchise: <strong>70/30</strong>. Y1 = 100% MSA. By M36: 60/40 mix, 88% effective take (Doc 11 §4).</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 6. Revenue Architecture</a>
+</div>
+</div>
+<div class="two-up" id="i4_s1_risk_matrix">
+<img src="img/diagrams/i4_s1_risk_matrix.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Milestones assume Goldilocks (k=0.3).</p>
+<p><strong>Phase 1: M1–M6 — Network Formation (Doc 07 §Combined Phase 1 Timeline)</strong></p>
+<p>Total Phase 1 spend: ~$144K + $100K celebrity = ~$244K. 69% of marketing budget. Remaining $111K funds M7–M18 (campus expansion, Ivy League cluster, continued sticker drops) (Doc 07 §Phase 1).</p>
+<p><em class="blockquote">Genesis dinners are quarterly (M1, M4, M7, M10). Sticker drops and gatherings fill the months between. (Doc 07 §Note).</em></p>
+<p><strong>Phase 2: M7–M12 — Network Effects</strong></p>
+<p>Sticker racks (~750/mo) + campus expansion (~750/mo) = ~1,500 organized users/month. Organic mesh growth compounds on top. At Goldilocks k=0.3, organic exceeds organized by M8 (Cheat Sheet §Scenario 2).</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 7. The First 12 Months</a>
+</div>
+</div>
+<div class="sidebar-block" id="i4_s1_contingency">
+<img src="img/diagrams/i4_s1_contingency.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The financial model's strongest claim — that SSK is cash-flow positive in all five growth scenarios — is simultaneously the strongest argument against a traditional Series A growth round.</p>
+<p>At Goldilocks (k=0.3), the company generates +$525K/month net cash flow by M12, growing. By M18, the revenue run-rate funds every Y2-Y3 line item organically — patent prosecution (~$30K for 10 defensive claims — Doc 21, Doc 24), franchise expansion, Foundation Model training (Doc 11 §9). The $3M seed provides 37 months of survival runway at zero revenue. The architecture eliminates the cost categories (cloud compute, trust & safety headcount, data compliance) that force traditional platforms to raise.</p>
+<p><strong>The standard growth-round justification does not apply:</strong></p>
+<p><strong>The Series A is contingent, not assumed.</strong> Justified only under specific conditions:</p>
+<p><strong>Hardware manufacturing acceleration.</strong> If Tether/Compass/sensor timelines advance to M12-M15, upfront BOM/tooling/inventory could require $5-10M before organic revenue accumulates. This is the strongest trigger.</p>
+<p><strong>Defensive war chest.</strong> An Apple/Google competitive entry into edge-AI sovereign infrastructure could require accelerated franchise deployment and patent prosecution.</p>
+<a href="#sec-1-business-plan" class="section-ref">§ 8. On the Series A — Why It May Not Be Necessary</a>
+</div>
+</div>
+<div class="section-divider" id="sec-2-founder">
+  <h2><a href="#sec-2-founder">§2 Founder</a></h2>
+</div>
+<div class="spread" id="i4_s2_founder_profile">
+<img src="img/diagrams/i4_s2_founder_profile.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>$7,150/mo infra + zero marginal compute cost inverts kill-gate logic:</p>
+<p><strong>Death requires three simultaneous failures:</strong> (1) < 19K users in 37 months, (2) k = 0, (3) acquisition < 500/mo. Any one false = company survives (Cheat Sheet §Kill Gates).</p>
+<a href="#sec-2-founder" class="section-ref">§ 10. The Kill-Gate Inversion</a>
+</div>
+</div>
+<div class="two-up flip" id="i4_s2_education">
+<img src="img/diagrams/i4_s2_education.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>99.6% voting control. 9.3M Class B (20x). Investors: Class A (1x). 10M shares — irrevocable cap. Future rounds from Class B conversion — no new shares created (Doc 16).</p>
+<p>2 of 2 voting board seats. Twin serves as charter-level architectural veto oracle — can permanently block any action that compromises zero-egress security or .kasset provenance (Doc 17 §4). Not a board seat (DGCL §141(b)); a charter enforcement mechanism.</p>
+<p><strong>No option pool.</strong> All employee compensation is cash + spark grants. Zero equity dilution from hiring (Doc 16 §5).</p>
+<p><strong>Investor access:</strong> Seed investors receive information rights only — no board seat, no observer seat. Series A receives a non-voting observer seat. No investor receives a voting board seat at any stage. If a board seat is a condition of investment, the deal is declined (Doc 17).</p>
+<p><strong>Why:</strong> The airgap IS the product. Removable airgap = worthless signatures (Doc 17 §3).</p>
+<p><strong>You are not betting on a founder. You are betting on an equation.</strong></p>
+<a href="#sec-2-founder" class="section-ref">§ 11. Governance</a>
+</div>
+</div>
+<div class="two-up" id="i4_s2_career_path">
+<img src="img/diagrams/i4_s2_career_path.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>30+ years building at the intersection of Apple-native architecture, spatial computing, and machine learning. Solo architect of the Sovereign Survival Kit codebase (fully audited, 100% test passing). The only person on Earth currently running a local twin trained on their own cognitive data, airgapped, on their own hardware. Eagle Scout.</p>
+<a href="#sec-2-founder" class="section-ref">§ Summary</a>
+</div>
+</div>
+<div class="two-up flip" id="i4_s2_ip_portfolio">
+<img src="img/diagrams/i4_s2_ip_portfolio.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>National Merit Scholar</strong></p>
+<p>· <strong>Eagle Scout</strong>, Boy Scouts of America</p>
+<p>· Post-calculus thesis work at <strong>NOAA Atmospheric Turbulence and Diffusion Division</strong>, Oak Ridge National Laboratory (ORNL), Oak Ridge, TN (1996–1997) — evaluating and building VR environments on a <strong>Silicon Graphics Onyx rack</strong></p>
+<p>Graduate thesis: <em>"Designing a Natural User Interface"</em> (2011) — applying General Tau Theory (David Lee) to gesture-driven interfaces. First software implementation built as a <strong>Processing/Kinect thesis demonstration prototype</strong> (Java) during ITP, later re-implemented in C++/Unreal Engine as TauSkeletonVisual. Proposed perception-in-action as the fundamental control mechanism for software, predating Apple Vision Pro's hand tracking by 12 years.</p>
+<a href="#sec-2-founder" class="section-ref">§ Education</a>
+</div>
+</div>
+<div class="two-up" id="i4_s2_tech_stack">
+<img src="img/diagrams/i4_s2_tech_stack.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Headline Roles</strong></p>
+<p><strong>Complete Chronology</strong></p>
+<p><strong>Research & IP</strong></p>
+<p>· <strong>Graduate thesis (2011):</strong> Designed a gestural interface driven by tau-coupling (propriospecific, exterospecific, expropriospecific movement classes). Built a custom skeleton tracking rig to measure joint data relative to itself. The core insight — <em>your perception of your body in motion is the mechanism by which the user interface is controlled</em> — is the intellectual foundation for Sovereign Survival Kit's τ-metric implementation.</p>
+<p>· <strong>TauSkeletonVisual:</strong> General Tau Theory implementation in C++/Unreal Engine (CC-BY-NC-ND 4.0). Defensive IP for Sovereign Survival Kit.</p>
+<p>· <strong>TGI Sports:</strong> Metal + RealityKit pipeline achieving 100% frame synchronization.</p>
+<a href="#sec-2-founder" class="section-ref">§ Full Career History</a>
+</div>
+</div>
+<div class="two-up flip" id="i4_s2_know_maps">
+<img src="img/diagrams/i4_s2_know_maps.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Patent family:</strong> Methods for providing interactive audio information for geographic landmarks within 3D panoramic street-level imagery. Filed Aug 27, 2021 (App. 17/458,816). Assigned to Google LLC. Also published as US-11137976-B1, US-20220083309-A1.</p>
+<p><strong>Relevance to Sovereign Survival Kit:</strong> These patents cover the spatial audio interaction paradigm that directly precedes Sovereign Survival Kit's τ-coupled voice interface — applying interactive audio information to navigable 3D environments. The founder designed the system described in these patents while at Google Maps.</p>
+<a href="#sec-2-founder" class="section-ref">§ Patents (Google-Assigned)</a>
+</div>
+</div>
+<div class="two-up" id="i4_s2_tau_skeleton">
+<img src="img/diagrams/i4_s2_tau_skeleton.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Sovereign Survival Kit <code>clara-engine</code> codebase is <strong>not a prototype</strong>. It is production code:</p>
+<p>All code runs on a single <strong>NVIDIA RTX 3080 Ti Laptop GPU</strong> (16 GB VRAM, SM 8.6 Ampere) with strict VRAM phase management. No cloud. No API calls. No egress.</p>
+<a href="#sec-2-founder" class="section-ref">§ Production Codebase (Owned & Audited)</a>
+</div>
+</div>
+
+</div>
+
+<div class="issue-nav">
+  <a href="issue_3.html">← Issue 3</a>
+  <a href="index.html">All Issues</a>
+  <a href="issue_5.html">Issue 5 →</a>
+</div>
+<footer class="site-footer">Sovereign Survival Kit, Inc. · Series A Data Room · 2026</footer>
+</body>
+</html>

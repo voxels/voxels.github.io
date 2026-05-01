@@ -1,491 +1,899 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Issue 2: The Architecture of Trust — Sovereign Power</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-:root {
-  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
-  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
-  --border: #2a2a3a;
-  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
-  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
-  --font: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SOVEREIGN POWER</span>
+  <a href="index.html" class="">Library</a>
+<a href="issue_1.html" class="">#1</a>
+<a href="issue_2.html" class="active">#2</a>
+<a href="issue_3.html" class="">#3</a>
+<a href="issue_4.html" class="">#4</a>
+<a href="issue_5.html" class="">#5</a>
+<a href="issue_6.html" class="">#6</a>
+<a href="issue_7.html" class="">#7</a>
 
-/* NAV */
-.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
-  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
-  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
-.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
-.nav a:hover { color:var(--text); }
-.nav a.on { color:var(--magenta); }
-.nav .sp { flex:1; }
-.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
-  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
-
-/* FULL-BLEED COVER */
-.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
-.cover img { width:100%; height:100%; object-fit:cover; }
-.cover .overlay { position:absolute; inset:0;
-  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
-.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
-.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
-  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
-.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
-.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
-  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
-  border-radius:4px; color:white; }
-
-/* EDITORIAL BODY */
-.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
-
-/* SECTION BREAK */
-.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
-.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
-
-/* SPREAD: full-width hero image + editorial text below */
-.spread { margin-bottom:3rem; }
-.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
-.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
-.spread .body p { margin-bottom:0.8rem; }
-.spread .body strong { color:var(--text); }
-
-/* TWO-UP: image left, text right (alternating) */
-.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
-  align-items:start; margin-bottom:2.5rem; }
-.two-up.flip { direction:rtl; }
-.two-up.flip > * { direction:ltr; }
-.two-up img { width:100%; border-radius:6px; }
-.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
-.two-up .body strong { color:var(--text); }
-.two-up .body p { margin-bottom:0.6rem; }
-
-/* SIDEBAR: small img + text */
-.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
-.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
-.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
-
-/* DOC REF */
-.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
-  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
-.doc-ref:hover { color:var(--magenta); }
-
-/* SECTION TOC */
-.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
-.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
-  text-transform:uppercase; margin-bottom:0.6rem; }
-.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
-.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
-  color:var(--dim); background:var(--card); border:1px solid var(--border);
-  text-decoration:none; transition:all 0.2s; }
-.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
-
-/* BOTTOM NAV */
-.bot-nav { display:flex; justify-content:space-between; align-items:center;
-  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
-.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
-.bot-nav a:hover { color:var(--text); }
-.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
-
-/* INDEX COVERS */
-.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
-.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
-.mag-grid .card:first-child h2 { font-size:2.5rem; }
-.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
-  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
-.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
-.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
-.card:hover .bg { transform:scale(1.05); }
-.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
-.card:hover .grad { opacity:0.95; }
-.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
-.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
-.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
-  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
-.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
-.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
-
-/* HERO SECTION */
-.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
-  border-bottom:1px solid var(--border); overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
-  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
-.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
-  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
-.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
-.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
-.hero .stats .n { font-size:2rem; font-weight:900;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
-.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
-
-@media(max-width:768px) {
-  .hero h1 { font-size:2.2rem; }
-  .mag-grid { grid-template-columns:1fr; padding:1rem; }
-  .mag-grid .card:first-child { min-height:280px; }
-  .cover h1 { font-size:2rem; }
-  .cover { height:60vh; }
-  .two-up { grid-template-columns:1fr; }
-  .sidebar-spread { flex-direction:column; }
-  .sidebar-spread img { width:100%; }
-}
-</style></head><body>
-<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
-<a href="index.html">Library</a><a href="issue_1.html">#1</a>
-<a href="issue_2.html" class="on">#2</a>
-<a href="issue_3.html">#3</a>
-<a href="issue_4.html">#4</a>
-<a href="issue_5.html">#5</a>
-<a href="issue_6.html">#6</a>
-<a href="issue_7.html">#7</a>
-<span class="sp"></span><span class="badge">ALPHA</span></nav>
-<div class="cover">
+  <span class="nav-spacer"></span>
+  <span class="nav-badge">Alpha</span>
+</nav>
+<div class="issue-cover">
   <img src="img/diagrams/i2_cover.png" alt="">
-  <div class="overlay"></div>
-  <div class="pill" style="background:#0984e3">Issue 2 of 7</div>
-  <div class="text"><h1>The Architecture of Trust</h1>
-  <div class="sub">Act 2: Architecture + Infrastructure · 81 illustrations</div></div>
+  <div class="issue-cover-overlay"></div>
+  <div class="issue-cover-badge" style="background:#0984e3">Issue 2 of 7</div>
+  <div class="issue-cover-text">
+    <h1>The Architecture of Trust</h1>
+    <div class="act-line">Act 2 · Architecture · 81 illustrations</div>
+  </div>
 </div>
-<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-1-currency">§1 Currency σ</a><a href="#sec-2-sensors">§2 Sensors</a><a href="#sec-3-network-formation">§3 Network Formation</a><a href="#sec-4-revenue">§4 Revenue</a><a href="#sec-5-distribution">§5 Distribution</a><a href="#sec-6-edgcumbe-encoding">§6 Edgcumbe Encoding</a></div></div>
-<div class="editorial"><div class="sec-break" id="sec-1-currency"><h2><a href="#sec-1-currency" style="color:inherit;text-decoration:none">§1 Currency σ</a></h2></div>
 
-                <div class="spread" id="i2_s1_sigma_definition">
-                  <img src="img/diagrams/i2_s1_sigma_definition.png" alt="" loading="lazy">
-                  <div class="body"><p>The original design pegged .kasset values to gold via an algorithmic oracle. This was abandoned because:</p><p><strong>Gold is mutable.</strong> Central banks hold 35,000+ tonnes. Government gold sales/purchases move the price. A sovereign could manipulate .kasset values by manipulating gold markets.</p><p><strong>Gold is geographically asymmetric.</strong> South Africa, China, Russia, and Australia dominate production. σ's energy base is universal.</p><p><strong>Gold has no intrinsic utility in the digital context.</strong> Energy is the substrate of all computation. Pricing intelligence in energy units is philosophically coherent.</p><a class="doc-ref" href="#sec-1-currency">§ 1. Why Not Gold?</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_spark_coin">
-                  <img src="img/diagrams/i2_s1_spark_coin.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>Derived from:</strong> SI joule, defined by the Planck constant (exact since the 2019 BIPM redefinition of SI base units)</p><p>· <strong>Changes when:</strong> NIST redefines the joule (happens only when measurement precision improves — the unit itself is invariant)</p><p>· <strong>Cannot be:</strong> printed, inflated, sanctioned, debased</p><p>σ is a <strong>reference number</strong> — a unit-of-account label applied to the user's existing fiat balance. It is NOT:</p><p>· A token, coin, or cryptocurrency (no blockchain, no chain, no wallet)</p><p>· A stablecoin (no dollar peg)</p><a class="doc-ref" href="#sec-1-currency">§ 2. The σ Definition</a></div>
-                </div>
-                <div class="two-up" id="i2_s1_why_not_gold">
-                  <img src="img/diagrams/i2_s1_why_not_gold.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>REC = Regional Energy Cost</strong></p><p>SSK publishes and open-sources a <strong>deterministic conversion function</strong> that converts σ to local currency using publicly available <strong>total delivered energy cost</strong> data — the all-in price a consumer pays per kWh, including production, transmission, distribution, storage, and applicable taxes/fees. This is the retail electricity price, not the levelized cost of energy (LCOE) or production cost alone.</p><p>The company publishes the formula <strong>once</strong>. It does NOT operate a centralized oracle, set prices, or update rates on behalf of users.</p><p><strong>Why Total Delivered Cost, Not Production Cost</strong></p><p>The total delivered cost is the correct economic basis because it represents the <strong>actual price of energy as experienced by the user</strong> — the full cost of having 1 kWh available for computation at a specific place and time.</p><p><strong>Data Sources (User-Configurable)</strong></p><a class="doc-ref" href="#sec-1-currency">§ 3. σ Conversion Formula</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_conversion_formula">
-                  <img src="img/diagrams/i2_s1_conversion_formula.png" alt="" loading="lazy">
-                  <div class="body"><p>There is no blockchain, no sequencer, and no smart contract. Trades settle bilaterally. Both devices must have their vaults open (foreground exclusivity — Doc 28 §0.7) to sign:</p><p>Steps 7-12 are <strong>intentionally asynchronous</strong>. The trade itself (steps 1-6) completes without SSK involvement. Fiat settlement (step 7) occurs outside SSK using whatever payment method the counterparties choose — identical to how Craigslist, Facebook Marketplace, and OfferUp transactions settle. The seller's on-device payment confirmation (step 8) binds the fiat acknowledgment to the cryptographic provenance chain without SSK touching, holding, or transmitting money. Certification happens later — when network connectivity is available, or when the user is physically near a Vault mesh node.</p><p>SSK's certification service is a <strong>notary</strong> — it certifies trades in exchange for a fee. It does not set prices, order transactions, manage a ledger, or control the marketplace. The traded .kasset content is Edgcumbe-encoded (Doc 28 §0.5) — a standardized, lossy format that carries methodology without the seller's cognitive fingerprint. The certification service certifies the provenance chain, not the content. The Codex (Stiftung-operated, non-profit) provides permanent archival.</p><p><strong>Certification constraints (from Layer 0/1):</strong></p><p>· <strong>BIPA compliance gate.</strong> .kassets derived from biometric sensor data (face mesh, voice, gesture) must carry verified BIPA consent in the provenance chain. The certification service verifies the consent record before certifying biometric-derived trades. This is a legal compliance requirement, not a content evaluation.</p><p>· <strong>Orphan record handling.</strong> If a user exercises the burn credential (Doc 28 §0.10), certification records for that user's previously certified trades persist in the Codex. The Codex handles orphaned provenance records — the certification is permanent even if the minter's vault no longer exists.</p><a class="doc-ref" href="#sec-1-currency">§ 5. Bilateral Settlement Protocol</a></div>
-                </div>
-                <div class="two-up" id="i2_s1_regional_prices">
-                  <img src="img/diagrams/i2_s1_regional_prices.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>Primary display:</strong> Spark ⚡ (always)</p><p>· <strong>Secondary:</strong> Local currency as reference (toggle-able), calculated from user's selected data source</p><p>· <strong>Source line:</strong> Explicit data source + timestamp (not "↑ 0.3% today" — SSK does not track rate movements)</p><p>· <strong>Staleness warning:</strong> Soft warning if cached rate exceeds user's staleness preference (default: 7 days)</p><a class="doc-ref" href="#sec-1-currency">§ 6. User-Facing Display</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_total_delivered_cost">
-                  <img src="img/diagrams/i2_s1_total_delivered_cost.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Trend</strong></p><p>Global energy costs are shaped by two vectors moving in opposite directions:</p><p><strong>Production cost (LCOE) is in secular decline:</strong></p><p><strong>Net-positive milestones:</strong></p><p>· <strong>December 2022:</strong> National Ignition Facility (NIF) achieves fusion ignition — net energy gain for the first time in history</p><p>· <strong>2024:</strong> Helion Energy targets 2028 for commercial fusion pilot (production LCOE projected: $0.01–$0.05/kWh)</p><a class="doc-ref" href="#sec-1-currency">§ 8. Energy Convergence Thesis — σ Stability Under Declining Production Costs</a></div>
-                </div>
-                <div class="two-up" id="i2_s1_data_sources">
-                  <img src="img/diagrams/i2_s1_data_sources.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Thesis summary:</strong> σ is a metrological reference number defined by physics (1 kWh ≡ 3.6 MJ), not by policy. Its fiat-equivalent value is determined by publicly observable delivered energy costs and fluctuates with those costs — it can decrease as energy infrastructure becomes more efficient. Each device computes the conversion locally using a published, deterministic, open-source formula on user-selected data sources. No central oracle exists. Unlike a production-cost peg, the total-delivered-cost basis retains a durable non-zero fiat anchor through infrastructure costs, making σ a practical unit of account today. σ is not designed or marketed as an investment, a store of value, or an appreciating asset. Users are responsible for their own assessment of σ's utility and any applicable tax obligations.</em></p><a class="doc-ref" href="#sec-1-currency">§ 8. σ Conversion Formula Resilience Under Energy Convergence</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_local_computation">
-                  <img src="img/diagrams/i2_s1_local_computation.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Edge-Native</strong> — All processing happens on-device. Sensors connect via BLE to the user's Sovereign Survival Kit instance, not to a cloud.</p><p><strong>Open Protocol</strong> — Sovereign Survival Kit defines a <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">SovSensor</code> protocol (JSON over BLE GATT) that any manufacturer can implement. The products below are reference designs, not a walled garden.</p><p><strong>Data as Input, Not Product</strong> — Sensor data is raw input for the twin's planning engines. These are NOT standalone health gadgets with their own apps. They are peripherals for the OS.</p><p><strong>.kasset Eligible</strong> — Anonymized, aggregated biometric trends can become .kasset data (e.g., "12 months of metabolic optimization protocols") for A2A commerce.</p><p><strong>Privacy by Architecture</strong> — Biometric data is the most sensitive personal data category. It stays in the PII vault with AES-256-GCM encryption. It is NEVER transmitted over a network.</p><a class="doc-ref" href="#sec-1-currency">§ 1. Design Principles</a></div>
-                </div>
-                <div class="two-up" id="i2_s1_no_appreciation">
-                  <img src="img/diagrams/i2_s1_no_appreciation.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Service UUID</strong></p><p><strong>Characteristic Format</strong></p><p>Every sensor transmits a standardized JSON payload over BLE GATT notify:</p><p><strong>Design Constraints</strong></p><a class="doc-ref" href="#sec-1-currency">§ 3. SovSensor Protocol (JSON over BLE GATT)</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_decay_hourglass">
-                  <img src="img/diagrams/i2_s1_decay_hourglass.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Note:</strong> This architecture represents the Version 2.0 design, intended for release concurrently with the Lifestyle Sensors line.</em></p><p>As the sensor line streams continuous biometric and environmental data, the Sovereign Digital Cocoon evolves into a <strong>Universal Fact Engine</strong>. Every breath, heartbeat, and movement becomes a high-signal fact captured locally.</p><p><strong>4.1 The Merkle Epoch (Local Minting)</strong></p><p>Minting every individual data point via AES-256-GCM and ML-DSA-65 would destroy battery and storage. Instead, Version 2.0 utilizes a <strong>Layer 3 State Channel</strong> (The Merkle Epoch):</p><p><strong>The Accumulator:</strong> Every sensor reading and human-to-human message is hashed as a leaf in a local Merkle Tree.</p><p><strong>Producer-Free Minting:</strong> This local hashing runs on the user's hardware and is inherently free (costing only local electricity σ).</p><a class="doc-ref" href="#sec-1-currency">§ 4. Version 2.0: The Sovereign Fact Engine (Ambient Knowledge Capitalization)</a></div>
-                </div>
-                <div class="two-up" id="i2_s1_non_transferable">
-                  <img src="img/diagrams/i2_s1_non_transferable.png" alt="" loading="lazy">
-                  <div class="body"><p>The twin's <strong>Situational Retrieval</strong> module (documented in <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">03_Twin_Architecture.md</code>, Section 2) uses sensor data as one of its context signals. For example:</p><p>· SovPulse reports HRV = 22ms → twin tags current state as "high stress"</p><p>· SovAir reports CO2 = 1200ppm → twin injects a ventilation nudge before the next response</p><p>· SovBreath reports acetone = 3.1ppm → twin notes ketosis and factors into Diet domain planning</p><a class="doc-ref" href="#sec-1-currency">§ 5. Data Flow: Sensor → twin</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_bilateral_settlement">
-                  <img src="img/diagrams/i2_s1_bilateral_settlement.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Hardware Revenue</strong></p><p><strong>Strategic Value (Not Revenue)</strong></p><p>The primary value of the sensor line is NOT hardware margin. It is:</p><p><strong>Engagement flywheel</strong> — As biometric history accumulates, the twin becomes irreplaceable. 6 months of continuous HRV, sleep, and metabolic data creates a personal health baseline no competitor can replicate.</p><p><strong>Extreme switching cost</strong> — The biometric corpus is locked in the PII vault with the user's encryption key. Starting fresh with another platform means losing all historical context.</p><p><strong>Data network effect</strong> — Anonymized .kasset health patterns (opt-in via CIP) improve the twin's planning algorithms across the entire network.</p><a class="doc-ref" href="#sec-1-currency">§ 5. Business Model</a></div>
-                </div>
-                <div class="two-up" id="i2_s1_user_display">
-                  <img src="img/diagrams/i2_s1_user_display.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Note</strong>: Biometric sensor devices may trigger regulatory classification depending on jurisdiction. This section captures awareness; detailed analysis is deferred to Phase 2+.</em></p><a class="doc-ref" href="#sec-1-currency">§ 6. Regulatory Considerations</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_nist_governance">
-                  <img src="img/diagrams/i2_s1_nist_governance.png" alt="" loading="lazy">
-                  <div class="body"><p>The sensor product line complements, not replaces, the existing hardware roadmap:</p><a class="doc-ref" href="#sec-1-currency">§ 7. Relationship to Existing Hardware IP</a></div>
-                </div>
-                <div class="two-up" id="i2_s1_energy_convergence">
-                  <img src="img/diagrams/i2_s1_energy_convergence.png" alt="" loading="lazy">
-                  <div class="body"><p>The network begins with a dinner — and repeats no more than <strong>four times per year</strong>.</p><p>A small portion of the seed round funds an intimate, curated series of events in New York City — each seating 8 to 16 people drawn from local educational institutions, alumni networks, and creative communities. Each event targets a different community. The venue is site-specific (a private dining room, a gallery, a club library). The meal is catered. The invitation carries one instruction:</p><p><strong>"Bring a piece of digital media you made. You will mint it and trade it with the others at the table."</strong></p><p>The quarterly cadence is deliberate — scarcity creates gravity. These are not recurring meetups. Each Genesis dinner is a curated, invitation-only event that seeds a new community into the network. Four per year means four new communities, four new .kasset domains, four new local word-of-mouth waves.</p><p><strong>Why 8–16 People</strong></p><p><strong>The Genesis Grant: ⚡500 Per Seat</strong></p><a class="doc-ref" href="#sec-1-currency">§ 1. The Genesis Series</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s1_self_generator">
-                  <img src="img/diagrams/i2_s1_self_generator.png" alt="" loading="lazy">
-                  <div class="body"><p>The Genesis Event proves the mechanic works: people create, price, and trade digital media face-to-face. The next phase scales that mechanic through two channels that reinforce each other — one ambient, one event-driven.</p><p><strong>Vector A: The Sticker Drop (QR Street Distribution)</strong></p><p>Local musicians and visual artists distribute their work by leaving pre-printed QR stickers in the streets. QR stickers are $0.05–$0.15/unit ambient awareness placements — they supplement mesh discovery and word-of-mouth, not replace them. See Doc 29 §4 for the full QR sticker specification.</p><p><strong>The sticker is a designed object.</strong> Each sticker is custom-printed with the artist's name, a thumbnail of the work (album art, a cropped image of the visual piece), Sovereign branding, and a QR code. The .kasset is pre-minted and the one-time claim token is encoded in the QR before the artist ever touches it. The artist's only job is to decide where to place them.</p><p><strong>Anti-cloning:</strong> One-time claim tokens replace hardware NFC MAC. Token is generated by the minting Mac, burned on first claim. A photographed QR is a race condition (first scan wins) — equivalent to finding a rare record first at a thrift store. See Doc 29 §4.</p><p><strong>The production pipeline:</strong></p><a class="doc-ref" href="#sec-1-currency">§ 2. Scaling the Table: Two Growth Vectors</a></div>
-                </div><div class="sec-break" id="sec-2-sensors"><h2><a href="#sec-2-sensors" style="color:inherit;text-decoration:none">§2 Sensors</a></h2></div>
+<div class="issue-toc">
+  <h3>In This Issue</h3>
+  <div class="toc-chips"><a href="#sec-1-currency" class="toc-chip">§1 Currency σ</a>
+<a href="#sec-2-sensors" class="toc-chip">§2 Sensors</a>
+<a href="#sec-3-network-formation" class="toc-chip">§3 Network Formation</a>
+<a href="#sec-4-revenue" class="toc-chip">§4 Revenue</a>
+<a href="#sec-5-distribution" class="toc-chip">§5 Distribution</a>
+<a href="#sec-6-edgcumbe-encoding" class="toc-chip">§6 Edgcumbe Encoding</a>
+</div>
+</div>
 
-                <div class="spread" id="i2_s2_sensor_lineup">
-                  <img src="img/diagrams/i2_s2_sensor_lineup.png" alt="" loading="lazy">
-                  <div class="body"><p>While the cultural track seeds the network through music and visual art, a parallel track runs simultaneously through academic institutions — starting with the <strong>Joseph Wharton Scholars (JWS)</strong> at the University of Pennsylvania.</p><p>The mechanic is the same. The medium is different. Instead of tracks and prints, students mint <strong>class papers, research projects, case analyses, and thesis work</strong> as .kassets and trade them with other students.</p><p><strong>Why JWS</strong></p><p><strong>What Gets Minted</strong></p><p>Students are already producing work that has value beyond the grade. The .kasset formalizes that value and makes it tradeable:</p><p><strong>How It Starts</strong></p><a class="doc-ref" href="#sec-2-sensors">§ 3. The Academic Track (Parallel Channel)</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s2_compass">
-                  <img src="img/diagrams/i2_s2_compass.png" alt="" loading="lazy">
-                  <div class="body"><p>Every formation mechanic described above — the Genesis dinner, the sticker drop, the gathering, the academic workshop — is amplified by the <strong>mesh network</strong>. Devices running the Sovereign edge app passively broadcast and discover .kasset availability through physical proximity. No internet. No server. No catalog to browse. Geography is the search engine.</p><p><strong>How It Works</strong></p><p>Three radio layers, each serving a different range:</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Pre-hardware (M1–M14):</strong> The mesh operates on BLE + WiFi-Direct only — both natively available on conforming mobile devices. This limits ambient discovery to ~100 meters, which is sufficient for events, campuses, and dense urban foot traffic. LoRa's neighborhood-scale range activates when Sovereign hardware ships at M15.</em></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">[!NOTE]</em></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Mobile BLE throttling.</strong> Mobile platforms throttle background BLE scanning (e.g., ~15% duty cycle with service-filtered discovery). Continuous, real-time peer detection is not reliable in background mode on mobile devices. SSK's architecture accounts for this: the <strong>Echo mechanism</strong> (§4.1, 24-hour store-and-forward) is the primary discovery mode, not continuous BLE. BLE proximity triggers the trade handshake when two users are in foreground or semi-active mode; Echoes populate the browse catalog asynchronously from cached availability vectors left by prior visitors. Discovery does not depend on continuous BLE scanning — it depends on the accumulation of Echoes at high-traffic locations (storefronts, campuses, transit hubs).</em></p><a class="doc-ref" href="#sec-2-sensors">§ 4. The Mesh Layer (Ambient Discovery)</a></div>
-                </div>
-                <div class="two-up" id="i2_s2_tether">
-                  <img src="img/diagrams/i2_s2_tether.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Piggybacking the City's Infrastructure</strong></p><p>New York City has ~2,000 LinkNYC kiosks deployed across Manhattan, Brooklyn, Queens, and the Bronx — each providing free public WiFi with a range of ~100–150 meters. This is an existing mesh backbone that Sovereign can ride for free.</p><p><strong>The mechanic:</strong> A Sovereign device within range of a LinkNYC kiosk briefly joins the open WiFi and broadcasts its availability vector via standard local network discovery (mDNS/multicast). Any other Sovereign device on the same kiosk's network receives it. The device then disconnects. Hit-and-run — a few seconds of WiFi contact is enough to exchange availability vectors.</p><p>This is not a hack. It is standard use of a public WiFi network for local service discovery. No terms of service are violated. No data leaves the local network. The kiosk is just a relay point.</p><p><strong>What this changes:</strong></p><p>The mesh math from Section 4 shifts dramatically. At 10,000 Sovereign users in NYC, LinkNYC extends the average encounter radius from 30m (BLE) to 150m (WiFi), increasing the coverage area by <strong>25×</strong> (from ~2,827 m² to ~70,686 m²). Daily organic encounters scale proportionally.</p><a class="doc-ref" href="#sec-2-sensors">§ 5. The LinkNYC Layer & The Introduction Economy</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s2_sentinel">
-                  <img src="img/diagrams/i2_s2_sentinel.png" alt="" loading="lazy">
-                  <div class="body"><p>Everything described in Sections 1–5 is grassroots — dinners, stickers, storefronts, campuses, mesh. It builds slowly, deliberately, and authentically. But there is a moment in the growth curve where a single high-amplitude signal converts organic traction into viral velocity. That signal is a <strong>one-time celebrity sponsorship.</strong></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">No celebrity partnership is committed at time of writing. The celebrity activation is a channel option, not a growth dependency. All five scenarios in Doc 13 §5 produce cash-flow-positive outcomes with or without celebrity participation.</em></p><p><strong>Timing: M5–M6 (Not Before)</strong></p><p>This does NOT happen at launch. The activation fires only after the following conditions are met:</p><p>If any of these are missing, the celebrity spend is wasted — you'd be driving traffic into an empty room.</p><p><strong>The Archetype: Cardi B</strong></p><a class="doc-ref" href="#sec-2-sensors">§ 6. The Catalyst: Single Celebrity Activation</a></div>
-                </div>
-                <div class="two-up" id="i2_s2_beacon">
-                  <img src="img/diagrams/i2_s2_beacon.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Funnel Stack</strong></p><p>Each formation layer feeds the next. They are not alternatives — they are sequential stages of a single acquisition funnel:</p><p><strong>The Math: How 12 Becomes 250,000</strong></p><p><strong>Key inflection points:</strong></p><p>· <strong>M4 (~1,100 users):</strong> Mesh encounter density crosses ~2 encounters/user/day. Echoes make the network feel populated even in off-peak hours.</p><p>· <strong>M5–6 (celebrity drop):</strong> 3,000 users in 48 hours. Storefronts across Brooklyn are already active — new users walk into a populated mesh immediately.</p><a class="doc-ref" href="#sec-2-sensors">§ 7. Convergence: From 12 Users to Critical Mass</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s2_ble_gatt">
-                  <img src="img/diagrams/i2_s2_ble_gatt.png" alt="" loading="lazy">
-                  <div class="body"><p>At critical mass, the network flips the traditional data extraction model. As outlined in Doc 06, a user's data exhaust—traditionally harvested for free by platforms—is captured, encrypted, and retained entirely within the local Sovereign Cocoon.</p><p>Users can authorize their Twin to bundle and anonymize specific telemetry or behavioral exhaust into macro-level .kassets. The Sovereign network then acts as an arbitrageur, trading this aggregated intelligence back to corporate cloud processors, LLM training labs, and market researchers. The corporate entities pay for high-fidelity, verified data, and the economic value flows directly back to the users who generated it. The network transitions from a cost center to an income generator for its users.</p><a class="doc-ref" href="#sec-2-sensors">§ 8. Data Exhaust Monetization (Corporate Arbitrage)</a></div>
-                </div>
-                <div class="sidebar-spread" id="i2_s2_y2_locked">
-                  <img src="img/diagrams/i2_s2_y2_locked.png" alt="" loading="lazy">
-                  <div class="body"><p>With the mesh active and the user base engaged, SovereignOS replaces legacy "doom-scrolling" platforms (Facebook, Instagram, X) with a Twin-curated, asynchronous information architecture.</p><p><strong>Feed Inputs:</strong></p><p><strong>Authorized Broadcasts:</strong> Personalized messages sent by authorized individuals to <em>N</em> number of recipients (the Sovereign equivalent of a mailing list or group broadcast).</p><p><strong>The Public Record:</strong> Statements, votes, and actions by public officials and government representatives, ingested continuously via the Codex subscription.</p><p><strong>Curation by the Twin:</strong></p><p>The feed is not an infinite scroll engineered for engagement. It is a periodic briefing curated by the user's Twin. The primary filtering metrics are <strong>cognitive demand</strong> and the <strong>minimization of cognitive fragmentation</strong>. The Twin synthesizes the noise, presenting only what matters, when the user has the cognitive budget to process it</p><a class="doc-ref" href="#sec-2-sensors">§ 9. The Sovereign Feed (Cognitive Defense)</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s2_y1_phone_only">
-                  <img src="img/diagrams/i2_s2_y1_phone_only.png" alt="" loading="lazy">
-                  <div class="body"><p>The second pillar of delegation is about curating professional and experiential progression. Rather than relying on algorithmic serendipity or a purely autonomous AI, users actively choose to "lock in" the specific people and domain experts they want to work with on a daily basis.</p><p>The user delegates discovery authority to chosen human managers or curators. These managers sift through the global mesh and the Sovereign Feed to define a highly refined, high-signal set of choices, opportunities, or introductions. The user's Twin acts as the logistical executor—maintaining these trusted connections, filtering out unauthorized noise, and presenting the user only with the curated selections from their chosen human managers. The user remains the ultimate decision-maker, selecting from a menu populated entirely by people they have explicitly chosen to trust.</p><a class="doc-ref" href="#sec-2-sensors">§ 11. Curatorial Delegation (Locking in the Network)</a></div>
-                </div><div class="sec-break" id="sec-3-network-formation"><h2><a href="#sec-3-network-formation" style="color:inherit;text-decoration:none">§3 Network Formation</a></h2></div>
+<div class="editorial">
+<div class="section-divider" id="sec-1-currency">
+  <h2><a href="#sec-1-currency">§1 Currency σ</a></h2>
+</div>
+<div class="spread" id="i2_s1_sigma_definition">
+<img src="img/diagrams/i2_s1_sigma_definition.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The original design pegged .kasset values to gold via an algorithmic oracle. This was abandoned because:</p>
+<p><strong>Gold is mutable.</strong> Central banks hold 35,000+ tonnes. Government gold sales/purchases move the price. A sovereign could manipulate .kasset values by manipulating gold markets.</p>
+<p><strong>Gold is geographically asymmetric.</strong> South Africa, China, Russia, and Australia dominate production. σ's energy base is universal.</p>
+<p><strong>Gold has no intrinsic utility in the digital context.</strong> Energy is the substrate of all computation. Pricing intelligence in energy units is philosophically coherent.</p>
+<a href="#sec-1-currency" class="section-ref">§ 1. Why Not Gold?</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_spark_coin">
+<img src="img/diagrams/i2_s1_spark_coin.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>Derived from:</strong> SI joule, defined by the Planck constant (exact since the 2019 BIPM redefinition of SI base units)</p>
+<p>· <strong>Changes when:</strong> NIST redefines the joule (happens only when measurement precision improves — the unit itself is invariant)</p>
+<p>· <strong>Cannot be:</strong> printed, inflated, sanctioned, debased</p>
+<p>σ is a <strong>reference number</strong> — a unit-of-account label applied to the user's existing fiat balance. It is NOT:</p>
+<p>· A token, coin, or cryptocurrency (no blockchain, no chain, no wallet)</p>
+<p>· A stablecoin (no dollar peg)</p>
+<a href="#sec-1-currency" class="section-ref">§ 2. The σ Definition</a>
+</div>
+</div>
+<div class="two-up" id="i2_s1_why_not_gold">
+<img src="img/diagrams/i2_s1_why_not_gold.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>REC = Regional Energy Cost</strong></p>
+<p>SSK publishes and open-sources a <strong>deterministic conversion function</strong> that converts σ to local currency using publicly available <strong>total delivered energy cost</strong> data — the all-in price a consumer pays per kWh, including production, transmission, distribution, storage, and applicable taxes/fees. This is the retail electricity price, not the levelized cost of energy (LCOE) or production cost alone.</p>
+<p>The company publishes the formula <strong>once</strong>. It does NOT operate a centralized oracle, set prices, or update rates on behalf of users.</p>
+<p><strong>Why Total Delivered Cost, Not Production Cost</strong></p>
+<p>The total delivered cost is the correct economic basis because it represents the <strong>actual price of energy as experienced by the user</strong> — the full cost of having 1 kWh available for computation at a specific place and time.</p>
+<p><strong>Data Sources (User-Configurable)</strong></p>
+<a href="#sec-1-currency" class="section-ref">§ 3. σ Conversion Formula</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_conversion_formula">
+<img src="img/diagrams/i2_s1_conversion_formula.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>There is no blockchain, no sequencer, and no smart contract. Trades settle bilaterally. Both devices must have their vaults open (foreground exclusivity — Doc 28 §0.7) to sign:</p>
+<p>Steps 7-12 are <strong>intentionally asynchronous</strong>. The trade itself (steps 1-6) completes without SSK involvement. Fiat settlement (step 7) occurs outside SSK using whatever payment method the counterparties choose — identical to how Craigslist, Facebook Marketplace, and OfferUp transactions settle. The seller's on-device payment confirmation (step 8) binds the fiat acknowledgment to the cryptographic provenance chain without SSK touching, holding, or transmitting money. Certification happens later — when network connectivity is available, or when the user is physically near a Vault mesh node.</p>
+<p>SSK's certification service is a <strong>notary</strong> — it certifies trades in exchange for a fee. It does not set prices, order transactions, manage a ledger, or control the marketplace. The traded .kasset content is Edgcumbe-encoded (Doc 28 §0.5) — a standardized, lossy format that carries methodology without the seller's cognitive fingerprint. The certification service certifies the provenance chain, not the content. The Codex (Stiftung-operated, non-profit) provides permanent archival.</p>
+<p><strong>Certification constraints (from Layer 0/1):</strong></p>
+<p>· <strong>BIPA compliance gate.</strong> .kassets derived from biometric sensor data (face mesh, voice, gesture) must carry verified BIPA consent in the provenance chain. The certification service verifies the consent record before certifying biometric-derived trades. This is a legal compliance requirement, not a content evaluation.</p>
+<p>· <strong>Orphan record handling.</strong> If a user exercises the burn credential (Doc 28 §0.10), certification records for that user's previously certified trades persist in the Codex. The Codex handles orphaned provenance records — the certification is permanent even if the minter's vault no longer exists.</p>
+<a href="#sec-1-currency" class="section-ref">§ 5. Bilateral Settlement Protocol</a>
+</div>
+</div>
+<div class="two-up" id="i2_s1_regional_prices">
+<img src="img/diagrams/i2_s1_regional_prices.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>Primary display:</strong> Spark ⚡ (always)</p>
+<p>· <strong>Secondary:</strong> Local currency as reference (toggle-able), calculated from user's selected data source</p>
+<p>· <strong>Source line:</strong> Explicit data source + timestamp (not "↑ 0.3% today" — SSK does not track rate movements)</p>
+<p>· <strong>Staleness warning:</strong> Soft warning if cached rate exceeds user's staleness preference (default: 7 days)</p>
+<a href="#sec-1-currency" class="section-ref">§ 6. User-Facing Display</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_total_delivered_cost">
+<img src="img/diagrams/i2_s1_total_delivered_cost.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Trend</strong></p>
+<p>Global energy costs are shaped by two vectors moving in opposite directions:</p>
+<p><strong>Production cost (LCOE) is in secular decline:</strong></p>
+<p><strong>Net-positive milestones:</strong></p>
+<p>· <strong>December 2022:</strong> National Ignition Facility (NIF) achieves fusion ignition — net energy gain for the first time in history</p>
+<p>· <strong>2024:</strong> Helion Energy targets 2028 for commercial fusion pilot (production LCOE projected: $0.01–$0.05/kWh)</p>
+<a href="#sec-1-currency" class="section-ref">§ 8. Energy Convergence Thesis — σ Stability Under Declining Production Costs</a>
+</div>
+</div>
+<div class="two-up" id="i2_s1_data_sources">
+<img src="img/diagrams/i2_s1_data_sources.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Thesis summary:</strong> σ is a metrological reference number defined by physics (1 kWh ≡ 3.6 MJ), not by policy. Its fiat-equivalent value is determined by publicly observable delivered energy costs and fluctuates with those costs — it can decrease as energy infrastructure becomes more efficient. Each device computes the conversion locally using a published, deterministic, open-source formula on user-selected data sources. No central oracle exists. Unlike a production-cost peg, the total-delivered-cost basis retains a durable non-zero fiat anchor through infrastructure costs, making σ a practical unit of account today. σ is not designed or marketed as an investment, a store of value, or an appreciating asset. Users are responsible for their own assessment of σ's utility and any applicable tax obligations.</em></p>
+<a href="#sec-1-currency" class="section-ref">§ 8. σ Conversion Formula Resilience Under Energy Convergence</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_local_computation">
+<img src="img/diagrams/i2_s1_local_computation.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Edge-Native</strong> — All processing happens on-device. Sensors connect via BLE to the user's Sovereign Survival Kit instance, not to a cloud.</p>
+<p><strong>Open Protocol</strong> — Sovereign Survival Kit defines a <code>SovSensor</code> protocol (JSON over BLE GATT) that any manufacturer can implement. The products below are reference designs, not a walled garden.</p>
+<p><strong>Data as Input, Not Product</strong> — Sensor data is raw input for the twin's planning engines. These are NOT standalone health gadgets with their own apps. They are peripherals for the OS.</p>
+<p><strong>.kasset Eligible</strong> — Anonymized, aggregated biometric trends can become .kasset data (e.g., "12 months of metabolic optimization protocols") for A2A commerce.</p>
+<p><strong>Privacy by Architecture</strong> — Biometric data is the most sensitive personal data category. It stays in the PII vault with AES-256-GCM encryption. It is NEVER transmitted over a network.</p>
+<a href="#sec-1-currency" class="section-ref">§ 1. Design Principles</a>
+</div>
+</div>
+<div class="two-up" id="i2_s1_no_appreciation">
+<img src="img/diagrams/i2_s1_no_appreciation.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Service UUID</strong></p>
+<p><strong>Characteristic Format</strong></p>
+<p>Every sensor transmits a standardized JSON payload over BLE GATT notify:</p>
+<p><strong>Design Constraints</strong></p>
+<a href="#sec-1-currency" class="section-ref">§ 3. SovSensor Protocol (JSON over BLE GATT)</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_decay_hourglass">
+<img src="img/diagrams/i2_s1_decay_hourglass.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Note:</strong> This architecture represents the Version 2.0 design, intended for release concurrently with the Lifestyle Sensors line.</em></p>
+<p>As the sensor line streams continuous biometric and environmental data, the Sovereign Digital Cocoon evolves into a <strong>Universal Fact Engine</strong>. Every breath, heartbeat, and movement becomes a high-signal fact captured locally.</p>
+<p><strong>4.1 The Merkle Epoch (Local Minting)</strong></p>
+<p>Minting every individual data point via AES-256-GCM and ML-DSA-65 would destroy battery and storage. Instead, Version 2.0 utilizes a <strong>Layer 3 State Channel</strong> (The Merkle Epoch):</p>
+<p><strong>The Accumulator:</strong> Every sensor reading and human-to-human message is hashed as a leaf in a local Merkle Tree.</p>
+<p><strong>Producer-Free Minting:</strong> This local hashing runs on the user's hardware and is inherently free (costing only local electricity σ).</p>
+<a href="#sec-1-currency" class="section-ref">§ 4. Version 2.0: The Sovereign Fact Engine (Ambient Knowledge Capitalization)</a>
+</div>
+</div>
+<div class="two-up" id="i2_s1_non_transferable">
+<img src="img/diagrams/i2_s1_non_transferable.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The twin's <strong>Situational Retrieval</strong> module (documented in <code>03_Twin_Architecture.md</code>, Section 2) uses sensor data as one of its context signals. For example:</p>
+<p>· SovPulse reports HRV = 22ms → twin tags current state as "high stress"</p>
+<p>· SovAir reports CO2 = 1200ppm → twin injects a ventilation nudge before the next response</p>
+<p>· SovBreath reports acetone = 3.1ppm → twin notes ketosis and factors into Diet domain planning</p>
+<a href="#sec-1-currency" class="section-ref">§ 5. Data Flow: Sensor → twin</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_bilateral_settlement">
+<img src="img/diagrams/i2_s1_bilateral_settlement.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Hardware Revenue</strong></p>
+<p><strong>Strategic Value (Not Revenue)</strong></p>
+<p>The primary value of the sensor line is NOT hardware margin. It is:</p>
+<p><strong>Engagement flywheel</strong> — As biometric history accumulates, the twin becomes irreplaceable. 6 months of continuous HRV, sleep, and metabolic data creates a personal health baseline no competitor can replicate.</p>
+<p><strong>Extreme switching cost</strong> — The biometric corpus is locked in the PII vault with the user's encryption key. Starting fresh with another platform means losing all historical context.</p>
+<p><strong>Data network effect</strong> — Anonymized .kasset health patterns (opt-in via CIP) improve the twin's planning algorithms across the entire network.</p>
+<a href="#sec-1-currency" class="section-ref">§ 5. Business Model</a>
+</div>
+</div>
+<div class="two-up" id="i2_s1_user_display">
+<img src="img/diagrams/i2_s1_user_display.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Note</strong>: Biometric sensor devices may trigger regulatory classification depending on jurisdiction. This section captures awareness; detailed analysis is deferred to Phase 2+.</em></p>
+<a href="#sec-1-currency" class="section-ref">§ 6. Regulatory Considerations</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_nist_governance">
+<img src="img/diagrams/i2_s1_nist_governance.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The sensor product line complements, not replaces, the existing hardware roadmap:</p>
+<a href="#sec-1-currency" class="section-ref">§ 7. Relationship to Existing Hardware IP</a>
+</div>
+</div>
+<div class="two-up" id="i2_s1_energy_convergence">
+<img src="img/diagrams/i2_s1_energy_convergence.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The network begins with a dinner — and repeats no more than <strong>four times per year</strong>.</p>
+<p>A small portion of the seed round funds an intimate, curated series of events in New York City — each seating 8 to 16 people drawn from local educational institutions, alumni networks, and creative communities. Each event targets a different community. The venue is site-specific (a private dining room, a gallery, a club library). The meal is catered. The invitation carries one instruction:</p>
+<p><strong>"Bring a piece of digital media you made. You will mint it and trade it with the others at the table."</strong></p>
+<p>The quarterly cadence is deliberate — scarcity creates gravity. These are not recurring meetups. Each Genesis dinner is a curated, invitation-only event that seeds a new community into the network. Four per year means four new communities, four new .kasset domains, four new local word-of-mouth waves.</p>
+<p><strong>Why 8–16 People</strong></p>
+<p><strong>The Genesis Grant: ⚡500 Per Seat</strong></p>
+<a href="#sec-1-currency" class="section-ref">§ 1. The Genesis Series</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s1_self_generator">
+<img src="img/diagrams/i2_s1_self_generator.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Genesis Event proves the mechanic works: people create, price, and trade digital media face-to-face. The next phase scales that mechanic through two channels that reinforce each other — one ambient, one event-driven.</p>
+<p><strong>Vector A: The Sticker Drop (QR Street Distribution)</strong></p>
+<p>Local musicians and visual artists distribute their work by leaving pre-printed QR stickers in the streets. QR stickers are $0.05–$0.15/unit ambient awareness placements — they supplement mesh discovery and word-of-mouth, not replace them. See Doc 29 §4 for the full QR sticker specification.</p>
+<p><strong>The sticker is a designed object.</strong> Each sticker is custom-printed with the artist's name, a thumbnail of the work (album art, a cropped image of the visual piece), Sovereign branding, and a QR code. The .kasset is pre-minted and the one-time claim token is encoded in the QR before the artist ever touches it. The artist's only job is to decide where to place them.</p>
+<p><strong>Anti-cloning:</strong> One-time claim tokens replace hardware NFC MAC. Token is generated by the minting Mac, burned on first claim. A photographed QR is a race condition (first scan wins) — equivalent to finding a rare record first at a thrift store. See Doc 29 §4.</p>
+<p><strong>The production pipeline:</strong></p>
+<a href="#sec-1-currency" class="section-ref">§ 2. Scaling the Table: Two Growth Vectors</a>
+</div>
+</div>
+<div class="section-divider" id="sec-2-sensors">
+  <h2><a href="#sec-2-sensors">§2 Sensors</a></h2>
+</div>
+<div class="spread" id="i2_s2_sensor_lineup">
+<img src="img/diagrams/i2_s2_sensor_lineup.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>While the cultural track seeds the network through music and visual art, a parallel track runs simultaneously through academic institutions — starting with the <strong>Joseph Wharton Scholars (JWS)</strong> at the University of Pennsylvania.</p>
+<p>The mechanic is the same. The medium is different. Instead of tracks and prints, students mint <strong>class papers, research projects, case analyses, and thesis work</strong> as .kassets and trade them with other students.</p>
+<p><strong>Why JWS</strong></p>
+<p><strong>What Gets Minted</strong></p>
+<p>Students are already producing work that has value beyond the grade. The .kasset formalizes that value and makes it tradeable:</p>
+<p><strong>How It Starts</strong></p>
+<a href="#sec-2-sensors" class="section-ref">§ 3. The Academic Track (Parallel Channel)</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s2_compass">
+<img src="img/diagrams/i2_s2_compass.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Every formation mechanic described above — the Genesis dinner, the sticker drop, the gathering, the academic workshop — is amplified by the <strong>mesh network</strong>. Devices running the Sovereign edge app passively broadcast and discover .kasset availability through physical proximity. No internet. No server. No catalog to browse. Geography is the search engine.</p>
+<p><strong>How It Works</strong></p>
+<p>Three radio layers, each serving a different range:</p>
+<p><em class="blockquote"><strong>Pre-hardware (M1–M14):</strong> The mesh operates on BLE + WiFi-Direct only — both natively available on conforming mobile devices. This limits ambient discovery to ~100 meters, which is sufficient for events, campuses, and dense urban foot traffic. LoRa's neighborhood-scale range activates when Sovereign hardware ships at M15.</em></p>
+<p><em class="blockquote">[!NOTE]</em></p>
+<p><em class="blockquote"><strong>Mobile BLE throttling.</strong> Mobile platforms throttle background BLE scanning (e.g., ~15% duty cycle with service-filtered discovery). Continuous, real-time peer detection is not reliable in background mode on mobile devices. SSK's architecture accounts for this: the <strong>Echo mechanism</strong> (§4.1, 24-hour store-and-forward) is the primary discovery mode, not continuous BLE. BLE proximity triggers the trade handshake when two users are in foreground or semi-active mode; Echoes populate the browse catalog asynchronously from cached availability vectors left by prior visitors. Discovery does not depend on continuous BLE scanning — it depends on the accumulation of Echoes at high-traffic locations (storefronts, campuses, transit hubs).</em></p>
+<a href="#sec-2-sensors" class="section-ref">§ 4. The Mesh Layer (Ambient Discovery)</a>
+</div>
+</div>
+<div class="two-up" id="i2_s2_tether">
+<img src="img/diagrams/i2_s2_tether.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Piggybacking the City's Infrastructure</strong></p>
+<p>New York City has ~2,000 LinkNYC kiosks deployed across Manhattan, Brooklyn, Queens, and the Bronx — each providing free public WiFi with a range of ~100–150 meters. This is an existing mesh backbone that Sovereign can ride for free.</p>
+<p><strong>The mechanic:</strong> A Sovereign device within range of a LinkNYC kiosk briefly joins the open WiFi and broadcasts its availability vector via standard local network discovery (mDNS/multicast). Any other Sovereign device on the same kiosk's network receives it. The device then disconnects. Hit-and-run — a few seconds of WiFi contact is enough to exchange availability vectors.</p>
+<p>This is not a hack. It is standard use of a public WiFi network for local service discovery. No terms of service are violated. No data leaves the local network. The kiosk is just a relay point.</p>
+<p><strong>What this changes:</strong></p>
+<p>The mesh math from Section 4 shifts dramatically. At 10,000 Sovereign users in NYC, LinkNYC extends the average encounter radius from 30m (BLE) to 150m (WiFi), increasing the coverage area by <strong>25×</strong> (from ~2,827 m² to ~70,686 m²). Daily organic encounters scale proportionally.</p>
+<a href="#sec-2-sensors" class="section-ref">§ 5. The LinkNYC Layer & The Introduction Economy</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s2_sentinel">
+<img src="img/diagrams/i2_s2_sentinel.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Everything described in Sections 1–5 is grassroots — dinners, stickers, storefronts, campuses, mesh. It builds slowly, deliberately, and authentically. But there is a moment in the growth curve where a single high-amplitude signal converts organic traction into viral velocity. That signal is a <strong>one-time celebrity sponsorship.</strong></p>
+<p><em class="blockquote">No celebrity partnership is committed at time of writing. The celebrity activation is a channel option, not a growth dependency. All five scenarios in Doc 13 §5 produce cash-flow-positive outcomes with or without celebrity participation.</em></p>
+<p><strong>Timing: M5–M6 (Not Before)</strong></p>
+<p>This does NOT happen at launch. The activation fires only after the following conditions are met:</p>
+<p>If any of these are missing, the celebrity spend is wasted — you'd be driving traffic into an empty room.</p>
+<p><strong>The Archetype: Cardi B</strong></p>
+<a href="#sec-2-sensors" class="section-ref">§ 6. The Catalyst: Single Celebrity Activation</a>
+</div>
+</div>
+<div class="two-up" id="i2_s2_beacon">
+<img src="img/diagrams/i2_s2_beacon.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Funnel Stack</strong></p>
+<p>Each formation layer feeds the next. They are not alternatives — they are sequential stages of a single acquisition funnel:</p>
+<p><strong>The Math: How 12 Becomes 250,000</strong></p>
+<p><strong>Key inflection points:</strong></p>
+<p>· <strong>M4 (~1,100 users):</strong> Mesh encounter density crosses ~2 encounters/user/day. Echoes make the network feel populated even in off-peak hours.</p>
+<p>· <strong>M5–6 (celebrity drop):</strong> 3,000 users in 48 hours. Storefronts across Brooklyn are already active — new users walk into a populated mesh immediately.</p>
+<a href="#sec-2-sensors" class="section-ref">§ 7. Convergence: From 12 Users to Critical Mass</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s2_ble_gatt">
+<img src="img/diagrams/i2_s2_ble_gatt.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>At critical mass, the network flips the traditional data extraction model. As outlined in Doc 06, a user's data exhaust—traditionally harvested for free by platforms—is captured, encrypted, and retained entirely within the local Sovereign Cocoon.</p>
+<p>Users can authorize their Twin to bundle and anonymize specific telemetry or behavioral exhaust into macro-level .kassets. The Sovereign network then acts as an arbitrageur, trading this aggregated intelligence back to corporate cloud processors, LLM training labs, and market researchers. The corporate entities pay for high-fidelity, verified data, and the economic value flows directly back to the users who generated it. The network transitions from a cost center to an income generator for its users.</p>
+<a href="#sec-2-sensors" class="section-ref">§ 8. Data Exhaust Monetization (Corporate Arbitrage)</a>
+</div>
+</div>
+<div class="sidebar-block" id="i2_s2_y2_locked">
+<img src="img/diagrams/i2_s2_y2_locked.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>With the mesh active and the user base engaged, SovereignOS replaces legacy "doom-scrolling" platforms (Facebook, Instagram, X) with a Twin-curated, asynchronous information architecture.</p>
+<p><strong>Feed Inputs:</strong></p>
+<p><strong>Authorized Broadcasts:</strong> Personalized messages sent by authorized individuals to <em>N</em> number of recipients (the Sovereign equivalent of a mailing list or group broadcast).</p>
+<p><strong>The Public Record:</strong> Statements, votes, and actions by public officials and government representatives, ingested continuously via the Codex subscription.</p>
+<p><strong>Curation by the Twin:</strong></p>
+<p>The feed is not an infinite scroll engineered for engagement. It is a periodic briefing curated by the user's Twin. The primary filtering metrics are <strong>cognitive demand</strong> and the <strong>minimization of cognitive fragmentation</strong>. The Twin synthesizes the noise, presenting only what matters, when the user has the cognitive budget to process it</p>
+<a href="#sec-2-sensors" class="section-ref">§ 9. The Sovereign Feed (Cognitive Defense)</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s2_y1_phone_only">
+<img src="img/diagrams/i2_s2_y1_phone_only.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The second pillar of delegation is about curating professional and experiential progression. Rather than relying on algorithmic serendipity or a purely autonomous AI, users actively choose to "lock in" the specific people and domain experts they want to work with on a daily basis.</p>
+<p>The user delegates discovery authority to chosen human managers or curators. These managers sift through the global mesh and the Sovereign Feed to define a highly refined, high-signal set of choices, opportunities, or introductions. The user's Twin acts as the logistical executor—maintaining these trusted connections, filtering out unauthorized noise, and presenting the user only with the curated selections from their chosen human managers. The user remains the ultimate decision-maker, selecting from a menu populated entirely by people they have explicitly chosen to trust.</p>
+<a href="#sec-2-sensors" class="section-ref">§ 11. Curatorial Delegation (Locking in the Network)</a>
+</div>
+</div>
+<div class="section-divider" id="sec-3-network-formation">
+  <h2><a href="#sec-3-network-formation">§3 Network Formation</a></h2>
+</div>
+<div class="spread" id="i2_s3_growth_overview">
+<img src="img/diagrams/i2_s3_growth_overview.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Because the Twin perfectly models the user's preferences, and because it ingests the Codex public record continuously, public officials can no longer rely on political amnesia. The Twin instantly cross-references any new statement from a representative against their entire historical record. Politicians must stand by their full record in any given moment, as every user's Twin acts as an indefatigable, personalized fact-checker and context-provider.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ 12. Absolute Political Accountability</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_genesis_dinner">
+<img src="img/diagrams/i2_s3_genesis_dinner.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>In Phase 3, the core mechanics of the .kasset exchange are adapted from economic trading to the democratic process.</p>
+<p>Voting evolves from a discrete, low-information event (e.g., every two years) into a <strong>continuous process</strong> executed by agents.</p>
+<p><strong>How it works:</strong></p>
+<p><strong>Delegation .kassets:</strong> Users issue specific cryptographic mandates (delegations) to representatives or domain experts.</p>
+<p><strong>Continuous Re-evaluation:</strong> The user's Twin monitors the representative's actions via the public record (Absolute Accountability).</p>
+<p><strong>Fluid Authority:</strong> Authority is conferred from the group onto a person to make representative decisions for the people who they delegate to. If a representative deviates from the user's values, the agent automatically withdraws the delegation and re-assigns it.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ 13. Agentic Voting & Liquid Authority</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_genesis_grant">
+<img src="img/diagrams/i2_s3_genesis_grant.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Sovereign Survival Kit does not rely on legacy corporate entities to generate revenue. We are replacing that economic model and cannot be dependent on existing players.</p>
+<p>Revenue derives from:</p>
+<p>Network transaction fees (progressive, physics-anchored)</p>
+<p>Hardware sales (margin on devices that enable the network)</p>
+<p>Service fees (storage, logistics, certification, education)</p>
+<p><strong>We do NOT monetize with:</strong> SaaS, data, excess compute leases, B2B licensing to enterprises, or API subscriptions.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ Revenue Philosophy</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_what_happens_table">
+<img src="img/diagrams/i2_s3_what_happens_table.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>1A. Progressive Certification Fee</strong></p>
+<p>· <strong>What:</strong> Dynamic fee on every .kasset trade certified by SSK's certification service (notary model). Three layers: Ramsey pricing (efficiency), Rawlsian veil (equity), energy-proportional (physics constraint). Trades settle bilaterally on mesh; the fee is for certification and Codex archival.</p>
+<p>· <strong>Variables:</strong> (1) measured asset rarity/novelty, (2) buyer's accumulated wealth profile</p>
+<p>· <strong>Typical range:</strong> 1.0–6.0% depending on segment (see doc 11 §3 for segment breakdown)</p>
+<p>· <strong>Weighted average:</strong> ~2.38% (M12) → ~3.25% (M36) as higher-value professional trades grow in share</p>
+<p>· <strong>Regulatory Risk:</strong> 🟢 LOW — standard marketplace transaction fee</p>
+<a href="#sec-3-network-formation" class="section-ref">§ Tier 1: Core Revenue (Year 1)</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_sticker_qr">
+<img src="img/diagrams/i2_s3_sticker_qr.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>2A. Sovereign Vault (Identity Storage — Tiered)</strong></p>
+<p>· <strong>What:</strong> Encrypted identity storage with tiered membership. Sovereign Survival Kit never sees the contents (zero-knowledge custody).</p>
+<p>· <strong>Tier 1 — Cold Storage:</strong> $60/year. Entry-level identity backup. Priced on safe deposit box analogy ($20-200/yr avg, TCBK/SmartAsset 2024).</p>
+<p>· <strong>Tier 2 — Standard:</strong> $15/month. Full features: backup, freeze, marketplace tools.</p>
+<p>· <strong>Tier 3 — Premium:</strong> $35/month + siloed education program fees ($23-70/mo, benchmarked to Adobe Creative Cloud). Premium effective: ~$80/mo.</p>
+<p>· <strong>Conversion:</strong> 75% (Y1) → 95% (Y3). Source: FDIC 2023 — 95.8% of US households are banked. Vault IS the bank.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ Tier 2: Premium Services (Year 2)</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_sticker_claim">
+<img src="img/diagrams/i2_s3_sticker_claim.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Founder directive (2026-04-15):</strong> "We do not rely on legacy corporate entities to generate revenue because we are replacing that economic model and cannot be dependent on existing players."</em></p>
+<p>></p>
+<p><em class="blockquote">The following streams will NEVER be pursued: Biometric SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK Licensing, Constituent Intelligence Platform (Government SaaS). Enterprise API of any kind is prohibited.</em></p>
+<p>></p>
+<p><em class="blockquote"><strong>Clarification:</strong> The Apex Oracle (Doc 26) serves individual buyers, not corporations. Every buyer is a named natural person acting through their own personal twin. There are no enterprise contracts, no corporate accounts, no B2B API, and no institutional integration. The "no B2B" constraint is absolute across all revenue tiers and all time horizons.</em></p>
+<a href="#sec-3-network-formation" class="section-ref">§ ~~Tier 3: B2B Licensing~~ — PERMANENTLY REJECTED</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_gathering_100">
+<img src="img/diagrams/i2_s3_gathering_100.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>4A. Volumetric Sphere (Ultra-Premium Hardware)</strong></p>
+<p>· <strong>What:</strong> White-glove venue installations of the 6-DOF gyroscopic control sphere. Distinct from the consumer Sphere/Rig ($2,499-$4,999 in doc 11) — this is a purpose-built, professionally installed system.</p>
+<p>· <strong>Pricing:</strong> $50,000-$150,000 per unit</p>
+<p>· <strong>Revenue:</strong> 50 units/year × $100K avg = $5M</p>
+<p>· <strong>Margin:</strong> 65%+</p>
+<p>· <strong>Regulatory Risk:</strong> 🟢 LOW — capital equipment sales</p>
+<a href="#sec-3-network-formation" class="section-ref">§ Tier 4: Sphere & Hardware Premium (Year 3+)</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_jws_workshop">
+<img src="img/diagrams/i2_s3_jws_workshop.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>5A. Expertise Certification Endorsements</strong></p>
+<p>· <strong>What:</strong> As the Provenance Engine builds verified expertise scores, professional organizations and industry guilds may pay to integrate or endorse Sovereign Survival Kit expertise ratings as an alternative to traditional credentialing.</p>
+<p>· <strong>Pricing:</strong> Partnership/endorsement fees $50K-$200K/year</p>
+<p>· <strong>Revenue:</strong> Long-term brand value play</p>
+<p>· <strong>Regulatory Risk:</strong> 🟢 LOW — standard endorsement/partnership fees</p>
+<a href="#sec-3-network-formation" class="section-ref">§ Tier 5: Network & Ecosystem Revenue (Year 2+)</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_itp_workshop">
+<img src="img/diagrams/i2_s3_itp_workshop.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Note:</strong> Specific dollar amounts are NOT stated here to avoid inconsistency with the financial model. All revenue projections are calculated in doc 11 (Financial Model) and doc 12 (Scenario Analysis) using cited assumptions and shown work. This document defines WHAT we charge. Doc 11 defines HOW MUCH.</em></p>
+<a href="#sec-3-network-formation" class="section-ref">§ Revenue Roadmap Summary (Approved Streams Only)</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_cross_pollination">
+<img src="img/diagrams/i2_s3_cross_pollination.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Sovereign Survival Kit ships as two components:</p>
+<p><strong>Component A: Desktop Application</strong></p>
+<p>A native desktop application distributed directly from the Company's website. Installable from a single package.</p>
+<p><strong>Per-platform packaging:</strong></p>
+<p>The desktop application contains:</p>
+<p><strong>Vault</strong> — Two-compartment encrypted storage (Doc 28). <code>vault_key = Argon2id(passphrase) ⊕ HSM_key</code>. HSM, KDF, and encrypted storage coexist in the same native process — no boundary crossing.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §1. Two-Component Model</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_mesh_ble">
+<img src="img/diagrams/i2_s3_mesh_ble.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The reference design (Doc 03, Doc 28) requires three platform capabilities:</p>
+<p><strong>Mobile Browser — Available APIs</strong></p>
+<p><strong>Mobile Browser — Blocked APIs</strong></p>
+<a href="#sec-3-network-formation" class="section-ref">§ §2. Capability Satisfaction</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_wifi_direct">
+<img src="img/diagrams/i2_s3_wifi_direct.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Proximity discovery operates across four tiers. No company infrastructure participates in any tier. Zero middleman.</p>
+<p><strong>Tier 1: BLE (Desktop-to-Desktop — Ambient)</strong></p>
+<p>When two desktops running SSK are in BLE range (~30m), they discover each other and exchange availability vectors automatically. No user action required.</p>
+<p><strong>Scenarios:</strong> Coffee shops, coworking spaces, academic workshops, Genesis dinners — any setting where laptops are present. The desktops advertise and scan. The phone is not involved in Tier 1.</p>
+<p><strong>Tier 2a: QR Exchange (Phone — Intentional, Zero Network)</strong></p>
+<p>Two people with phones. No WiFi. No BLE. No network of any kind. The camera is the radio:</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §3. Four-Tier Discovery Model</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_storefront_qr">
+<img src="img/diagrams/i2_s3_storefront_qr.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Physical distribution stickers use QR codes, not NFC tags. QR codes are 10× cheaper, universally compatible with any phone camera, and scannable from any mobile browser via <code>getUserMedia()</code> + jsQR.</p>
+<p><strong>Two Modes</strong></p>
+<p><strong>Claim Sticker (single .kasset):</strong> QR encodes a one-time claim token + .kasset metadata. User scans → claims the asset. First scan wins. Token burned on claim. Works offline (claim queued, settled when desktop is reachable).</p>
+<p><strong>Discovery Sticker (catalog):</strong> QR encodes an availability vector. User scans → sees what the artist has for sale. Browsing is fully offline. Purchase is queued until connectivity.</p>
+<p><strong>Economics</strong></p>
+<p><strong>Anti-Cloning</strong></p>
+<a href="#sec-3-network-formation" class="section-ref">§ §4. Sticker Distribution — QR Codes</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_echoes">
+<img src="img/diagrams/i2_s3_echoes.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The vault locks when the user is not present. "Present" is a human state that technology can only approximate.</p>
+<p><strong>Enforcement point:</strong> The desktop application. The phone contributes signals but does not enforce the lock.</p>
+<p><strong>Candidate signals:</strong></p>
+<p><strong>Design constraints:</strong></p>
+<p>The desktop is the enforcement point</p>
+<p>The vault locks when presence cannot be confirmed</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §5. Presence Detection — Open Design Problem</a>
+</div>
+</div>
+<div class="sidebar-block" id="i2_s3_echo_density">
+<img src="img/diagrams/i2_s3_echo_density.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Direct distribution replaces store trust with:</p>
+<p><strong>Open source</strong> — the user can read the code</p>
+<p><strong>Reproducible builds</strong> — the user can verify the binary matches the source</p>
+<p><strong>Platform signing</strong> — automated security scans still run on each platform</p>
+<p><strong>No phone app store involvement at all</strong> — the phone runs a web interface, not a native app</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §6. Why Not App Stores?</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_linknyc">
+<img src="img/diagrams/i2_s3_linknyc.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The vault key derivation requires an HSM abstraction layer:</p>
+<p><strong>Linux single-factor note:</strong> Without a hardware HSM, Ubuntu installations rely on passphrase-only KDF. This is weaker than the two-factor model on macOS/Windows. Users who require two-factor vault security should use macOS or Windows, or add a USB HSM (YubiKey, Nitrokey) as a future hardware option.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §7. Platform HSM Abstraction</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_introduction_kasset">
+<img src="img/diagrams/i2_s3_introduction_kasset.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Open Source: The Vault (Layer 0)</strong></p>
+<p>The vault layer is open source. This is the transparency commitment. The user must be able to verify that the safe is real — that the encryption has no backdoor, the lock works, the burn credential destroys data, and the airgap check is honest.</p>
+<p>The vault contains no novel algorithms. It composes well-known cryptographic primitives (AES-256-GCM, Argon2id, P-256 ECDSA, ML-DSA-65) into the two-compartment architecture. The novelty is in the <em>architecture</em> (what's stored where, why the compartments exist, how the lock triggers) — which is protected by defensive patent claims 11 and 13 (Doc 21). The <em>implementation</em> uses standard libraries that any cryptographer can audit.</p>
+<p><strong>What's open source:</strong></p>
+<p><strong>License:</strong> Apache 2.0. Separately buildable and auditable.</p>
+<p><strong>Proprietary: Everything Above the Vault</strong></p>
+<a href="#sec-3-network-formation" class="section-ref">§ §8. Source Code Licensing</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_serendipitous_intro">
+<img src="img/diagrams/i2_s3_serendipitous_intro.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The desktop application runs as a native process on each platform. No Docker, Podman, or virtualization layer is used. This is a deliberate architectural decision.</p>
+<p><strong>Rationale</strong></p>
+<p>The container's only advantage — a clean, flag-level network airgap — does not justify splitting the vault's security boundary across a process barrier. The airgap during minting is enforced by the minting code itself: it checks all network interfaces and refuses to proceed if any are reachable. This check is part of the open-source vault layer and is verified by the reproducible build.</p>
+<p><strong>Cross-Platform Strategy</strong></p>
+<p>The application is not made cross-platform by a container. It is made cross-platform by the language stack:</p>
+<p>The platform-specific surface is ~550 lines per platform. Everything else is shared.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §9. No Containerization</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_celebrity_drop">
+<img src="img/diagrams/i2_s3_celebrity_drop.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A central problem in sovereign data architecture is the transfer of cognitive methodology between autonomous agents without transferring cognitive identity. A seller possesses expertise — a process for solving a class of problems. A buyer wishes to acquire that process. The transfer must preserve the <em>what</em> and <em>how</em> of the methodology while destroying the <em>who</em> — the cognitive fingerprint of the seller.</p>
+<p>Linguistic translation fails this requirement. Authorship attribution survives translation across natural languages; stylometric features persist even under aggressive paraphrasing (Koppel, Schler, & Argamon, 2009). The translation must therefore be <strong>structural</strong>, operating on the topology and dynamics of the process itself rather than on its linguistic surface.</p>
+<p><strong>Thesis.</strong> A methodology is a geodesic on a manifold. The seller's identity is the coordinate system. Minting strips the coordinates. Folding installs new coordinates. Privacy is geometry.</p>
+<p>More precisely: any cognitive methodology can be encoded as a sequence of five process-algebraic operators (Milner, 1989) annotated with continuous temporal dynamics (Lee, 1998) in ℝ^∞. This encoding lives on an infinite-dimensional manifold whose curvature emerges from the collective behavior of all agents. The seller's idiolect defines a fiber over each point of the base trajectory; minting projects the trajectory onto the base manifold, discarding the fiber. The buyer's idiolect selects a new fiber, reconstructing the methodology in the buyer's personal cognitive space via energy minimization (Anfinsen, 1973). The projection is many-to-one: the seller's identity cannot be recovered. The methodology content is invariant: the buyer receives what was encoded. Privacy and fidelity are not competing objectives — they are dual consequences of the same geometric structure.</p>
+<p>The encoding formalizes a fundamental epistemological distinction: the <strong>factual structure</strong> of a methodology (which operations, in what order, with what branching logic) is observer-independent — it lives on the base manifold. The <strong>opinion texture</strong> (the practitioner's personal rhythm, emphasis, confidence, and aesthetic weighting) is observer-dependent — it lives in the fiber. Minting extracts the fact and strips the opinion. Folding adds new opinion to the preserved fact. Lossiness and privacy are the same phenomenon measured from different sides: lossiness is the opinion that was stripped; privacy is the identity that was destroyed with it.</p>
+<p>This paper derives the <strong>Edgcumbe calculus</strong> that formalizes this construction. The calculus generates cognitive encoding and economic dynamics as specializations of a single pair of equations: the geodesic equation (agent dynamics) and the mean-field emergence equation (manifold dynamics). §2 establishes the five independent first principles. §3 derives the calculus. §4 demonstrates domain specializations. §5 registers assumptions and limitations. Companion documents provide the physics onboarding (Internal: 37a) and technical specification with IP claims (Internal: 37b).</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §1. Introduction</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s3_12_to_250k">
+<img src="img/diagrams/i2_s3_12_to_250k.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Edgcumbe encoding is derived from the intersection of five independent bodies of established theory. Each contributes one structural constraint. Their combination is novel; individually, each is well-established.</p>
+<p><strong>§2.1 Complexity and Computational Equivalence</strong></p>
+<p>Wolfram (2002) demonstrated that simple rules iterated over simple elements produce arbitrary complexity. Rule 110 — a one-dimensional cellular automaton with 2 states and nearest-neighbor rules — is Turing-complete (Cook, 2004). The complexity resides not in the elements or the rules but in the iteration.</p>
+<p><strong>Constraint derived:</strong> The encoding alphabet can be small. Expressiveness arises from the combinatorics of sequences, not from the richness of individual symbols. A base of 5 symbols is sufficient for universal process description if the iteration depth is unbounded.</p>
+<p><strong>§2.2 Radix Economy</strong></p>
+<p>The most efficient integer radix — minimizing the product of base × digits required to represent a given range — is the integer nearest to Euler's number <em>e</em> ≈ 2.718 (Knuth, 1997, Vol. 2). That integer is 3. Base-3 is mathematically optimal for compact representation.</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §2. First Principles</a>
+</div>
+</div>
+<div class="two-up" id="i2_s3_cac_decline">
+<img src="img/diagrams/i2_s3_cac_decline.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>§3.1 The Unified Equation</strong></p>
+<p>We define a complex adaptive system in the language of differential geometry.</p>
+<p><strong>Definition 1 (State manifold).</strong> Let <strong>M</strong> be an infinite-dimensional differentiable manifold. Points on M represent states of the system. Curves on M represent trajectories (evolution over time).</p>
+<p><strong>Definition 2 (Connection).</strong> A connection Γ on M specifies how tangent vectors at one point relate to tangent vectors at nearby points. Γ encodes the manifold's curvature — how the state space bends.</p>
+<p><strong>Definition 3 (Geodesic equation).</strong> An agent's trajectory x(t) on M satisfies:</p>
+<p>This is the equation of geodesic flow: the agent follows the straightest possible path through curved space. The acceleration (d²x/dt²) is determined by the curvature (Γ) and the current velocity (dx/dt).</p>
+<a href="#sec-3-network-formation" class="section-ref">§ §3. The Edgcumbe Calculus</a>
+</div>
+</div>
+<div class="section-divider" id="sec-4-revenue">
+  <h2><a href="#sec-4-revenue">§4 Revenue</a></h2>
+</div>
+<div class="spread" id="i2_s4_revenue_overview">
+<img src="img/diagrams/i2_s4_revenue_overview.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The unified equation pair — geodesic (1) and emergence (2) — generates mature scientific domains as specializations. Each is obtained by specifying the manifold, field, connection, and symmetry group. The physics specialization (quantum mechanics) is developed in the companion document (Internal: 37a); this section focuses on economics, where the structural correspondences are most directly testable.</p>
+<p><strong>§4.1 Economics</strong></p>
+<p><strong>Key correspondences:</strong></p>
+<p><strong>Superposition → Option value.</strong> Before exercise, a financial option encodes all possible payoffs weighted by probability (Black & Scholes, 1973). Exercise collapses the option to realized payoff. Before trade, a .kasset encodes all possible understandings. Folding collapses to one. The mathematical structure is identical — path integration over future states.</p>
+<p><strong>Gauge invariance → Numéraire invariance.</strong> The choice of numéraire (which good denominates prices) does not affect economic outcomes, just as the choice of idiolect does not affect methodology content. Both are gauge invariances — the content is projection-invariant, the representation is observer-dependent.</p>
+<p><strong>Information loss → Akerlof inverted.</strong> Akerlof (1970) showed that information asymmetry in markets destroys quality (only "lemons" are sold). In the Edgcumbe system, information loss is a <em>feature</em>: the encoding is designed to lose the seller's identity. The mechanism is strategy-proof — the seller cannot encode identity even intentionally, because minting is a many-to-one projection.</p>
+<a href="#sec-4-revenue" class="section-ref">§ §4. Domain Specializations</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s4_progressive_fee">
+<img src="img/diagrams/i2_s4_progressive_fee.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>§5.1 Register of Assumptions</strong></p>
+<p><strong>§5.2 Relationship to Prior Frameworks</strong></p>
+<p>The Edgcumbe calculus synthesizes but does not replace its source theories. Wolfram (2002) provides the principle that small alphabets suffice. Lee (1998, 2009) provides the dynamic variables. Milner (1989) provides the structural operators. Anfinsen (1973) provides the folding model. Each is used within its established domain of validity; the novelty is in the combination.</p>
+<p>The calculus does NOT claim to be a theory of consciousness, a replacement for quantum mechanics, or a general economic model. It is a framework for encoding cognitive methodology as a gauge-invariant sequence on an emergent manifold, with privacy as a geometric property.</p>
+<p><strong>§5.3 Limitations</strong></p>
+<p><strong>No empirical validation.</strong> This is a theoretical paper that defines the formal structure and experimental predictions of the Edgcumbe encoding. Empirical data follows the experiment definition; this paper IS the experiment definition. The predictions in §5.5 are stated with sufficient precision to be tested against a deployed implementation. The relationship between theory and experiment is sequential, not concurrent — the theory must be internally consistent before measurement can confirm or refute it.</p>
+<a href="#sec-4-revenue" class="section-ref">§ §5. Discussion</a>
+</div>
+</div>
+<div class="two-up" id="i2_s4_ramsey_pricing">
+<img src="img/diagrams/i2_s4_ramsey_pricing.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The following companion documents contain material extracted from earlier drafts of this paper to separate the theoretical framework from implementation details and audience-specific onboarding:</p>
+<p>· <strong>Internal: 37a — Physics Onboarding.</strong> Maps the Edgcumbe framework onto quantum mechanical structures (hydrogen atom reference, QM specialization, divergences, open research directions). For physicist onboarding.</p>
+<p>· <strong>Internal: 37b — Technical Specification & IP Claims.</strong> System architecture, pipeline specifications, complementary pairing validator, domain convergence monitor, and defensible IP claim register. For engineering and patent counsel.</p>
+<a href="#sec-4-revenue" class="section-ref">§ §6. Companion Documents</a>
+</div>
+</div>
+<div class="two-up flip" id="i2_s4_rawlsian_fairness">
+<img src="img/diagrams/i2_s4_rawlsian_fairness.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The original design pegged .kasset values to gold via an algorithmic oracle. This was abandoned because:</p>
+<p><strong>Gold is mutable.</strong> Central banks hold 35,000+ tonnes. Government gold sales/purchases move the price. A sovereign could manipulate .kasset values by manipulating gold markets.</p>
+<p><strong>Gold is geographically asymmetric.</strong> South Africa, China, Russia, and Australia dominate production. σ's energy base is universal.</p>
+<p><strong>Gold has no intrinsic utility in the digital context.</strong> Energy is the substrate of all computation. Pricing intelligence in energy units is philosophically coherent.</p>
 
-                <div class="spread" id="i2_s3_growth_overview">
-                  <img src="img/diagrams/i2_s3_growth_overview.png" alt="" loading="lazy">
-                  <div class="body"><p>Because the Twin perfectly models the user's preferences, and because it ingests the Codex public record continuously, public officials can no longer rely on political amnesia. The Twin instantly cross-references any new statement from a representative against their entire historical record. Politicians must stand by their full record in any given moment, as every user's Twin acts as an indefatigable, personalized fact-checker and context-provider.</p><a class="doc-ref" href="#sec-3-network-formation">§ 12. Absolute Political Accountability</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_genesis_dinner">
-                  <img src="img/diagrams/i2_s3_genesis_dinner.png" alt="" loading="lazy">
-                  <div class="body"><p>In Phase 3, the core mechanics of the .kasset exchange are adapted from economic trading to the democratic process.</p><p>Voting evolves from a discrete, low-information event (e.g., every two years) into a <strong>continuous process</strong> executed by agents.</p><p><strong>How it works:</strong></p><p><strong>Delegation .kassets:</strong> Users issue specific cryptographic mandates (delegations) to representatives or domain experts.</p><p><strong>Continuous Re-evaluation:</strong> The user's Twin monitors the representative's actions via the public record (Absolute Accountability).</p><p><strong>Fluid Authority:</strong> Authority is conferred from the group onto a person to make representative decisions for the people who they delegate to. If a representative deviates from the user's values, the agent automatically withdraws the delegation and re-assigns it.</p><a class="doc-ref" href="#sec-3-network-formation">§ 13. Agentic Voting & Liquid Authority</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_genesis_grant">
-                  <img src="img/diagrams/i2_s3_genesis_grant.png" alt="" loading="lazy">
-                  <div class="body"><p>Sovereign Survival Kit does not rely on legacy corporate entities to generate revenue. We are replacing that economic model and cannot be dependent on existing players.</p><p>Revenue derives from:</p><p>Network transaction fees (progressive, physics-anchored)</p><p>Hardware sales (margin on devices that enable the network)</p><p>Service fees (storage, logistics, certification, education)</p><p><strong>We do NOT monetize with:</strong> SaaS, data, excess compute leases, B2B licensing to enterprises, or API subscriptions.</p><a class="doc-ref" href="#sec-3-network-formation">§ Revenue Philosophy</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_what_happens_table">
-                  <img src="img/diagrams/i2_s3_what_happens_table.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>1A. Progressive Certification Fee</strong></p><p>· <strong>What:</strong> Dynamic fee on every .kasset trade certified by SSK's certification service (notary model). Three layers: Ramsey pricing (efficiency), Rawlsian veil (equity), energy-proportional (physics constraint). Trades settle bilaterally on mesh; the fee is for certification and Codex archival.</p><p>· <strong>Variables:</strong> (1) measured asset rarity/novelty, (2) buyer's accumulated wealth profile</p><p>· <strong>Typical range:</strong> 1.0–6.0% depending on segment (see doc 11 §3 for segment breakdown)</p><p>· <strong>Weighted average:</strong> ~2.38% (M12) → ~3.25% (M36) as higher-value professional trades grow in share</p><p>· <strong>Regulatory Risk:</strong> 🟢 LOW — standard marketplace transaction fee</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 1: Core Revenue (Year 1)</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_sticker_qr">
-                  <img src="img/diagrams/i2_s3_sticker_qr.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>2A. Sovereign Vault (Identity Storage — Tiered)</strong></p><p>· <strong>What:</strong> Encrypted identity storage with tiered membership. Sovereign Survival Kit never sees the contents (zero-knowledge custody).</p><p>· <strong>Tier 1 — Cold Storage:</strong> $60/year. Entry-level identity backup. Priced on safe deposit box analogy ($20-200/yr avg, TCBK/SmartAsset 2024).</p><p>· <strong>Tier 2 — Standard:</strong> $15/month. Full features: backup, freeze, marketplace tools.</p><p>· <strong>Tier 3 — Premium:</strong> $35/month + siloed education program fees ($23-70/mo, benchmarked to Adobe Creative Cloud). Premium effective: ~$80/mo.</p><p>· <strong>Conversion:</strong> 75% (Y1) → 95% (Y3). Source: FDIC 2023 — 95.8% of US households are banked. Vault IS the bank.</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 2: Premium Services (Year 2)</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_sticker_claim">
-                  <img src="img/diagrams/i2_s3_sticker_claim.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Founder directive (2026-04-15):</strong> "We do not rely on legacy corporate entities to generate revenue because we are replacing that economic model and cannot be dependent on existing players."</em></p><p>></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">The following streams will NEVER be pursued: Biometric SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK Licensing, Constituent Intelligence Platform (Government SaaS). Enterprise API of any kind is prohibited.</em></p><p>></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Clarification:</strong> The Apex Oracle (Doc 26) serves individual buyers, not corporations. Every buyer is a named natural person acting through their own personal twin. There are no enterprise contracts, no corporate accounts, no B2B API, and no institutional integration. The "no B2B" constraint is absolute across all revenue tiers and all time horizons.</em></p><a class="doc-ref" href="#sec-3-network-formation">§ ~~Tier 3: B2B Licensing~~ — PERMANENTLY REJECTED</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_gathering_100">
-                  <img src="img/diagrams/i2_s3_gathering_100.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>4A. Volumetric Sphere (Ultra-Premium Hardware)</strong></p><p>· <strong>What:</strong> White-glove venue installations of the 6-DOF gyroscopic control sphere. Distinct from the consumer Sphere/Rig ($2,499-$4,999 in doc 11) — this is a purpose-built, professionally installed system.</p><p>· <strong>Pricing:</strong> $50,000-$150,000 per unit</p><p>· <strong>Revenue:</strong> 50 units/year × $100K avg = $5M</p><p>· <strong>Margin:</strong> 65%+</p><p>· <strong>Regulatory Risk:</strong> 🟢 LOW — capital equipment sales</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 4: Sphere & Hardware Premium (Year 3+)</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_jws_workshop">
-                  <img src="img/diagrams/i2_s3_jws_workshop.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>5A. Expertise Certification Endorsements</strong></p><p>· <strong>What:</strong> As the Provenance Engine builds verified expertise scores, professional organizations and industry guilds may pay to integrate or endorse Sovereign Survival Kit expertise ratings as an alternative to traditional credentialing.</p><p>· <strong>Pricing:</strong> Partnership/endorsement fees $50K-$200K/year</p><p>· <strong>Revenue:</strong> Long-term brand value play</p><p>· <strong>Regulatory Risk:</strong> 🟢 LOW — standard endorsement/partnership fees</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 5: Network & Ecosystem Revenue (Year 2+)</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_itp_workshop">
-                  <img src="img/diagrams/i2_s3_itp_workshop.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Note:</strong> Specific dollar amounts are NOT stated here to avoid inconsistency with the financial model. All revenue projections are calculated in doc 11 (Financial Model) and doc 12 (Scenario Analysis) using cited assumptions and shown work. This document defines WHAT we charge. Doc 11 defines HOW MUCH.</em></p><a class="doc-ref" href="#sec-3-network-formation">§ Revenue Roadmap Summary (Approved Streams Only)</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_cross_pollination">
-                  <img src="img/diagrams/i2_s3_cross_pollination.png" alt="" loading="lazy">
-                  <div class="body"><p>The Sovereign Survival Kit ships as two components:</p><p><strong>Component A: Desktop Application</strong></p><p>A native desktop application distributed directly from the Company's website. Installable from a single package.</p><p><strong>Per-platform packaging:</strong></p><p>The desktop application contains:</p><p><strong>Vault</strong> — Two-compartment encrypted storage (Doc 28). <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">vault_key = Argon2id(passphrase) ⊕ HSM_key</code>. HSM, KDF, and encrypted storage coexist in the same native process — no boundary crossing.</p><a class="doc-ref" href="#sec-3-network-formation">§ §1. Two-Component Model</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_mesh_ble">
-                  <img src="img/diagrams/i2_s3_mesh_ble.png" alt="" loading="lazy">
-                  <div class="body"><p>The reference design (Doc 03, Doc 28) requires three platform capabilities:</p><p><strong>Mobile Browser — Available APIs</strong></p><p><strong>Mobile Browser — Blocked APIs</strong></p><a class="doc-ref" href="#sec-3-network-formation">§ §2. Capability Satisfaction</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_wifi_direct">
-                  <img src="img/diagrams/i2_s3_wifi_direct.png" alt="" loading="lazy">
-                  <div class="body"><p>Proximity discovery operates across four tiers. No company infrastructure participates in any tier. Zero middleman.</p><p><strong>Tier 1: BLE (Desktop-to-Desktop — Ambient)</strong></p><p>When two desktops running SSK are in BLE range (~30m), they discover each other and exchange availability vectors automatically. No user action required.</p><p><strong>Scenarios:</strong> Coffee shops, coworking spaces, academic workshops, Genesis dinners — any setting where laptops are present. The desktops advertise and scan. The phone is not involved in Tier 1.</p><p><strong>Tier 2a: QR Exchange (Phone — Intentional, Zero Network)</strong></p><p>Two people with phones. No WiFi. No BLE. No network of any kind. The camera is the radio:</p><a class="doc-ref" href="#sec-3-network-formation">§ §3. Four-Tier Discovery Model</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_storefront_qr">
-                  <img src="img/diagrams/i2_s3_storefront_qr.png" alt="" loading="lazy">
-                  <div class="body"><p>Physical distribution stickers use QR codes, not NFC tags. QR codes are 10× cheaper, universally compatible with any phone camera, and scannable from any mobile browser via <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">getUserMedia()</code> + jsQR.</p><p><strong>Two Modes</strong></p><p><strong>Claim Sticker (single .kasset):</strong> QR encodes a one-time claim token + .kasset metadata. User scans → claims the asset. First scan wins. Token burned on claim. Works offline (claim queued, settled when desktop is reachable).</p><p><strong>Discovery Sticker (catalog):</strong> QR encodes an availability vector. User scans → sees what the artist has for sale. Browsing is fully offline. Purchase is queued until connectivity.</p><p><strong>Economics</strong></p><p><strong>Anti-Cloning</strong></p><a class="doc-ref" href="#sec-3-network-formation">§ §4. Sticker Distribution — QR Codes</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_echoes">
-                  <img src="img/diagrams/i2_s3_echoes.png" alt="" loading="lazy">
-                  <div class="body"><p>The vault locks when the user is not present. "Present" is a human state that technology can only approximate.</p><p><strong>Enforcement point:</strong> The desktop application. The phone contributes signals but does not enforce the lock.</p><p><strong>Candidate signals:</strong></p><p><strong>Design constraints:</strong></p><p>The desktop is the enforcement point</p><p>The vault locks when presence cannot be confirmed</p><a class="doc-ref" href="#sec-3-network-formation">§ §5. Presence Detection — Open Design Problem</a></div>
-                </div>
-                <div class="sidebar-spread" id="i2_s3_echo_density">
-                  <img src="img/diagrams/i2_s3_echo_density.png" alt="" loading="lazy">
-                  <div class="body"><p>Direct distribution replaces store trust with:</p><p><strong>Open source</strong> — the user can read the code</p><p><strong>Reproducible builds</strong> — the user can verify the binary matches the source</p><p><strong>Platform signing</strong> — automated security scans still run on each platform</p><p><strong>No phone app store involvement at all</strong> — the phone runs a web interface, not a native app</p><a class="doc-ref" href="#sec-3-network-formation">§ §6. Why Not App Stores?</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_linknyc">
-                  <img src="img/diagrams/i2_s3_linknyc.png" alt="" loading="lazy">
-                  <div class="body"><p>The vault key derivation requires an HSM abstraction layer:</p><p><strong>Linux single-factor note:</strong> Without a hardware HSM, Ubuntu installations rely on passphrase-only KDF. This is weaker than the two-factor model on macOS/Windows. Users who require two-factor vault security should use macOS or Windows, or add a USB HSM (YubiKey, Nitrokey) as a future hardware option.</p><a class="doc-ref" href="#sec-3-network-formation">§ §7. Platform HSM Abstraction</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_introduction_kasset">
-                  <img src="img/diagrams/i2_s3_introduction_kasset.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Open Source: The Vault (Layer 0)</strong></p><p>The vault layer is open source. This is the transparency commitment. The user must be able to verify that the safe is real — that the encryption has no backdoor, the lock works, the burn credential destroys data, and the airgap check is honest.</p><p>The vault contains no novel algorithms. It composes well-known cryptographic primitives (AES-256-GCM, Argon2id, P-256 ECDSA, ML-DSA-65) into the two-compartment architecture. The novelty is in the <em>architecture</em> (what's stored where, why the compartments exist, how the lock triggers) — which is protected by defensive patent claims 11 and 13 (Doc 21). The <em>implementation</em> uses standard libraries that any cryptographer can audit.</p><p><strong>What's open source:</strong></p><p><strong>License:</strong> Apache 2.0. Separately buildable and auditable.</p><p><strong>Proprietary: Everything Above the Vault</strong></p><a class="doc-ref" href="#sec-3-network-formation">§ §8. Source Code Licensing</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_serendipitous_intro">
-                  <img src="img/diagrams/i2_s3_serendipitous_intro.png" alt="" loading="lazy">
-                  <div class="body"><p>The desktop application runs as a native process on each platform. No Docker, Podman, or virtualization layer is used. This is a deliberate architectural decision.</p><p><strong>Rationale</strong></p><p>The container's only advantage — a clean, flag-level network airgap — does not justify splitting the vault's security boundary across a process barrier. The airgap during minting is enforced by the minting code itself: it checks all network interfaces and refuses to proceed if any are reachable. This check is part of the open-source vault layer and is verified by the reproducible build.</p><p><strong>Cross-Platform Strategy</strong></p><p>The application is not made cross-platform by a container. It is made cross-platform by the language stack:</p><p>The platform-specific surface is ~550 lines per platform. Everything else is shared.</p><a class="doc-ref" href="#sec-3-network-formation">§ §9. No Containerization</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_celebrity_drop">
-                  <img src="img/diagrams/i2_s3_celebrity_drop.png" alt="" loading="lazy">
-                  <div class="body"><p>A central problem in sovereign data architecture is the transfer of cognitive methodology between autonomous agents without transferring cognitive identity. A seller possesses expertise — a process for solving a class of problems. A buyer wishes to acquire that process. The transfer must preserve the <em>what</em> and <em>how</em> of the methodology while destroying the <em>who</em> — the cognitive fingerprint of the seller.</p><p>Linguistic translation fails this requirement. Authorship attribution survives translation across natural languages; stylometric features persist even under aggressive paraphrasing (Koppel, Schler, & Argamon, 2009). The translation must therefore be <strong>structural</strong>, operating on the topology and dynamics of the process itself rather than on its linguistic surface.</p><p><strong>Thesis.</strong> A methodology is a geodesic on a manifold. The seller's identity is the coordinate system. Minting strips the coordinates. Folding installs new coordinates. Privacy is geometry.</p><p>More precisely: any cognitive methodology can be encoded as a sequence of five process-algebraic operators (Milner, 1989) annotated with continuous temporal dynamics (Lee, 1998) in ℝ^∞. This encoding lives on an infinite-dimensional manifold whose curvature emerges from the collective behavior of all agents. The seller's idiolect defines a fiber over each point of the base trajectory; minting projects the trajectory onto the base manifold, discarding the fiber. The buyer's idiolect selects a new fiber, reconstructing the methodology in the buyer's personal cognitive space via energy minimization (Anfinsen, 1973). The projection is many-to-one: the seller's identity cannot be recovered. The methodology content is invariant: the buyer receives what was encoded. Privacy and fidelity are not competing objectives — they are dual consequences of the same geometric structure.</p><p>The encoding formalizes a fundamental epistemological distinction: the <strong>factual structure</strong> of a methodology (which operations, in what order, with what branching logic) is observer-independent — it lives on the base manifold. The <strong>opinion texture</strong> (the practitioner's personal rhythm, emphasis, confidence, and aesthetic weighting) is observer-dependent — it lives in the fiber. Minting extracts the fact and strips the opinion. Folding adds new opinion to the preserved fact. Lossiness and privacy are the same phenomenon measured from different sides: lossiness is the opinion that was stripped; privacy is the identity that was destroyed with it.</p><p>This paper derives the <strong>Edgcumbe calculus</strong> that formalizes this construction. The calculus generates cognitive encoding and economic dynamics as specializations of a single pair of equations: the geodesic equation (agent dynamics) and the mean-field emergence equation (manifold dynamics). §2 establishes the five independent first principles. §3 derives the calculus. §4 demonstrates domain specializations. §5 registers assumptions and limitations. Companion documents provide the physics onboarding (Internal: 37a) and technical specification with IP claims (Internal: 37b).</p><a class="doc-ref" href="#sec-3-network-formation">§ §1. Introduction</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s3_12_to_250k">
-                  <img src="img/diagrams/i2_s3_12_to_250k.png" alt="" loading="lazy">
-                  <div class="body"><p>The Edgcumbe encoding is derived from the intersection of five independent bodies of established theory. Each contributes one structural constraint. Their combination is novel; individually, each is well-established.</p><p><strong>§2.1 Complexity and Computational Equivalence</strong></p><p>Wolfram (2002) demonstrated that simple rules iterated over simple elements produce arbitrary complexity. Rule 110 — a one-dimensional cellular automaton with 2 states and nearest-neighbor rules — is Turing-complete (Cook, 2004). The complexity resides not in the elements or the rules but in the iteration.</p><p><strong>Constraint derived:</strong> The encoding alphabet can be small. Expressiveness arises from the combinatorics of sequences, not from the richness of individual symbols. A base of 5 symbols is sufficient for universal process description if the iteration depth is unbounded.</p><p><strong>§2.2 Radix Economy</strong></p><p>The most efficient integer radix — minimizing the product of base × digits required to represent a given range — is the integer nearest to Euler's number <em>e</em> ≈ 2.718 (Knuth, 1997, Vol. 2). That integer is 3. Base-3 is mathematically optimal for compact representation.</p><a class="doc-ref" href="#sec-3-network-formation">§ §2. First Principles</a></div>
-                </div>
-                <div class="two-up" id="i2_s3_cac_decline">
-                  <img src="img/diagrams/i2_s3_cac_decline.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>§3.1 The Unified Equation</strong></p><p>We define a complex adaptive system in the language of differential geometry.</p><p><strong>Definition 1 (State manifold).</strong> Let <strong>M</strong> be an infinite-dimensional differentiable manifold. Points on M represent states of the system. Curves on M represent trajectories (evolution over time).</p><p><strong>Definition 2 (Connection).</strong> A connection Γ on M specifies how tangent vectors at one point relate to tangent vectors at nearby points. Γ encodes the manifold's curvature — how the state space bends.</p><p><strong>Definition 3 (Geodesic equation).</strong> An agent's trajectory x(t) on M satisfies:</p><p>This is the equation of geodesic flow: the agent follows the straightest possible path through curved space. The acceleration (d²x/dt²) is determined by the curvature (Γ) and the current velocity (dx/dt).</p><a class="doc-ref" href="#sec-3-network-formation">§ §3. The Edgcumbe Calculus</a></div>
-                </div><div class="sec-break" id="sec-4-revenue"><h2><a href="#sec-4-revenue" style="color:inherit;text-decoration:none">§4 Revenue</a></h2></div>
+</div>
+</div>
+<div class="two-up" id="i2_s4_vault_subscription">
+<img src="img/diagrams/i2_s4_vault_subscription.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>Derived from:</strong> SI joule, defined by the Planck constant (exact since the 2019 BIPM redefinition of SI base units)</p>
+<p>· <strong>Changes when:</strong> NIST redefines the joule (happens only when measurement precision improves — the unit itself is invariant)</p>
+<p>· <strong>Cannot be:</strong> printed, inflated, sanctioned, debased</p>
+<p>σ is a <strong>reference number</strong> — a unit-of-account label applied to the user's existing fiat balance. It is NOT:</p>
 
-                <div class="spread" id="i2_s4_revenue_overview">
-                  <img src="img/diagrams/i2_s4_revenue_overview.png" alt="" loading="lazy">
-                  <div class="body"><p>The unified equation pair — geodesic (1) and emergence (2) — generates mature scientific domains as specializations. Each is obtained by specifying the manifold, field, connection, and symmetry group. The physics specialization (quantum mechanics) is developed in the companion document (Internal: 37a); this section focuses on economics, where the structural correspondences are most directly testable.</p><p><strong>§4.1 Economics</strong></p><p><strong>Key correspondences:</strong></p><p><strong>Superposition → Option value.</strong> Before exercise, a financial option encodes all possible payoffs weighted by probability (Black & Scholes, 1973). Exercise collapses the option to realized payoff. Before trade, a .kasset encodes all possible understandings. Folding collapses to one. The mathematical structure is identical — path integration over future states.</p><p><strong>Gauge invariance → Numéraire invariance.</strong> The choice of numéraire (which good denominates prices) does not affect economic outcomes, just as the choice of idiolect does not affect methodology content. Both are gauge invariances — the content is projection-invariant, the representation is observer-dependent.</p><p><strong>Information loss → Akerlof inverted.</strong> Akerlof (1970) showed that information asymmetry in markets destroys quality (only "lemons" are sold). In the Edgcumbe system, information loss is a <em>feature</em>: the encoding is designed to lose the seller's identity. The mechanism is strategy-proof — the seller cannot encode identity even intentionally, because minting is a many-to-one projection.</p><a class="doc-ref" href="#sec-4-revenue">§ §4. Domain Specializations</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s4_progressive_fee">
-                  <img src="img/diagrams/i2_s4_progressive_fee.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>§5.1 Register of Assumptions</strong></p><p><strong>§5.2 Relationship to Prior Frameworks</strong></p><p>The Edgcumbe calculus synthesizes but does not replace its source theories. Wolfram (2002) provides the principle that small alphabets suffice. Lee (1998, 2009) provides the dynamic variables. Milner (1989) provides the structural operators. Anfinsen (1973) provides the folding model. Each is used within its established domain of validity; the novelty is in the combination.</p><p>The calculus does NOT claim to be a theory of consciousness, a replacement for quantum mechanics, or a general economic model. It is a framework for encoding cognitive methodology as a gauge-invariant sequence on an emergent manifold, with privacy as a geometric property.</p><p><strong>§5.3 Limitations</strong></p><p><strong>No empirical validation.</strong> This is a theoretical paper that defines the formal structure and experimental predictions of the Edgcumbe encoding. Empirical data follows the experiment definition; this paper IS the experiment definition. The predictions in §5.5 are stated with sufficient precision to be tested against a deployed implementation. The relationship between theory and experiment is sequential, not concurrent — the theory must be internally consistent before measurement can confirm or refute it.</p><a class="doc-ref" href="#sec-4-revenue">§ §5. Discussion</a></div>
-                </div>
-                <div class="two-up" id="i2_s4_ramsey_pricing">
-                  <img src="img/diagrams/i2_s4_ramsey_pricing.png" alt="" loading="lazy">
-                  <div class="body"><p>The following companion documents contain material extracted from earlier drafts of this paper to separate the theoretical framework from implementation details and audience-specific onboarding:</p><p>· <strong>Internal: 37a — Physics Onboarding.</strong> Maps the Edgcumbe framework onto quantum mechanical structures (hydrogen atom reference, QM specialization, divergences, open research directions). For physicist onboarding.</p><p>· <strong>Internal: 37b — Technical Specification & IP Claims.</strong> System architecture, pipeline specifications, complementary pairing validator, domain convergence monitor, and defensible IP claim register. For engineering and patent counsel.</p><a class="doc-ref" href="#sec-4-revenue">§ §6. Companion Documents</a></div>
-                </div>
-                <div class="two-up flip" id="i2_s4_rawlsian_fairness">
-                  <img src="img/diagrams/i2_s4_rawlsian_fairness.png" alt="" loading="lazy">
-                  <div class="body"><p>The original design pegged .kasset values to gold via an algorithmic oracle. This was abandoned because:</p><p><strong>Gold is mutable.</strong> Central banks hold 35,000+ tonnes. Government gold sales/purchases move the price. A sovereign could manipulate .kasset values by manipulating gold markets.</p><p><strong>Gold is geographically asymmetric.</strong> South Africa, China, Russia, and Australia dominate production. σ's energy base is universal.</p><p><strong>Gold has no intrinsic utility in the digital context.</strong> Energy is the substrate of all computation. Pricing intelligence in energy units is philosophically coherent.</p></div>
-                </div>
-                <div class="two-up" id="i2_s4_vault_subscription">
-                  <img src="img/diagrams/i2_s4_vault_subscription.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>Derived from:</strong> SI joule, defined by the Planck constant (exact since the 2019 BIPM redefinition of SI base units)</p><p>· <strong>Changes when:</strong> NIST redefines the joule (happens only when measurement precision improves — the unit itself is invariant)</p><p>· <strong>Cannot be:</strong> printed, inflated, sanctioned, debased</p><p>σ is a <strong>reference number</strong> — a unit-of-account label applied to the user's existing fiat balance. It is NOT:</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s4_vault_freeze">
-                  <img src="img/diagrams/i2_s4_vault_freeze.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>REC = Regional Energy Cost</strong></p><p>SSK publishes and open-sources a <strong>deterministic conversion function</strong> that converts σ to local currency using publicly available <strong>total delivered energy cost</strong> data — the all-in price a consumer pays per kWh, including production, transmission, distribution, storage, and applicable taxes/fees. This is the retail electricity price, not the levelized cost of energy (LCOE) or production cost alone.</p><p>The company publishes the formula <strong>once</strong>. It does NOT operate a centralized oracle, set prices, or update rates on behalf of users.</p><p><strong>Why Total Delivered Cost, Not Production Cost</strong></p></div>
-                </div>
-                <div class="two-up" id="i2_s4_courier_fees">
-                  <img src="img/diagrams/i2_s4_courier_fees.png" alt="" loading="lazy">
-                  <div class="body"><p>There is no blockchain, no sequencer, and no smart contract. Trades settle bilaterally. Both devices must have their vaults open (foreground exclusivity — Doc 28 §0.7) to sign:</p><p>Steps 7-12 are <strong>intentionally asynchronous</strong>. The trade itself (steps 1-6) completes without SSK involvement. Fiat settlement (step 7) occurs outside SSK using whatever payment method the counterparties choose — identical to how Craigslist, Facebook Marketplace, and OfferUp transactions settle. The seller's on-device payment confirmation (step 8) binds the fiat acknowledgment to the cryptographic provenance chain without SSK touching, holding, or transmitting money. Certification happens later — when network connectivity is available, or when the user is physically near a Vault mesh node.</p><p>SSK's certification service is a <strong>notary</strong> — it certifies trades in exchange for a fee. It does not set prices, order transactions, manage a ledger, or control the marketplace. The traded .kasset content is Edgcumbe-encoded (Doc 28 §0.5) — a standardized, lossy format that carries methodology without the seller's cognitive fingerprint. The certification service certifies the provenance chain, not the content. The Codex (Stiftung-operated, non-profit) provides permanent archival.</p><p><strong>Certification constraints (from Layer 0/1):</strong></p></div>
-                </div>
-                <div class="two-up flip" id="i2_s4_verification_fees">
-                  <img src="img/diagrams/i2_s4_verification_fees.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>Primary display:</strong> Spark ⚡ (always)</p><p>· <strong>Secondary:</strong> Local currency as reference (toggle-able), calculated from user's selected data source</p><p>· <strong>Source line:</strong> Explicit data source + timestamp (not "↑ 0.3% today" — SSK does not track rate movements)</p><p>· <strong>Staleness warning:</strong> Soft warning if cached rate exceeds user's staleness preference (default: 7 days)</p></div>
-                </div>
-                <div class="two-up" id="i2_s4_hardware_margins">
-                  <img src="img/diagrams/i2_s4_hardware_margins.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Trend</strong></p><p>Global energy costs are shaped by two vectors moving in opposite directions:</p><p><strong>Production cost (LCOE) is in secular decline:</strong></p><p><strong>Net-positive milestones:</strong></p></div>
-                </div>
-                <div class="two-up flip" id="i2_s4_licensing_fees">
-                  <img src="img/diagrams/i2_s4_licensing_fees.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Thesis summary:</strong> σ is a metrological reference number defined by physics (1 kWh ≡ 3.6 MJ), not by policy. Its fiat-equivalent value is determined by publicly observable delivered energy costs and fluctuates with those costs — it can decrease as energy infrastructure becomes more efficient. Each device computes the conversion locally using a published, deterministic, open-source formula on user-selected data sources. No central oracle exists. Unlike a production-cost peg, the total-delivered-cost basis retains a durable non-zero fiat anchor through infrastructure costs, making σ a practical unit of account today. σ is not designed or marketed as an investment, a store of value, or an appreciating asset. Users are responsible for their own assessment of σ's utility and any applicable tax obligations.</em></p></div>
-                </div>
-                <div class="sidebar-spread" id="i2_s4_fee_compression">
-                  <img src="img/diagrams/i2_s4_fee_compression.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Edge-Native</strong> — All processing happens on-device. Sensors connect via BLE to the user's Sovereign Survival Kit instance, not to a cloud.</p><p><strong>Open Protocol</strong> — Sovereign Survival Kit defines a <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">SovSensor</code> protocol (JSON over BLE GATT) that any manufacturer can implement. The products below are reference designs, not a walled garden.</p><p><strong>Data as Input, Not Product</strong> — Sensor data is raw input for the twin's planning engines. These are NOT standalone health gadgets with their own apps. They are peripherals for the OS.</p><p><strong>.kasset Eligible</strong> — Anonymized, aggregated biometric trends can become .kasset data (e.g., "12 months of metabolic optimization protocols") for A2A commerce.</p></div>
-                </div><div class="sec-break" id="sec-5-distribution"><h2><a href="#sec-5-distribution" style="color:inherit;text-decoration:none">§5 Distribution</a></h2></div>
+</div>
+</div>
+<div class="two-up flip" id="i2_s4_vault_freeze">
+<img src="img/diagrams/i2_s4_vault_freeze.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>REC = Regional Energy Cost</strong></p>
+<p>SSK publishes and open-sources a <strong>deterministic conversion function</strong> that converts σ to local currency using publicly available <strong>total delivered energy cost</strong> data — the all-in price a consumer pays per kWh, including production, transmission, distribution, storage, and applicable taxes/fees. This is the retail electricity price, not the levelized cost of energy (LCOE) or production cost alone.</p>
+<p>The company publishes the formula <strong>once</strong>. It does NOT operate a centralized oracle, set prices, or update rates on behalf of users.</p>
+<p><strong>Why Total Delivered Cost, Not Production Cost</strong></p>
 
-                <div class="spread" id="i2_s5_two_component">
-                  <img src="img/diagrams/i2_s5_two_component.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Service UUID</strong></p><p><strong>Characteristic Format</strong></p><p>Every sensor transmits a standardized JSON payload over BLE GATT notify:</p><p><strong>Design Constraints</strong></p></div>
-                </div>
-                <div class="two-up flip" id="i2_s5_no_appstore">
-                  <img src="img/diagrams/i2_s5_no_appstore.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Note:</strong> This architecture represents the Version 2.0 design, intended for release concurrently with the Lifestyle Sensors line.</em></p><p>As the sensor line streams continuous biometric and environmental data, the Sovereign Digital Cocoon evolves into a <strong>Universal Fact Engine</strong>. Every breath, heartbeat, and movement becomes a high-signal fact captured locally.</p><p><strong>4.1 The Merkle Epoch (Local Minting)</strong></p><p>Minting every individual data point via AES-256-GCM and ML-DSA-65 would destroy battery and storage. Instead, Version 2.0 utilizes a <strong>Layer 3 State Channel</strong> (The Merkle Epoch):</p></div>
-                </div>
-                <div class="two-up" id="i2_s5_developer_id">
-                  <img src="img/diagrams/i2_s5_developer_id.png" alt="" loading="lazy">
-                  <div class="body"><p>The twin's <strong>Situational Retrieval</strong> module (documented in <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">03_Twin_Architecture.md</code>, Section 2) uses sensor data as one of its context signals. For example:</p><p>· SovPulse reports HRV = 22ms → twin tags current state as "high stress"</p><p>· SovAir reports CO2 = 1200ppm → twin injects a ventilation nudge before the next response</p><p>· SovBreath reports acetone = 3.1ppm → twin notes ketosis and factors into Diet domain planning</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s5_safari_web">
-                  <img src="img/diagrams/i2_s5_safari_web.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Hardware Revenue</strong></p><p><strong>Strategic Value (Not Revenue)</strong></p><p>The primary value of the sensor line is NOT hardware margin. It is:</p><p><strong>Engagement flywheel</strong> — As biometric history accumulates, the twin becomes irreplaceable. 6 months of continuous HRV, sleep, and metabolic data creates a personal health baseline no competitor can replicate.</p></div>
-                </div>
-                <div class="two-up" id="i2_s5_four_tier_discovery">
-                  <img src="img/diagrams/i2_s5_four_tier_discovery.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Note</strong>: Biometric sensor devices may trigger regulatory classification depending on jurisdiction. This section captures awareness; detailed analysis is deferred to Phase 2+.</em></p></div>
-                </div>
-                <div class="two-up flip" id="i2_s5_ble_range">
-                  <img src="img/diagrams/i2_s5_ble_range.png" alt="" loading="lazy">
-                  <div class="body"><p>The sensor product line complements, not replaces, the existing hardware roadmap:</p></div>
-                </div>
-                <div class="two-up" id="i2_s5_lora_range">
-                  <img src="img/diagrams/i2_s5_lora_range.png" alt="" loading="lazy">
-                  <div class="body"><p>The network begins with a dinner — and repeats no more than <strong>four times per year</strong>.</p><p>A small portion of the seed round funds an intimate, curated series of events in New York City — each seating 8 to 16 people drawn from local educational institutions, alumni networks, and creative communities. Each event targets a different community. The venue is site-specific (a private dining room, a gallery, a club library). The meal is catered. The invitation carries one instruction:</p><p><strong>"Bring a piece of digital media you made. You will mint it and trade it with the others at the table."</strong></p><p>The quarterly cadence is deliberate — scarcity creates gravity. These are not recurring meetups. Each Genesis dinner is a curated, invitation-only event that seeds a new community into the network. Four per year means four new communities, four new .kasset domains, four new local word-of-mouth waves.</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s5_hf_radio">
-                  <img src="img/diagrams/i2_s5_hf_radio.png" alt="" loading="lazy">
-                  <div class="body"><p>The Genesis Event proves the mechanic works: people create, price, and trade digital media face-to-face. The next phase scales that mechanic through two channels that reinforce each other — one ambient, one event-driven.</p><p><strong>Vector A: The Sticker Drop (QR Street Distribution)</strong></p><p>Local musicians and visual artists distribute their work by leaving pre-printed QR stickers in the streets. QR stickers are $0.05–$0.15/unit ambient awareness placements — they supplement mesh discovery and word-of-mouth, not replace them. See Doc 29 §4 for the full QR sticker specification.</p><p><strong>The sticker is a designed object.</strong> Each sticker is custom-printed with the artist's name, a thumbnail of the work (album art, a cropped image of the visual piece), Sovereign branding, and a QR code. The .kasset is pre-minted and the one-time claim token is encoded in the QR before the artist ever touches it. The artist's only job is to decide where to place them.</p></div>
-                </div>
-                <div class="two-up" id="i2_s5_qr_presence">
-                  <img src="img/diagrams/i2_s5_qr_presence.png" alt="" loading="lazy">
-                  <div class="body"><p>While the cultural track seeds the network through music and visual art, a parallel track runs simultaneously through academic institutions — starting with the <strong>Joseph Wharton Scholars (JWS)</strong> at the University of Pennsylvania.</p><p>The mechanic is the same. The medium is different. Instead of tracks and prints, students mint <strong>class papers, research projects, case analyses, and thesis work</strong> as .kassets and trade them with other students.</p><p><strong>Why JWS</strong></p><p><strong>What Gets Minted</strong></p></div>
-                </div><div class="sec-break" id="sec-6-edgcumbe-encoding"><h2><a href="#sec-6-edgcumbe-encoding" style="color:inherit;text-decoration:none">§6 Edgcumbe Encoding</a></h2></div>
+</div>
+</div>
+<div class="two-up" id="i2_s4_courier_fees">
+<img src="img/diagrams/i2_s4_courier_fees.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>There is no blockchain, no sequencer, and no smart contract. Trades settle bilaterally. Both devices must have their vaults open (foreground exclusivity — Doc 28 §0.7) to sign:</p>
+<p>Steps 7-12 are <strong>intentionally asynchronous</strong>. The trade itself (steps 1-6) completes without SSK involvement. Fiat settlement (step 7) occurs outside SSK using whatever payment method the counterparties choose — identical to how Craigslist, Facebook Marketplace, and OfferUp transactions settle. The seller's on-device payment confirmation (step 8) binds the fiat acknowledgment to the cryptographic provenance chain without SSK touching, holding, or transmitting money. Certification happens later — when network connectivity is available, or when the user is physically near a Vault mesh node.</p>
+<p>SSK's certification service is a <strong>notary</strong> — it certifies trades in exchange for a fee. It does not set prices, order transactions, manage a ledger, or control the marketplace. The traded .kasset content is Edgcumbe-encoded (Doc 28 §0.5) — a standardized, lossy format that carries methodology without the seller's cognitive fingerprint. The certification service certifies the provenance chain, not the content. The Codex (Stiftung-operated, non-profit) provides permanent archival.</p>
+<p><strong>Certification constraints (from Layer 0/1):</strong></p>
 
-                <div class="spread" id="i2_s6_encoding_overview">
-                  <img src="img/diagrams/i2_s6_encoding_overview.png" alt="" loading="lazy">
-                  <div class="body"><p>Every formation mechanic described above — the Genesis dinner, the sticker drop, the gathering, the academic workshop — is amplified by the <strong>mesh network</strong>. Devices running the Sovereign edge app passively broadcast and discover .kasset availability through physical proximity. No internet. No server. No catalog to browse. Geography is the search engine.</p><p><strong>How It Works</strong></p><p>Three radio layers, each serving a different range:</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Pre-hardware (M1–M14):</strong> The mesh operates on BLE + WiFi-Direct only — both natively available on conforming mobile devices. This limits ambient discovery to ~100 meters, which is sufficient for events, campuses, and dense urban foot traffic. LoRa's neighborhood-scale range activates when Sovereign hardware ships at M15.</em></p></div>
-                </div>
-                <div class="two-up flip" id="i2_s6_unified_equation">
-                  <img src="img/diagrams/i2_s6_unified_equation.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Piggybacking the City's Infrastructure</strong></p><p>New York City has ~2,000 LinkNYC kiosks deployed across Manhattan, Brooklyn, Queens, and the Bronx — each providing free public WiFi with a range of ~100–150 meters. This is an existing mesh backbone that Sovereign can ride for free.</p><p><strong>The mechanic:</strong> A Sovereign device within range of a LinkNYC kiosk briefly joins the open WiFi and broadcasts its availability vector via standard local network discovery (mDNS/multicast). Any other Sovereign device on the same kiosk's network receives it. The device then disconnects. Hit-and-run — a few seconds of WiFi contact is enough to exchange availability vectors.</p><p>This is not a hack. It is standard use of a public WiFi network for local service discovery. No terms of service are violated. No data leaves the local network. The kiosk is just a relay point.</p></div>
-                </div>
-                <div class="two-up" id="i2_s6_encoding_space">
-                  <img src="img/diagrams/i2_s6_encoding_space.png" alt="" loading="lazy">
-                  <div class="body"><p>Everything described in Sections 1–5 is grassroots — dinners, stickers, storefronts, campuses, mesh. It builds slowly, deliberately, and authentically. But there is a moment in the growth curve where a single high-amplitude signal converts organic traction into viral velocity. That signal is a <strong>one-time celebrity sponsorship.</strong></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">No celebrity partnership is committed at time of writing. The celebrity activation is a channel option, not a growth dependency. All five scenarios in Doc 13 §5 produce cash-flow-positive outcomes with or without celebrity participation.</em></p><p><strong>Timing: M5–M6 (Not Before)</strong></p><p>This does NOT happen at launch. The activation fires only after the following conditions are met:</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s6_segmentation_phi">
-                  <img src="img/diagrams/i2_s6_segmentation_phi.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Funnel Stack</strong></p><p>Each formation layer feeds the next. They are not alternatives — they are sequential stages of a single acquisition funnel:</p><p><strong>The Math: How 12 Becomes 250,000</strong></p><p><strong>Key inflection points:</strong></p></div>
-                </div>
-                <div class="two-up" id="i2_s6_coupling_psi">
-                  <img src="img/diagrams/i2_s6_coupling_psi.png" alt="" loading="lazy">
-                  <div class="body"><p>At critical mass, the network flips the traditional data extraction model. As outlined in Doc 06, a user's data exhaust—traditionally harvested for free by platforms—is captured, encrypted, and retained entirely within the local Sovereign Cocoon.</p><p>Users can authorize their Twin to bundle and anonymize specific telemetry or behavioral exhaust into macro-level .kassets. The Sovereign network then acts as an arbitrageur, trading this aggregated intelligence back to corporate cloud processors, LLM training labs, and market researchers. The corporate entities pay for high-fidelity, verified data, and the economic value flows directly back to the users who generated it. The network transitions from a cost center to an income generator for its users.</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s6_compression_xi">
-                  <img src="img/diagrams/i2_s6_compression_xi.png" alt="" loading="lazy">
-                  <div class="body"><p>With the mesh active and the user base engaged, SovereignOS replaces legacy "doom-scrolling" platforms (Facebook, Instagram, X) with a Twin-curated, asynchronous information architecture.</p><p><strong>Feed Inputs:</strong></p><p><strong>Authorized Broadcasts:</strong> Personalized messages sent by authorized individuals to <em>N</em> number of recipients (the Sovereign equivalent of a mailing list or group broadcast).</p><p><strong>The Public Record:</strong> Statements, votes, and actions by public officials and government representatives, ingested continuously via the Codex subscription.</p></div>
-                </div>
-                <div class="two-up" id="i2_s6_projection_pi">
-                  <img src="img/diagrams/i2_s6_projection_pi.png" alt="" loading="lazy">
-                  <div class="body"><p>The second pillar of delegation is about curating professional and experiential progression. Rather than relying on algorithmic serendipity or a purely autonomous AI, users actively choose to "lock in" the specific people and domain experts they want to work with on a daily basis.</p><p>The user delegates discovery authority to chosen human managers or curators. These managers sift through the global mesh and the Sovereign Feed to define a highly refined, high-signal set of choices, opportunities, or introductions. The user's Twin acts as the logistical executor—maintaining these trusted connections, filtering out unauthorized noise, and presenting the user only with the curated selections from their chosen human managers. The user remains the ultimate decision-maker, selecting from a menu populated entirely by people they have explicitly chosen to trust.</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s6_folding_omega">
-                  <img src="img/diagrams/i2_s6_folding_omega.png" alt="" loading="lazy">
-                  <div class="body"><p>Because the Twin perfectly models the user's preferences, and because it ingests the Codex public record continuously, public officials can no longer rely on political amnesia. The Twin instantly cross-references any new statement from a representative against their entire historical record. Politicians must stand by their full record in any given moment, as every user's Twin acts as an indefatigable, personalized fact-checker and context-provider.</p></div>
-                </div>
-                <div class="two-up" id="i2_s6_privacy_guarantee">
-                  <img src="img/diagrams/i2_s6_privacy_guarantee.png" alt="" loading="lazy">
-                  <div class="body"><p>In Phase 3, the core mechanics of the .kasset exchange are adapted from economic trading to the democratic process.</p><p>Voting evolves from a discrete, low-information event (e.g., every two years) into a <strong>continuous process</strong> executed by agents.</p><p><strong>How it works:</strong></p><p><strong>Delegation .kassets:</strong> Users issue specific cryptographic mandates (delegations) to representatives or domain experts.</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s6_complementary_pairs">
-                  <img src="img/diagrams/i2_s6_complementary_pairs.png" alt="" loading="lazy">
-                  <div class="body"><p>Sovereign Survival Kit does not rely on legacy corporate entities to generate revenue. We are replacing that economic model and cannot be dependent on existing players.</p><p>Revenue derives from:</p><p>Network transaction fees (progressive, physics-anchored)</p><p>Hardware sales (margin on devices that enable the network)</p></div>
-                </div>
-                <div class="two-up" id="i2_s6_dynamic_phrases">
-                  <img src="img/diagrams/i2_s6_dynamic_phrases.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>1A. Progressive Certification Fee</strong></p><p>· <strong>What:</strong> Dynamic fee on every .kasset trade certified by SSK's certification service (notary model). Three layers: Ramsey pricing (efficiency), Rawlsian veil (equity), energy-proportional (physics constraint). Trades settle bilaterally on mesh; the fee is for certification and Codex archival.</p><p>· <strong>Variables:</strong> (1) measured asset rarity/novelty, (2) buyer's accumulated wealth profile</p><p>· <strong>Typical range:</strong> 1.0–6.0% depending on segment (see doc 11 §3 for segment breakdown)</p></div>
-                </div>
-                <div class="two-up flip" id="i2_s6_domain_convergence">
-                  <img src="img/diagrams/i2_s6_domain_convergence.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>2A. Sovereign Vault (Identity Storage — Tiered)</strong></p><p>· <strong>What:</strong> Encrypted identity storage with tiered membership. Sovereign Survival Kit never sees the contents (zero-knowledge custody).</p><p>· <strong>Tier 1 — Cold Storage:</strong> $60/year. Entry-level identity backup. Priced on safe deposit box analogy ($20-200/yr avg, TCBK/SmartAsset 2024).</p><p>· <strong>Tier 2 — Standard:</strong> $15/month. Full features: backup, freeze, marketplace tools.</p></div>
-                </div>
-                <div class="sidebar-spread" id="i2_s6_tau_theory">
-                  <img src="img/diagrams/i2_s6_tau_theory.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Founder directive (2026-04-15):</strong> "We do not rely on legacy corporate entities to generate revenue because we are replacing that economic model and cannot be dependent on existing players."</em></p><p>></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">The following streams will NEVER be pursued: Biometric SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK Licensing, Constituent Intelligence Platform (Government SaaS). Enterprise API of any kind is prohibited.</em></p><p>></p></div>
-                </div>
-                <div class="two-up flip" id="i2_s6_worked_example">
-                  <img src="img/diagrams/i2_s6_worked_example.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>4A. Volumetric Sphere (Ultra-Premium Hardware)</strong></p><p>· <strong>What:</strong> White-glove venue installations of the 6-DOF gyroscopic control sphere. Distinct from the consumer Sphere/Rig ($2,499-$4,999 in doc 11) — this is a purpose-built, professionally installed system.</p><p>· <strong>Pricing:</strong> $50,000-$150,000 per unit</p><p>· <strong>Revenue:</strong> 50 units/year × $100K avg = $5M</p></div>
-                </div>
-                <div class="two-up" id="i2_s6_mutation">
-                  <img src="img/diagrams/i2_s6_mutation.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>5A. Expertise Certification Endorsements</strong></p><p>· <strong>What:</strong> As the Provenance Engine builds verified expertise scores, professional organizations and industry guilds may pay to integrate or endorse Sovereign Survival Kit expertise ratings as an alternative to traditional credentialing.</p><p>· <strong>Pricing:</strong> Partnership/endorsement fees $50K-$200K/year</p><p>· <strong>Revenue:</strong> Long-term brand value play</p></div>
-                </div></div>
-<div class="bot-nav"><a href="issue_1.html">← Issue 1</a><a href="index.html">All Issues</a><a href="issue_3.html">Issue 3 →</a></div>
-<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
-</body></html>
+</div>
+</div>
+<div class="two-up flip" id="i2_s4_verification_fees">
+<img src="img/diagrams/i2_s4_verification_fees.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>Primary display:</strong> Spark ⚡ (always)</p>
+<p>· <strong>Secondary:</strong> Local currency as reference (toggle-able), calculated from user's selected data source</p>
+<p>· <strong>Source line:</strong> Explicit data source + timestamp (not "↑ 0.3% today" — SSK does not track rate movements)</p>
+<p>· <strong>Staleness warning:</strong> Soft warning if cached rate exceeds user's staleness preference (default: 7 days)</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s4_hardware_margins">
+<img src="img/diagrams/i2_s4_hardware_margins.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Trend</strong></p>
+<p>Global energy costs are shaped by two vectors moving in opposite directions:</p>
+<p><strong>Production cost (LCOE) is in secular decline:</strong></p>
+<p><strong>Net-positive milestones:</strong></p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s4_licensing_fees">
+<img src="img/diagrams/i2_s4_licensing_fees.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Thesis summary:</strong> σ is a metrological reference number defined by physics (1 kWh ≡ 3.6 MJ), not by policy. Its fiat-equivalent value is determined by publicly observable delivered energy costs and fluctuates with those costs — it can decrease as energy infrastructure becomes more efficient. Each device computes the conversion locally using a published, deterministic, open-source formula on user-selected data sources. No central oracle exists. Unlike a production-cost peg, the total-delivered-cost basis retains a durable non-zero fiat anchor through infrastructure costs, making σ a practical unit of account today. σ is not designed or marketed as an investment, a store of value, or an appreciating asset. Users are responsible for their own assessment of σ's utility and any applicable tax obligations.</em></p>
+
+</div>
+</div>
+<div class="sidebar-block" id="i2_s4_fee_compression">
+<img src="img/diagrams/i2_s4_fee_compression.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Edge-Native</strong> — All processing happens on-device. Sensors connect via BLE to the user's Sovereign Survival Kit instance, not to a cloud.</p>
+<p><strong>Open Protocol</strong> — Sovereign Survival Kit defines a <code>SovSensor</code> protocol (JSON over BLE GATT) that any manufacturer can implement. The products below are reference designs, not a walled garden.</p>
+<p><strong>Data as Input, Not Product</strong> — Sensor data is raw input for the twin's planning engines. These are NOT standalone health gadgets with their own apps. They are peripherals for the OS.</p>
+<p><strong>.kasset Eligible</strong> — Anonymized, aggregated biometric trends can become .kasset data (e.g., "12 months of metabolic optimization protocols") for A2A commerce.</p>
+
+</div>
+</div>
+<div class="section-divider" id="sec-5-distribution">
+  <h2><a href="#sec-5-distribution">§5 Distribution</a></h2>
+</div>
+<div class="spread" id="i2_s5_two_component">
+<img src="img/diagrams/i2_s5_two_component.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Service UUID</strong></p>
+<p><strong>Characteristic Format</strong></p>
+<p>Every sensor transmits a standardized JSON payload over BLE GATT notify:</p>
+<p><strong>Design Constraints</strong></p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s5_no_appstore">
+<img src="img/diagrams/i2_s5_no_appstore.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Note:</strong> This architecture represents the Version 2.0 design, intended for release concurrently with the Lifestyle Sensors line.</em></p>
+<p>As the sensor line streams continuous biometric and environmental data, the Sovereign Digital Cocoon evolves into a <strong>Universal Fact Engine</strong>. Every breath, heartbeat, and movement becomes a high-signal fact captured locally.</p>
+<p><strong>4.1 The Merkle Epoch (Local Minting)</strong></p>
+<p>Minting every individual data point via AES-256-GCM and ML-DSA-65 would destroy battery and storage. Instead, Version 2.0 utilizes a <strong>Layer 3 State Channel</strong> (The Merkle Epoch):</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s5_developer_id">
+<img src="img/diagrams/i2_s5_developer_id.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The twin's <strong>Situational Retrieval</strong> module (documented in <code>03_Twin_Architecture.md</code>, Section 2) uses sensor data as one of its context signals. For example:</p>
+<p>· SovPulse reports HRV = 22ms → twin tags current state as "high stress"</p>
+<p>· SovAir reports CO2 = 1200ppm → twin injects a ventilation nudge before the next response</p>
+<p>· SovBreath reports acetone = 3.1ppm → twin notes ketosis and factors into Diet domain planning</p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s5_safari_web">
+<img src="img/diagrams/i2_s5_safari_web.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Hardware Revenue</strong></p>
+<p><strong>Strategic Value (Not Revenue)</strong></p>
+<p>The primary value of the sensor line is NOT hardware margin. It is:</p>
+<p><strong>Engagement flywheel</strong> — As biometric history accumulates, the twin becomes irreplaceable. 6 months of continuous HRV, sleep, and metabolic data creates a personal health baseline no competitor can replicate.</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s5_four_tier_discovery">
+<img src="img/diagrams/i2_s5_four_tier_discovery.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Note</strong>: Biometric sensor devices may trigger regulatory classification depending on jurisdiction. This section captures awareness; detailed analysis is deferred to Phase 2+.</em></p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s5_ble_range">
+<img src="img/diagrams/i2_s5_ble_range.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The sensor product line complements, not replaces, the existing hardware roadmap:</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s5_lora_range">
+<img src="img/diagrams/i2_s5_lora_range.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The network begins with a dinner — and repeats no more than <strong>four times per year</strong>.</p>
+<p>A small portion of the seed round funds an intimate, curated series of events in New York City — each seating 8 to 16 people drawn from local educational institutions, alumni networks, and creative communities. Each event targets a different community. The venue is site-specific (a private dining room, a gallery, a club library). The meal is catered. The invitation carries one instruction:</p>
+<p><strong>"Bring a piece of digital media you made. You will mint it and trade it with the others at the table."</strong></p>
+<p>The quarterly cadence is deliberate — scarcity creates gravity. These are not recurring meetups. Each Genesis dinner is a curated, invitation-only event that seeds a new community into the network. Four per year means four new communities, four new .kasset domains, four new local word-of-mouth waves.</p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s5_hf_radio">
+<img src="img/diagrams/i2_s5_hf_radio.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Genesis Event proves the mechanic works: people create, price, and trade digital media face-to-face. The next phase scales that mechanic through two channels that reinforce each other — one ambient, one event-driven.</p>
+<p><strong>Vector A: The Sticker Drop (QR Street Distribution)</strong></p>
+<p>Local musicians and visual artists distribute their work by leaving pre-printed QR stickers in the streets. QR stickers are $0.05–$0.15/unit ambient awareness placements — they supplement mesh discovery and word-of-mouth, not replace them. See Doc 29 §4 for the full QR sticker specification.</p>
+<p><strong>The sticker is a designed object.</strong> Each sticker is custom-printed with the artist's name, a thumbnail of the work (album art, a cropped image of the visual piece), Sovereign branding, and a QR code. The .kasset is pre-minted and the one-time claim token is encoded in the QR before the artist ever touches it. The artist's only job is to decide where to place them.</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s5_qr_presence">
+<img src="img/diagrams/i2_s5_qr_presence.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>While the cultural track seeds the network through music and visual art, a parallel track runs simultaneously through academic institutions — starting with the <strong>Joseph Wharton Scholars (JWS)</strong> at the University of Pennsylvania.</p>
+<p>The mechanic is the same. The medium is different. Instead of tracks and prints, students mint <strong>class papers, research projects, case analyses, and thesis work</strong> as .kassets and trade them with other students.</p>
+<p><strong>Why JWS</strong></p>
+<p><strong>What Gets Minted</strong></p>
+
+</div>
+</div>
+<div class="section-divider" id="sec-6-edgcumbe-encoding">
+  <h2><a href="#sec-6-edgcumbe-encoding">§6 Edgcumbe Encoding</a></h2>
+</div>
+<div class="spread" id="i2_s6_encoding_overview">
+<img src="img/diagrams/i2_s6_encoding_overview.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Every formation mechanic described above — the Genesis dinner, the sticker drop, the gathering, the academic workshop — is amplified by the <strong>mesh network</strong>. Devices running the Sovereign edge app passively broadcast and discover .kasset availability through physical proximity. No internet. No server. No catalog to browse. Geography is the search engine.</p>
+<p><strong>How It Works</strong></p>
+<p>Three radio layers, each serving a different range:</p>
+<p><em class="blockquote"><strong>Pre-hardware (M1–M14):</strong> The mesh operates on BLE + WiFi-Direct only — both natively available on conforming mobile devices. This limits ambient discovery to ~100 meters, which is sufficient for events, campuses, and dense urban foot traffic. LoRa's neighborhood-scale range activates when Sovereign hardware ships at M15.</em></p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s6_unified_equation">
+<img src="img/diagrams/i2_s6_unified_equation.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Piggybacking the City's Infrastructure</strong></p>
+<p>New York City has ~2,000 LinkNYC kiosks deployed across Manhattan, Brooklyn, Queens, and the Bronx — each providing free public WiFi with a range of ~100–150 meters. This is an existing mesh backbone that Sovereign can ride for free.</p>
+<p><strong>The mechanic:</strong> A Sovereign device within range of a LinkNYC kiosk briefly joins the open WiFi and broadcasts its availability vector via standard local network discovery (mDNS/multicast). Any other Sovereign device on the same kiosk's network receives it. The device then disconnects. Hit-and-run — a few seconds of WiFi contact is enough to exchange availability vectors.</p>
+<p>This is not a hack. It is standard use of a public WiFi network for local service discovery. No terms of service are violated. No data leaves the local network. The kiosk is just a relay point.</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s6_encoding_space">
+<img src="img/diagrams/i2_s6_encoding_space.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Everything described in Sections 1–5 is grassroots — dinners, stickers, storefronts, campuses, mesh. It builds slowly, deliberately, and authentically. But there is a moment in the growth curve where a single high-amplitude signal converts organic traction into viral velocity. That signal is a <strong>one-time celebrity sponsorship.</strong></p>
+<p><em class="blockquote">No celebrity partnership is committed at time of writing. The celebrity activation is a channel option, not a growth dependency. All five scenarios in Doc 13 §5 produce cash-flow-positive outcomes with or without celebrity participation.</em></p>
+<p><strong>Timing: M5–M6 (Not Before)</strong></p>
+<p>This does NOT happen at launch. The activation fires only after the following conditions are met:</p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s6_segmentation_phi">
+<img src="img/diagrams/i2_s6_segmentation_phi.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Funnel Stack</strong></p>
+<p>Each formation layer feeds the next. They are not alternatives — they are sequential stages of a single acquisition funnel:</p>
+<p><strong>The Math: How 12 Becomes 250,000</strong></p>
+<p><strong>Key inflection points:</strong></p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s6_coupling_psi">
+<img src="img/diagrams/i2_s6_coupling_psi.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>At critical mass, the network flips the traditional data extraction model. As outlined in Doc 06, a user's data exhaust—traditionally harvested for free by platforms—is captured, encrypted, and retained entirely within the local Sovereign Cocoon.</p>
+<p>Users can authorize their Twin to bundle and anonymize specific telemetry or behavioral exhaust into macro-level .kassets. The Sovereign network then acts as an arbitrageur, trading this aggregated intelligence back to corporate cloud processors, LLM training labs, and market researchers. The corporate entities pay for high-fidelity, verified data, and the economic value flows directly back to the users who generated it. The network transitions from a cost center to an income generator for its users.</p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s6_compression_xi">
+<img src="img/diagrams/i2_s6_compression_xi.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>With the mesh active and the user base engaged, SovereignOS replaces legacy "doom-scrolling" platforms (Facebook, Instagram, X) with a Twin-curated, asynchronous information architecture.</p>
+<p><strong>Feed Inputs:</strong></p>
+<p><strong>Authorized Broadcasts:</strong> Personalized messages sent by authorized individuals to <em>N</em> number of recipients (the Sovereign equivalent of a mailing list or group broadcast).</p>
+<p><strong>The Public Record:</strong> Statements, votes, and actions by public officials and government representatives, ingested continuously via the Codex subscription.</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s6_projection_pi">
+<img src="img/diagrams/i2_s6_projection_pi.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The second pillar of delegation is about curating professional and experiential progression. Rather than relying on algorithmic serendipity or a purely autonomous AI, users actively choose to "lock in" the specific people and domain experts they want to work with on a daily basis.</p>
+<p>The user delegates discovery authority to chosen human managers or curators. These managers sift through the global mesh and the Sovereign Feed to define a highly refined, high-signal set of choices, opportunities, or introductions. The user's Twin acts as the logistical executor—maintaining these trusted connections, filtering out unauthorized noise, and presenting the user only with the curated selections from their chosen human managers. The user remains the ultimate decision-maker, selecting from a menu populated entirely by people they have explicitly chosen to trust.</p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s6_folding_omega">
+<img src="img/diagrams/i2_s6_folding_omega.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Because the Twin perfectly models the user's preferences, and because it ingests the Codex public record continuously, public officials can no longer rely on political amnesia. The Twin instantly cross-references any new statement from a representative against their entire historical record. Politicians must stand by their full record in any given moment, as every user's Twin acts as an indefatigable, personalized fact-checker and context-provider.</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s6_privacy_guarantee">
+<img src="img/diagrams/i2_s6_privacy_guarantee.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>In Phase 3, the core mechanics of the .kasset exchange are adapted from economic trading to the democratic process.</p>
+<p>Voting evolves from a discrete, low-information event (e.g., every two years) into a <strong>continuous process</strong> executed by agents.</p>
+<p><strong>How it works:</strong></p>
+<p><strong>Delegation .kassets:</strong> Users issue specific cryptographic mandates (delegations) to representatives or domain experts.</p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s6_complementary_pairs">
+<img src="img/diagrams/i2_s6_complementary_pairs.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Sovereign Survival Kit does not rely on legacy corporate entities to generate revenue. We are replacing that economic model and cannot be dependent on existing players.</p>
+<p>Revenue derives from:</p>
+<p>Network transaction fees (progressive, physics-anchored)</p>
+<p>Hardware sales (margin on devices that enable the network)</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s6_dynamic_phrases">
+<img src="img/diagrams/i2_s6_dynamic_phrases.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>1A. Progressive Certification Fee</strong></p>
+<p>· <strong>What:</strong> Dynamic fee on every .kasset trade certified by SSK's certification service (notary model). Three layers: Ramsey pricing (efficiency), Rawlsian veil (equity), energy-proportional (physics constraint). Trades settle bilaterally on mesh; the fee is for certification and Codex archival.</p>
+<p>· <strong>Variables:</strong> (1) measured asset rarity/novelty, (2) buyer's accumulated wealth profile</p>
+<p>· <strong>Typical range:</strong> 1.0–6.0% depending on segment (see doc 11 §3 for segment breakdown)</p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s6_domain_convergence">
+<img src="img/diagrams/i2_s6_domain_convergence.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>2A. Sovereign Vault (Identity Storage — Tiered)</strong></p>
+<p>· <strong>What:</strong> Encrypted identity storage with tiered membership. Sovereign Survival Kit never sees the contents (zero-knowledge custody).</p>
+<p>· <strong>Tier 1 — Cold Storage:</strong> $60/year. Entry-level identity backup. Priced on safe deposit box analogy ($20-200/yr avg, TCBK/SmartAsset 2024).</p>
+<p>· <strong>Tier 2 — Standard:</strong> $15/month. Full features: backup, freeze, marketplace tools.</p>
+
+</div>
+</div>
+<div class="sidebar-block" id="i2_s6_tau_theory">
+<img src="img/diagrams/i2_s6_tau_theory.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Founder directive (2026-04-15):</strong> "We do not rely on legacy corporate entities to generate revenue because we are replacing that economic model and cannot be dependent on existing players."</em></p>
+<p>></p>
+<p><em class="blockquote">The following streams will NEVER be pursued: Biometric SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK Licensing, Constituent Intelligence Platform (Government SaaS). Enterprise API of any kind is prohibited.</em></p>
+<p>></p>
+
+</div>
+</div>
+<div class="two-up flip" id="i2_s6_worked_example">
+<img src="img/diagrams/i2_s6_worked_example.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>4A. Volumetric Sphere (Ultra-Premium Hardware)</strong></p>
+<p>· <strong>What:</strong> White-glove venue installations of the 6-DOF gyroscopic control sphere. Distinct from the consumer Sphere/Rig ($2,499-$4,999 in doc 11) — this is a purpose-built, professionally installed system.</p>
+<p>· <strong>Pricing:</strong> $50,000-$150,000 per unit</p>
+<p>· <strong>Revenue:</strong> 50 units/year × $100K avg = $5M</p>
+
+</div>
+</div>
+<div class="two-up" id="i2_s6_mutation">
+<img src="img/diagrams/i2_s6_mutation.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>5A. Expertise Certification Endorsements</strong></p>
+<p>· <strong>What:</strong> As the Provenance Engine builds verified expertise scores, professional organizations and industry guilds may pay to integrate or endorse Sovereign Survival Kit expertise ratings as an alternative to traditional credentialing.</p>
+<p>· <strong>Pricing:</strong> Partnership/endorsement fees $50K-$200K/year</p>
+<p>· <strong>Revenue:</strong> Long-term brand value play</p>
+
+</div>
+</div>
+
+</div>
+
+<div class="issue-nav">
+  <a href="issue_1.html">← Issue 1</a>
+  <a href="index.html">All Issues</a>
+  <a href="issue_3.html">Issue 3 →</a>
+</div>
+<footer class="site-footer">Sovereign Survival Kit, Inc. · Series A Data Room · 2026</footer>
+</body>
+</html>

@@ -1,310 +1,436 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Issue 5: The Legal Shield — Sovereign Power</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-:root {
-  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
-  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
-  --border: #2a2a3a;
-  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
-  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
-  --font: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SOVEREIGN POWER</span>
+  <a href="index.html" class="">Library</a>
+<a href="issue_1.html" class="">#1</a>
+<a href="issue_2.html" class="">#2</a>
+<a href="issue_3.html" class="">#3</a>
+<a href="issue_4.html" class="">#4</a>
+<a href="issue_5.html" class="active">#5</a>
+<a href="issue_6.html" class="">#6</a>
+<a href="issue_7.html" class="">#7</a>
 
-/* NAV */
-.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
-  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
-  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
-.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
-.nav a:hover { color:var(--text); }
-.nav a.on { color:var(--magenta); }
-.nav .sp { flex:1; }
-.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
-  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
-
-/* FULL-BLEED COVER */
-.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
-.cover img { width:100%; height:100%; object-fit:cover; }
-.cover .overlay { position:absolute; inset:0;
-  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
-.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
-.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
-  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
-.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
-.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
-  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
-  border-radius:4px; color:white; }
-
-/* EDITORIAL BODY */
-.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
-
-/* SECTION BREAK */
-.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
-.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
-
-/* SPREAD: full-width hero image + editorial text below */
-.spread { margin-bottom:3rem; }
-.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
-.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
-.spread .body p { margin-bottom:0.8rem; }
-.spread .body strong { color:var(--text); }
-
-/* TWO-UP: image left, text right (alternating) */
-.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
-  align-items:start; margin-bottom:2.5rem; }
-.two-up.flip { direction:rtl; }
-.two-up.flip > * { direction:ltr; }
-.two-up img { width:100%; border-radius:6px; }
-.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
-.two-up .body strong { color:var(--text); }
-.two-up .body p { margin-bottom:0.6rem; }
-
-/* SIDEBAR: small img + text */
-.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
-.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
-.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
-
-/* DOC REF */
-.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
-  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
-.doc-ref:hover { color:var(--magenta); }
-
-/* SECTION TOC */
-.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
-.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
-  text-transform:uppercase; margin-bottom:0.6rem; }
-.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
-.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
-  color:var(--dim); background:var(--card); border:1px solid var(--border);
-  text-decoration:none; transition:all 0.2s; }
-.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
-
-/* BOTTOM NAV */
-.bot-nav { display:flex; justify-content:space-between; align-items:center;
-  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
-.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
-.bot-nav a:hover { color:var(--text); }
-.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
-
-/* INDEX COVERS */
-.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
-.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
-.mag-grid .card:first-child h2 { font-size:2.5rem; }
-.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
-  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
-.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
-.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
-.card:hover .bg { transform:scale(1.05); }
-.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
-.card:hover .grad { opacity:0.95; }
-.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
-.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
-.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
-  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
-.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
-.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
-
-/* HERO SECTION */
-.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
-  border-bottom:1px solid var(--border); overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
-  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
-.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
-  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
-.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
-.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
-.hero .stats .n { font-size:2rem; font-weight:900;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
-.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
-
-@media(max-width:768px) {
-  .hero h1 { font-size:2.2rem; }
-  .mag-grid { grid-template-columns:1fr; padding:1rem; }
-  .mag-grid .card:first-child { min-height:280px; }
-  .cover h1 { font-size:2rem; }
-  .cover { height:60vh; }
-  .two-up { grid-template-columns:1fr; }
-  .sidebar-spread { flex-direction:column; }
-  .sidebar-spread img { width:100%; }
-}
-</style></head><body>
-<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
-<a href="index.html">Library</a><a href="issue_1.html">#1</a>
-<a href="issue_2.html">#2</a>
-<a href="issue_3.html">#3</a>
-<a href="issue_4.html">#4</a>
-<a href="issue_5.html" class="on">#5</a>
-<a href="issue_6.html">#6</a>
-<a href="issue_7.html">#7</a>
-<span class="sp"></span><span class="badge">ALPHA</span></nav>
-<div class="cover">
+  <span class="nav-spacer"></span>
+  <span class="nav-badge">Alpha</span>
+</nav>
+<div class="issue-cover">
   <img src="img/diagrams/i5_cover.png" alt="">
-  <div class="overlay"></div>
-  <div class="pill" style="background:#6c5ce7">Issue 5 of 7</div>
-  <div class="text"><h1>The Legal Shield</h1>
-  <div class="sub">Act 5: Legal + Governance + IP · 35 illustrations</div></div>
+  <div class="issue-cover-overlay"></div>
+  <div class="issue-cover-badge" style="background:#6c5ce7">Issue 5 of 7</div>
+  <div class="issue-cover-text">
+    <h1>The Legal Shield</h1>
+    <div class="act-line">Act 5 · Legal + IP · 35 illustrations</div>
+  </div>
 </div>
-<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-1-investor-terms">§1 Investor Terms</a><a href="#sec-2-cap-table">§2 Cap Table</a><a href="#sec-3-governance">§3 Governance</a><a href="#sec-4-legal-entity">§4 Legal Entity</a><a href="#sec-5-ip-portfolio">§5 IP Portfolio</a><a href="#sec-6-howey-test">§6 Howey Test</a><a href="#sec-7-regulatory-risk">§7 Regulatory Risk</a><a href="#sec-8-legal-budget">§8 Legal Budget</a><a href="#sec-9-competition">§9 Competition</a></div></div>
-<div class="editorial"><div class="sec-break" id="sec-1-investor-terms"><h2><a href="#sec-1-investor-terms" style="color:inherit;text-decoration:none">§1 Investor Terms</a></h2></div>
 
-                <div class="spread" id="i5_s1_safe_structure">
-                  <img src="img/diagrams/i5_s1_safe_structure.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>What Investors Receive</strong></p><p>· <strong>At signing:</strong> A SAFE — a contractual right to receive preferred stock in the future when a priced round (Series A) closes.</p><p>· <strong>At conversion:</strong> Preferred shares in Sovereign Survival Kit Inc. (Delaware C-Corp) calculated by dividing the investment amount by the lower of (a) the valuation cap price or (b) the Series A price.</p><p>· <strong>No board seats.</strong> Investors receive information rights and, for qualifying checks, pro-rata participation rights in subsequent rounds.</p><p>· <strong>No governance over the DAO or Trust.</strong> Investment is in the C-Corp only. The Wyoming DAO LLC and Nevada Irrevocable Trust are separate legal entities not subject to investor governance.</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Architectural note:</strong> The zero-egress architecture requires singular sovereign authority over design decisions — control that cannot be fragmented, delegated to committee, or overridden by shareholder vote. During the founder's lifetime, that authority is vested in the founder. Upon succession, it transfers whole to the Nevada Irrevocable Trust. See §5.</em></p><a class="doc-ref" href="#sec-1-investor-terms">§ 1. Seed Round — Post-Money SAFE</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s1_valuation_cap">
-                  <img src="img/diagrams/i5_s1_valuation_cap.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>What Series A Investors Receive</strong></p><p>· Preferred shares in Sovereign Survival Kit Inc. (Delaware C-Corp) with 1x liquidation preference. Shares are converted from the founder's Class B allocation — the fixed pool of 10,000,000 shares does not increase.</p><p>· Information rights (annual reviewed financials).</p><p>· <strong>Observer seat on the board</strong> — not a voting seat. Founder retains majority board control. See <a href="17_Board_and_Governance.md" style="color:var(--magenta);text-decoration:none">Board and Governance</a>.</p><p>· Immutable charter constraints protect all shareholders equally. See <a href="17_Board_and_Governance.md" style="color:var(--magenta);text-decoration:none">Board and Governance §4</a>.</p><a class="doc-ref" href="#sec-1-investor-terms">§ 2. Series A — Priced Preferred Round (Target M18)</a></div>
-                </div>
-                <div class="two-up" id="i5_s1_dilution_model">
-                  <img src="img/diagrams/i5_s1_dilution_model.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">Full legal/IP breakdown in <a href="24_Legal_Budget_Breakdown.md" style="color:var(--magenta);text-decoration:none">Legal Budget Breakdown</a>. Individual compensation detail in <a href="11_Financial_Model_and_Projections.md" style="color:var(--magenta);text-decoration:none">Financial Model §7</a>.</em></p><p>></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Payroll:</strong> Funds a 3-person founding team (Founder/CEO, Technical Lead Manager, COO). Fractional CFO and GC retained in Y2.</em></p><p>></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Compensation structure:</strong> Employees receive cash compensation plus spark grants equivalent to typical options value — no equity grants, no options. The Nevada Irrevocable Trust is a separate vehicle; its membership is at the founder's sole and absolute discretion and is not subject to investor inquiry. No option pool exists. This preserves the clean 93/7 cap table.</em></p><p>></p><a class="doc-ref" href="#sec-1-investor-terms">§ 4. Use of Seed Proceeds ($3M — ~18-Month Runway)</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s1_use_of_proceeds">
-                  <img src="img/diagrams/i5_s1_use_of_proceeds.png" alt="" loading="lazy">
-                  <div class="body"><p>Sovereign Survival Kit is architecturally a sovereign, edge-first platform. The .kasset minting process requires zero network egress — the ML-DSA-65 post-quantum signature proves that each asset was generated locally and is unaltered. If any party — investor, board member, or regulator — can compel a design change that introduces a network path into the core processing environment, the cryptographic provenance chain breaks, the signature is void, and the product has no value proposition. The founder's absolute control over the company is therefore not a preference — it is a <strong>structural requirement of the product itself</strong>.</p><p>· <strong>Fixed share pool:</strong> The charter permanently fixes the authorized share count at 10,000,000. No new shares may ever be created. Future equity rounds are funded by the founder voluntarily converting Class B shares to the applicable preferred class. The total never changes. See <a href="17_Board_and_Governance.md" style="color:var(--magenta);text-decoration:none">Board and Governance §4</a>.</p><p>· <strong>Dual-class stock:</strong> The founder holds Class B shares with <strong>20x voting rights</strong> (Lyft precedent). All investor shares are Class A (1x voting). At 93% ownership post-seed, the founder holds 99.6% of all votes. Under the fixed-pool model, the founder retains >95% vote control even at <60% economic ownership. No combination of investors across any number of rounds can outvote the founder.</p><p>· <strong>No sunset provision.</strong> The dual-class structure is permanent and does not expire based on time, transfer, or IPO. This is consistent with Alphabet, Meta, and Snap, none of which have voting sunsets.</p><p>· <strong>The OpenAI cautionary case.</strong> The contemporaneous <em>Altman v. Musk</em> litigation (2025-2026) demonstrates exactly what happens when governance structure allows investors and board members to override a founder's architectural vision — OpenAI's conversion from non-profit to capped-profit to for-profit restructured the entity's mission under investor pressure. SSK's governance is designed to make that outcome structurally impossible. The airgap cannot be removed by board vote because the charter codifies it as an irrevocable constraint.</p><p>· <strong>Board majority:</strong> Founder holds both voting board seats at all stages through Series A. The Series A observer seat is non-voting. See <a href="17_Board_and_Governance.md" style="color:var(--magenta);text-decoration:none">Board and Governance</a>.</p><a class="doc-ref" href="#sec-1-investor-terms">§ 5. Founder Control Provisions</a></div>
-                </div><div class="sec-break" id="sec-2-cap-table"><h2><a href="#sec-2-cap-table" style="color:inherit;text-decoration:none">§2 Cap Table</a></h2></div>
+<div class="issue-toc">
+  <h3>In This Issue</h3>
+  <div class="toc-chips"><a href="#sec-1-investor-terms" class="toc-chip">§1 Investor Terms</a>
+<a href="#sec-2-cap-table" class="toc-chip">§2 Cap Table</a>
+<a href="#sec-3-governance" class="toc-chip">§3 Governance</a>
+<a href="#sec-4-legal-entity" class="toc-chip">§4 Legal Entity</a>
+<a href="#sec-5-ip-portfolio" class="toc-chip">§5 IP Portfolio</a>
+<a href="#sec-6-howey-test" class="toc-chip">§6 Howey Test</a>
+<a href="#sec-7-regulatory-risk" class="toc-chip">§7 Regulatory Risk</a>
+<a href="#sec-8-legal-budget" class="toc-chip">§8 Legal Budget</a>
+<a href="#sec-9-competition" class="toc-chip">§9 Competition</a>
+</div>
+</div>
 
-                <div class="spread" id="i5_s2_cap_table">
-                  <img src="img/diagrams/i5_s2_cap_table.png" alt="" loading="lazy">
-                  <div class="body"><p><em>700,000 shares authorized but unissued, reserved for SAFE conversion at the first priced equity round. Post-money SAFE commits 7.0% dilution at conversion.</em></p><p><strong>Notes:</strong></p><p>· Class B shares carry <strong>20x voting rights</strong> per share (Lyft precedent). See <a href="15_Investor_Terms.md" style="color:var(--magenta);text-decoration:none">Investor Terms §5</a>.</p><p>· <strong>No option pool.</strong> All employee compensation is non-dilutive — cash salary plus spark grants. See §5 below.</p><p>· No prior investors. No angels. No advisor equity grants. Clean cap table.</p><a class="doc-ref" href="#sec-2-cap-table">§ 1. Pre-Seed (Current State)</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s2_dual_class">
-                  <img src="img/diagrams/i5_s2_dual_class.png" alt="" loading="lazy">
-                  <div class="body"><p>The $3M seed is raised via a YC Standard Post-Money SAFE with a <strong>$42.86M post-money valuation cap</strong>. SAFEs convert into preferred stock at the first priced equity round of ≥$1M.</p><p><strong>Derivation:</strong></p><p>· Post-money cap: $42,857,143 (~$42.86M)</p><p>· Investor ownership: $3,000,000 / $42,857,143 = <strong>7.0%</strong></p><p>· Founder retention: 100% − 7.0% = <strong>93.0%</strong></p><p>· Price per share: $42,857,143 / 10,000,000 = <strong>$4.286</strong></p><a class="doc-ref" href="#sec-2-cap-table">§ 2. Post-Seed: SAFE Conversion at First Priced Round</a></div>
-                </div>
-                <div class="sidebar-spread" id="i5_s2_no_option_pool">
-                  <img src="img/diagrams/i5_s2_no_option_pool.png" alt="" loading="lazy">
-                  <div class="body"><p>Hypothetical scenario: $15M priced round at $80M pre-money ($95M post-money). The founder voluntarily converts Class B shares to preferred — <strong>no new shares are created.</strong> The 10,000,000 total is permanent. This round may never occur; it is presented to demonstrate the fixed-pool mechanic.</p><p><strong>Derivation:</strong></p><p>· Pre-money valuation: $80,000,000</p><p>· Price per share: $80,000,000 / 10,000,000 = <strong>$8.00</strong></p><p>· Series A shares: $15,000,000 / $8.00 = <strong>1,875,000</strong></p><p>· Mechanism: Founder converts 1,875,000 Class B → Series A Preferred. Shares returned to treasury and re-issued as preferred.</p><a class="doc-ref" href="#sec-2-cap-table">§ 3. Hypothetical Future Round: Illustrative Model</a></div>
-                </div><div class="sec-break" id="sec-3-governance"><h2><a href="#sec-3-governance" style="color:inherit;text-decoration:none">§3 Governance</a></h2></div>
+<div class="editorial">
+<div class="section-divider" id="sec-1-investor-terms">
+  <h2><a href="#sec-1-investor-terms">§1 Investor Terms</a></h2>
+</div>
+<div class="spread" id="i5_s1_safe_structure">
+<img src="img/diagrams/i5_s1_safe_structure.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>What Investors Receive</strong></p>
+<p>· <strong>At signing:</strong> A SAFE — a contractual right to receive preferred stock in the future when a priced round (Series A) closes.</p>
+<p>· <strong>At conversion:</strong> Preferred shares in Sovereign Survival Kit Inc. (Delaware C-Corp) calculated by dividing the investment amount by the lower of (a) the valuation cap price or (b) the Series A price.</p>
+<p>· <strong>No board seats.</strong> Investors receive information rights and, for qualifying checks, pro-rata participation rights in subsequent rounds.</p>
+<p>· <strong>No governance over the DAO or Trust.</strong> Investment is in the C-Corp only. The Wyoming DAO LLC and Nevada Irrevocable Trust are separate legal entities not subject to investor governance.</p>
+<p><em class="blockquote"><strong>Architectural note:</strong> The zero-egress architecture requires singular sovereign authority over design decisions — control that cannot be fragmented, delegated to committee, or overridden by shareholder vote. During the founder's lifetime, that authority is vested in the founder. Upon succession, it transfers whole to the Nevada Irrevocable Trust. See §5.</em></p>
+<a href="#sec-1-investor-terms" class="section-ref">§ 1. Seed Round — Post-Money SAFE</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s1_valuation_cap">
+<img src="img/diagrams/i5_s1_valuation_cap.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>What Series A Investors Receive</strong></p>
+<p>· Preferred shares in Sovereign Survival Kit Inc. (Delaware C-Corp) with 1x liquidation preference. Shares are converted from the founder's Class B allocation — the fixed pool of 10,000,000 shares does not increase.</p>
+<p>· Information rights (annual reviewed financials).</p>
+<p>· <strong>Observer seat on the board</strong> — not a voting seat. Founder retains majority board control. See <a href="17_Board_and_Governance.md">Board and Governance</a>.</p>
+<p>· Immutable charter constraints protect all shareholders equally. See <a href="17_Board_and_Governance.md">Board and Governance §4</a>.</p>
+<a href="#sec-1-investor-terms" class="section-ref">§ 2. Series A — Priced Preferred Round (Target M18)</a>
+</div>
+</div>
+<div class="two-up" id="i5_s1_dilution_model">
+<img src="img/diagrams/i5_s1_dilution_model.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote">Full legal/IP breakdown in <a href="24_Legal_Budget_Breakdown.md">Legal Budget Breakdown</a>. Individual compensation detail in <a href="11_Financial_Model_and_Projections.md">Financial Model §7</a>.</em></p>
+<p>></p>
+<p><em class="blockquote"><strong>Payroll:</strong> Funds a 3-person founding team (Founder/CEO, Technical Lead Manager, COO). Fractional CFO and GC retained in Y2.</em></p>
+<p>></p>
+<p><em class="blockquote"><strong>Compensation structure:</strong> Employees receive cash compensation plus spark grants equivalent to typical options value — no equity grants, no options. The Nevada Irrevocable Trust is a separate vehicle; its membership is at the founder's sole and absolute discretion and is not subject to investor inquiry. No option pool exists. This preserves the clean 93/7 cap table.</em></p>
+<p>></p>
+<a href="#sec-1-investor-terms" class="section-ref">§ 4. Use of Seed Proceeds ($3M — ~18-Month Runway)</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s1_use_of_proceeds">
+<img src="img/diagrams/i5_s1_use_of_proceeds.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Sovereign Survival Kit is architecturally a sovereign, edge-first platform. The .kasset minting process requires zero network egress — the ML-DSA-65 post-quantum signature proves that each asset was generated locally and is unaltered. If any party — investor, board member, or regulator — can compel a design change that introduces a network path into the core processing environment, the cryptographic provenance chain breaks, the signature is void, and the product has no value proposition. The founder's absolute control over the company is therefore not a preference — it is a <strong>structural requirement of the product itself</strong>.</p>
+<p>· <strong>Fixed share pool:</strong> The charter permanently fixes the authorized share count at 10,000,000. No new shares may ever be created. Future equity rounds are funded by the founder voluntarily converting Class B shares to the applicable preferred class. The total never changes. See <a href="17_Board_and_Governance.md">Board and Governance §4</a>.</p>
+<p>· <strong>Dual-class stock:</strong> The founder holds Class B shares with <strong>20x voting rights</strong> (Lyft precedent). All investor shares are Class A (1x voting). At 93% ownership post-seed, the founder holds 99.6% of all votes. Under the fixed-pool model, the founder retains >95% vote control even at <60% economic ownership. No combination of investors across any number of rounds can outvote the founder.</p>
+<p>· <strong>No sunset provision.</strong> The dual-class structure is permanent and does not expire based on time, transfer, or IPO. This is consistent with Alphabet, Meta, and Snap, none of which have voting sunsets.</p>
+<p>· <strong>The OpenAI cautionary case.</strong> The contemporaneous <em>Altman v. Musk</em> litigation (2025-2026) demonstrates exactly what happens when governance structure allows investors and board members to override a founder's architectural vision — OpenAI's conversion from non-profit to capped-profit to for-profit restructured the entity's mission under investor pressure. SSK's governance is designed to make that outcome structurally impossible. The airgap cannot be removed by board vote because the charter codifies it as an irrevocable constraint.</p>
+<p>· <strong>Board majority:</strong> Founder holds both voting board seats at all stages through Series A. The Series A observer seat is non-voting. See <a href="17_Board_and_Governance.md">Board and Governance</a>.</p>
+<a href="#sec-1-investor-terms" class="section-ref">§ 5. Founder Control Provisions</a>
+</div>
+</div>
+<div class="section-divider" id="sec-2-cap-table">
+  <h2><a href="#sec-2-cap-table">§2 Cap Table</a></h2>
+</div>
+<div class="spread" id="i5_s2_cap_table">
+<img src="img/diagrams/i5_s2_cap_table.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em>700,000 shares authorized but unissued, reserved for SAFE conversion at the first priced equity round. Post-money SAFE commits 7.0% dilution at conversion.</em></p>
+<p><strong>Notes:</strong></p>
+<p>· Class B shares carry <strong>20x voting rights</strong> per share (Lyft precedent). See <a href="15_Investor_Terms.md">Investor Terms §5</a>.</p>
+<p>· <strong>No option pool.</strong> All employee compensation is non-dilutive — cash salary plus spark grants. See §5 below.</p>
+<p>· No prior investors. No angels. No advisor equity grants. Clean cap table.</p>
+<a href="#sec-2-cap-table" class="section-ref">§ 1. Pre-Seed (Current State)</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s2_dual_class">
+<img src="img/diagrams/i5_s2_dual_class.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The $3M seed is raised via a YC Standard Post-Money SAFE with a <strong>$42.86M post-money valuation cap</strong>. SAFEs convert into preferred stock at the first priced equity round of ≥$1M.</p>
+<p><strong>Derivation:</strong></p>
+<p>· Post-money cap: $42,857,143 (~$42.86M)</p>
+<p>· Investor ownership: $3,000,000 / $42,857,143 = <strong>7.0%</strong></p>
+<p>· Founder retention: 100% − 7.0% = <strong>93.0%</strong></p>
+<p>· Price per share: $42,857,143 / 10,000,000 = <strong>$4.286</strong></p>
+<a href="#sec-2-cap-table" class="section-ref">§ 2. Post-Seed: SAFE Conversion at First Priced Round</a>
+</div>
+</div>
+<div class="sidebar-block" id="i5_s2_no_option_pool">
+<img src="img/diagrams/i5_s2_no_option_pool.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Hypothetical scenario: $15M priced round at $80M pre-money ($95M post-money). The founder voluntarily converts Class B shares to preferred — <strong>no new shares are created.</strong> The 10,000,000 total is permanent. This round may never occur; it is presented to demonstrate the fixed-pool mechanic.</p>
+<p><strong>Derivation:</strong></p>
+<p>· Pre-money valuation: $80,000,000</p>
+<p>· Price per share: $80,000,000 / 10,000,000 = <strong>$8.00</strong></p>
+<p>· Series A shares: $15,000,000 / $8.00 = <strong>1,875,000</strong></p>
+<p>· Mechanism: Founder converts 1,875,000 Class B → Series A Preferred. Shares returned to treasury and re-issued as preferred.</p>
+<a href="#sec-2-cap-table" class="section-ref">§ 3. Hypothetical Future Round: Illustrative Model</a>
+</div>
+</div>
+<div class="section-divider" id="sec-3-governance">
+  <h2><a href="#sec-3-governance">§3 Governance</a></h2>
+</div>
+<div class="two-up" id="i5_s3_board_seats">
+<img src="img/diagrams/i5_s3_board_seats.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Traditional startups reserve 15-20% for employee stock options. Sovereign Survival Kit does not, for two reasons:</p>
+<p><strong>Spark grants replace equity incentives.</strong> Employees receive cash-settled performance grants equivalent to typical options value, providing economic upside without diluting the cap table or requiring 409A valuations. See <a href="15_Investor_Terms.md">Investor Terms §4</a>.</p>
+<p><strong>Cap table purity is an investor signal.</strong> A clean, undiluted cap table with 93% founder ownership demonstrates conviction, capital efficiency, and alignment. There is no dead equity. Every share is held by someone with direct skin in the game.</p>
+<a href="#sec-3-governance" class="section-ref">§ 5. Why No Option Pool</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s3_immutable_constraints">
+<img src="img/diagrams/i5_s3_immutable_constraints.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The following are <strong>separate legal entities</strong> with no equity relationship to Sovereign Survival Kit Inc.:</p>
+<p>Investors in Sovereign Survival Kit Inc. have <strong>no claim, visibility, or governance rights</strong> over the DAO or Trust.</p>
+<p><em class="blockquote"><strong>Revenue architecture:</strong> All platform revenue, including the progressive network fee on .kasset trades, flows exclusively through the C-Corp. Shareholder distributions are pro-rata. The founder's distributions flow to the Nevada Irrevocable Trust. No platform revenue may be routed directly to the DAO or Trust in a manner that bypasses the C-Corp and its shareholders. Binding covenant language to be included in the Investor Rights Agreement.</em></p>
+<a href="#sec-3-governance" class="section-ref">§ 6. Entities NOT On This Cap Table</a>
+</div>
+</div>
+<div class="section-divider" id="sec-4-legal-entity">
+  <h2><a href="#sec-4-legal-entity">§4 Legal Entity</a></h2>
+</div>
+<div class="spread" id="i5_s4_entity_structure">
+<img src="img/diagrams/i5_s4_entity_structure.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Total voting seats:</strong> 2</p>
+<p><strong>Founder control:</strong> Absolute. The founder holds Seat 1 permanently and appoints/removes Seat 2 at will. In the event of disagreement, Seat 2's dissent is recorded in board minutes — the outcome is not affected. The founder may appoint a proxy for day-to-day decision-making but cannot resign the chairmanship.</p>
+<p><strong>Succession</strong></p>
+<p>Upon the founder's incapacitation or death:</p>
+<p><strong>The Founder's Twin (Advisory Role):</strong> The twin does not hold a board seat — DGCL §141(b) requires directors to be natural persons. Instead, the twin serves as the <strong>architectural veto oracle</strong>: an irrevocable charter-level advisory function that reviews every board resolution for compliance with the immutable constraints (§4). If the twin determines that a proposed action would compromise the zero-egress security architecture, the .kasset provenance chain, or the fixed share pool, it issues a <strong>binding architectural veto</strong>. The veto is not a board vote — it is a charter enforcement mechanism. The proposed action is permanently abandoned, and the board must formulate a new plan that satisfies the constraint. This covenant is irrevocably codified in the C-Corp charter and cannot be amended, overridden, or removed by any board action, shareholder vote, or merger.</p>
+<a href="#sec-4-legal-entity" class="section-ref">§ 1. Board Composition</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s4_piiaa">
+<img src="img/diagrams/i5_s4_piiaa.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote"><strong>Observer access:</strong> The observer may review advance board materials (agenda, financials, draft resolutions) in a Vault SCIF. No copies may be retained outside the SCIF. The Trust's representative receives the founder's twin as an Oracle for strategic counsel — the observer is not entitled to participate in or have visibility into those conversations.</em></p>
+<p><strong>Investors do not receive voting board seats at any stage.</strong> If an investor requires a board seat as a condition of investment, the deal is declined. Founder control is a technical requirement of the reference design, not a negotiating position.</p>
+<a href="#sec-4-legal-entity" class="section-ref">§ 2. Investor Board Rights</a>
+</div>
+</div>
+<div class="section-divider" id="sec-5-ip-portfolio">
+  <h2><a href="#sec-5-ip-portfolio">§5 IP Portfolio</a></h2>
+</div>
+<div class="spread" id="i5_s5_ip_chain">
+<img src="img/diagrams/i5_s5_ip_chain.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Sovereign Survival Kit is not software. It is a <strong>reference design</strong> — its properties are immutable, and guaranteed by mathematics and physics. An individual's security and sovereignty cannot be impacted by committee, influenced by investor preference, or compromised by majority vote.</p>
+<p><em class="blockquote"><strong>Long-term governance:</strong> At national-infrastructure scale, the board may evolve to require government-level oversight commensurate with SSK's role in supporting the United States. This is a charter amendment event, not a current-state provision.</em></p>
+<a href="#sec-5-ip-portfolio" class="section-ref">§ 3. Governance Rationale</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s5_17_patents">
+<img src="img/diagrams/i5_s5_17_patents.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The following constraints are irrevocably codified in the C-Corp charter. They bind the founder, the board, and all future shareholders equally:</p>
+<p><strong>Fixed share pool.</strong> The authorized share count is permanently fixed at 10,000,000. No additional shares may be authorized, created, or reserved — by any board action, shareholder vote, or merger. Future equity financing rounds (Series A, B, C, etc.) are funded exclusively by the founder voluntarily converting Class B shares to the applicable preferred class. The 10,000,000 total never changes. The founder's 20x voting rights on remaining Class B shares ensure absolute governance control through any number of rounds.</p>
+<p><strong>No network egress.</strong> No corporate action may compel the introduction of network egress into the core processing environment. The reference design is airgapped by definition.</p>
+<p><strong>Architectural veto covenant.</strong> The founder's twin serves as a charter-level architectural oracle. Any proposed board action that would violate constraints (1) or (2) — or compromise the .kasset provenance chain — is subject to a binding veto that cannot be overridden. This covenant survives the founder's death and is enforceable by the Trust as charter beneficiary.</p>
+<a href="#sec-5-ip-portfolio" class="section-ref">§ 4. Immutable Constraints</a>
+</div>
+</div>
+<div class="two-up" id="i5_s5_defensive_patents">
+<img src="img/diagrams/i5_s5_defensive_patents.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>To mitigate regulatory risk while maximizing venture investability, Sovereign Survival Kit is structured across three distinct jurisdictions:</p>
+<p><strong>A. Sovereign Survival Kit Inc. (Delaware C-Corp)</strong></p>
+<p>· <strong>Purpose:</strong> The corporate entity that publishes and maintains the sovereign reference design.</p>
+<p>· <strong>Assets Held:</strong></p>
+<p>· Proprietary Intellectual Property</p>
+<p>· Trademarks for "Sovereign Survival Kit", ".kasset mint".</p>
+<a href="#sec-5-ip-portfolio" class="section-ref">§ 1. Geographic Structuring</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s5_know_maps_ip">
+<img src="img/diagrams/i5_s5_know_maps_ip.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>Status:</strong> Pending. The C-Corp is not yet incorporated. Upon incorporation, the founder will execute a full IP assignment transferring all intellectual property — with no carve-outs or retained rights — to Sovereign Survival Kit Inc.</p>
+<p>· <strong>Future Hires:</strong> Each employee will execute a PIIAA upon onboarding, assigning all work product to the C-Corp.</p>
+<a href="#sec-5-ip-portfolio" class="section-ref">§ 2. PIIAA (Proprietary Information and Inventions Assignment Agreement)</a>
+</div>
+</div>
+<div class="two-up" id="i5_s5_tau_ip">
+<img src="img/diagrams/i5_s5_tau_ip.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>The Legal Stance:</strong> "We cannot hand over what we physically cannot access."</p>
+<p>· <strong>Mechanism:</strong> Because the reference design operates with hard-coded network airgaps and stores all data in AES-256-GCM encrypted <code>.kassets</code> secured by the user's physical hardware enclave, Sovereign Survival Kit Inc. is structurally unable to comply with a data subpoena.</p>
+<p>· <strong>Result:</strong> Sovereign Survival Kit is structurally unable to suffer the primary legal threat facing all cloud-AI companies (data breach, PII theft, government dragnet surveillance).</p>
+<a href="#sec-5-ip-portfolio" class="section-ref">§ 3. Liability Position: Zero-Egress by Design</a>
+</div>
+</div>
+<div class="section-divider" id="sec-6-howey-test">
+  <h2><a href="#sec-6-howey-test">§6 Howey Test</a></h2>
+</div>
+<div class="spread" id="i5_s6_howey_dragon">
+<img src="img/diagrams/i5_s6_howey_dragon.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Upon incorporation, all intellectual property used in Sovereign Survival Kit will flow through a documented chain from origin to the C-Corp. This document traces each asset's provenance, license, and planned assignment status.</p>
+<a href="#sec-6-howey-test" class="section-ref">§ 1. Overview</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s6_not_investment">
+<img src="img/diagrams/i5_s6_not_investment.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>A. Reference Design Codebase</strong></p>
+<p><strong>B. Know-Maps (iOS/macOS/visionOS NLU App)</strong></p>
+<p><strong>C. TauSkeletonVisual (C++/Unreal Engine)</strong></p>
+<p><strong>D. General Tau Theory (Mathematical Framework)</strong></p>
+<p><strong>E. Gemma 4 E4B (Inference Model)</strong></p>
+<p><strong>F. Gemma 4 E4B (Training Base)</strong></p>
+<a href="#sec-6-howey-test" class="section-ref">§ 3. Detailed Asset Chain</a>
+</div>
+</div>
+<div class="two-up" id="i5_s6_no_common_enterprise">
+<img src="img/diagrams/i5_s6_no_common_enterprise.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>None. Upon incorporation, all intellectual property will be assigned to the C-Corp with no carve-outs or retained rights.</p>
+<a href="#sec-6-howey-test" class="section-ref">§ 4. Founder Retained Assets</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s6_no_profit_expectation">
+<img src="img/diagrams/i5_s6_no_profit_expectation.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>clara-engine (AskMikeeHost) — Production Codebase</strong></p>
+<p><strong>License:</strong> Proprietary (Sovereign Survival Kit Inc.)</p>
+<p><strong>Status:</strong> Fully audited, bug-fixed, 100% test passing</p>
+<p><strong>Model:</strong> Gemma 4 E4B (Google DeepMind 🇺🇸) — compliant with Model Origin Policy</p>
+<p>#### Inference Layer (13 files, ~2,500 lines)</p>
+<p>#### Profiling Pipeline (9 files, ~4,000 lines)</p>
+<a href="#sec-6-howey-test" class="section-ref">§ 1. SOFTWARE IP (Production Code)</a>
+</div>
+</div>
+<div class="two-up" id="i5_s6_no_efforts_others">
+<img src="img/diagrams/i5_s6_no_efforts_others.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>TauSkeletonVisual — C++ Research Code</strong></p>
+<p><strong>License:</strong> CC-BY-NC-ND 4.0 (defensive IP — cannot be commercially used by competitors)</p>
+<p><strong>Status:</strong> Research-grade, requires migration to Apple Vision architecture</p>
+<p><strong>Volumetric Control Sphere — Hardware Architecture</strong></p>
+<p><strong>License:</strong> Proprietary (Sovereign Survival Kit Inc.)</p>
+<p><strong>Status:</strong> Architectural design complete, awaiting EVT (Phase 2+ priority)</p>
+<a href="#sec-6-howey-test" class="section-ref">§ 2. SPATIAL COMPUTING IP</a>
+</div>
+</div>
+<div class="sidebar-block" id="i5_s6_all_four_fail">
+<img src="img/diagrams/i5_s6_all_four_fail.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Know-Maps — iOS/macOS/visionOS NLU App</strong></p>
+<p><strong>License:</strong> Apache 2.0 (app code), Proprietary (CoreML models)</p>
+<p><strong>Status:</strong> Functioning app in development</p>
+<a href="#sec-6-howey-test" class="section-ref">§ 3. APPLE NATIVE IP</a>
+</div>
+</div>
+<div class="section-divider" id="sec-7-regulatory-risk">
+  <h2><a href="#sec-7-regulatory-risk">§7 Regulatory Risk</a></h2>
+</div>
+<div class="spread" id="i5_s7_jurisdiction_map">
+<img src="img/diagrams/i5_s7_jurisdiction_map.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Sovereign Commerce Protocol</strong></p>
+<p><strong>License:</strong> Open source (protocol), Proprietary (trust infrastructure)</p>
+<p><strong>Status:</strong> Design complete, bilateral protocol implementation pending</p>
+<p><strong>Removed from previous version:</strong></p>
+<p>· ~~Gold-Peg Oracle~~ → Replaced by σ conversion formula (energy-backed, not gold-backed)</p>
+<p>· ~~Sovereign Settlement Chain~~ → Replaced by bilateral mesh settlement + notary certification</p>
+<a href="#sec-7-regulatory-risk" class="section-ref">§ 4. PROTOCOL IP</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s7_us_safe">
+<img src="img/diagrams/i5_s7_us_safe.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Note: Hardware manufacturing is NOT a Series A priority. The Compass and Black Box are supplementary products. SovSensor devices are Phase 2+ reference designs. The core platform runs on user-owned phones and laptops.</p>
+<a href="#sec-7-regulatory-risk" class="section-ref">§ 5. HARDWARE IP</a>
+</div>
+</div>
+<div class="two-up" id="i5_s7_japan_safe">
+<img src="img/diagrams/i5_s7_japan_safe.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Three.js Avatar Pipeline (3 files, 338 lines)</strong></p>
+<p><strong>4DGS Avatar Pipeline</strong></p>
+<a href="#sec-7-regulatory-risk" class="section-ref">§ 6. AVATAR & RENDERING IP</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s7_eu_hostile">
+<img src="img/diagrams/i5_s7_eu_hostile.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Open Source vs. Proprietary Split</strong></p>
+<p><em class="blockquote"><strong>SSOT:</strong> Doc 29 §8 (Source Code Licensing). Vault is open source; everything above the vault is proprietary.</em></p>
+<a href="#sec-7-regulatory-risk" class="section-ref">§ 8. IP PROTECTION SUMMARY</a>
+</div>
+</div>
+<div class="two-up" id="i5_s7_uk_hostile">
+<img src="img/diagrams/i5_s7_uk_hostile.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote">Web search conducted 2026-04-26. This is a preliminary screen, NOT a formal freedom-to-operate opinion. A patent attorney must conduct a formal USPTO/WIPO/EPO search with proper classification codes (CPC/IPC) before any filing.</em></p>
+<p><strong>Doc 21 Claims (10 Formal)</strong></p>
+<p><strong>Additional Candidates (7 Defensible)</strong></p>
+<p><strong>Removed from Candidate List</strong></p>
+<p><strong>Summary</strong></p>
+<a href="#sec-7-regulatory-risk" class="section-ref">§ 9. PRELIMINARY PRIOR ART SCREEN</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s7_mitigation">
+<img src="img/diagrams/i5_s7_mitigation.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A localized software operating environment comprising:</p>
+<p>A hardware-isolated host node maintaining a strict network airgap via software locks blocking all egress external network requests.</p>
+<p>A local LLM inference engine restricted within a memory-managed envelope, utilizing lock-based phase transitions to prevent OOM termination.</p>
+<p>A module generating a Directed Acyclic Graph (DAG) of conversational reasoning.</p>
+<p>An operation that serializes said DAG, filters it through a proprietary NLP PII-stripping module operating locally, and encrypts the output via AES-256-GCM, dual-signed by (a) a hardware-bound P-256 ECDSA signature generated inside the device hardware security module proving the asset was signed on a specific physical device, and (b) a software-generated ML-DSA-65 post-quantum signature ensuring resilience against future quantum cryptanalysis. Neither signature alone is sufficient; the combination proves both physical device provenance and quantum-resistant integrity.</p>
+<a href="#sec-7-regulatory-risk" class="section-ref">§ CLAIM 1: The .kasset Minting Pipeline</a>
+</div>
+</div>
+<div class="section-divider" id="sec-8-legal-budget">
+  <h2><a href="#sec-8-legal-budget">§8 Legal Budget</a></h2>
+</div>
+<div class="two-up" id="i5_s8_legal_budget">
+<img src="img/diagrams/i5_s8_legal_budget.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A method for intent detection via spatial computing, characterized by:</p>
+<p>Extracting visual depth and coordinate metrics via native device frameworks.</p>
+<p>Applying General Tau Theory ($\tau$ and $\dot{\tau}$) to map the approach velocity and gesture intent within a physically constrained virtual bounding box around the user.</p>
+<p>Translating said localized vectors entirely to a local web socket loopback without utilizing external rendering clouds.</p>
+<a href="#sec-8-legal-budget" class="section-ref">§ CLAIM 2: Volumetric Control Sphere (Tau Theory Mapping)</a>
+</div>
+</div>
+<div class="sidebar-block" id="i5_s8_356k_total">
+<img src="img/diagrams/i5_s8_356k_total.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A system for preventing the minting of hallucinated or low-quality knowledge assets within a network-isolated compute environment, comprising:</p>
+<p>An asynchronous quality evaluator deployed parallel to a local generative layer, operating entirely within a network-isolated (zero-egress) compute environment.</p>
+<p>A multi-dimensional composite scoring engine that evaluates generated text across four dimensions — Groundedness (NLI entailment ratio against source context), Relevance (cosine similarity to retrieval context), Persona Fidelity (drift detection from offline calibration sets), and Coherence — producing a single aggregate composite score.</p>
+<p>A mint-gate mechanism that intercepts generated text below an aggregate composite threshold of N, triggers localized regeneration within the same network-isolated environment, and prevents the serialization of any text into a .kasset archive until the threshold is met.</p>
+<p>The combination of zero-egress enforcement with composite quality gating such that no knowledge asset can be minted from hallucinated, irrelevant, or persona-inconsistent content, and no generated text traverses a network boundary at any stage of evaluation or regeneration.</p>
+<a href="#sec-8-legal-budget" class="section-ref">§ CLAIM 3: Zero-Egress Quality-Gated Knowledge Asset Minting</a>
+</div>
+</div>
+<div class="section-divider" id="sec-9-competition">
+  <h2><a href="#sec-9-competition">§9 Competition</a></h2>
+</div>
+<div class="spread" id="i5_s9_porters_five">
+<img src="img/diagrams/i5_s9_porters_five.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A method for dynamically curating a language model's context window, comprising:</p>
+<p>Segmenting continuous user experience into discrete episodes via temporal, semantic, emotional, and domain boundary detection.</p>
+<p>Compressing each episode into a sparse representation via a learned compressor model operating within a fixed VRAM budget.</p>
+<p>On each conversational turn, rewriting the user's query using conversation history, then retrieving relevant episodes via vector similarity search combined with a situational context vector computed from biometric state, temporal position, and domain-specific state registers.</p>
+<p>Proactively surfacing episodes the user has not explicitly requested but which the anticipatory retrieval engine determines are relevant to the user's current cognitive context based on low overlap with recent conversational history and high similarity to the computed context vector.</p>
+<p>All retrieval, compression, context assembly, and generation occurring entirely within a network-isolated compute environment.</p>
+<a href="#sec-9-competition" class="section-ref">§ CLAIM 4: Dynamic Context Window Assembly with Episodic Memory Encoding</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s9_worldcoin_compare">
+<img src="img/diagrams/i5_s9_worldcoin_compare.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A method for developing a private communication protocol between a human user and a personal AI agent, comprising:</p>
+<p>A multi-stage fine-tuning pipeline (SCP → DPO → E2E) establishing a baseline personality and communication style.</p>
+<p>An ongoing fourth stage that ingests compressed conversational shorthand, shared vocabulary, emotional calibration patterns, and disagreement resolution sequences from real interaction logs.</p>
+<p>A learned mapping function (the "Idiolect") that translates a collection of time constants (tau profiles) representing the user's cognitive dynamics into semantic weight modifications for a base language model, such that the mapping function — not static weight matrices — is the computational representation of the user's personality.</p>
+<p>Storage of the Idiolect mapping function and the tau collection as cryptographically separated components, wherein the tau collection encodes process dynamics (decision tempo, cognitive rhythm, approach patterns) without encoding content (names, facts, personal history), and the Idiolect mapping function is the sole component that renders the tau collection semantically meaningful.</p>
+<p>A drift detection module monitoring the evolution of shared vocabulary and emotional shorthand over time to prevent unintended persona divergence.</p>
+<a href="#sec-9-competition" class="section-ref">§ CLAIM 5: Idiolect Evolution Engine with Tau-Secured Weight Representation</a>
+</div>
+</div>
+<div class="two-up" id="i5_s9_sbt_compare">
+<img src="img/diagrams/i5_s9_sbt_compare.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A system for ingesting physical-world biometric and environmental data into a personal AI planning engine, comprising:</p>
+<p>An open BLE GATT protocol (SovSensor) transmitting standardized JSON sensor readings from edge peripherals (breath composition, heart rate variability, ambient air quality, light exposure, body composition, asset proximity).</p>
+<p>Local storage of all sensor data in an AES-256-GCM encrypted PII vault with zero network egress.</p>
+<p>Integration of sensor-derived state variables into the AI agent's per-turn situational retrieval pipeline as domain-specific context signals for 8 life domains (rest, nourishment, body, shelter, assets, income, bonds, growth).</p>
+<p>All sensor data processing, storage, and AI planning occurring entirely on user-owned hardware.</p>
+<a href="#sec-9-competition" class="section-ref">§ CLAIM 6: Biometric Sensor Bridge Protocol</a>
+</div>
+</div>
+<div class="two-up flip" id="i5_s9_moat_diagram">
+<img src="img/diagrams/i5_s9_moat_diagram.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A system for extracting and contributing factual knowledge from a deceased user's private data vault to a shared knowledge repository, comprising:</p>
+<p>A biometric death certification mechanism triggered by the failure of the deadman's switch (multi-device heartbeat timeout exceeding a minimum floor of ≥180 days), cryptographically verified by the user's hardware security module.</p>
+<p>A multi-pass PII stripping pipeline operating entirely on-device, comprising: (a) Named Entity Recognition (NER) for explicit PII (names, SSNs, addresses, dates of birth), (b) regex-based pattern matching for structured identifiers, (c) LLM-based contextual review for implied PII (location-correlated descriptions, medical context, behavioral patterns identifiable via Sweeney re-identification), and (d) a confidence threshold gate requiring ≥0.95 confidence that a fact is PII-free before contribution.</p>
+<p>A differential privacy budget (ε) applied to all contributed facts, ensuring that no individual fact — alone or in combination with other contributed facts — can be used to re-identify the deceased user. The privacy budget is calibrated per-domain (medical ε ≤ 0.1, financial ε ≤ 0.5, general knowledge ε ≤ 1.0).</p>
+<p>Compulsory contribution of verified, PII-stripped factual knowledge to the Common Knowledge Codex, a shared repository accessible to all network participants.</p>
+<p>A post-contribution redaction protocol enabling network governance to flag and suppress specific Codex entries if PII is discovered after contribution, without deleting the underlying factual content.</p>
+<a href="#sec-9-competition" class="section-ref">§ CLAIM 7: Mortality-Triggered Differential Privacy Pipeline for Compulsory Knowledge Contribution</a>
+</div>
+</div>
 
-                <div class="two-up" id="i5_s3_board_seats">
-                  <img src="img/diagrams/i5_s3_board_seats.png" alt="" loading="lazy">
-                  <div class="body"><p>Traditional startups reserve 15-20% for employee stock options. Sovereign Survival Kit does not, for two reasons:</p><p><strong>Spark grants replace equity incentives.</strong> Employees receive cash-settled performance grants equivalent to typical options value, providing economic upside without diluting the cap table or requiring 409A valuations. See <a href="15_Investor_Terms.md" style="color:var(--magenta);text-decoration:none">Investor Terms §4</a>.</p><p><strong>Cap table purity is an investor signal.</strong> A clean, undiluted cap table with 93% founder ownership demonstrates conviction, capital efficiency, and alignment. There is no dead equity. Every share is held by someone with direct skin in the game.</p><a class="doc-ref" href="#sec-3-governance">§ 5. Why No Option Pool</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s3_immutable_constraints">
-                  <img src="img/diagrams/i5_s3_immutable_constraints.png" alt="" loading="lazy">
-                  <div class="body"><p>The following are <strong>separate legal entities</strong> with no equity relationship to Sovereign Survival Kit Inc.:</p><p>Investors in Sovereign Survival Kit Inc. have <strong>no claim, visibility, or governance rights</strong> over the DAO or Trust.</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Revenue architecture:</strong> All platform revenue, including the progressive network fee on .kasset trades, flows exclusively through the C-Corp. Shareholder distributions are pro-rata. The founder's distributions flow to the Nevada Irrevocable Trust. No platform revenue may be routed directly to the DAO or Trust in a manner that bypasses the C-Corp and its shareholders. Binding covenant language to be included in the Investor Rights Agreement.</em></p><a class="doc-ref" href="#sec-3-governance">§ 6. Entities NOT On This Cap Table</a></div>
-                </div><div class="sec-break" id="sec-4-legal-entity"><h2><a href="#sec-4-legal-entity" style="color:inherit;text-decoration:none">§4 Legal Entity</a></h2></div>
+</div>
 
-                <div class="spread" id="i5_s4_entity_structure">
-                  <img src="img/diagrams/i5_s4_entity_structure.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Total voting seats:</strong> 2</p><p><strong>Founder control:</strong> Absolute. The founder holds Seat 1 permanently and appoints/removes Seat 2 at will. In the event of disagreement, Seat 2's dissent is recorded in board minutes — the outcome is not affected. The founder may appoint a proxy for day-to-day decision-making but cannot resign the chairmanship.</p><p><strong>Succession</strong></p><p>Upon the founder's incapacitation or death:</p><p><strong>The Founder's Twin (Advisory Role):</strong> The twin does not hold a board seat — DGCL §141(b) requires directors to be natural persons. Instead, the twin serves as the <strong>architectural veto oracle</strong>: an irrevocable charter-level advisory function that reviews every board resolution for compliance with the immutable constraints (§4). If the twin determines that a proposed action would compromise the zero-egress security architecture, the .kasset provenance chain, or the fixed share pool, it issues a <strong>binding architectural veto</strong>. The veto is not a board vote — it is a charter enforcement mechanism. The proposed action is permanently abandoned, and the board must formulate a new plan that satisfies the constraint. This covenant is irrevocably codified in the C-Corp charter and cannot be amended, overridden, or removed by any board action, shareholder vote, or merger.</p><a class="doc-ref" href="#sec-4-legal-entity">§ 1. Board Composition</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s4_piiaa">
-                  <img src="img/diagrams/i5_s4_piiaa.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Observer access:</strong> The observer may review advance board materials (agenda, financials, draft resolutions) in a Vault SCIF. No copies may be retained outside the SCIF. The Trust's representative receives the founder's twin as an Oracle for strategic counsel — the observer is not entitled to participate in or have visibility into those conversations.</em></p><p><strong>Investors do not receive voting board seats at any stage.</strong> If an investor requires a board seat as a condition of investment, the deal is declined. Founder control is a technical requirement of the reference design, not a negotiating position.</p><a class="doc-ref" href="#sec-4-legal-entity">§ 2. Investor Board Rights</a></div>
-                </div><div class="sec-break" id="sec-5-ip-portfolio"><h2><a href="#sec-5-ip-portfolio" style="color:inherit;text-decoration:none">§5 IP Portfolio</a></h2></div>
-
-                <div class="spread" id="i5_s5_ip_chain">
-                  <img src="img/diagrams/i5_s5_ip_chain.png" alt="" loading="lazy">
-                  <div class="body"><p>The Sovereign Survival Kit is not software. It is a <strong>reference design</strong> — its properties are immutable, and guaranteed by mathematics and physics. An individual's security and sovereignty cannot be impacted by committee, influenced by investor preference, or compromised by majority vote.</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Long-term governance:</strong> At national-infrastructure scale, the board may evolve to require government-level oversight commensurate with SSK's role in supporting the United States. This is a charter amendment event, not a current-state provision.</em></p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 3. Governance Rationale</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s5_17_patents">
-                  <img src="img/diagrams/i5_s5_17_patents.png" alt="" loading="lazy">
-                  <div class="body"><p>The following constraints are irrevocably codified in the C-Corp charter. They bind the founder, the board, and all future shareholders equally:</p><p><strong>Fixed share pool.</strong> The authorized share count is permanently fixed at 10,000,000. No additional shares may be authorized, created, or reserved — by any board action, shareholder vote, or merger. Future equity financing rounds (Series A, B, C, etc.) are funded exclusively by the founder voluntarily converting Class B shares to the applicable preferred class. The 10,000,000 total never changes. The founder's 20x voting rights on remaining Class B shares ensure absolute governance control through any number of rounds.</p><p><strong>No network egress.</strong> No corporate action may compel the introduction of network egress into the core processing environment. The reference design is airgapped by definition.</p><p><strong>Architectural veto covenant.</strong> The founder's twin serves as a charter-level architectural oracle. Any proposed board action that would violate constraints (1) or (2) — or compromise the .kasset provenance chain — is subject to a binding veto that cannot be overridden. This covenant survives the founder's death and is enforceable by the Trust as charter beneficiary.</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 4. Immutable Constraints</a></div>
-                </div>
-                <div class="two-up" id="i5_s5_defensive_patents">
-                  <img src="img/diagrams/i5_s5_defensive_patents.png" alt="" loading="lazy">
-                  <div class="body"><p>To mitigate regulatory risk while maximizing venture investability, Sovereign Survival Kit is structured across three distinct jurisdictions:</p><p><strong>A. Sovereign Survival Kit Inc. (Delaware C-Corp)</strong></p><p>· <strong>Purpose:</strong> The corporate entity that publishes and maintains the sovereign reference design.</p><p>· <strong>Assets Held:</strong></p><p>· Proprietary Intellectual Property</p><p>· Trademarks for "Sovereign Survival Kit", ".kasset mint".</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 1. Geographic Structuring</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s5_know_maps_ip">
-                  <img src="img/diagrams/i5_s5_know_maps_ip.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>Status:</strong> Pending. The C-Corp is not yet incorporated. Upon incorporation, the founder will execute a full IP assignment transferring all intellectual property — with no carve-outs or retained rights — to Sovereign Survival Kit Inc.</p><p>· <strong>Future Hires:</strong> Each employee will execute a PIIAA upon onboarding, assigning all work product to the C-Corp.</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 2. PIIAA (Proprietary Information and Inventions Assignment Agreement)</a></div>
-                </div>
-                <div class="two-up" id="i5_s5_tau_ip">
-                  <img src="img/diagrams/i5_s5_tau_ip.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>The Legal Stance:</strong> "We cannot hand over what we physically cannot access."</p><p>· <strong>Mechanism:</strong> Because the reference design operates with hard-coded network airgaps and stores all data in AES-256-GCM encrypted <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">.kassets</code> secured by the user's physical hardware enclave, Sovereign Survival Kit Inc. is structurally unable to comply with a data subpoena.</p><p>· <strong>Result:</strong> Sovereign Survival Kit is structurally unable to suffer the primary legal threat facing all cloud-AI companies (data breach, PII theft, government dragnet surveillance).</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 3. Liability Position: Zero-Egress by Design</a></div>
-                </div><div class="sec-break" id="sec-6-howey-test"><h2><a href="#sec-6-howey-test" style="color:inherit;text-decoration:none">§6 Howey Test</a></h2></div>
-
-                <div class="spread" id="i5_s6_howey_dragon">
-                  <img src="img/diagrams/i5_s6_howey_dragon.png" alt="" loading="lazy">
-                  <div class="body"><p>Upon incorporation, all intellectual property used in Sovereign Survival Kit will flow through a documented chain from origin to the C-Corp. This document traces each asset's provenance, license, and planned assignment status.</p><a class="doc-ref" href="#sec-6-howey-test">§ 1. Overview</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s6_not_investment">
-                  <img src="img/diagrams/i5_s6_not_investment.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>A. Reference Design Codebase</strong></p><p><strong>B. Know-Maps (iOS/macOS/visionOS NLU App)</strong></p><p><strong>C. TauSkeletonVisual (C++/Unreal Engine)</strong></p><p><strong>D. General Tau Theory (Mathematical Framework)</strong></p><p><strong>E. Gemma 4 E4B (Inference Model)</strong></p><p><strong>F. Gemma 4 E4B (Training Base)</strong></p><a class="doc-ref" href="#sec-6-howey-test">§ 3. Detailed Asset Chain</a></div>
-                </div>
-                <div class="two-up" id="i5_s6_no_common_enterprise">
-                  <img src="img/diagrams/i5_s6_no_common_enterprise.png" alt="" loading="lazy">
-                  <div class="body"><p>None. Upon incorporation, all intellectual property will be assigned to the C-Corp with no carve-outs or retained rights.</p><a class="doc-ref" href="#sec-6-howey-test">§ 4. Founder Retained Assets</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s6_no_profit_expectation">
-                  <img src="img/diagrams/i5_s6_no_profit_expectation.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>clara-engine (AskMikeeHost) — Production Codebase</strong></p><p><strong>License:</strong> Proprietary (Sovereign Survival Kit Inc.)</p><p><strong>Status:</strong> Fully audited, bug-fixed, 100% test passing</p><p><strong>Model:</strong> Gemma 4 E4B (Google DeepMind 🇺🇸) — compliant with Model Origin Policy</p><p>#### Inference Layer (13 files, ~2,500 lines)</p><p>#### Profiling Pipeline (9 files, ~4,000 lines)</p><a class="doc-ref" href="#sec-6-howey-test">§ 1. SOFTWARE IP (Production Code)</a></div>
-                </div>
-                <div class="two-up" id="i5_s6_no_efforts_others">
-                  <img src="img/diagrams/i5_s6_no_efforts_others.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>TauSkeletonVisual — C++ Research Code</strong></p><p><strong>License:</strong> CC-BY-NC-ND 4.0 (defensive IP — cannot be commercially used by competitors)</p><p><strong>Status:</strong> Research-grade, requires migration to Apple Vision architecture</p><p><strong>Volumetric Control Sphere — Hardware Architecture</strong></p><p><strong>License:</strong> Proprietary (Sovereign Survival Kit Inc.)</p><p><strong>Status:</strong> Architectural design complete, awaiting EVT (Phase 2+ priority)</p><a class="doc-ref" href="#sec-6-howey-test">§ 2. SPATIAL COMPUTING IP</a></div>
-                </div>
-                <div class="sidebar-spread" id="i5_s6_all_four_fail">
-                  <img src="img/diagrams/i5_s6_all_four_fail.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Know-Maps — iOS/macOS/visionOS NLU App</strong></p><p><strong>License:</strong> Apache 2.0 (app code), Proprietary (CoreML models)</p><p><strong>Status:</strong> Functioning app in development</p><a class="doc-ref" href="#sec-6-howey-test">§ 3. APPLE NATIVE IP</a></div>
-                </div><div class="sec-break" id="sec-7-regulatory-risk"><h2><a href="#sec-7-regulatory-risk" style="color:inherit;text-decoration:none">§7 Regulatory Risk</a></h2></div>
-
-                <div class="spread" id="i5_s7_jurisdiction_map">
-                  <img src="img/diagrams/i5_s7_jurisdiction_map.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Sovereign Commerce Protocol</strong></p><p><strong>License:</strong> Open source (protocol), Proprietary (trust infrastructure)</p><p><strong>Status:</strong> Design complete, bilateral protocol implementation pending</p><p><strong>Removed from previous version:</strong></p><p>· ~~Gold-Peg Oracle~~ → Replaced by σ conversion formula (energy-backed, not gold-backed)</p><p>· ~~Sovereign Settlement Chain~~ → Replaced by bilateral mesh settlement + notary certification</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 4. PROTOCOL IP</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s7_us_safe">
-                  <img src="img/diagrams/i5_s7_us_safe.png" alt="" loading="lazy">
-                  <div class="body"><p>Note: Hardware manufacturing is NOT a Series A priority. The Compass and Black Box are supplementary products. SovSensor devices are Phase 2+ reference designs. The core platform runs on user-owned phones and laptops.</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 5. HARDWARE IP</a></div>
-                </div>
-                <div class="two-up" id="i5_s7_japan_safe">
-                  <img src="img/diagrams/i5_s7_japan_safe.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Three.js Avatar Pipeline (3 files, 338 lines)</strong></p><p><strong>4DGS Avatar Pipeline</strong></p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 6. AVATAR & RENDERING IP</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s7_eu_hostile">
-                  <img src="img/diagrams/i5_s7_eu_hostile.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Open Source vs. Proprietary Split</strong></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>SSOT:</strong> Doc 29 §8 (Source Code Licensing). Vault is open source; everything above the vault is proprietary.</em></p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 8. IP PROTECTION SUMMARY</a></div>
-                </div>
-                <div class="two-up" id="i5_s7_uk_hostile">
-                  <img src="img/diagrams/i5_s7_uk_hostile.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">Web search conducted 2026-04-26. This is a preliminary screen, NOT a formal freedom-to-operate opinion. A patent attorney must conduct a formal USPTO/WIPO/EPO search with proper classification codes (CPC/IPC) before any filing.</em></p><p><strong>Doc 21 Claims (10 Formal)</strong></p><p><strong>Additional Candidates (7 Defensible)</strong></p><p><strong>Removed from Candidate List</strong></p><p><strong>Summary</strong></p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 9. PRELIMINARY PRIOR ART SCREEN</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s7_mitigation">
-                  <img src="img/diagrams/i5_s7_mitigation.png" alt="" loading="lazy">
-                  <div class="body"><p>A localized software operating environment comprising:</p><p>A hardware-isolated host node maintaining a strict network airgap via software locks blocking all egress external network requests.</p><p>A local LLM inference engine restricted within a memory-managed envelope, utilizing lock-based phase transitions to prevent OOM termination.</p><p>A module generating a Directed Acyclic Graph (DAG) of conversational reasoning.</p><p>An operation that serializes said DAG, filters it through a proprietary NLP PII-stripping module operating locally, and encrypts the output via AES-256-GCM, dual-signed by (a) a hardware-bound P-256 ECDSA signature generated inside the device hardware security module proving the asset was signed on a specific physical device, and (b) a software-generated ML-DSA-65 post-quantum signature ensuring resilience against future quantum cryptanalysis. Neither signature alone is sufficient; the combination proves both physical device provenance and quantum-resistant integrity.</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ CLAIM 1: The .kasset Minting Pipeline</a></div>
-                </div><div class="sec-break" id="sec-8-legal-budget"><h2><a href="#sec-8-legal-budget" style="color:inherit;text-decoration:none">§8 Legal Budget</a></h2></div>
-
-                <div class="two-up" id="i5_s8_legal_budget">
-                  <img src="img/diagrams/i5_s8_legal_budget.png" alt="" loading="lazy">
-                  <div class="body"><p>A method for intent detection via spatial computing, characterized by:</p><p>Extracting visual depth and coordinate metrics via native device frameworks.</p><p>Applying General Tau Theory ($\tau$ and $\dot{\tau}$) to map the approach velocity and gesture intent within a physically constrained virtual bounding box around the user.</p><p>Translating said localized vectors entirely to a local web socket loopback without utilizing external rendering clouds.</p><a class="doc-ref" href="#sec-8-legal-budget">§ CLAIM 2: Volumetric Control Sphere (Tau Theory Mapping)</a></div>
-                </div>
-                <div class="sidebar-spread" id="i5_s8_356k_total">
-                  <img src="img/diagrams/i5_s8_356k_total.png" alt="" loading="lazy">
-                  <div class="body"><p>A system for preventing the minting of hallucinated or low-quality knowledge assets within a network-isolated compute environment, comprising:</p><p>An asynchronous quality evaluator deployed parallel to a local generative layer, operating entirely within a network-isolated (zero-egress) compute environment.</p><p>A multi-dimensional composite scoring engine that evaluates generated text across four dimensions — Groundedness (NLI entailment ratio against source context), Relevance (cosine similarity to retrieval context), Persona Fidelity (drift detection from offline calibration sets), and Coherence — producing a single aggregate composite score.</p><p>A mint-gate mechanism that intercepts generated text below an aggregate composite threshold of N, triggers localized regeneration within the same network-isolated environment, and prevents the serialization of any text into a .kasset archive until the threshold is met.</p><p>The combination of zero-egress enforcement with composite quality gating such that no knowledge asset can be minted from hallucinated, irrelevant, or persona-inconsistent content, and no generated text traverses a network boundary at any stage of evaluation or regeneration.</p><a class="doc-ref" href="#sec-8-legal-budget">§ CLAIM 3: Zero-Egress Quality-Gated Knowledge Asset Minting</a></div>
-                </div><div class="sec-break" id="sec-9-competition"><h2><a href="#sec-9-competition" style="color:inherit;text-decoration:none">§9 Competition</a></h2></div>
-
-                <div class="spread" id="i5_s9_porters_five">
-                  <img src="img/diagrams/i5_s9_porters_five.png" alt="" loading="lazy">
-                  <div class="body"><p>A method for dynamically curating a language model's context window, comprising:</p><p>Segmenting continuous user experience into discrete episodes via temporal, semantic, emotional, and domain boundary detection.</p><p>Compressing each episode into a sparse representation via a learned compressor model operating within a fixed VRAM budget.</p><p>On each conversational turn, rewriting the user's query using conversation history, then retrieving relevant episodes via vector similarity search combined with a situational context vector computed from biometric state, temporal position, and domain-specific state registers.</p><p>Proactively surfacing episodes the user has not explicitly requested but which the anticipatory retrieval engine determines are relevant to the user's current cognitive context based on low overlap with recent conversational history and high similarity to the computed context vector.</p><p>All retrieval, compression, context assembly, and generation occurring entirely within a network-isolated compute environment.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 4: Dynamic Context Window Assembly with Episodic Memory Encoding</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s9_worldcoin_compare">
-                  <img src="img/diagrams/i5_s9_worldcoin_compare.png" alt="" loading="lazy">
-                  <div class="body"><p>A method for developing a private communication protocol between a human user and a personal AI agent, comprising:</p><p>A multi-stage fine-tuning pipeline (SCP → DPO → E2E) establishing a baseline personality and communication style.</p><p>An ongoing fourth stage that ingests compressed conversational shorthand, shared vocabulary, emotional calibration patterns, and disagreement resolution sequences from real interaction logs.</p><p>A learned mapping function (the "Idiolect") that translates a collection of time constants (tau profiles) representing the user's cognitive dynamics into semantic weight modifications for a base language model, such that the mapping function — not static weight matrices — is the computational representation of the user's personality.</p><p>Storage of the Idiolect mapping function and the tau collection as cryptographically separated components, wherein the tau collection encodes process dynamics (decision tempo, cognitive rhythm, approach patterns) without encoding content (names, facts, personal history), and the Idiolect mapping function is the sole component that renders the tau collection semantically meaningful.</p><p>A drift detection module monitoring the evolution of shared vocabulary and emotional shorthand over time to prevent unintended persona divergence.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 5: Idiolect Evolution Engine with Tau-Secured Weight Representation</a></div>
-                </div>
-                <div class="two-up" id="i5_s9_sbt_compare">
-                  <img src="img/diagrams/i5_s9_sbt_compare.png" alt="" loading="lazy">
-                  <div class="body"><p>A system for ingesting physical-world biometric and environmental data into a personal AI planning engine, comprising:</p><p>An open BLE GATT protocol (SovSensor) transmitting standardized JSON sensor readings from edge peripherals (breath composition, heart rate variability, ambient air quality, light exposure, body composition, asset proximity).</p><p>Local storage of all sensor data in an AES-256-GCM encrypted PII vault with zero network egress.</p><p>Integration of sensor-derived state variables into the AI agent's per-turn situational retrieval pipeline as domain-specific context signals for 8 life domains (rest, nourishment, body, shelter, assets, income, bonds, growth).</p><p>All sensor data processing, storage, and AI planning occurring entirely on user-owned hardware.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 6: Biometric Sensor Bridge Protocol</a></div>
-                </div>
-                <div class="two-up flip" id="i5_s9_moat_diagram">
-                  <img src="img/diagrams/i5_s9_moat_diagram.png" alt="" loading="lazy">
-                  <div class="body"><p>A system for extracting and contributing factual knowledge from a deceased user's private data vault to a shared knowledge repository, comprising:</p><p>A biometric death certification mechanism triggered by the failure of the deadman's switch (multi-device heartbeat timeout exceeding a minimum floor of ≥180 days), cryptographically verified by the user's hardware security module.</p><p>A multi-pass PII stripping pipeline operating entirely on-device, comprising: (a) Named Entity Recognition (NER) for explicit PII (names, SSNs, addresses, dates of birth), (b) regex-based pattern matching for structured identifiers, (c) LLM-based contextual review for implied PII (location-correlated descriptions, medical context, behavioral patterns identifiable via Sweeney re-identification), and (d) a confidence threshold gate requiring ≥0.95 confidence that a fact is PII-free before contribution.</p><p>A differential privacy budget (ε) applied to all contributed facts, ensuring that no individual fact — alone or in combination with other contributed facts — can be used to re-identify the deceased user. The privacy budget is calibrated per-domain (medical ε ≤ 0.1, financial ε ≤ 0.5, general knowledge ε ≤ 1.0).</p><p>Compulsory contribution of verified, PII-stripped factual knowledge to the Common Knowledge Codex, a shared repository accessible to all network participants.</p><p>A post-contribution redaction protocol enabling network governance to flag and suppress specific Codex entries if PII is discovered after contribution, without deleting the underlying factual content.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 7: Mortality-Triggered Differential Privacy Pipeline for Compulsory Knowledge Contribution</a></div>
-                </div></div>
-<div class="bot-nav"><a href="issue_4.html">← Issue 4</a><a href="index.html">All Issues</a><a href="issue_6.html">Issue 6 →</a></div>
-<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
-</body></html>
+<div class="issue-nav">
+  <a href="issue_4.html">← Issue 4</a>
+  <a href="index.html">All Issues</a>
+  <a href="issue_6.html">Issue 6 →</a>
+</div>
+<footer class="site-footer">Sovereign Survival Kit, Inc. · Series A Data Room · 2026</footer>
+</body>
+</html>

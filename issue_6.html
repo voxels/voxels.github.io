@@ -1,289 +1,365 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Issue 6: The Vault & The Long Game — Sovereign Power</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-:root {
-  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
-  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
-  --border: #2a2a3a;
-  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
-  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
-  --font: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SOVEREIGN POWER</span>
+  <a href="index.html" class="">Library</a>
+<a href="issue_1.html" class="">#1</a>
+<a href="issue_2.html" class="">#2</a>
+<a href="issue_3.html" class="">#3</a>
+<a href="issue_4.html" class="">#4</a>
+<a href="issue_5.html" class="">#5</a>
+<a href="issue_6.html" class="active">#6</a>
+<a href="issue_7.html" class="">#7</a>
 
-/* NAV */
-.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
-  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
-  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
-.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
-.nav a:hover { color:var(--text); }
-.nav a.on { color:var(--magenta); }
-.nav .sp { flex:1; }
-.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
-  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
-
-/* FULL-BLEED COVER */
-.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
-.cover img { width:100%; height:100%; object-fit:cover; }
-.cover .overlay { position:absolute; inset:0;
-  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
-.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
-.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
-  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
-.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
-.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
-  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
-  border-radius:4px; color:white; }
-
-/* EDITORIAL BODY */
-.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
-
-/* SECTION BREAK */
-.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
-.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
-
-/* SPREAD: full-width hero image + editorial text below */
-.spread { margin-bottom:3rem; }
-.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
-.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
-.spread .body p { margin-bottom:0.8rem; }
-.spread .body strong { color:var(--text); }
-
-/* TWO-UP: image left, text right (alternating) */
-.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
-  align-items:start; margin-bottom:2.5rem; }
-.two-up.flip { direction:rtl; }
-.two-up.flip > * { direction:ltr; }
-.two-up img { width:100%; border-radius:6px; }
-.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
-.two-up .body strong { color:var(--text); }
-.two-up .body p { margin-bottom:0.6rem; }
-
-/* SIDEBAR: small img + text */
-.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
-.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
-.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
-
-/* DOC REF */
-.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
-  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
-.doc-ref:hover { color:var(--magenta); }
-
-/* SECTION TOC */
-.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
-.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
-  text-transform:uppercase; margin-bottom:0.6rem; }
-.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
-.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
-  color:var(--dim); background:var(--card); border:1px solid var(--border);
-  text-decoration:none; transition:all 0.2s; }
-.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
-
-/* BOTTOM NAV */
-.bot-nav { display:flex; justify-content:space-between; align-items:center;
-  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
-.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
-.bot-nav a:hover { color:var(--text); }
-.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
-
-/* INDEX COVERS */
-.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
-.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
-.mag-grid .card:first-child h2 { font-size:2.5rem; }
-.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
-  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
-.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
-.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
-.card:hover .bg { transform:scale(1.05); }
-.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
-.card:hover .grad { opacity:0.95; }
-.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
-.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
-.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
-  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
-.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
-.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
-
-/* HERO SECTION */
-.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
-  border-bottom:1px solid var(--border); overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
-  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
-.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
-  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
-.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
-.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
-.hero .stats .n { font-size:2rem; font-weight:900;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
-.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
-
-@media(max-width:768px) {
-  .hero h1 { font-size:2.2rem; }
-  .mag-grid { grid-template-columns:1fr; padding:1rem; }
-  .mag-grid .card:first-child { min-height:280px; }
-  .cover h1 { font-size:2rem; }
-  .cover { height:60vh; }
-  .two-up { grid-template-columns:1fr; }
-  .sidebar-spread { flex-direction:column; }
-  .sidebar-spread img { width:100%; }
-}
-</style></head><body>
-<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
-<a href="index.html">Library</a><a href="issue_1.html">#1</a>
-<a href="issue_2.html">#2</a>
-<a href="issue_3.html">#3</a>
-<a href="issue_4.html">#4</a>
-<a href="issue_5.html">#5</a>
-<a href="issue_6.html" class="on">#6</a>
-<a href="issue_7.html">#7</a>
-<span class="sp"></span><span class="badge">ALPHA</span></nav>
-<div class="cover">
+  <span class="nav-spacer"></span>
+  <span class="nav-badge">Alpha</span>
+</nav>
+<div class="issue-cover">
   <img src="img/diagrams/i6_cover.png" alt="">
-  <div class="overlay"></div>
-  <div class="pill" style="background:#d63031">Issue 6 of 7</div>
-  <div class="text"><h1>The Vault & The Long Game</h1>
-  <div class="sub">Act 5b + Act 6 · 31 illustrations</div></div>
+  <div class="issue-cover-overlay"></div>
+  <div class="issue-cover-badge" style="background:#d63031">Issue 6 of 7</div>
+  <div class="issue-cover-text">
+    <h1>The Vault & The Long Game</h1>
+    <div class="act-line">Act 6 · Security · 31 illustrations</div>
+  </div>
 </div>
-<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-1-vault-architecture">§1 Vault Architecture</a><a href="#sec-2-auth-and-security">§2 Auth and Security</a><a href="#sec-3-content-policy">§3 Content Policy</a><a href="#sec-4-long-game">§4 Long Game</a></div></div>
-<div class="editorial"><div class="sec-break" id="sec-1-vault-architecture"><h2><a href="#sec-1-vault-architecture" style="color:inherit;text-decoration:none">§1 Vault Architecture</a></h2></div>
 
-                <div class="spread" id="i6_s1_vault_overview">
-                  <img src="img/diagrams/i6_s1_vault_overview.png" alt="" loading="lazy">
-                  <div class="body"><p>The Foundation Model (CIP-trained, M28+) continuously identifies <strong>technical specifications of facts that are not true yet</strong> — precise, structured descriptions of knowledge that doesn't exist but whose absence is detectable from the topology of what does exist. Each gap is priced by the protocol on two axes: <strong>rarity × utility.</strong></p><p>This Gap Feed is the product. It is visible only to club members. The Foundation Model's contents are never released. The club is the monetization.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 1. What It Is</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s1_core_axiom">
-                  <img src="img/diagrams/i6_s1_core_axiom.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Swiss Stiftung (Foundation).</strong> Separate legal entity from SSK Corp. Purpose-locked under Swiss law.</p><p>Modeled on the intersection of:</p><p>· <strong>Bell Labs</strong> — fundamental research institution</p><p>· <strong>DARPA</strong> — directed research via precise technical specifications</p><p>· <strong>Gates Foundation</strong> — global impact, philanthropic governance</p><p><strong>SSK Corp's role:</strong> Donates unfettered, free, secure access to the Foundation Model. Receives $0 in return. SSK Corp benefits indirectly — every bounty-funded .kasset that enters the public marketplace generates progressive certification fees via the certification service.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 2. Legal Structure</a></div>
-                </div>
-                <div class="two-up" id="i6_s1_encryption_layers">
-                  <img src="img/diagrams/i6_s1_encryption_layers.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>"Apex decision maker" — quantified threshold:</strong> Individuals whose decisions directly govern >$100B in capital or >100M people. Includes untracked dynastic and family wealth not visible on public billionaire lists.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 3. Membership</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s1_compartment_a">
-                  <img src="img/diagrams/i6_s1_compartment_a.png" alt="" loading="lazy">
-                  <div class="body"><p>Delivered through the member's <strong>existing twin</strong>. Same architecture as every other Sovereign user. Same device. Premium security features only. No separate terminal. No separate hardware. The architecture — minus the public availability of the market — is the exact same thing.</p><p>Each gap is a <strong>technical specification of a fact that isn't true yet</strong>: a precise description of knowledge whose absence the Foundation Model has detected, priced by rarity and utility.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 4. The Gap Feed</a></div>
-                </div>
-                <div class="two-up" id="i6_s1_compartment_b">
-                  <img src="img/diagrams/i6_s1_compartment_b.png" alt="" loading="lazy">
-                  <div class="body"><p>Bounties are <strong>separate from the membership fee.</strong> The membership buys access to the Gap Feed. The bounty is a separate payment from the buyer that funds the creation of the knowledge.</p><p><strong>Flow</strong></p><p><strong>Bounty Targeting</strong></p><p>The FM identifies candidates using:</p><p>When the FM determines no single user is likely to succeed alone, it proposes a <strong>Swarm Contract bounty</strong> — targeting 2-3 complementary users to work collaboratively.</p><p><strong>Excluded signals:</strong> Minting velocity. Prior bounty completion record. Peer demand. These are not used in targeting.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 5. The Bounty System</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s1_internal_boundary">
-                  <img src="img/diagrams/i6_s1_internal_boundary.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Maximum access window: the shorter of the two participants' lifetimes.</strong></p><p>When either the buyer or the minter dies, the .kasset releases to the public marketplace. The minter's death triggers Rule 1 (factual knowledge enters the Common Knowledge Codex). The buyer's death terminates the exclusive access.</p><p><strong>Properties</strong></p><p><strong>The billionaire and the researcher become mutual life insurance policies.</strong> In a world where power historically eliminates threats, this system converts the relationship between apex capital and frontier knowledge into a mutual non-aggression pact enforced by economics.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 6. The Lockup Rule</a></div>
-                </div>
-                <div class="two-up" id="i6_s1_idiolect_architecture">
-                  <img src="img/diagrams/i6_s1_idiolect_architecture.png" alt="" loading="lazy">
-                  <div class="body"><p>Buyer cartels, government weaponization of intelligence, and deals conducted outside the system are acknowledged as <strong>consequences of nature</strong> — not structurally prevented.</p><p><strong>The primary enforcement mechanism is the seat itself.</strong> The Gap Feed is the most valuable predictive intelligence on the formation of new human knowledge. Thousands of qualified buyers exist for ~100 seats. Violation of the rules = permanent expulsion. No reinstatement. The seat goes to the next qualified buyer. The opportunity cost of losing the seat dwarfs any single act of rule violation.</p><p><strong>The anti-suppression mechanism is the lockup rule.</strong> Knowledge cannot be buried indefinitely. Death enforces release. The shorter of the two lifetimes guarantees it.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 7. Anti-Collusion Posture</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s1_training_pipeline">
-                  <img src="img/diagrams/i6_s1_training_pipeline.png" alt="" loading="lazy">
-                  <div class="body"><p>The Foundation Model generates revenue <strong>without releasing its contents.</strong> The Stiftung operates the Gap Feed. The Corp operates the marketplace. The minters create the knowledge. The buyers fund it.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 8. Revenue Model</a></div>
-                </div>
-                <div class="two-up" id="i6_s1_security_properties">
-                  <img src="img/diagrams/i6_s1_security_properties.png" alt="" loading="lazy">
-                  <div class="body"><p>The principle: <strong>apex capital funds the conditions for intelligence formation at the base.</strong> The money flows down.</p><p><strong>A. Moonshot Funding (Google X Model)</strong></p><p>The FM identifies gap constellations — clusters of interconnected knowledge voids that, if resolved together, solve a civilizational problem. "End malaria" is not one gap. It's 50 interconnected gaps across epidemiology, drug delivery logistics, cold chain management, mosquito genomics, public health infrastructure.</p><p>The Stiftung funds the entire constellation as a <strong>Swarm Contract bounty</strong> (see doc 20, IP Inventory: "Algorithmic orchestration of 20+ interlocking human contributions into a single cryptographic contract"). The Swarm Contract DAG manages interdependencies and payout sequencing. The FM orchestrates targeting across all sub-bounties simultaneously.</p><p><strong>Sustainable fusion is the first and largest moonshot.</strong> The Stiftung funds the research that produces the energy source that powers the institution that funds the research. If it works, the σ loop closes completely.</p><p>Resolved moonshot .kassets enter the public Codex immediately — no buyer lockup. The moonshot program recruits a caliber of minter that no sticker drop or Genesis Grant will attract: people who want to work on problems that matter.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 1. Fund Deployment Categories</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s1_selective_release">
-                  <img src="img/diagrams/i6_s1_selective_release.png" alt="" loading="lazy">
-                  <div class="body"><p>The entire campus is a library that creates its own contents.</p><p><strong>2.1 Main Campus: Wears Valley, East Tennessee</strong></p><p><strong>Location:</strong> Connected parcels of large acreage in the Wears Valley / Townsend corridor, near the entrance to Great Smoky Mountains National Park. Wears Valley (Wear Cove) runs parallel to the park between Chilhowee Mountain to the north and the park boundary to the south. The western end opens toward Townsend ("the peaceful side of the Smokies"). The Metcalf Bottoms park entrance is directly accessible.</p><p><strong>Jurisdictional note:</strong> Wears Valley spans Sevier County (east, toward Pigeon Forge) and Blount County (west, toward Townsend). Large acreage in Blount County has fewer STR-driven zoning restrictions and more agricultural/open land use. The western Wears Valley / Townsend side is the primary acquisition target.</p><p><strong>Scale:</strong> 300-500+ acres. Apple Park is 175 acres / 2.8M sq ft / $5B / 12,000 capacity. The Sovereign campus is larger and more complex — it contains a boarding school, graduate program, research labs, corporate R&D, performance venues, and an arboretum. 500 acres allows the Swarthmore integration model: buildings embedded in the arboretum, not the arboretum surrounding buildings.</p><p><strong>Campus design references (post-Fallingwater):</strong></p><a class="doc-ref" href="#sec-1-vault-architecture">§ 2. The Sovereign Campus</a></div>
-                </div>
-                <div class="two-up" id="i6_s1_kasset_absorption">
-                  <img src="img/diagrams/i6_s1_kasset_absorption.png" alt="" loading="lazy">
-                  <div class="body"><p>All four deployment categories form a single system:</p><p>The Stiftung is the circulatory system. Apex membership fees pump capital from the top to the base. The base produces minters. Minters fill gaps. Filled gaps validate the Gap Feed. The Gap Feed justifies the memberships. The memberships fund the Stiftung. Closed loop.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 3. Connective Pipeline</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s1_edgcumbe_layer">
-                  <img src="img/diagrams/i6_s1_edgcumbe_layer.png" alt="" loading="lazy">
-                  <div class="body"><p>This document covers <strong>Line of Business #1: The Apex Oracle</strong> and its downstream infrastructure (the Stiftung).</p><p>Both Y3 business lines are now fully documented.</p><a class="doc-ref" href="#sec-1-vault-architecture">§ 4. Thread Summary — Where We Are</a></div>
-                </div><div class="sec-break" id="sec-2-auth-and-security"><h2><a href="#sec-2-auth-and-security" style="color:inherit;text-decoration:none">§2 Auth and Security</a></h2></div>
+<div class="issue-toc">
+  <h3>In This Issue</h3>
+  <div class="toc-chips"><a href="#sec-1-vault-architecture" class="toc-chip">§1 Vault Architecture</a>
+<a href="#sec-2-auth-and-security" class="toc-chip">§2 Auth and Security</a>
+<a href="#sec-3-content-policy" class="toc-chip">§3 Content Policy</a>
+<a href="#sec-4-long-game" class="toc-chip">§4 Long Game</a>
+</div>
+</div>
 
-                <div class="spread" id="i6_s2_auth_chain">
-                  <img src="img/diagrams/i6_s2_auth_chain.png" alt="" loading="lazy">
-                  <div class="body"><p>The vault is a cryptographically secure storage space on the user's personal device. The owner is the only person permitted to open, store, and lock it. The vault is an extension of the owner's mind — a digital container for personal writing, expression, reasoning, and acquired knowledge. Its contents are protected under the 1st Amendment (expression), 4th Amendment (papers and effects), and 5th Amendment (testimonial privilege). Neither the company, the government, nor any third party has a legal right to the contents.</p><a class="doc-ref" href="#sec-2-auth-and-security">§ §0.1 Core Axiom</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s2_foreground_lock">
-                  <img src="img/diagrams/i6_s2_foreground_lock.png" alt="" loading="lazy">
-                  <div class="body"><p>· <strong>Cipher:</strong> AES-256-GCM (authenticated encryption)</p><p>· <strong>Signing:</strong> ML-DSA-65 (post-quantum, NIST FIPS 204)</p><p>· <strong>Key derivation (active vault):</strong> <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">vault_key = Argon2id(passphrase) ⊕ HSM_key</code>. Both the user's passphrase and the device's hardware security module key are cryptographic inputs. Neither alone is sufficient. Compromise of one factor does not compromise the vault.</p><p>· <strong>Key derivation (backup):</strong> <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">backup_key = Argon2id(passphrase) ⊕ BackupEnclave_HSM_key</code>. The Home Backup Enclave contains its own HSM. Backup encryption is two-factor: passphrase + physical possession of the Backup Enclave.</p><p>· <strong>Argon2id minimum parameters:</strong> Memory cost ≥ 256 MiB, iterations ≥ 3. On platforms without HSM (software fallback), memory cost ≥ 512 MiB and iterations ≥ 4 to compensate for single-factor. These are minimums — implementations should tune higher based on device capability.</p><p>· <strong>Passphrase complexity:</strong> Minimum 40 bits of entropy enforced at setup (approximately 4+ random words or 8+ mixed characters). User's choice beyond the minimum.</p><a class="doc-ref" href="#sec-2-auth-and-security">§ §0.2 Encryption</a></div>
-                </div>
-                <div class="two-up" id="i6_s2_in_memory_security">
-                  <img src="img/diagrams/i6_s2_in_memory_security.png" alt="" loading="lazy">
-                  <div class="body"><p>Reproducible builds. The vault layer is open-source. Deterministic compilation allows any auditor to verify the distributed binary matches the published source. Coerced software updates are publicly detectable.</p><p><strong>Platform constraint (documented honestly):</strong> Some distribution channels re-sign binaries (e.g., app stores). The reproducible-build guarantee applies to the open-source artifact and direct-distributed builds, not to re-signed distribution channel binaries. Auditors can verify via direct-distributed builds.</p><p><strong>Update integrity:</strong> All software updates MUST be verified against an EdDSA signature before installation. The signing public key is embedded in the vault binary at build time. A valid signature proves the update was produced by the company's build pipeline. An invalid or missing signature rejects the update. This is a vault-layer requirement — the vault process verifies updates before applying them.</p><a class="doc-ref" href="#sec-2-auth-and-security">§ §0.3 Source Code Integrity</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s2_tau_decay">
-                  <img src="img/diagrams/i6_s2_tau_decay.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Compartment A — Sovereign Space (Self-Created)</strong></p><p>Everything the owner made, wrote, recorded, thought, or trained. Contains three critical components:</p><p><strong>The Idiolect</strong> — the user's unique semantic map. A learned mapping function that translates tau profiles (process dynamics) into semantic weight space. The idiolect IS the user in computational form. It is trained from the user's language, writing, behavior, and decisions. It is the key that makes tau values meaningful. <strong>It never leaves the vault.</strong></p><p><strong>The Tau Collection</strong> — the user's cognitive dynamics. Process descriptors: how fast the user decides, how they hesitate, their rhythms across cognitive domains. Without the idiolect: an unlabeled bag of numbers. With the idiolect: the user's personality.</p><p><strong>Raw Content</strong> — journal entries, messages, health data, personal facts. PII-stripped before reaching the training pipeline. The idiolect is trained FROM this content, but the content is consumed during training and not stored in recoverable form.</p><p>· Constitutional basis: 1st Amendment (expression), 5th Amendment (testimonial privilege)</p><a class="doc-ref" href="#sec-2-auth-and-security">§ §0.4 Two-Compartment Architecture</a></div>
-                </div>
-                <div class="two-up" id="i6_s2_recovery">
-                  <img src="img/diagrams/i6_s2_recovery.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Twin Computation Model</strong></p><p>The "LoRA weights" in this architecture are not static weight matrices. They are the <strong>output</strong> of the Idiolect function applied to the tau collection. The weights are computed at runtime, not stored. The idiolect is the generator. The taus are the inputs. The weights are ephemeral — they exist only during active inference, recomputed each time the idiolect is loaded.</p><p><strong>What the Idiolect Is (Implementation)</strong></p><p>The idiolect is a <strong>learned mapping function</strong> — concretely, a small hypernetwork that:</p><p>Takes surface tau parameters as input (observable signals — see Doc 03 §3)</p><p>Outputs weight modifications (ΔW) for the base model's layers</p><a class="doc-ref" href="#sec-2-auth-and-security">§ §0.5 The Idiolect Architecture</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s2_burn_credential">
-                  <img src="img/diagrams/i6_s2_burn_credential.png" alt="" loading="lazy">
-                  <div class="body"><p>No biometric authentication at the SSK layer. Device OS-level biometric auth is the user's choice and the platform's domain. SSK does not implement, require, or store biometric data for vault authentication.</p><p><strong>Auth flow:</strong> <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">Device OS auth → SSK passphrase → vault_key = Argon2id(passphrase) ⊕ HSM_key</code></p><p><strong>High-stakes operations</strong> (mint, trade, export): passphrase re-confirmation + HSM-bound TOTP (6-digit rotating code, seed in hardware security module). Anti-remote-theft measure — protects against passphrase-only compromise from a different device. Not an anti-state measure.</p><a class="doc-ref" href="#sec-2-auth-and-security">§ §0.6 Authentication</a></div>
-                </div>
-                <div class="two-up" id="i6_s2_warrant_proof">
-                  <img src="img/diagrams/i6_s2_warrant_proof.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Locking Principle: Foreground Exclusivity</strong></p><p>The vault is open if and only if SSK is the active foreground application on an unlocked screen. The vault locks when either condition breaks:</p><p>· Screen turns off → vault locks</p><p>· App leaves foreground → vault locks</p><p>· Device locks → vault locks</p><p>One rule. No sensor dependency. No attention inference. Re-access requires passphrase.</p><a class="doc-ref" href="#sec-2-auth-and-security">§ §0.7 Session and Lock</a></div>
-                </div><div class="sec-break" id="sec-3-content-policy"><h2><a href="#sec-3-content-policy" style="color:inherit;text-decoration:none">§3 Content Policy</a></h2></div>
+<div class="editorial">
+<div class="section-divider" id="sec-1-vault-architecture">
+  <h2><a href="#sec-1-vault-architecture">§1 Vault Architecture</a></h2>
+</div>
+<div class="spread" id="i6_s1_vault_overview">
+<img src="img/diagrams/i6_s1_vault_overview.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Foundation Model (CIP-trained, M28+) continuously identifies <strong>technical specifications of facts that are not true yet</strong> — precise, structured descriptions of knowledge that doesn't exist but whose absence is detectable from the topology of what does exist. Each gap is priced by the protocol on two axes: <strong>rarity × utility.</strong></p>
+<p>This Gap Feed is the product. It is visible only to club members. The Foundation Model's contents are never released. The club is the monetization.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 1. What It Is</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s1_core_axiom">
+<img src="img/diagrams/i6_s1_core_axiom.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Swiss Stiftung (Foundation).</strong> Separate legal entity from SSK Corp. Purpose-locked under Swiss law.</p>
+<p>Modeled on the intersection of:</p>
+<p>· <strong>Bell Labs</strong> — fundamental research institution</p>
+<p>· <strong>DARPA</strong> — directed research via precise technical specifications</p>
+<p>· <strong>Gates Foundation</strong> — global impact, philanthropic governance</p>
+<p><strong>SSK Corp's role:</strong> Donates unfettered, free, secure access to the Foundation Model. Receives $0 in return. SSK Corp benefits indirectly — every bounty-funded .kasset that enters the public marketplace generates progressive certification fees via the certification service.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 2. Legal Structure</a>
+</div>
+</div>
+<div class="two-up" id="i6_s1_encryption_layers">
+<img src="img/diagrams/i6_s1_encryption_layers.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>"Apex decision maker" — quantified threshold:</strong> Individuals whose decisions directly govern >$100B in capital or >100M people. Includes untracked dynastic and family wealth not visible on public billionaire lists.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 3. Membership</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s1_compartment_a">
+<img src="img/diagrams/i6_s1_compartment_a.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Delivered through the member's <strong>existing twin</strong>. Same architecture as every other Sovereign user. Same device. Premium security features only. No separate terminal. No separate hardware. The architecture — minus the public availability of the market — is the exact same thing.</p>
+<p>Each gap is a <strong>technical specification of a fact that isn't true yet</strong>: a precise description of knowledge whose absence the Foundation Model has detected, priced by rarity and utility.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 4. The Gap Feed</a>
+</div>
+</div>
+<div class="two-up" id="i6_s1_compartment_b">
+<img src="img/diagrams/i6_s1_compartment_b.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Bounties are <strong>separate from the membership fee.</strong> The membership buys access to the Gap Feed. The bounty is a separate payment from the buyer that funds the creation of the knowledge.</p>
+<p><strong>Flow</strong></p>
+<p><strong>Bounty Targeting</strong></p>
+<p>The FM identifies candidates using:</p>
+<p>When the FM determines no single user is likely to succeed alone, it proposes a <strong>Swarm Contract bounty</strong> — targeting 2-3 complementary users to work collaboratively.</p>
+<p><strong>Excluded signals:</strong> Minting velocity. Prior bounty completion record. Peer demand. These are not used in targeting.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 5. The Bounty System</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s1_internal_boundary">
+<img src="img/diagrams/i6_s1_internal_boundary.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Maximum access window: the shorter of the two participants' lifetimes.</strong></p>
+<p>When either the buyer or the minter dies, the .kasset releases to the public marketplace. The minter's death triggers Rule 1 (factual knowledge enters the Common Knowledge Codex). The buyer's death terminates the exclusive access.</p>
+<p><strong>Properties</strong></p>
+<p><strong>The billionaire and the researcher become mutual life insurance policies.</strong> In a world where power historically eliminates threats, this system converts the relationship between apex capital and frontier knowledge into a mutual non-aggression pact enforced by economics.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 6. The Lockup Rule</a>
+</div>
+</div>
+<div class="two-up" id="i6_s1_idiolect_architecture">
+<img src="img/diagrams/i6_s1_idiolect_architecture.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Buyer cartels, government weaponization of intelligence, and deals conducted outside the system are acknowledged as <strong>consequences of nature</strong> — not structurally prevented.</p>
+<p><strong>The primary enforcement mechanism is the seat itself.</strong> The Gap Feed is the most valuable predictive intelligence on the formation of new human knowledge. Thousands of qualified buyers exist for ~100 seats. Violation of the rules = permanent expulsion. No reinstatement. The seat goes to the next qualified buyer. The opportunity cost of losing the seat dwarfs any single act of rule violation.</p>
+<p><strong>The anti-suppression mechanism is the lockup rule.</strong> Knowledge cannot be buried indefinitely. Death enforces release. The shorter of the two lifetimes guarantees it.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 7. Anti-Collusion Posture</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s1_training_pipeline">
+<img src="img/diagrams/i6_s1_training_pipeline.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Foundation Model generates revenue <strong>without releasing its contents.</strong> The Stiftung operates the Gap Feed. The Corp operates the marketplace. The minters create the knowledge. The buyers fund it.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 8. Revenue Model</a>
+</div>
+</div>
+<div class="two-up" id="i6_s1_security_properties">
+<img src="img/diagrams/i6_s1_security_properties.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The principle: <strong>apex capital funds the conditions for intelligence formation at the base.</strong> The money flows down.</p>
+<p><strong>A. Moonshot Funding (Google X Model)</strong></p>
+<p>The FM identifies gap constellations — clusters of interconnected knowledge voids that, if resolved together, solve a civilizational problem. "End malaria" is not one gap. It's 50 interconnected gaps across epidemiology, drug delivery logistics, cold chain management, mosquito genomics, public health infrastructure.</p>
+<p>The Stiftung funds the entire constellation as a <strong>Swarm Contract bounty</strong> (see doc 20, IP Inventory: "Algorithmic orchestration of 20+ interlocking human contributions into a single cryptographic contract"). The Swarm Contract DAG manages interdependencies and payout sequencing. The FM orchestrates targeting across all sub-bounties simultaneously.</p>
+<p><strong>Sustainable fusion is the first and largest moonshot.</strong> The Stiftung funds the research that produces the energy source that powers the institution that funds the research. If it works, the σ loop closes completely.</p>
+<p>Resolved moonshot .kassets enter the public Codex immediately — no buyer lockup. The moonshot program recruits a caliber of minter that no sticker drop or Genesis Grant will attract: people who want to work on problems that matter.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 1. Fund Deployment Categories</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s1_selective_release">
+<img src="img/diagrams/i6_s1_selective_release.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The entire campus is a library that creates its own contents.</p>
+<p><strong>2.1 Main Campus: Wears Valley, East Tennessee</strong></p>
+<p><strong>Location:</strong> Connected parcels of large acreage in the Wears Valley / Townsend corridor, near the entrance to Great Smoky Mountains National Park. Wears Valley (Wear Cove) runs parallel to the park between Chilhowee Mountain to the north and the park boundary to the south. The western end opens toward Townsend ("the peaceful side of the Smokies"). The Metcalf Bottoms park entrance is directly accessible.</p>
+<p><strong>Jurisdictional note:</strong> Wears Valley spans Sevier County (east, toward Pigeon Forge) and Blount County (west, toward Townsend). Large acreage in Blount County has fewer STR-driven zoning restrictions and more agricultural/open land use. The western Wears Valley / Townsend side is the primary acquisition target.</p>
+<p><strong>Scale:</strong> 300-500+ acres. Apple Park is 175 acres / 2.8M sq ft / $5B / 12,000 capacity. The Sovereign campus is larger and more complex — it contains a boarding school, graduate program, research labs, corporate R&D, performance venues, and an arboretum. 500 acres allows the Swarthmore integration model: buildings embedded in the arboretum, not the arboretum surrounding buildings.</p>
+<p><strong>Campus design references (post-Fallingwater):</strong></p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 2. The Sovereign Campus</a>
+</div>
+</div>
+<div class="two-up" id="i6_s1_kasset_absorption">
+<img src="img/diagrams/i6_s1_kasset_absorption.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>All four deployment categories form a single system:</p>
+<p>The Stiftung is the circulatory system. Apex membership fees pump capital from the top to the base. The base produces minters. Minters fill gaps. Filled gaps validate the Gap Feed. The Gap Feed justifies the memberships. The memberships fund the Stiftung. Closed loop.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 3. Connective Pipeline</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s1_edgcumbe_layer">
+<img src="img/diagrams/i6_s1_edgcumbe_layer.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>This document covers <strong>Line of Business #1: The Apex Oracle</strong> and its downstream infrastructure (the Stiftung).</p>
+<p>Both Y3 business lines are now fully documented.</p>
+<a href="#sec-1-vault-architecture" class="section-ref">§ 4. Thread Summary — Where We Are</a>
+</div>
+</div>
+<div class="section-divider" id="sec-2-auth-and-security">
+  <h2><a href="#sec-2-auth-and-security">§2 Auth and Security</a></h2>
+</div>
+<div class="spread" id="i6_s2_auth_chain">
+<img src="img/diagrams/i6_s2_auth_chain.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The vault is a cryptographically secure storage space on the user's personal device. The owner is the only person permitted to open, store, and lock it. The vault is an extension of the owner's mind — a digital container for personal writing, expression, reasoning, and acquired knowledge. Its contents are protected under the 1st Amendment (expression), 4th Amendment (papers and effects), and 5th Amendment (testimonial privilege). Neither the company, the government, nor any third party has a legal right to the contents.</p>
+<a href="#sec-2-auth-and-security" class="section-ref">§ §0.1 Core Axiom</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s2_foreground_lock">
+<img src="img/diagrams/i6_s2_foreground_lock.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>· <strong>Cipher:</strong> AES-256-GCM (authenticated encryption)</p>
+<p>· <strong>Signing:</strong> ML-DSA-65 (post-quantum, NIST FIPS 204)</p>
+<p>· <strong>Key derivation (active vault):</strong> <code>vault_key = Argon2id(passphrase) ⊕ HSM_key</code>. Both the user's passphrase and the device's hardware security module key are cryptographic inputs. Neither alone is sufficient. Compromise of one factor does not compromise the vault.</p>
+<p>· <strong>Key derivation (backup):</strong> <code>backup_key = Argon2id(passphrase) ⊕ BackupEnclave_HSM_key</code>. The Home Backup Enclave contains its own HSM. Backup encryption is two-factor: passphrase + physical possession of the Backup Enclave.</p>
+<p>· <strong>Argon2id minimum parameters:</strong> Memory cost ≥ 256 MiB, iterations ≥ 3. On platforms without HSM (software fallback), memory cost ≥ 512 MiB and iterations ≥ 4 to compensate for single-factor. These are minimums — implementations should tune higher based on device capability.</p>
+<p>· <strong>Passphrase complexity:</strong> Minimum 40 bits of entropy enforced at setup (approximately 4+ random words or 8+ mixed characters). User's choice beyond the minimum.</p>
+<a href="#sec-2-auth-and-security" class="section-ref">§ §0.2 Encryption</a>
+</div>
+</div>
+<div class="two-up" id="i6_s2_in_memory_security">
+<img src="img/diagrams/i6_s2_in_memory_security.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Reproducible builds. The vault layer is open-source. Deterministic compilation allows any auditor to verify the distributed binary matches the published source. Coerced software updates are publicly detectable.</p>
+<p><strong>Platform constraint (documented honestly):</strong> Some distribution channels re-sign binaries (e.g., app stores). The reproducible-build guarantee applies to the open-source artifact and direct-distributed builds, not to re-signed distribution channel binaries. Auditors can verify via direct-distributed builds.</p>
+<p><strong>Update integrity:</strong> All software updates MUST be verified against an EdDSA signature before installation. The signing public key is embedded in the vault binary at build time. A valid signature proves the update was produced by the company's build pipeline. An invalid or missing signature rejects the update. This is a vault-layer requirement — the vault process verifies updates before applying them.</p>
+<a href="#sec-2-auth-and-security" class="section-ref">§ §0.3 Source Code Integrity</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s2_tau_decay">
+<img src="img/diagrams/i6_s2_tau_decay.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Compartment A — Sovereign Space (Self-Created)</strong></p>
+<p>Everything the owner made, wrote, recorded, thought, or trained. Contains three critical components:</p>
+<p><strong>The Idiolect</strong> — the user's unique semantic map. A learned mapping function that translates tau profiles (process dynamics) into semantic weight space. The idiolect IS the user in computational form. It is trained from the user's language, writing, behavior, and decisions. It is the key that makes tau values meaningful. <strong>It never leaves the vault.</strong></p>
+<p><strong>The Tau Collection</strong> — the user's cognitive dynamics. Process descriptors: how fast the user decides, how they hesitate, their rhythms across cognitive domains. Without the idiolect: an unlabeled bag of numbers. With the idiolect: the user's personality.</p>
+<p><strong>Raw Content</strong> — journal entries, messages, health data, personal facts. PII-stripped before reaching the training pipeline. The idiolect is trained FROM this content, but the content is consumed during training and not stored in recoverable form.</p>
+<p>· Constitutional basis: 1st Amendment (expression), 5th Amendment (testimonial privilege)</p>
+<a href="#sec-2-auth-and-security" class="section-ref">§ §0.4 Two-Compartment Architecture</a>
+</div>
+</div>
+<div class="two-up" id="i6_s2_recovery">
+<img src="img/diagrams/i6_s2_recovery.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Twin Computation Model</strong></p>
+<p>The "LoRA weights" in this architecture are not static weight matrices. They are the <strong>output</strong> of the Idiolect function applied to the tau collection. The weights are computed at runtime, not stored. The idiolect is the generator. The taus are the inputs. The weights are ephemeral — they exist only during active inference, recomputed each time the idiolect is loaded.</p>
+<p><strong>What the Idiolect Is (Implementation)</strong></p>
+<p>The idiolect is a <strong>learned mapping function</strong> — concretely, a small hypernetwork that:</p>
+<p>Takes surface tau parameters as input (observable signals — see Doc 03 §3)</p>
+<p>Outputs weight modifications (ΔW) for the base model's layers</p>
+<a href="#sec-2-auth-and-security" class="section-ref">§ §0.5 The Idiolect Architecture</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s2_burn_credential">
+<img src="img/diagrams/i6_s2_burn_credential.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>No biometric authentication at the SSK layer. Device OS-level biometric auth is the user's choice and the platform's domain. SSK does not implement, require, or store biometric data for vault authentication.</p>
+<p><strong>Auth flow:</strong> <code>Device OS auth → SSK passphrase → vault_key = Argon2id(passphrase) ⊕ HSM_key</code></p>
+<p><strong>High-stakes operations</strong> (mint, trade, export): passphrase re-confirmation + HSM-bound TOTP (6-digit rotating code, seed in hardware security module). Anti-remote-theft measure — protects against passphrase-only compromise from a different device. Not an anti-state measure.</p>
+<a href="#sec-2-auth-and-security" class="section-ref">§ §0.6 Authentication</a>
+</div>
+</div>
+<div class="two-up" id="i6_s2_warrant_proof">
+<img src="img/diagrams/i6_s2_warrant_proof.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Locking Principle: Foreground Exclusivity</strong></p>
+<p>The vault is open if and only if SSK is the active foreground application on an unlocked screen. The vault locks when either condition breaks:</p>
+<p>· Screen turns off → vault locks</p>
+<p>· App leaves foreground → vault locks</p>
+<p>· Device locks → vault locks</p>
+<p>One rule. No sensor dependency. No attention inference. Re-access requires passphrase.</p>
+<a href="#sec-2-auth-and-security" class="section-ref">§ §0.7 Session and Lock</a>
+</div>
+</div>
+<div class="section-divider" id="sec-3-content-policy">
+  <h2><a href="#sec-3-content-policy">§3 Content Policy</a></h2>
+</div>
+<div class="spread" id="i6_s3_two_rules">
+<img src="img/diagrams/i6_s3_two_rules.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>New device with conforming HSM</p>
+<p>Install SSK (reproducible build — verifiable)</p>
+<p>Connect Home Backup Enclave (two-factor encrypted backup)</p>
+<p>Enter passphrase</p>
+<p>Backup decrypted via <code>Argon2id(passphrase) ⊕ BackupEnclave_HSM_key</code></p>
+<p>New HSM key generated on new device; vault re-encrypted under new device HSM + passphrase</p>
+<a href="#sec-3-content-policy" class="section-ref">§ §0.8 Recovery</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s3_csam_filter">
+<img src="img/diagrams/i6_s3_csam_filter.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Opt-in security feature.</strong> User activates at their own discretion and assumes all liability.</p>
+<p>A second passphrase that, when entered, executes atomic, irrevocable destruction of all active vault contents:</p>
+<p>HSM key zeroed</p>
+<p>Encryption keys overwritten with random data</p>
+<p>All data in both compartments overwritten (including Idiolect and Tau collection)</p>
+<p>Operation is atomic — cannot be interrupted or rolled back</p>
+<a href="#sec-3-content-policy" class="section-ref">§ §0.9 Burn Credential</a>
+</div>
+</div>
+<div class="two-up" id="i6_s3_ofac_screening">
+<img src="img/diagrams/i6_s3_ofac_screening.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The company is a vault manufacturer. It distributes encrypted local software. Safe manufacturers are not liable for what's stored in their safes. The company has no ability to inspect vault contents and no obligation to do so.</p>
+<a href="#sec-3-content-policy" class="section-ref">§ §0.10 Container Liability</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s3_layered_enforcement">
+<img src="img/diagrams/i6_s3_layered_enforcement.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The vault is designed so the company cannot access user data, even under compulsion. This follows from the 1st, 4th, and 5th Amendments. The company does not possess user keys. The KDF architecture requires both the user's passphrase and the device's HSM key — the company has neither. Reproducible builds prove no backdoor exists.</p>
+<a href="#sec-3-content-policy" class="section-ref">§ §0.11 Warrant-Proof Design Position</a>
+</div>
+</div>
+<div class="sidebar-block" id="i6_s3_no_censorship">
+<img src="img/diagrams/i6_s3_no_censorship.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The following existing documents contain definitions or claims that are affected by this specification:</p>
+<a href="#sec-3-content-policy" class="section-ref">§ §0.14 Affected Data Room Documents</a>
+</div>
+</div>
+<div class="section-divider" id="sec-4-long-game">
+  <h2><a href="#sec-4-long-game">§4 Long Game</a></h2>
+</div>
+<div class="spread" id="i6_s4_apex_oracle">
+<img src="img/diagrams/i6_s4_apex_oracle.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>This section is the complete specification of what the vault protects, how it is protected, and what is intentionally left unprotected. Any data not listed here does not receive vault-level encryption. This is the canonical reference for implementors.</p>
+<p><strong>Protection Class 1: Encrypted At Rest</strong></p>
+<p>Data encrypted with <code>vault_key</code> via AES-256-GCM. Stored on disk. Accessible only when vault is open (foreground, authenticated). Organized by compartment.</p>
+<p><strong>Compartment A — Sovereign Space (1st + 5th Amendment)</strong></p>
+<p><strong>Compartment B — Acquired Space (4th Amendment)</strong></p>
+<p><strong>Protection Class 2: Purged From Memory On Vault Lock</strong></p>
+<a href="#sec-4-long-game" class="section-ref">§ §0.15 Encryption Inventory</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s4_stiftung_fund">
+<img src="img/diagrams/i6_s4_stiftung_fund.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Problem</strong></p>
+<p>The vault layer is open source (Doc 29 §8). The intelligence layer is proprietary. If both run in the same address space, the proprietary code can read anything in memory — including the decrypted idiolect, the vault_key, and all Class 2 data. During normal operation (not minting), the application has network access (web server, BLE, trade settlement). A supply chain attack on the proprietary binary could exfiltrate the idiolect while the user believes the open-source vault is protecting them. The open-source vault is meaningless if untrusted code shares its address space with network access.</p>
+<p><strong>The Requirement</strong></p>
+<p>The intelligence module and the vault module MUST run as separate operating system processes. This is not optional. Shared-address-space architectures violate the trust model.</p>
+<p><strong>Sandbox Enforcement</strong></p>
+<p>The intelligence process MUST be sandboxed by the operating system's kernel-level isolation mechanism. The sandbox MUST deny:</p>
+<a href="#sec-4-long-game" class="section-ref">§ §0.16 Internal Trust Boundary</a>
+</div>
+</div>
+<div class="two-up" id="i6_s4_campus_east_tn">
+<img src="img/diagrams/i6_s4_campus_east_tn.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Problem</strong></p>
+<p>The idiolect and conversation context (Class 2 data) must be zeroed from RAM on vault lock. In C, <code>memset_s()</code> / <code>SecureZeroMemory()</code> / <code>explicit_bzero()</code> guarantee the compiler cannot elide the write. In Python (the intelligence process), the garbage collector does not guarantee when memory is freed. <code>del</code> removes the reference. The allocator may reuse the page. But the old bytes persist until overwritten.</p>
+<p>Additionally: numpy arrays may create internal copies. Python string interning caches small strings indefinitely. Slicing creates views that share underlying memory.</p>
+<p><strong>The Requirement</strong></p>
+<p>All Class 2 data in the intelligence process MUST be stored in C-allocated memory (via <code>mmap</code>, <code>ctypes.create_string_buffer</code>, or <code>numpy</code> arrays backed by <code>mmap</code>). Python references point into this memory but never copy it into Python-managed objects (strings, bytes literals, lists).</p>
+<p><strong>Swap prevention:</strong> All Class 2 buffers MUST be locked into physical RAM (prevented from being paged to disk) immediately after allocation. Without this, the OS may write the idiolect to the swap partition or pagefile, where it persists after memory purge and is recoverable via disk forensics. If the OS declines the lock request (insufficient privilege or resource limits), the vault MUST warn the user that swap protection is unavailable. See platform implementation guides for per-platform memory-locking mechanisms.</p>
+<a href="#sec-4-long-game" class="section-ref">§ §0.17 Memory Purge Specification</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s4_ubi_distribution">
+<img src="img/diagrams/i6_s4_ubi_distribution.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Scenarios</strong></p>
+<p><strong>Procedure (Atomic Re-Keying)</strong></p>
+<p>User authenticates with current vault_key (old passphrase + old HSM)</p>
+<p>Vault contents decrypted into RAM (Class 2 window)</p>
+<p>New HSM key generated (on new hardware or via PKCS#11)</p>
+<p>New vault_key computed: <code>Argon2id(new_passphrase) ⊕ new_HSM_key</code></p>
+<a href="#sec-4-long-game" class="section-ref">§ §0.18 HSM Migration and Re-Keying</a>
+</div>
+</div>
+<div class="two-up" id="i6_s4_y3_vision">
+<img src="img/diagrams/i6_s4_y3_vision.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Rule</strong></p>
+<p>If the application cannot determine its foreground state, it MUST treat the state as "not foreground" and lock the vault. <strong>Fail-safe, not fail-open.</strong></p>
+<p><strong>Platform Signal Mapping (Reference)</strong></p>
+<p>The following table maps the abstract requirement ("foreground lost" / "screen locked") to the concrete OS signal on each supported platform. These are included in the reference design because the signal names define what CONSTITUTES foreground loss — a design constraint, not merely an implementation detail.</p>
+<p><strong>Screen Lock Detection (All Platforms)</strong></p>
+<p>Foreground loss from app switching is detected by the primary signal. Screen lock (device locked by user or timeout) is a SEPARATE signal that also triggers vault lock:</p>
+<a href="#sec-4-long-game" class="section-ref">§ §0.19 Foreground Detection Failure Mode</a>
+</div>
+</div>
+<div class="two-up flip" id="i6_s4_endgame">
+<img src="img/diagrams/i6_s4_endgame.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The Sovereign Survival Kit builds personal vaults, hands the only key to the owner, and certifies the provenance of what comes out. The company never holds the key. It cannot open the vault, inspect the contents, or decide what goes in. Once the owner locks the door, the contents are sovereign — protected by the same constitutional principles that protect a person's papers, thoughts, and private effects.</p>
+<p>This architecture has a direct consequence for content enforcement: The company controls two boundaries — the minting mechanism (what enters the tradeable format) and the certification stamp (what gets certified). It does not control what the owner stores, writes, or creates inside their own vault. Content enforcement therefore operates at layer boundaries, not at the content layer.</p>
+<a href="#sec-4-long-game" class="section-ref">§ §1. Constitutional Principle</a>
+</div>
+</div>
 
-                <div class="spread" id="i6_s3_two_rules">
-                  <img src="img/diagrams/i6_s3_two_rules.png" alt="" loading="lazy">
-                  <div class="body"><p>New device with conforming HSM</p><p>Install SSK (reproducible build — verifiable)</p><p>Connect Home Backup Enclave (two-factor encrypted backup)</p><p>Enter passphrase</p><p>Backup decrypted via <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">Argon2id(passphrase) ⊕ BackupEnclave_HSM_key</code></p><p>New HSM key generated on new device; vault re-encrypted under new device HSM + passphrase</p><a class="doc-ref" href="#sec-3-content-policy">§ §0.8 Recovery</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s3_csam_filter">
-                  <img src="img/diagrams/i6_s3_csam_filter.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Opt-in security feature.</strong> User activates at their own discretion and assumes all liability.</p><p>A second passphrase that, when entered, executes atomic, irrevocable destruction of all active vault contents:</p><p>HSM key zeroed</p><p>Encryption keys overwritten with random data</p><p>All data in both compartments overwritten (including Idiolect and Tau collection)</p><p>Operation is atomic — cannot be interrupted or rolled back</p><a class="doc-ref" href="#sec-3-content-policy">§ §0.9 Burn Credential</a></div>
-                </div>
-                <div class="two-up" id="i6_s3_ofac_screening">
-                  <img src="img/diagrams/i6_s3_ofac_screening.png" alt="" loading="lazy">
-                  <div class="body"><p>The company is a vault manufacturer. It distributes encrypted local software. Safe manufacturers are not liable for what's stored in their safes. The company has no ability to inspect vault contents and no obligation to do so.</p><a class="doc-ref" href="#sec-3-content-policy">§ §0.10 Container Liability</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s3_layered_enforcement">
-                  <img src="img/diagrams/i6_s3_layered_enforcement.png" alt="" loading="lazy">
-                  <div class="body"><p>The vault is designed so the company cannot access user data, even under compulsion. This follows from the 1st, 4th, and 5th Amendments. The company does not possess user keys. The KDF architecture requires both the user's passphrase and the device's HSM key — the company has neither. Reproducible builds prove no backdoor exists.</p><a class="doc-ref" href="#sec-3-content-policy">§ §0.11 Warrant-Proof Design Position</a></div>
-                </div>
-                <div class="sidebar-spread" id="i6_s3_no_censorship">
-                  <img src="img/diagrams/i6_s3_no_censorship.png" alt="" loading="lazy">
-                  <div class="body"><p>The following existing documents contain definitions or claims that are affected by this specification:</p><a class="doc-ref" href="#sec-3-content-policy">§ §0.14 Affected Data Room Documents</a></div>
-                </div><div class="sec-break" id="sec-4-long-game"><h2><a href="#sec-4-long-game" style="color:inherit;text-decoration:none">§4 Long Game</a></h2></div>
+</div>
 
-                <div class="spread" id="i6_s4_apex_oracle">
-                  <img src="img/diagrams/i6_s4_apex_oracle.png" alt="" loading="lazy">
-                  <div class="body"><p>This section is the complete specification of what the vault protects, how it is protected, and what is intentionally left unprotected. Any data not listed here does not receive vault-level encryption. This is the canonical reference for implementors.</p><p><strong>Protection Class 1: Encrypted At Rest</strong></p><p>Data encrypted with <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">vault_key</code> via AES-256-GCM. Stored on disk. Accessible only when vault is open (foreground, authenticated). Organized by compartment.</p><p><strong>Compartment A — Sovereign Space (1st + 5th Amendment)</strong></p><p><strong>Compartment B — Acquired Space (4th Amendment)</strong></p><p><strong>Protection Class 2: Purged From Memory On Vault Lock</strong></p><a class="doc-ref" href="#sec-4-long-game">§ §0.15 Encryption Inventory</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s4_stiftung_fund">
-                  <img src="img/diagrams/i6_s4_stiftung_fund.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Problem</strong></p><p>The vault layer is open source (Doc 29 §8). The intelligence layer is proprietary. If both run in the same address space, the proprietary code can read anything in memory — including the decrypted idiolect, the vault_key, and all Class 2 data. During normal operation (not minting), the application has network access (web server, BLE, trade settlement). A supply chain attack on the proprietary binary could exfiltrate the idiolect while the user believes the open-source vault is protecting them. The open-source vault is meaningless if untrusted code shares its address space with network access.</p><p><strong>The Requirement</strong></p><p>The intelligence module and the vault module MUST run as separate operating system processes. This is not optional. Shared-address-space architectures violate the trust model.</p><p><strong>Sandbox Enforcement</strong></p><p>The intelligence process MUST be sandboxed by the operating system's kernel-level isolation mechanism. The sandbox MUST deny:</p><a class="doc-ref" href="#sec-4-long-game">§ §0.16 Internal Trust Boundary</a></div>
-                </div>
-                <div class="two-up" id="i6_s4_campus_east_tn">
-                  <img src="img/diagrams/i6_s4_campus_east_tn.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Problem</strong></p><p>The idiolect and conversation context (Class 2 data) must be zeroed from RAM on vault lock. In C, <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">memset_s()</code> / <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">SecureZeroMemory()</code> / <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">explicit_bzero()</code> guarantee the compiler cannot elide the write. In Python (the intelligence process), the garbage collector does not guarantee when memory is freed. <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">del</code> removes the reference. The allocator may reuse the page. But the old bytes persist until overwritten.</p><p>Additionally: numpy arrays may create internal copies. Python string interning caches small strings indefinitely. Slicing creates views that share underlying memory.</p><p><strong>The Requirement</strong></p><p>All Class 2 data in the intelligence process MUST be stored in C-allocated memory (via <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">mmap</code>, <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">ctypes.create_string_buffer</code>, or <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">numpy</code> arrays backed by <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">mmap</code>). Python references point into this memory but never copy it into Python-managed objects (strings, bytes literals, lists).</p><p><strong>Swap prevention:</strong> All Class 2 buffers MUST be locked into physical RAM (prevented from being paged to disk) immediately after allocation. Without this, the OS may write the idiolect to the swap partition or pagefile, where it persists after memory purge and is recoverable via disk forensics. If the OS declines the lock request (insufficient privilege or resource limits), the vault MUST warn the user that swap protection is unavailable. See platform implementation guides for per-platform memory-locking mechanisms.</p><a class="doc-ref" href="#sec-4-long-game">§ §0.17 Memory Purge Specification</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s4_ubi_distribution">
-                  <img src="img/diagrams/i6_s4_ubi_distribution.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Scenarios</strong></p><p><strong>Procedure (Atomic Re-Keying)</strong></p><p>User authenticates with current vault_key (old passphrase + old HSM)</p><p>Vault contents decrypted into RAM (Class 2 window)</p><p>New HSM key generated (on new hardware or via PKCS#11)</p><p>New vault_key computed: <code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">Argon2id(new_passphrase) ⊕ new_HSM_key</code></p><a class="doc-ref" href="#sec-4-long-game">§ §0.18 HSM Migration and Re-Keying</a></div>
-                </div>
-                <div class="two-up" id="i6_s4_y3_vision">
-                  <img src="img/diagrams/i6_s4_y3_vision.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Rule</strong></p><p>If the application cannot determine its foreground state, it MUST treat the state as "not foreground" and lock the vault. <strong>Fail-safe, not fail-open.</strong></p><p><strong>Platform Signal Mapping (Reference)</strong></p><p>The following table maps the abstract requirement ("foreground lost" / "screen locked") to the concrete OS signal on each supported platform. These are included in the reference design because the signal names define what CONSTITUTES foreground loss — a design constraint, not merely an implementation detail.</p><p><strong>Screen Lock Detection (All Platforms)</strong></p><p>Foreground loss from app switching is detected by the primary signal. Screen lock (device locked by user or timeout) is a SEPARATE signal that also triggers vault lock:</p><a class="doc-ref" href="#sec-4-long-game">§ §0.19 Foreground Detection Failure Mode</a></div>
-                </div>
-                <div class="two-up flip" id="i6_s4_endgame">
-                  <img src="img/diagrams/i6_s4_endgame.png" alt="" loading="lazy">
-                  <div class="body"><p>The Sovereign Survival Kit builds personal vaults, hands the only key to the owner, and certifies the provenance of what comes out. The company never holds the key. It cannot open the vault, inspect the contents, or decide what goes in. Once the owner locks the door, the contents are sovereign — protected by the same constitutional principles that protect a person's papers, thoughts, and private effects.</p><p>This architecture has a direct consequence for content enforcement: The company controls two boundaries — the minting mechanism (what enters the tradeable format) and the certification stamp (what gets certified). It does not control what the owner stores, writes, or creates inside their own vault. Content enforcement therefore operates at layer boundaries, not at the content layer.</p><a class="doc-ref" href="#sec-4-long-game">§ §1. Constitutional Principle</a></div>
-                </div></div>
-<div class="bot-nav"><a href="issue_5.html">← Issue 5</a><a href="index.html">All Issues</a><a href="issue_7.html">Issue 7 →</a></div>
-<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
-</body></html>
+<div class="issue-nav">
+  <a href="issue_5.html">← Issue 5</a>
+  <a href="index.html">All Issues</a>
+  <a href="issue_7.html">Issue 7 →</a>
+</div>
+<footer class="site-footer">Sovereign Survival Kit, Inc. · Series A Data Room · 2026</footer>
+</body>
+</html>

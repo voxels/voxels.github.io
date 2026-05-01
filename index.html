@@ -1,227 +1,109 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sovereign Power Library</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-:root {
-  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
-  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
-  --border: #2a2a3a;
-  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
-  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
-  --font: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SOVEREIGN POWER</span>
+  <a href="index.html" class="active">Library</a>
+<a href="issue_1.html" class="">#1</a>
+<a href="issue_2.html" class="">#2</a>
+<a href="issue_3.html" class="">#3</a>
+<a href="issue_4.html" class="">#4</a>
+<a href="issue_5.html" class="">#5</a>
+<a href="issue_6.html" class="">#6</a>
+<a href="issue_7.html" class="">#7</a>
 
-/* NAV */
-.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
-  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
-  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
-.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
-.nav a:hover { color:var(--text); }
-.nav a.on { color:var(--magenta); }
-.nav .sp { flex:1; }
-.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
-  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
-
-/* FULL-BLEED COVER */
-.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
-.cover img { width:100%; height:100%; object-fit:cover; }
-.cover .overlay { position:absolute; inset:0;
-  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
-.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
-.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
-  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
-.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
-.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
-  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
-  border-radius:4px; color:white; }
-
-/* EDITORIAL BODY */
-.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
-
-/* SECTION BREAK */
-.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
-.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
-
-/* SPREAD: full-width hero image + editorial text below */
-.spread { margin-bottom:3rem; }
-.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
-.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
-.spread .body p { margin-bottom:0.8rem; }
-.spread .body strong { color:var(--text); }
-
-/* TWO-UP: image left, text right (alternating) */
-.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
-  align-items:start; margin-bottom:2.5rem; }
-.two-up.flip { direction:rtl; }
-.two-up.flip > * { direction:ltr; }
-.two-up img { width:100%; border-radius:6px; }
-.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
-.two-up .body strong { color:var(--text); }
-.two-up .body p { margin-bottom:0.6rem; }
-
-/* SIDEBAR: small img + text */
-.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
-.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
-.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
-
-/* DOC REF */
-.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
-  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
-.doc-ref:hover { color:var(--magenta); }
-
-/* SECTION TOC */
-.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
-.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
-  text-transform:uppercase; margin-bottom:0.6rem; }
-.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
-.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
-  color:var(--dim); background:var(--card); border:1px solid var(--border);
-  text-decoration:none; transition:all 0.2s; }
-.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
-
-/* BOTTOM NAV */
-.bot-nav { display:flex; justify-content:space-between; align-items:center;
-  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
-.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
-.bot-nav a:hover { color:var(--text); }
-.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
-
-/* INDEX COVERS */
-.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
-.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
-.mag-grid .card:first-child h2 { font-size:2.5rem; }
-.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
-  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
-.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
-.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
-.card:hover .bg { transform:scale(1.05); }
-.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
-.card:hover .grad { opacity:0.95; }
-.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
-.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
-.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
-  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
-.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
-.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
-
-/* HERO SECTION */
-.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
-  border-bottom:1px solid var(--border); overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
-  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
-.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
-  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
-.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
-.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
-.hero .stats .n { font-size:2rem; font-weight:900;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
-.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
-
-@media(max-width:768px) {
-  .hero h1 { font-size:2.2rem; }
-  .mag-grid { grid-template-columns:1fr; padding:1rem; }
-  .mag-grid .card:first-child { min-height:280px; }
-  .cover h1 { font-size:2rem; }
-  .cover { height:60vh; }
-  .two-up { grid-template-columns:1fr; }
-  .sidebar-spread { flex-direction:column; }
-  .sidebar-spread img { width:100%; }
-}
-</style></head><body>
-<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
-<a href="index.html" class="on">Library</a><span class="sp"></span><span class="badge">ALPHA</span></nav>
-<div class="hero"><h1>Sovereign Power Library</h1>
-<div class="sub">The Illustrated Data Room</div>
-<div class="stats">
-<div><div class="n">7</div><div class="l">Issues</div></div>
-<div><div class="n">301</div><div class="l">Illustrations</div></div>
-<div><div class="n">39</div><div class="l">Source Docs</div></div>
+  <span class="nav-spacer"></span>
+  <span class="nav-badge">Alpha</span>
+</nav>
+<div class="index-hero">
+  <h1>Sovereign Power Library</h1>
+  <div class="subtitle">The Illustrated Data Room</div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-number">7</div><div class="stat-label">Issues</div></div>
+    <div class="stat"><div class="stat-number">301</div><div class="stat-label">Illustrations</div></div>
+    <div class="stat"><div class="stat-number">39</div><div class="stat-label">Source Docs</div></div>
+  </div>
+  <div class="build-tag">ALPHA · 2026-05-01</div>
 </div>
-<div class="meta">ALPHA · 2026-05-01</div></div>
-<div class="mag-grid">
-        <a href="issue_1.html" class="card">
-          <div class="bg" style="background-image:url('img/cover_issue_1.png')"></div>
-          <div class="grad" style="background:linear-gradient(0deg,#e84393dd 0%,#e8439344 40%,transparent 70%)"></div>
-          <div class="info">
-            <div class="num">Issue 1 of 7</div>
-            <h2>The Sovereign Cocoon</h2>
-            <div class="card-sub">What Is This?</div>
-            <div class="card-act">Act 1: Thesis + Product · 73 illustrations</div>
-          </div>
-        </a>
-        <a href="issue_2.html" class="card">
-          <div class="bg" style="background-image:url('img/cover_issue_2.png')"></div>
-          <div class="grad" style="background:linear-gradient(0deg,#0984e3dd 0%,#0984e344 40%,transparent 70%)"></div>
-          <div class="info">
-            <div class="num">Issue 2 of 7</div>
-            <h2>The Architecture of Trust</h2>
-            <div class="card-sub">How Does It Work?</div>
-            <div class="card-act">Act 2: Architecture + Infrastructure · 81 illustrations</div>
-          </div>
-        </a>
-        <a href="issue_3.html" class="card">
-          <div class="bg" style="background-image:url('img/cover_issue_3.png')"></div>
-          <div class="grad" style="background:linear-gradient(0deg,#00b894dd 0%,#00b89444 40%,transparent 70%)"></div>
-          <div class="info">
-            <div class="num">Issue 3 of 7</div>
-            <h2>The Size of the Prize</h2>
-            <div class="card-sub">How Big Is It?</div>
-            <div class="card-act">Act 3: Market + Economics · 37 illustrations</div>
-          </div>
-        </a>
-        <a href="issue_4.html" class="card">
-          <div class="bg" style="background-image:url('img/cover_issue_4.png')"></div>
-          <div class="grad" style="background:linear-gradient(0deg,#fdcb6edd 0%,#fdcb6e44 40%,transparent 70%)"></div>
-          <div class="info">
-            <div class="num">Issue 4 of 7</div>
-            <h2>The Execution Plan</h2>
-            <div class="card-sub">How Do We Execute?</div>
-            <div class="card-act">Act 4: Plan + Team · 16 illustrations</div>
-          </div>
-        </a>
-        <a href="issue_5.html" class="card">
-          <div class="bg" style="background-image:url('img/cover_issue_5.png')"></div>
-          <div class="grad" style="background:linear-gradient(0deg,#6c5ce7dd 0%,#6c5ce744 40%,transparent 70%)"></div>
-          <div class="info">
-            <div class="num">Issue 5 of 7</div>
-            <h2>The Legal Shield</h2>
-            <div class="card-sub">What Are the Terms?</div>
-            <div class="card-act">Act 5: Legal + Governance + IP · 35 illustrations</div>
-          </div>
-        </a>
-        <a href="issue_6.html" class="card">
-          <div class="bg" style="background-image:url('img/cover_issue_6.png')"></div>
-          <div class="grad" style="background:linear-gradient(0deg,#d63031dd 0%,#d6303144 40%,transparent 70%)"></div>
-          <div class="info">
-            <div class="num">Issue 6 of 7</div>
-            <h2>The Vault & The Long Game</h2>
-            <div class="card-sub">Security + Vision</div>
-            <div class="card-act">Act 5b + Act 6 · 31 illustrations</div>
-          </div>
-        </a>
-        <a href="issue_7.html" class="card">
-          <div class="bg" style="background-image:url('img/cover_issue_7.png')"></div>
-          <div class="grad" style="background:linear-gradient(0deg,#e17055dd 0%,#e1705544 40%,transparent 70%)"></div>
-          <div class="info">
-            <div class="num">Issue 7 of 7</div>
-            <h2>The Appendix Tower</h2>
-            <div class="card-sub">Reference & Walkthrough</div>
-            <div class="card-act">Appendix · 28 illustrations</div>
-          </div>
-        </a></div>
-<div class="footer">Sovereign Survival Kit, Inc. · Series A Data Room · 2026</div>
-</body></html>
+<div class="magazine-grid">
+<a href="issue_1.html" class="issue-card">
+  <div class="issue-card-bg" style="background-image:url('img/cover_issue_1.png')"></div>
+  <div class="issue-card-gradient" style="background:linear-gradient(0deg,#e84393dd 0%,#e8439344 40%,transparent 70%)"></div>
+  <div class="issue-card-content">
+    <div class="issue-card-number">Issue 1 of 7</div>
+    <div class="issue-card-title">The Sovereign Cocoon</div>
+    <div class="issue-card-subtitle">What Is This?</div>
+    <div class="issue-card-meta">Act 1 · Thesis + Product · 73 illustrations</div>
+  </div>
+</a>
+<a href="issue_2.html" class="issue-card">
+  <div class="issue-card-bg" style="background-image:url('img/cover_issue_2.png')"></div>
+  <div class="issue-card-gradient" style="background:linear-gradient(0deg,#0984e3dd 0%,#0984e344 40%,transparent 70%)"></div>
+  <div class="issue-card-content">
+    <div class="issue-card-number">Issue 2 of 7</div>
+    <div class="issue-card-title">The Architecture of Trust</div>
+    <div class="issue-card-subtitle">How Does It Work?</div>
+    <div class="issue-card-meta">Act 2 · Architecture · 81 illustrations</div>
+  </div>
+</a>
+<a href="issue_3.html" class="issue-card">
+  <div class="issue-card-bg" style="background-image:url('img/cover_issue_3.png')"></div>
+  <div class="issue-card-gradient" style="background:linear-gradient(0deg,#00b894dd 0%,#00b89444 40%,transparent 70%)"></div>
+  <div class="issue-card-content">
+    <div class="issue-card-number">Issue 3 of 7</div>
+    <div class="issue-card-title">The Size of the Prize</div>
+    <div class="issue-card-subtitle">How Big Is It?</div>
+    <div class="issue-card-meta">Act 3 · Market + Economics · 37 illustrations</div>
+  </div>
+</a>
+<a href="issue_4.html" class="issue-card">
+  <div class="issue-card-bg" style="background-image:url('img/cover_issue_4.png')"></div>
+  <div class="issue-card-gradient" style="background:linear-gradient(0deg,#fdcb6edd 0%,#fdcb6e44 40%,transparent 70%)"></div>
+  <div class="issue-card-content">
+    <div class="issue-card-number">Issue 4 of 7</div>
+    <div class="issue-card-title">The Execution Plan</div>
+    <div class="issue-card-subtitle">How Do We Execute?</div>
+    <div class="issue-card-meta">Act 4 · Plan + Team · 16 illustrations</div>
+  </div>
+</a>
+<a href="issue_5.html" class="issue-card">
+  <div class="issue-card-bg" style="background-image:url('img/cover_issue_5.png')"></div>
+  <div class="issue-card-gradient" style="background:linear-gradient(0deg,#6c5ce7dd 0%,#6c5ce744 40%,transparent 70%)"></div>
+  <div class="issue-card-content">
+    <div class="issue-card-number">Issue 5 of 7</div>
+    <div class="issue-card-title">The Legal Shield</div>
+    <div class="issue-card-subtitle">What Are the Terms?</div>
+    <div class="issue-card-meta">Act 5 · Legal + IP · 35 illustrations</div>
+  </div>
+</a>
+<a href="issue_6.html" class="issue-card">
+  <div class="issue-card-bg" style="background-image:url('img/cover_issue_6.png')"></div>
+  <div class="issue-card-gradient" style="background:linear-gradient(0deg,#d63031dd 0%,#d6303144 40%,transparent 70%)"></div>
+  <div class="issue-card-content">
+    <div class="issue-card-number">Issue 6 of 7</div>
+    <div class="issue-card-title">The Vault & The Long Game</div>
+    <div class="issue-card-subtitle">Security + Vision</div>
+    <div class="issue-card-meta">Act 6 · Security · 31 illustrations</div>
+  </div>
+</a>
+<a href="issue_7.html" class="issue-card">
+  <div class="issue-card-bg" style="background-image:url('img/cover_issue_7.png')"></div>
+  <div class="issue-card-gradient" style="background:linear-gradient(0deg,#e17055dd 0%,#e1705544 40%,transparent 70%)"></div>
+  <div class="issue-card-content">
+    <div class="issue-card-number">Issue 7 of 7</div>
+    <div class="issue-card-title">The Appendix Tower</div>
+    <div class="issue-card-subtitle">Reference & Walkthrough</div>
+    <div class="issue-card-meta">Appendix · 28 illustrations</div>
+  </div>
+</a>
+
+</div>
+<footer class="site-footer">Sovereign Survival Kit, Inc. · Series A Data Room · 2026</footer>
+</body>
+</html>

@@ -1,314 +1,457 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Issue 3: The Size of the Prize — Sovereign Power</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-:root {
-  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
-  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
-  --border: #2a2a3a;
-  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
-  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
-  --font: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SOVEREIGN POWER</span>
+  <a href="index.html" class="">Library</a>
+<a href="issue_1.html" class="">#1</a>
+<a href="issue_2.html" class="">#2</a>
+<a href="issue_3.html" class="active">#3</a>
+<a href="issue_4.html" class="">#4</a>
+<a href="issue_5.html" class="">#5</a>
+<a href="issue_6.html" class="">#6</a>
+<a href="issue_7.html" class="">#7</a>
 
-/* NAV */
-.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
-  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
-  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
-.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
-.nav a:hover { color:var(--text); }
-.nav a.on { color:var(--magenta); }
-.nav .sp { flex:1; }
-.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
-  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
-
-/* FULL-BLEED COVER */
-.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
-.cover img { width:100%; height:100%; object-fit:cover; }
-.cover .overlay { position:absolute; inset:0;
-  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
-.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
-.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
-  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
-.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
-.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
-  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
-  border-radius:4px; color:white; }
-
-/* EDITORIAL BODY */
-.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
-
-/* SECTION BREAK */
-.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
-.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
-
-/* SPREAD: full-width hero image + editorial text below */
-.spread { margin-bottom:3rem; }
-.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
-.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
-.spread .body p { margin-bottom:0.8rem; }
-.spread .body strong { color:var(--text); }
-
-/* TWO-UP: image left, text right (alternating) */
-.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
-  align-items:start; margin-bottom:2.5rem; }
-.two-up.flip { direction:rtl; }
-.two-up.flip > * { direction:ltr; }
-.two-up img { width:100%; border-radius:6px; }
-.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
-.two-up .body strong { color:var(--text); }
-.two-up .body p { margin-bottom:0.6rem; }
-
-/* SIDEBAR: small img + text */
-.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
-.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
-.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
-
-/* DOC REF */
-.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
-  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
-.doc-ref:hover { color:var(--magenta); }
-
-/* SECTION TOC */
-.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
-.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
-  text-transform:uppercase; margin-bottom:0.6rem; }
-.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
-.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
-  color:var(--dim); background:var(--card); border:1px solid var(--border);
-  text-decoration:none; transition:all 0.2s; }
-.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
-
-/* BOTTOM NAV */
-.bot-nav { display:flex; justify-content:space-between; align-items:center;
-  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
-.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
-.bot-nav a:hover { color:var(--text); }
-.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
-
-/* INDEX COVERS */
-.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
-  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
-.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
-.mag-grid .card:first-child h2 { font-size:2.5rem; }
-.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
-  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
-.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
-.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
-.card:hover .bg { transform:scale(1.05); }
-.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
-.card:hover .grad { opacity:0.95; }
-.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
-.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
-.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
-  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
-.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
-.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
-
-/* HERO SECTION */
-.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
-  border-bottom:1px solid var(--border); overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
-  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
-.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
-  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
-.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
-.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
-.hero .stats .n { font-size:2rem; font-weight:900;
-  background:linear-gradient(135deg,var(--magenta),var(--blue));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
-.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
-
-@media(max-width:768px) {
-  .hero h1 { font-size:2.2rem; }
-  .mag-grid { grid-template-columns:1fr; padding:1rem; }
-  .mag-grid .card:first-child { min-height:280px; }
-  .cover h1 { font-size:2rem; }
-  .cover { height:60vh; }
-  .two-up { grid-template-columns:1fr; }
-  .sidebar-spread { flex-direction:column; }
-  .sidebar-spread img { width:100%; }
-}
-</style></head><body>
-<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
-<a href="index.html">Library</a><a href="issue_1.html">#1</a>
-<a href="issue_2.html">#2</a>
-<a href="issue_3.html" class="on">#3</a>
-<a href="issue_4.html">#4</a>
-<a href="issue_5.html">#5</a>
-<a href="issue_6.html">#6</a>
-<a href="issue_7.html">#7</a>
-<span class="sp"></span><span class="badge">ALPHA</span></nav>
-<div class="cover">
+  <span class="nav-spacer"></span>
+  <span class="nav-badge">Alpha</span>
+</nav>
+<div class="issue-cover">
   <img src="img/diagrams/i3_cover.png" alt="">
-  <div class="overlay"></div>
-  <div class="pill" style="background:#00b894">Issue 3 of 7</div>
-  <div class="text"><h1>The Size of the Prize</h1>
-  <div class="sub">Act 3: Market + Economics · 37 illustrations</div></div>
+  <div class="issue-cover-overlay"></div>
+  <div class="issue-cover-badge" style="background:#00b894">Issue 3 of 7</div>
+  <div class="issue-cover-text">
+    <h1>The Size of the Prize</h1>
+    <div class="act-line">Act 3 · Market + Economics · 37 illustrations</div>
+  </div>
 </div>
-<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-1-tam-sam-som">§1 TAM/SAM/SOM</a><a href="#sec-2-unit-economics">§2 Unit Economics</a><a href="#sec-3-projections">§3 Projections</a><a href="#sec-4-scenarios">§4 Scenarios</a><a href="#sec-5-survival-proof">§5 Survival Proof</a></div></div>
-<div class="editorial"><div class="sec-break" id="sec-1-tam-sam-som"><h2><a href="#sec-1-tam-sam-som" style="color:inherit;text-decoration:none">§1 TAM/SAM/SOM</a></h2></div>
 
-                <div class="spread" id="i3_s1_tam_overview">
-                  <img src="img/diagrams/i3_s1_tam_overview.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Total value of commerce that .kasset transactions could intermediate — US + Japan only.</strong></p><p>A .kasset formalizes three forms of human economic output. Each form maps to existing macro data with no overlap between segments. Two additional layers capture value that SSK creates or recaptures beyond existing commerce.</p><p><strong>Segment 1: Physical Objects — $7.8T</strong></p><p>Any physical good — manufactured anywhere, purchased with fiat, minted by the original owner as a provenance .kasset. Includes all retail, all consumer goods, all secondhand.</p><p>NAICS proxy: <strong>44-45</strong> (Retail Trade).</p><p><strong>Segment 2: Service Agreements — $18.0T</strong></p><a class="doc-ref" href="#sec-1-tam-sam-som">§ 1. TAM: $32.5T</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s1_tam_globe">
-                  <img src="img/diagrams/i3_s1_tam_globe.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Geographic filter: US + Japan. Demographic filter: age 15+.</strong></p><p>The TAM is already scoped to US + Japan. The SAM applies a single demographic gate: anyone aged 15 or older — the population legally eligible to participate in commerce.</p><p>At 15+, participants account for ~96% of consumer spending and ~100% of labor compensation. The SAM excludes only economic activity attributable to minors under 15.</p><p><strong>SAM = TAM × 0.96 = $31.2T</strong> — effectively the full US+Japan TAM, reduced marginally by the age gate.</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">The SAM is intentionally broad. SSK is not a niche privacy product — it is a universal commerce layer. The narrowing happens at SOM, where beachhead communities define Year 1 execution.</em></p><a class="doc-ref" href="#sec-1-tam-sam-som">§ 2. SAM: $31.2T</a></div>
-                </div>
-                <div class="two-up" id="i3_s1_sam_nyc_tokyo">
-                  <img src="img/diagrams/i3_s1_sam_nyc_tokyo.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Per-Capita SAM Activity</strong></p><p>The SAM represents $31.2T of annual economic activity across 385M people (US+Japan, 15+).</p><p><strong>Per-capita annual economic activity: $31.2T ÷ 385M = $81,039/person/year.</strong></p><p>This is the theoretical ceiling — if a single person routed 100% of their economic life through .kasset transactions.</p><p><strong>Beachhead Communities (doc 07)</strong></p><p>SSK launches into four overlapping communities with high privacy motivation and low hardware barriers. The addressable value for each segment is derived from population × per-capita SAM activity:</p><a class="doc-ref" href="#sec-1-tam-sam-som">§ 3. SOM: Beachhead Derivation from SAM</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s1_som_first_year">
-                  <img src="img/diagrams/i3_s1_som_first_year.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>CAC by Scenario:</strong></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Planning CAC: $6.04</strong> (Goldilocks). Competitive: average consumer app CAC is $30-$100 (Liftoff 2024), SaaS CAC is $100-$400 (ProfitWell 2024). SSK's structural advantage is zero marginal compute cost — the user's device runs inference, training, and minting.</em></p><p><strong>Churn Evidence & Retention Thesis</strong></p><p>The 5%→2% monthly churn projection is conservative relative to social platform benchmarks:</p><p>SSK's retention advantage is structural, not behavioral. Three switching costs compound over time:</p><p><strong>Idiolect lock-in.</strong> The twin trains continuously on the owner's speech patterns, vocabulary, and decision history. This training data cannot be exported or replicated on another platform — it is cryptographically bound to the user's hardware security module. Leaving SSK means abandoning months or years of cognitive calibration.</p><a class="doc-ref" href="#sec-1-tam-sam-som">§ Per User</a></div>
-                </div>
-                <div class="two-up" id="i3_s1_naics_segments">
-                  <img src="img/diagrams/i3_s1_naics_segments.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Segment breakdown (M12):</strong> The ⚡300 average is volume-weighted across all segments:</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Early-stage fee compression (M1-M6):</strong> The progressive fee formula (<code style="background:var(--card);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em">ramsey(rarity) × rawlsian(buyer_⚡_balance²) × energy_proportionality(REC)</code>) includes a quadratic buyer-balance component that barely activates in early months when all users have near-zero ⚡ balances. The effective weighted fee in M1-M6 will converge toward the Ramsey floor (~1-1.5%) rather than the modeled 2.38%. This shifts the early-stage breakeven from ~14,200 to ~19,000-22,700 users. The fee naturally rises as user balances accumulate through trade activity. The 2.38% weighted average is the steady-state M12 projection, not the launch-day reality.</em></p><p><strong>Derivation:</strong> (0.40×100)+(0.35×300)+(0.20×500)+(0.05×800) = 40+105+100+40 = <strong>⚡285 → ⚡300</strong> (rounded up for conservatism)</p><a class="doc-ref" href="#sec-1-tam-sam-som">§ Per Trade (M12 parameters)</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s1_penetration_proof">
-                  <img src="img/diagrams/i3_s1_penetration_proof.png" alt="" loading="lazy">
-                  <div class="body"><p>Note: In MSA markets (NYC, Tokyo, Tier 1 cities), SSK is the sole operator — there is no operator split. This section applies only to non-MSA franchise operators.</p><p><strong>Breakeven derivation:</strong> $2,500 ÷ $1.01/trade = 2,475 trades needed. At 450 users × 6.08 trades/user = 2,736 trades/mo → <strong>breakeven</strong> ✓</p><a class="doc-ref" href="#sec-1-tam-sam-som">§ Per Non-MSA Operator</a></div>
-                </div><div class="sec-break" id="sec-2-unit-economics"><h2><a href="#sec-2-unit-economics" style="color:inherit;text-decoration:none">§2 Unit Economics</a></h2></div>
+<div class="issue-toc">
+  <h3>In This Issue</h3>
+  <div class="toc-chips"><a href="#sec-1-tam-sam-som" class="toc-chip">§1 TAM/SAM/SOM</a>
+<a href="#sec-2-unit-economics" class="toc-chip">§2 Unit Economics</a>
+<a href="#sec-3-projections" class="toc-chip">§3 Projections</a>
+<a href="#sec-4-scenarios" class="toc-chip">§4 Scenarios</a>
+<a href="#sec-5-survival-proof" class="toc-chip">§5 Survival Proof</a>
+</div>
+</div>
 
-                <div class="spread" id="i3_s2_trade_receipt">
-                  <img src="img/diagrams/i3_s2_trade_receipt.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Production infrastructure: $2,150/month.</strong> The certification service, Codex archival, and CDN are the only infrastructure required to operate the network. The $5,000 agent swarms line is development tooling (multi-agent orchestration for codebase development) — it can be reduced or eliminated post-launch. The self-funded survival floor (Doc 01) uses $2,150 + founder living = ~$2,400/month burn, producing breakeven at 325-488 users.</p><p><strong>Derivation:</strong> M24 MRR = $39,019,008 (SSK share). $7,150 ÷ $39,019,008 = 0.018% ✓</p><a class="doc-ref" href="#sec-2-unit-economics">§ Infrastructure Costs (Fixed)</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s2_per_trade">
-                  <img src="img/diagrams/i3_s2_per_trade.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Gross margin comparison:</strong></p><p>· OpenAI: ~50-60% (estimated, GPU-heavy)</p><p>· Sovereign Survival Kit: <strong>95%+</strong> (near-zero marginal cost)</p><a class="doc-ref" href="#sec-2-unit-economics">§ The Zero-Cloud Advantage</a></div>
-                </div>
-                <div class="two-up" id="i3_s2_fee_segments">
-                  <img src="img/diagrams/i3_s2_fee_segments.png" alt="" loading="lazy">
-                  <div class="body"><p>As total delivered energy costs decline (driven by solar LCOE –88% since 2010, with a durable infrastructure floor from transmission/distribution), Sovereign Survival Kit's zero-cloud architecture gains a compounding advantage:</p><p><strong>Net effect:</strong> In a declining-energy-cost future, cloud AI companies still need data centers, cooling, and staff. Sovereign Survival Kit needs nothing — the user provides the compute, the energy, and the intelligence. As delivered energy cost decreases, Sovereign Survival Kit's marginal cost curve converges toward <em>true zero</em>, not just near-zero. Self-generators who bypass the grid entirely achieve full energy sovereignty. (See doc 23, §8.)</p><a class="doc-ref" href="#sec-2-unit-economics">§ The Energy Convergence Advantage</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s2_per_user">
-                  <img src="img/diagrams/i3_s2_per_user.png" alt="" loading="lazy">
-                  <div class="body"><p>A core driver of the Sovereign Survival Kit unit economics is the permanently inverted fee schedule for fundamental physical labor (agriculture, carpentry, plumbing). By structurally subsidizing tradesmen identified purely by their thermodynamic utility to human persistence, the network captures an immediate hyper-local monopoly.</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">[!IMPORTANT]</em></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>The Processing Fee Recovery:</strong> Tradesmen operating on the network pay a 1.0% certification fee (lowest tier) versus 2.9% + $0.30/transaction in the legacy payment stack (Stripe, Square, PayPal). A plumber doing $80K/year in transactions immediately recovers <strong>~$1,520/year</strong> in processing fee savings alone — with no payment processor lock-in, no chargebacks, and no 3-day settlement delays.</em></p><p>Because the network offers structurally lower fees, instant settlement, and zero platform dependency, tradesmen face a strong economic incentive to stay. Returning to legacy payment rails would mean higher processing costs and slower cash flow. This creates durable retention among the foundational labor class of the economy.</p><a class="doc-ref" href="#sec-2-unit-economics">§ Protected Trades & Fee Recovery</a></div>
-                </div>
-                <div class="two-up" id="i3_s2_goldilocks_user">
-                  <img src="img/diagrams/i3_s2_goldilocks_user.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>$3M Seed.</strong> This is extremely lean by design — Sovereign Survival Kit has zero cloud compute costs, zero hardware manufacturing drag at launch, and a 3-person core team augmented by internal agent swarms.</p><p><strong>The Spark Treasury Bootstrap (SETI Compute Protocol)</strong></p><p>We do not allocate seed money towards highly depreciative, centralized GPU farm scaling (e.g., purchasing 50+ RTX 4090s). The initial network liquidity (The Spark Treasury) cannot be arbitrarily minted; it must be backed by physical physics computation.</p><p>To bootstrap the L2 sequences before global critical mass is reached, Sovereign Survival Kit utilizes a "SETI@home" style Genesis Compute Protocol running on the Founder's pre-existing hardware pool:</p><p>· <strong>Genesis Pool:</strong> 1x RTX 3080 Ti laptops.</p><p>· By executing the σ conversion formula on this local device and certifying the genesis provenance entries, the Sovereign Survival Kit protocol technically "pays" this cluster in natively minted Sparks (⚡). This physically-derived Spark forms the initial Company Treasury used to purchase Base Codex Bounties.</p><a class="doc-ref" href="#sec-2-unit-economics">§ 1. The Seed Ask & Use of Funds</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s2_cac_by_scenario">
-                  <img src="img/diagrams/i3_s2_cac_by_scenario.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Multi-Stream Revenue (Zero Data Monetization)</strong></p><p>Sovereign Survival Kit architecturally cannot monetize user data. Revenue derives from multiple streams:</p><p><strong>What we do NOT charge:</strong> listing fees, distribution channel fees (direct distribution), data monetization (architecturally impossible), payment processing (σ is native), content moderation headcount (Rule 2 is hardware-enforced).</p><a class="doc-ref" href="#sec-2-unit-economics">§ 2. Revenue Model</a></div>
-                </div>
-                <div class="sidebar-spread" id="i3_s2_ltv_cac_ratio">
-                  <img src="img/diagrams/i3_s2_ltv_cac_ratio.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>σ ↔ Fiat Conversion (Published Formula)</strong></p><p>σ's fiat conversion is based on the <strong>total delivered cost of energy</strong> — the all-in retail price a consumer pays per kWh (production + transmission + distribution + storage + taxes). NOT production cost (LCOE). Each device runs the published formula locally on user-selected data sources. Default: EIA (US), METI (Japan). See doc 05, doc 23.</p><p><strong>Geographic User Distribution (by period)</strong></p><p>The beachhead is Brooklyn (Vault 1), Tokyo (Vault 2), and one additional US city (Vault 3). User distribution shifts as the network expands:</p><p><strong>Derivation (M1–M12):</strong> (0.60 × $0.33) + (0.25 × $0.18) + (0.15 × $0.17) = $0.198 + $0.045 + $0.0255 = <strong>$0.2685 → $0.27</strong></p><p><strong>Derivation (M13–24):</strong> (0.40 × $0.33) + (0.20 × $0.18) + (0.30 × $0.17) + (0.10 × $0.20) = $0.132 + $0.036 + $0.051 + $0.020 = <strong>$0.239 → $0.24</strong></p><a class="doc-ref" href="#sec-2-unit-economics">§ 3. Base Assumptions</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s2_gross_margin">
-                  <img src="img/diagrams/i3_s2_gross_margin.png" alt="" loading="lazy">
-                  <div class="body"><p>Every number below is derived from the assumptions above. The math is shown.</p><p><strong>Planning Scenario: Goldilocks (k = 0.3, ~59K users at M12)</strong></p><p>User growth is demographic-grounded from NYC MSA (16.5M age 15+) + Tokyo Metro (32.9M age 15+) = 49.4M addressable. Onboarding via Campus Bridge (peer-to-peer). Growth is NOT bounded by physical Vault locations.</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Why Goldilocks:</strong> k = 0.3 means one new referral per user every ~10 weeks. The introduction economy works but does not go viral. Organic exceeds organized by M8. The company survives at k ≈ 0 (No Traction: 18,382 users, still cash-flow positive — Cheat Sheet §Scenario 1), but plans at k = 0.3.</em></p><p>Benchmark: Instagram reached 10M in Y1 (iOS only, 65M addressable). SSK modeled at 1/40th Instagram penetration, adjusted for higher friction.</p><p><strong>SSK is the sole operator in all MSA markets (100% of fees).</strong> 70/30 split applies only in non-MSA franchise markets.</p><a class="doc-ref" href="#sec-2-unit-economics">§ 4. Revenue Projections</a></div>
-                </div><div class="sec-break" id="sec-3-projections"><h2><a href="#sec-3-projections" style="color:inherit;text-decoration:none">§3 Projections</a></h2></div>
+<div class="editorial">
+<div class="section-divider" id="sec-1-tam-sam-som">
+  <h2><a href="#sec-1-tam-sam-som">§1 TAM/SAM/SOM</a></h2>
+</div>
+<div class="spread" id="i3_s1_tam_overview">
+<img src="img/diagrams/i3_s1_tam_overview.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Total value of commerce that .kasset transactions could intermediate — US + Japan only.</strong></p>
+<p>A .kasset formalizes three forms of human economic output. Each form maps to existing macro data with no overlap between segments. Two additional layers capture value that SSK creates or recaptures beyond existing commerce.</p>
+<p><strong>Segment 1: Physical Objects — $7.8T</strong></p>
+<p>Any physical good — manufactured anywhere, purchased with fiat, minted by the original owner as a provenance .kasset. Includes all retail, all consumer goods, all secondhand.</p>
+<p>NAICS proxy: <strong>44-45</strong> (Retail Trade).</p>
+<p><strong>Segment 2: Service Agreements — $18.0T</strong></p>
+<a href="#sec-1-tam-sam-som" class="section-ref">§ 1. TAM: $32.5T</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s1_tam_globe">
+<img src="img/diagrams/i3_s1_tam_globe.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Geographic filter: US + Japan. Demographic filter: age 15+.</strong></p>
+<p>The TAM is already scoped to US + Japan. The SAM applies a single demographic gate: anyone aged 15 or older — the population legally eligible to participate in commerce.</p>
+<p>At 15+, participants account for ~96% of consumer spending and ~100% of labor compensation. The SAM excludes only economic activity attributable to minors under 15.</p>
+<p><strong>SAM = TAM × 0.96 = $31.2T</strong> — effectively the full US+Japan TAM, reduced marginally by the age gate.</p>
+<p><em class="blockquote">The SAM is intentionally broad. SSK is not a niche privacy product — it is a universal commerce layer. The narrowing happens at SOM, where beachhead communities define Year 1 execution.</em></p>
+<a href="#sec-1-tam-sam-som" class="section-ref">§ 2. SAM: $31.2T</a>
+</div>
+</div>
+<div class="two-up" id="i3_s1_sam_nyc_tokyo">
+<img src="img/diagrams/i3_s1_sam_nyc_tokyo.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Per-Capita SAM Activity</strong></p>
+<p>The SAM represents $31.2T of annual economic activity across 385M people (US+Japan, 15+).</p>
+<p><strong>Per-capita annual economic activity: $31.2T ÷ 385M = $81,039/person/year.</strong></p>
+<p>This is the theoretical ceiling — if a single person routed 100% of their economic life through .kasset transactions.</p>
+<p><strong>Beachhead Communities (doc 07)</strong></p>
+<p>SSK launches into four overlapping communities with high privacy motivation and low hardware barriers. The addressable value for each segment is derived from population × per-capita SAM activity:</p>
+<a href="#sec-1-tam-sam-som" class="section-ref">§ 3. SOM: Beachhead Derivation from SAM</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s1_som_first_year">
+<img src="img/diagrams/i3_s1_som_first_year.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>CAC by Scenario:</strong></p>
+<p><em class="blockquote"><strong>Planning CAC: $6.04</strong> (Goldilocks). Competitive: average consumer app CAC is $30-$100 (Liftoff 2024), SaaS CAC is $100-$400 (ProfitWell 2024). SSK's structural advantage is zero marginal compute cost — the user's device runs inference, training, and minting.</em></p>
+<p><strong>Churn Evidence & Retention Thesis</strong></p>
+<p>The 5%→2% monthly churn projection is conservative relative to social platform benchmarks:</p>
+<p>SSK's retention advantage is structural, not behavioral. Three switching costs compound over time:</p>
+<p><strong>Idiolect lock-in.</strong> The twin trains continuously on the owner's speech patterns, vocabulary, and decision history. This training data cannot be exported or replicated on another platform — it is cryptographically bound to the user's hardware security module. Leaving SSK means abandoning months or years of cognitive calibration.</p>
+<a href="#sec-1-tam-sam-som" class="section-ref">§ Per User</a>
+</div>
+</div>
+<div class="two-up" id="i3_s1_naics_segments">
+<img src="img/diagrams/i3_s1_naics_segments.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Segment breakdown (M12):</strong> The ⚡300 average is volume-weighted across all segments:</p>
+<p><em class="blockquote"><strong>Early-stage fee compression (M1-M6):</strong> The progressive fee formula (<code>ramsey(rarity) × rawlsian(buyer_⚡_balance²) × energy_proportionality(REC)</code>) includes a quadratic buyer-balance component that barely activates in early months when all users have near-zero ⚡ balances. The effective weighted fee in M1-M6 will converge toward the Ramsey floor (~1-1.5%) rather than the modeled 2.38%. This shifts the early-stage breakeven from ~14,200 to ~19,000-22,700 users. The fee naturally rises as user balances accumulate through trade activity. The 2.38% weighted average is the steady-state M12 projection, not the launch-day reality.</em></p>
+<p><strong>Derivation:</strong> (0.40×100)+(0.35×300)+(0.20×500)+(0.05×800) = 40+105+100+40 = <strong>⚡285 → ⚡300</strong> (rounded up for conservatism)</p>
+<a href="#sec-1-tam-sam-som" class="section-ref">§ Per Trade (M12 parameters)</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s1_penetration_proof">
+<img src="img/diagrams/i3_s1_penetration_proof.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Note: In MSA markets (NYC, Tokyo, Tier 1 cities), SSK is the sole operator — there is no operator split. This section applies only to non-MSA franchise operators.</p>
+<p><strong>Breakeven derivation:</strong> $2,500 ÷ $1.01/trade = 2,475 trades needed. At 450 users × 6.08 trades/user = 2,736 trades/mo → <strong>breakeven</strong> ✓</p>
+<a href="#sec-1-tam-sam-som" class="section-ref">§ Per Non-MSA Operator</a>
+</div>
+</div>
+<div class="section-divider" id="sec-2-unit-economics">
+  <h2><a href="#sec-2-unit-economics">§2 Unit Economics</a></h2>
+</div>
+<div class="spread" id="i3_s2_trade_receipt">
+<img src="img/diagrams/i3_s2_trade_receipt.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Production infrastructure: $2,150/month.</strong> The certification service, Codex archival, and CDN are the only infrastructure required to operate the network. The $5,000 agent swarms line is development tooling (multi-agent orchestration for codebase development) — it can be reduced or eliminated post-launch. The self-funded survival floor (Doc 01) uses $2,150 + founder living = ~$2,400/month burn, producing breakeven at 325-488 users.</p>
+<p><strong>Derivation:</strong> M24 MRR = $39,019,008 (SSK share). $7,150 ÷ $39,019,008 = 0.018% ✓</p>
+<a href="#sec-2-unit-economics" class="section-ref">§ Infrastructure Costs (Fixed)</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s2_per_trade">
+<img src="img/diagrams/i3_s2_per_trade.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Gross margin comparison:</strong></p>
+<p>· OpenAI: ~50-60% (estimated, GPU-heavy)</p>
+<p>· Sovereign Survival Kit: <strong>95%+</strong> (near-zero marginal cost)</p>
+<a href="#sec-2-unit-economics" class="section-ref">§ The Zero-Cloud Advantage</a>
+</div>
+</div>
+<div class="two-up" id="i3_s2_fee_segments">
+<img src="img/diagrams/i3_s2_fee_segments.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>As total delivered energy costs decline (driven by solar LCOE –88% since 2010, with a durable infrastructure floor from transmission/distribution), Sovereign Survival Kit's zero-cloud architecture gains a compounding advantage:</p>
+<p><strong>Net effect:</strong> In a declining-energy-cost future, cloud AI companies still need data centers, cooling, and staff. Sovereign Survival Kit needs nothing — the user provides the compute, the energy, and the intelligence. As delivered energy cost decreases, Sovereign Survival Kit's marginal cost curve converges toward <em>true zero</em>, not just near-zero. Self-generators who bypass the grid entirely achieve full energy sovereignty. (See doc 23, §8.)</p>
+<a href="#sec-2-unit-economics" class="section-ref">§ The Energy Convergence Advantage</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s2_per_user">
+<img src="img/diagrams/i3_s2_per_user.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>A core driver of the Sovereign Survival Kit unit economics is the permanently inverted fee schedule for fundamental physical labor (agriculture, carpentry, plumbing). By structurally subsidizing tradesmen identified purely by their thermodynamic utility to human persistence, the network captures an immediate hyper-local monopoly.</p>
+<p><em class="blockquote">[!IMPORTANT]</em></p>
+<p><em class="blockquote"><strong>The Processing Fee Recovery:</strong> Tradesmen operating on the network pay a 1.0% certification fee (lowest tier) versus 2.9% + $0.30/transaction in the legacy payment stack (Stripe, Square, PayPal). A plumber doing $80K/year in transactions immediately recovers <strong>~$1,520/year</strong> in processing fee savings alone — with no payment processor lock-in, no chargebacks, and no 3-day settlement delays.</em></p>
+<p>Because the network offers structurally lower fees, instant settlement, and zero platform dependency, tradesmen face a strong economic incentive to stay. Returning to legacy payment rails would mean higher processing costs and slower cash flow. This creates durable retention among the foundational labor class of the economy.</p>
+<a href="#sec-2-unit-economics" class="section-ref">§ Protected Trades & Fee Recovery</a>
+</div>
+</div>
+<div class="two-up" id="i3_s2_goldilocks_user">
+<img src="img/diagrams/i3_s2_goldilocks_user.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>$3M Seed.</strong> This is extremely lean by design — Sovereign Survival Kit has zero cloud compute costs, zero hardware manufacturing drag at launch, and a 3-person core team augmented by internal agent swarms.</p>
+<p><strong>The Spark Treasury Bootstrap (SETI Compute Protocol)</strong></p>
+<p>We do not allocate seed money towards highly depreciative, centralized GPU farm scaling (e.g., purchasing 50+ RTX 4090s). The initial network liquidity (The Spark Treasury) cannot be arbitrarily minted; it must be backed by physical physics computation.</p>
+<p>To bootstrap the L2 sequences before global critical mass is reached, Sovereign Survival Kit utilizes a "SETI@home" style Genesis Compute Protocol running on the Founder's pre-existing hardware pool:</p>
+<p>· <strong>Genesis Pool:</strong> 1x RTX 3080 Ti laptops.</p>
+<p>· By executing the σ conversion formula on this local device and certifying the genesis provenance entries, the Sovereign Survival Kit protocol technically "pays" this cluster in natively minted Sparks (⚡). This physically-derived Spark forms the initial Company Treasury used to purchase Base Codex Bounties.</p>
+<a href="#sec-2-unit-economics" class="section-ref">§ 1. The Seed Ask & Use of Funds</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s2_cac_by_scenario">
+<img src="img/diagrams/i3_s2_cac_by_scenario.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Multi-Stream Revenue (Zero Data Monetization)</strong></p>
+<p>Sovereign Survival Kit architecturally cannot monetize user data. Revenue derives from multiple streams:</p>
+<p><strong>What we do NOT charge:</strong> listing fees, distribution channel fees (direct distribution), data monetization (architecturally impossible), payment processing (σ is native), content moderation headcount (Rule 2 is hardware-enforced).</p>
+<a href="#sec-2-unit-economics" class="section-ref">§ 2. Revenue Model</a>
+</div>
+</div>
+<div class="sidebar-block" id="i3_s2_ltv_cac_ratio">
+<img src="img/diagrams/i3_s2_ltv_cac_ratio.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>σ ↔ Fiat Conversion (Published Formula)</strong></p>
+<p>σ's fiat conversion is based on the <strong>total delivered cost of energy</strong> — the all-in retail price a consumer pays per kWh (production + transmission + distribution + storage + taxes). NOT production cost (LCOE). Each device runs the published formula locally on user-selected data sources. Default: EIA (US), METI (Japan). See doc 05, doc 23.</p>
+<p><strong>Geographic User Distribution (by period)</strong></p>
+<p>The beachhead is Brooklyn (Vault 1), Tokyo (Vault 2), and one additional US city (Vault 3). User distribution shifts as the network expands:</p>
+<p><strong>Derivation (M1–M12):</strong> (0.60 × $0.33) + (0.25 × $0.18) + (0.15 × $0.17) = $0.198 + $0.045 + $0.0255 = <strong>$0.2685 → $0.27</strong></p>
+<p><strong>Derivation (M13–24):</strong> (0.40 × $0.33) + (0.20 × $0.18) + (0.30 × $0.17) + (0.10 × $0.20) = $0.132 + $0.036 + $0.051 + $0.020 = <strong>$0.239 → $0.24</strong></p>
+<a href="#sec-2-unit-economics" class="section-ref">§ 3. Base Assumptions</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s2_gross_margin">
+<img src="img/diagrams/i3_s2_gross_margin.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Every number below is derived from the assumptions above. The math is shown.</p>
+<p><strong>Planning Scenario: Goldilocks (k = 0.3, ~59K users at M12)</strong></p>
+<p>User growth is demographic-grounded from NYC MSA (16.5M age 15+) + Tokyo Metro (32.9M age 15+) = 49.4M addressable. Onboarding via Campus Bridge (peer-to-peer). Growth is NOT bounded by physical Vault locations.</p>
+<p><em class="blockquote"><strong>Why Goldilocks:</strong> k = 0.3 means one new referral per user every ~10 weeks. The introduction economy works but does not go viral. Organic exceeds organized by M8. The company survives at k ≈ 0 (No Traction: 18,382 users, still cash-flow positive — Cheat Sheet §Scenario 1), but plans at k = 0.3.</em></p>
+<p>Benchmark: Instagram reached 10M in Y1 (iOS only, 65M addressable). SSK modeled at 1/40th Instagram penetration, adjusted for higher friction.</p>
+<p><strong>SSK is the sole operator in all MSA markets (100% of fees).</strong> 70/30 split applies only in non-MSA franchise markets.</p>
+<a href="#sec-2-unit-economics" class="section-ref">§ 4. Revenue Projections</a>
+</div>
+</div>
+<div class="section-divider" id="sec-3-projections">
+  <h2><a href="#sec-3-projections">§3 Projections</a></h2>
+</div>
+<div class="spread" id="i3_s3_forecast_overview">
+<img src="img/diagrams/i3_s3_forecast_overview.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Per User</strong></p>
+<p><strong>CAC by growth scenario:</strong></p>
+<p><strong>Marketing Funnel (Full Traction Scenario, k=0.6)</strong></p>
+<p>The funnel below illustrates the Full Traction scenario (250K users). The Goldilocks planning scenario (59K users) uses the same paid channels but with lower organic referral volume (k=0.3 vs k=0.6):</p>
+<p><strong>Channel breakdown of $355K marketing spend:</strong></p>
+<p><em class="blockquote"><strong>Note:</strong> The $1.42 blended CAC applies only to the Full Traction scenario (k=0.6). Goldilocks planning CAC is $6.04 ($355K ÷ 59K users). The per-channel CAC ($3.00-$6.67) is the honest cost of paid acquisition regardless of scenario.</em></p>
+<a href="#sec-3-projections" class="section-ref">§ 5. Unit Economics</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s3_goldilocks_scenario">
+<img src="img/diagrams/i3_s3_goldilocks_scenario.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>The Unfair Advantage: Zero Cloud Compute</strong></p>
+<p>Traditional AI companies (OpenAI, Anthropic) burn billions on GPU clusters for inference. Sovereign Survival Kit inference runs entirely on user-owned hardware. Scaling from 1,000 to 1,000,000 users costs us <strong>$0 in additional compute.</strong></p>
+<p><strong>Fixed Costs</strong></p>
+<p><strong>Variable Costs (Scale)</strong></p>
+<p><strong>Gross margin:</strong> 95%+ at all scales.</p>
+<a href="#sec-3-projections" class="section-ref">§ 6. Cost Structure</a>
+</div>
+</div>
+<div class="two-up" id="i3_s3_y1_revenue">
+<img src="img/diagrams/i3_s3_y1_revenue.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em class="blockquote">TLM, COO, DevOps, and GC receive cash compensation only — no equity, no options. Upside participation through the Nevada Irrevocable Trust at the founder's sole discretion. GC coordinates specialist outside counsel for patent prosecution and complex litigation. Engineering needs (certification service, edge app, bilateral signing protocol) may require specialized contractors funded from the operating reserve.</em></p>
+<p><strong>Headcount Summary</strong></p>
+<a href="#sec-3-projections" class="section-ref">§ 7. Headcount & Payroll (36-Month)</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s3_y2_revenue">
+<img src="img/diagrams/i3_s3_y2_revenue.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Revenue is derived by summing monthly projections from Section 4. Year 1 = M1–M12, Year 2 = M13–M24, Year 3 = M25–M36.</p>
+<p><strong>Revenue derivation (all streams, per Section 4):</strong></p>
+<p>· <strong>Year 1:</strong> Certification (post-attrition) + Courier + Vault subscription + Vault Freeze + Verification/Coordination. No hardware (ships M15). Total: <strong>$38.5M</strong> Full Traction / <strong>$9.5M</strong> Goldilocks (per Multi-Stream Revenue Summary above).</p>
+<p>· <strong>Year 2:</strong> + Hardware (Tether, Compass, Sensors, Accessories) from M15. Total: <strong>$1,428.4M</strong> Full Traction.</p>
+<p>· <strong>Year 3:</strong> Full global expansion. Total: <strong>$8,789.2M</strong> Full Traction / <strong>$2,198.2M</strong> Goldilocks.</p>
+<p><strong>Cash Flow (Full Traction scenario — Goldilocks produces ~25% of these revenue figures):</strong></p>
+<a href="#sec-3-projections" class="section-ref">§ 8. 36-Month Cash Flow</a>
+</div>
+</div>
+<div class="two-up" id="i3_s3_y3_revenue">
+<img src="img/diagrams/i3_s3_y3_revenue.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The following product streams are detailed breakdowns of the multi-stream revenue already projected above. B2B streams are permanently rejected:</p>
+<p><strong>~~B2B Licensing~~ — PERMANENTLY REJECTED</strong></p>
+<p><em class="blockquote"><strong>Founder directive (2026-04-15):</strong> These streams will NEVER be pursued: Biometric Certification SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK, Constituent Intelligence Platform (B2G), Enterprise API of any kind.</em></p>
+<p><strong>Vault Product Suite</strong></p>
+<p><strong>Hardware Product Suite</strong></p>
+<p><strong>Revenue Summary</strong></p>
+<a href="#sec-3-projections" class="section-ref">§ 10. Revenue Stream Details</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s3_all_streams">
+<img src="img/diagrams/i3_s3_all_streams.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Policy:</strong> No federal/state government grants. NYC-local arts grants (no supervision) and non-governmental sources only.</p>
+<p><strong>Tier 1: Active Revenue (Immediate)</strong></p>
+<p><strong>Tier 2: Crypto Ecosystem Grants (Cash)</strong></p>
+<p><strong>Tier 3: Startup Competitions (Equity-Free Cash)</strong></p>
+<p><strong>Tier 4: Arts & Culture Grants (via Fiscal Sponsor)</strong></p>
+<p><strong>Tier 5: Alumni Angel Network (Low-Dilution SAFEs)</strong></p>
+<a href="#sec-3-projections" class="section-ref">§ 11. Non-Dilutive Funding Pipeline (Pre/Alongside Seed)</a>
+</div>
+</div>
+<div class="two-up" id="i3_s3_use_of_funds">
+<img src="img/diagrams/i3_s3_use_of_funds.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Standard venture practice dictates kill/continue gates — milestones where the founder commits to returning capital if metrics aren't met. The implicit logic: "if the product hasn't worked by month X, cut losses and stop burning investor money."</p>
+<p>That logic assumes a cost structure where each month of operation consumes capital that cannot be recovered. Kill gates protect investors from a company that bleeds money while searching for product-market fit.</p>
+<p><strong>SSK's cost structure eliminates the premise.</strong> Monthly infrastructure: $7,150. Survival burn: $80,000/month. $3M provides 37 months of runway at zero revenue. Breakeven: 14,200 trading users (19,000-22,700 during early-stage fee compression). The worst-case growth scenario (k=0.05, No Traction) produces 18,382 users by M12 — above breakeven when the viral coefficient is nearly zero.</p>
+<p><strong>At every standard kill gate milestone, the company is alive:</strong></p>
+<p><strong>The question is not "when do we kill?" but "what would have to be true for this company to die?"</strong></p>
+<p>For the company to die, ALL THREE conditions must hold simultaneously:</p>
+<a href="#sec-3-projections" class="section-ref">§ 12. Survivability Proof (Why Kill Gates Don't Apply)</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s3_burn_rate">
+<img src="img/diagrams/i3_s3_burn_rate.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Assumptions:</strong></p>
+<p>· Digital onboarding via Campus Bridge (peer-to-peer). Growth NOT bounded by Vault locations.</p>
+<p>· Demographic-grounded: NYC MSA (16.5M age 15+) + Tokyo Metro (32.9M age 15+) = 49.4M addressable.</p>
+<p>· Modeled at 1/40th Instagram Y1 penetration rate (adjusted for higher friction).</p>
+<p>· SSK is sole operator in MSA markets (100% of certification fees).</p>
+<p><em class="blockquote"><strong>Planning scenario is Goldilocks (k=0.3).</strong> See Doc 11 §4 for the Goldilocks projection table (59K users M12, 2.5M M36, $2,198M Y3 total revenue). This scenario (Full Traction) represents the upside if the introduction economy achieves moderate virality.</em></p>
+<a href="#sec-3-projections" class="section-ref">§ Scenario A: Full Traction (k = 0.6)</a>
+</div>
+</div>
+<div class="two-up" id="i3_s3_breakeven">
+<img src="img/diagrams/i3_s3_breakeven.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Assumptions:</strong></p>
+<p>· Connect fails to achieve product-market fit in MSM beachhead.</p>
+<p>· Marketplace adoption is <strong>20% of base case</strong> (1/5th).</p>
+<p>· No Series A. Only seed funding.</p>
+<p><strong>Derivation (M12):</strong> 50,000 × 6.08 = 304,000. 304,000 × $81 × 2.38% = <strong>$586,035</strong> ✓</p>
+<p><strong>Derivation (M36):</strong> 2,000,000 × 6.08 = 12,160,000. 12,160,000 × $154 × 3.25% = <strong>$60,860,800</strong> ✓</p>
+<a href="#sec-3-projections" class="section-ref">§ Scenario B: Downside (Beachhead Stall)</a>
+</div>
+</div>
+<div class="sidebar-block" id="i3_s3_conservative">
+<img src="img/diagrams/i3_s3_conservative.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The progressive network fee model is highly sensitive to average trade value. Using M24 parameters (blended σ = $0.24, weighted fee = 2.80%, 6.08 trades/user/mo):</p>
+<p><strong>Derivation (⚡500):</strong> $120 × 2.80% = $3.36/trade. $10,000,000 ÷ $3.36 = <strong>2,976,190 trades</strong> ✓</p>
+<p><strong>Implication:</strong> Higher-value .kassets (workflow, classifier, reasoning chain) are critical to revenue growth. The Codex certification program and Swarm Contracts are designed to drive average trade values upward over time.</p>
+<a href="#sec-3-projections" class="section-ref">§ Key Sensitivity: Average Trade Value</a>
+</div>
+</div>
+<div class="section-divider" id="sec-4-scenarios">
+  <h2><a href="#sec-4-scenarios">§4 Scenarios</a></h2>
+</div>
+<div class="spread" id="i3_s4_scenario_tree">
+<img src="img/diagrams/i3_s4_scenario_tree.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The base case uses 6.08 trades/user/mo (73/year), derived from SSK segment-weighted analysis (Appendix §A5: blended 6.5, conservatively rounded to 6.08; cross-checked against Amazon purchase frequency). Using M12 parameters (250,000 users, ⚡300 avg trade, $81 avg trade value, 2.38% weighted fee, 100% MSA take):</p>
+<p><strong>Derivation (breakeven):</strong> $2,003,000/yr ÷ 12 = $166,917/mo. $166,917 ÷ $1.93/trade = 86,485 trades. 86,485 ÷ 250,000 users = <strong>0.35 trades/user/mo</strong> ✓</p>
+<p><strong>Implication:</strong> Trade frequency can fall to <strong>5.7% of the base estimate</strong> before the company fails to cover Y1 operating expenses. At 50% of base (3.04 trades/mo), revenue is $17.6M — still 8.8× total expenses. The model is structurally robust against trade frequency assumptions because the zero-infrastructure-cost architecture means the breakeven bar is extraordinarily low.</p>
+<a href="#sec-4-scenarios" class="section-ref">§ Key Sensitivity: Trade Frequency</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s4_full_traction">
+<img src="img/diagrams/i3_s4_full_traction.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>Note: This applies ONLY to non-MSA franchise operators. In MSA markets, SSK is the sole operator (no split).</p>
+<p>Using M18 parameters (⚡500 avg, $120 avg trade, 2.80% fee, 6.08 trades/user/mo):</p>
+<p><strong>Derivation (breakeven):</strong> $2,500 ÷ $1.01 = <strong>2,475 trades/month needed</strong>. At 450 users × 6.08 = 2,736 → <strong>breakeven</strong> ✓</p>
+<p><strong>Implication:</strong> At 6.08 trades/user/mo, non-MSA operators need only ~450 attributed users to break even. This is achievable by ~M15. The 6-month USD stipend bridges pre-breakeven.</p>
+<a href="#sec-4-scenarios" class="section-ref">§ Key Sensitivity: Non-MSA Operator Breakeven</a>
+</div>
+</div>
+<div class="two-up" id="i3_s4_downside">
+<img src="img/diagrams/i3_s4_downside.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>1.1 General Tau Theory (David Lee)</strong></p>
+<p>General Tau Theory (Lee, 1998, 2009) establishes that biological action systems are guided by the variable τ — the time-to-closure of a gap between the current state and a goal state. The key findings:</p>
+<p>· <strong>τ_d(t)</strong> = time-to-closure of the gap in domain <em>d</em>. As the gap closes, τ → 0. At closure (rest), τ = 0.</p>
+<p>· <strong>τ̇_d(t)</strong> = rate of closure. τ̇ = −1 means perfect constant-velocity approach. τ̇ < −1 means decelerative (soft landing). τ̇ > −1 means accelerative (hard arrival).</p>
+<p>· <strong>τ-coupling:</strong> Skilled, coordinated action is characterized by the coupling equation τ₁ = k · τ₂^α, where multiple action systems maintain a power-law relationship such that they <strong>all reach zero at the same instant.</strong> The coupling exponent α determines the approach profile (smooth vs. abrupt), and the goodness of fit (R²) measures coordination quality.</p>
+<p>· <strong>The harmony:</strong> When multiple τ profiles across different domains are coupled with R² → 1, all gaps close simultaneously. This is what Lee calls "τ-guided action" — the moment when everything converges to rest at once.</p>
+<a href="#sec-4-scenarios" class="section-ref">§ 1. Theoretical Foundation</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s4_trade_sensitivity">
+<img src="img/diagrams/i3_s4_trade_sensitivity.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>2.1 Per-User State</strong></p>
+<p>For user <em>i</em>, the twin maintains continuous measurements across <em>D</em> sensor domains (cardiac, conversational, gestural, environmental, financial, social, spatial, creative — the 8 domain registers of Doc 03):</p>
+<p>The raw units (bpm, ppm, Hz, $/trade) disappear at τ. Every domain is measured as a time-to-closure — how far is the current state from the goal state, expressed in units of the reference frame period. This is the key architectural insight: τ strips units, enabling cross-domain coupling measurement.</p>
+<p><strong>2.2 Convergence Measure</strong></p>
+<p>The <strong>convergence measure</strong> Ψ quantifies the instantaneous harmonic quality — how closely multiple domains are simultaneously approaching rest (τ → 0) in a coordinated manner:</p>
+<p>Where:</p>
+<a href="#sec-4-scenarios" class="section-ref">§ 2. Definitions</a>
+</div>
+</div>
+<div class="two-up" id="i3_s4_value_sensitivity">
+<img src="img/diagrams/i3_s4_value_sensitivity.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>3.1 Instantaneous Trade Probability</strong></p>
+<p>The probability that user <em>i</em> initiates a trade in the interval [t, t + dt] is:</p>
+<p>Where:</p>
+<p><strong>Physical interpretation:</strong> When harmonic convergence Ψ_i exceeds the population median, the user trades more frequently than average. When Ψ_i is below median (domains uncoordinated, gaps far from closure), the user trades less. The exponent α captures whether trade response is proportional to convergence quality (α=1) or explosive above a threshold (α>1).</p>
+<p><strong>3.2 Expected Monthly Trade Frequency</strong></p>
+<p>The expected number of trades for user <em>i</em> in one month (T = 1 month):</p>
+<a href="#sec-4-scenarios" class="section-ref">§ 3. Layer 1: Individual Trade Rate</a>
+</div>
+</div>
+<div class="sidebar-block" id="i3_s4_all_profitable">
+<img src="img/diagrams/i3_s4_all_profitable.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>4.1 The Logistic-Desire Growth Equation</strong></p>
+<p>The algebraic model:</p>
+<p>The calculus model replaces constant k with a dynamic function:</p>
+<p><strong>4.2 Three Regimes</strong></p>
+<p>The growth equation has three distinct regimes:</p>
+<p><strong>Regime 1: Early Growth (N << K, Ψ̄ moderate)</strong></p>
+<a href="#sec-4-scenarios" class="section-ref">§ 4. Layer 2: Network Growth</a>
+</div>
+</div>
+<div class="section-divider" id="sec-5-survival-proof">
+  <h2><a href="#sec-5-survival-proof">§5 Survival Proof</a></h2>
+</div>
+<div class="spread" id="i3_s5_kill_gates">
+<img src="img/diagrams/i3_s5_kill_gates.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>5.1 The Revenue Integral</strong></p>
+<p>Where each component is itself a dynamic function:</p>
+<p><strong>5.2 Trade Frequency F̄(t)</strong></p>
+<p>The population mean of individual trade frequencies. NOT constant. It varies with:</p>
+<p>· Seasonal effects (campus activity → more gaps opening and closing → higher Ψ̄ during academic year)</p>
+<p>· Network density (denser mesh → more opportunities for simultaneous gap closure → higher Ψ̄)</p>
+<a href="#sec-5-survival-proof" class="section-ref">§ 5. Layer 3: Revenue</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s5_gate1_funding">
+<img src="img/diagrams/i3_s5_gate1_funding.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The algebraic model is obtained by evaluating the calculus model at its steady-state fixed point and linearizing:</p>
+<p><strong>When the approximation holds:</strong></p>
+<p>· N << K (far from carrying capacity)</p>
+<p>· Fee distribution at equilibrium (M6+)</p>
+<p>· Population Ψ̄ near its long-run mean (no extreme convergence events)</p>
+<p><strong>When it breaks:</strong></p>
+<a href="#sec-5-survival-proof" class="section-ref">§ 6. Algebraic Model as First-Order Approximation</a>
+</div>
+</div>
+<div class="two-up" id="i3_s5_gate2_users">
+<img src="img/diagrams/i3_s5_gate2_users.png" alt="" loading="lazy">
+<div class="spread-text">
+<p>The calculus model has <strong>five population-level parameters</strong> that must be calibrated empirically:</p>
+<p><strong>Full parameter inventory:</strong> The five parameters above govern the population dynamics. The per-user Ψ computation introduces additional parameters: <em>D</em> domain weights w_d (8), up to <em>D(D-1)/2</em> coupling exponents α_{d,e} (28 for 8 domains), and the R² rolling window length <em>W</em>. These per-user parameters are either fixed a priori (if resolution path (a) is chosen for the circularity problem, §2.2) or learned online (if path (b) is proven). The fee integral (§5.4) adds the ramsey() and rawlsian() functional forms, which must be specified before calibration. <strong>Total effective parameter count: ~40+ per user when weights are learned, ~5 population-level when weights are fixed.</strong> The honest position: the model is parsimonious at the population level and high-dimensional at the individual level. Calibration requires sufficient trade events per user to constrain the individual parameters — the 1,000-user threshold assumes ~6,000 monthly trade observations.</p>
+<p><em class="blockquote"><strong>Open item (stability):</strong> The coupled ODE system (N depends on Ψ̄, Ψ̄ depends on N through network density, φ depends on balance distribution which depends on N) contains positive feedback loops. Fixed-point analysis, stability conditions, and existence/uniqueness of solutions are required before this model can be submitted for formal review. <strong>Deferred to post-TLM review.</strong></em></p>
+<p><strong>The verification hook applies here.</strong> The investor's onboarding IS the first empirical measurement of these parameters. Their interaction with the system produces a Ψ measurement — how many of their internal domains converge toward resolution during the experience. Their referral behavior (do they tell someone?) measures k₀. Their trade frequency measures λ₀. The proof is not in the equations. The proof is in what happens when a skeptical, high-agency individual encounters the system.</p>
+<a href="#sec-5-survival-proof" class="section-ref">§ 7. Empirical Calibration</a>
+</div>
+</div>
+<div class="two-up flip" id="i3_s5_gate3_revenue">
+<img src="img/diagrams/i3_s5_gate3_revenue.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><em>This model is falsifiable. Calibrate λ₀, α, k₀, K, and Ψ_ref from the first 1,000 users and compare predicted N(t), F̄(t), and R(t) against observed values. If the model predicts accurately, the thesis holds. If it doesn't, the deviation tells you exactly which parameter was wrong and how to fix it.</em></p>
+<p><em>"How do you know this maps to reality?"</em></p>
+<p>Try it.</p>
+<p><em>Sovereign Survival Kit — Series A Data Room. Document 12B. Confidential.</em></p>
+<a href="#sec-5-survival-proof" class="section-ref">§ 8. Notation Summary</a>
+</div>
+</div>
+<div class="two-up" id="i3_s5_gate4_competition">
+<img src="img/diagrams/i3_s5_gate4_competition.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Total value of commerce that .kasset transactions could intermediate — US + Japan only.</strong></p>
+<p>A .kasset formalizes three forms of human economic output. Each form maps to existing macro data with no overlap between segments. Two additional layers capture value that SSK creates or recaptures beyond existing commerce.</p>
+<p><strong>Segment 1: Physical Objects — $7.8T</strong></p>
+<p>Any physical good — manufactured anywhere, purchased with fiat, minted by the original owner as a provenance .kasset. Includes all retail, all consumer goods, all secondhand.</p>
 
-                <div class="spread" id="i3_s3_forecast_overview">
-                  <img src="img/diagrams/i3_s3_forecast_overview.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Per User</strong></p><p><strong>CAC by growth scenario:</strong></p><p><strong>Marketing Funnel (Full Traction Scenario, k=0.6)</strong></p><p>The funnel below illustrates the Full Traction scenario (250K users). The Goldilocks planning scenario (59K users) uses the same paid channels but with lower organic referral volume (k=0.3 vs k=0.6):</p><p><strong>Channel breakdown of $355K marketing spend:</strong></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Note:</strong> The $1.42 blended CAC applies only to the Full Traction scenario (k=0.6). Goldilocks planning CAC is $6.04 ($355K ÷ 59K users). The per-channel CAC ($3.00-$6.67) is the honest cost of paid acquisition regardless of scenario.</em></p><a class="doc-ref" href="#sec-3-projections">§ 5. Unit Economics</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s3_goldilocks_scenario">
-                  <img src="img/diagrams/i3_s3_goldilocks_scenario.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>The Unfair Advantage: Zero Cloud Compute</strong></p><p>Traditional AI companies (OpenAI, Anthropic) burn billions on GPU clusters for inference. Sovereign Survival Kit inference runs entirely on user-owned hardware. Scaling from 1,000 to 1,000,000 users costs us <strong>$0 in additional compute.</strong></p><p><strong>Fixed Costs</strong></p><p><strong>Variable Costs (Scale)</strong></p><p><strong>Gross margin:</strong> 95%+ at all scales.</p><a class="doc-ref" href="#sec-3-projections">§ 6. Cost Structure</a></div>
-                </div>
-                <div class="two-up" id="i3_s3_y1_revenue">
-                  <img src="img/diagrams/i3_s3_y1_revenue.png" alt="" loading="lazy">
-                  <div class="body"><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0">TLM, COO, DevOps, and GC receive cash compensation only — no equity, no options. Upside participation through the Nevada Irrevocable Trust at the founder's sole discretion. GC coordinates specialist outside counsel for patent prosecution and complex litigation. Engineering needs (certification service, edge app, bilateral signing protocol) may require specialized contractors funded from the operating reserve.</em></p><p><strong>Headcount Summary</strong></p><a class="doc-ref" href="#sec-3-projections">§ 7. Headcount & Payroll (36-Month)</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s3_y2_revenue">
-                  <img src="img/diagrams/i3_s3_y2_revenue.png" alt="" loading="lazy">
-                  <div class="body"><p>Revenue is derived by summing monthly projections from Section 4. Year 1 = M1–M12, Year 2 = M13–M24, Year 3 = M25–M36.</p><p><strong>Revenue derivation (all streams, per Section 4):</strong></p><p>· <strong>Year 1:</strong> Certification (post-attrition) + Courier + Vault subscription + Vault Freeze + Verification/Coordination. No hardware (ships M15). Total: <strong>$38.5M</strong> Full Traction / <strong>$9.5M</strong> Goldilocks (per Multi-Stream Revenue Summary above).</p><p>· <strong>Year 2:</strong> + Hardware (Tether, Compass, Sensors, Accessories) from M15. Total: <strong>$1,428.4M</strong> Full Traction.</p><p>· <strong>Year 3:</strong> Full global expansion. Total: <strong>$8,789.2M</strong> Full Traction / <strong>$2,198.2M</strong> Goldilocks.</p><p><strong>Cash Flow (Full Traction scenario — Goldilocks produces ~25% of these revenue figures):</strong></p><a class="doc-ref" href="#sec-3-projections">§ 8. 36-Month Cash Flow</a></div>
-                </div>
-                <div class="two-up" id="i3_s3_y3_revenue">
-                  <img src="img/diagrams/i3_s3_y3_revenue.png" alt="" loading="lazy">
-                  <div class="body"><p>The following product streams are detailed breakdowns of the multi-stream revenue already projected above. B2B streams are permanently rejected:</p><p><strong>~~B2B Licensing~~ — PERMANENTLY REJECTED</strong></p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Founder directive (2026-04-15):</strong> These streams will NEVER be pursued: Biometric Certification SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK, Constituent Intelligence Platform (B2G), Enterprise API of any kind.</em></p><p><strong>Vault Product Suite</strong></p><p><strong>Hardware Product Suite</strong></p><p><strong>Revenue Summary</strong></p><a class="doc-ref" href="#sec-3-projections">§ 10. Revenue Stream Details</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s3_all_streams">
-                  <img src="img/diagrams/i3_s3_all_streams.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Policy:</strong> No federal/state government grants. NYC-local arts grants (no supervision) and non-governmental sources only.</p><p><strong>Tier 1: Active Revenue (Immediate)</strong></p><p><strong>Tier 2: Crypto Ecosystem Grants (Cash)</strong></p><p><strong>Tier 3: Startup Competitions (Equity-Free Cash)</strong></p><p><strong>Tier 4: Arts & Culture Grants (via Fiscal Sponsor)</strong></p><p><strong>Tier 5: Alumni Angel Network (Low-Dilution SAFEs)</strong></p><a class="doc-ref" href="#sec-3-projections">§ 11. Non-Dilutive Funding Pipeline (Pre/Alongside Seed)</a></div>
-                </div>
-                <div class="two-up" id="i3_s3_use_of_funds">
-                  <img src="img/diagrams/i3_s3_use_of_funds.png" alt="" loading="lazy">
-                  <div class="body"><p>Standard venture practice dictates kill/continue gates — milestones where the founder commits to returning capital if metrics aren't met. The implicit logic: "if the product hasn't worked by month X, cut losses and stop burning investor money."</p><p>That logic assumes a cost structure where each month of operation consumes capital that cannot be recovered. Kill gates protect investors from a company that bleeds money while searching for product-market fit.</p><p><strong>SSK's cost structure eliminates the premise.</strong> Monthly infrastructure: $7,150. Survival burn: $80,000/month. $3M provides 37 months of runway at zero revenue. Breakeven: 14,200 trading users (19,000-22,700 during early-stage fee compression). The worst-case growth scenario (k=0.05, No Traction) produces 18,382 users by M12 — above breakeven when the viral coefficient is nearly zero.</p><p><strong>At every standard kill gate milestone, the company is alive:</strong></p><p><strong>The question is not "when do we kill?" but "what would have to be true for this company to die?"</strong></p><p>For the company to die, ALL THREE conditions must hold simultaneously:</p><a class="doc-ref" href="#sec-3-projections">§ 12. Survivability Proof (Why Kill Gates Don't Apply)</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s3_burn_rate">
-                  <img src="img/diagrams/i3_s3_burn_rate.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Assumptions:</strong></p><p>· Digital onboarding via Campus Bridge (peer-to-peer). Growth NOT bounded by Vault locations.</p><p>· Demographic-grounded: NYC MSA (16.5M age 15+) + Tokyo Metro (32.9M age 15+) = 49.4M addressable.</p><p>· Modeled at 1/40th Instagram Y1 penetration rate (adjusted for higher friction).</p><p>· SSK is sole operator in MSA markets (100% of certification fees).</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Planning scenario is Goldilocks (k=0.3).</strong> See Doc 11 §4 for the Goldilocks projection table (59K users M12, 2.5M M36, $2,198M Y3 total revenue). This scenario (Full Traction) represents the upside if the introduction economy achieves moderate virality.</em></p><a class="doc-ref" href="#sec-3-projections">§ Scenario A: Full Traction (k = 0.6)</a></div>
-                </div>
-                <div class="two-up" id="i3_s3_breakeven">
-                  <img src="img/diagrams/i3_s3_breakeven.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Assumptions:</strong></p><p>· Connect fails to achieve product-market fit in MSM beachhead.</p><p>· Marketplace adoption is <strong>20% of base case</strong> (1/5th).</p><p>· No Series A. Only seed funding.</p><p><strong>Derivation (M12):</strong> 50,000 × 6.08 = 304,000. 304,000 × $81 × 2.38% = <strong>$586,035</strong> ✓</p><p><strong>Derivation (M36):</strong> 2,000,000 × 6.08 = 12,160,000. 12,160,000 × $154 × 3.25% = <strong>$60,860,800</strong> ✓</p><a class="doc-ref" href="#sec-3-projections">§ Scenario B: Downside (Beachhead Stall)</a></div>
-                </div>
-                <div class="sidebar-spread" id="i3_s3_conservative">
-                  <img src="img/diagrams/i3_s3_conservative.png" alt="" loading="lazy">
-                  <div class="body"><p>The progressive network fee model is highly sensitive to average trade value. Using M24 parameters (blended σ = $0.24, weighted fee = 2.80%, 6.08 trades/user/mo):</p><p><strong>Derivation (⚡500):</strong> $120 × 2.80% = $3.36/trade. $10,000,000 ÷ $3.36 = <strong>2,976,190 trades</strong> ✓</p><p><strong>Implication:</strong> Higher-value .kassets (workflow, classifier, reasoning chain) are critical to revenue growth. The Codex certification program and Swarm Contracts are designed to drive average trade values upward over time.</p><a class="doc-ref" href="#sec-3-projections">§ Key Sensitivity: Average Trade Value</a></div>
-                </div><div class="sec-break" id="sec-4-scenarios"><h2><a href="#sec-4-scenarios" style="color:inherit;text-decoration:none">§4 Scenarios</a></h2></div>
+</div>
+</div>
+<div class="sidebar-block" id="i3_s5_alive_at_every_gate">
+<img src="img/diagrams/i3_s5_alive_at_every_gate.png" alt="" loading="lazy">
+<div class="spread-text">
+<p><strong>Geographic filter: US + Japan. Demographic filter: age 15+.</strong></p>
+<p>The TAM is already scoped to US + Japan. The SAM applies a single demographic gate: anyone aged 15 or older — the population legally eligible to participate in commerce.</p>
+<p>At 15+, participants account for ~96% of consumer spending and ~100% of labor compensation. The SAM excludes only economic activity attributable to minors under 15.</p>
+<p><strong>SAM = TAM × 0.96 = $31.2T</strong> — effectively the full US+Japan TAM, reduced marginally by the age gate.</p>
 
-                <div class="spread" id="i3_s4_scenario_tree">
-                  <img src="img/diagrams/i3_s4_scenario_tree.png" alt="" loading="lazy">
-                  <div class="body"><p>The base case uses 6.08 trades/user/mo (73/year), derived from SSK segment-weighted analysis (Appendix §A5: blended 6.5, conservatively rounded to 6.08; cross-checked against Amazon purchase frequency). Using M12 parameters (250,000 users, ⚡300 avg trade, $81 avg trade value, 2.38% weighted fee, 100% MSA take):</p><p><strong>Derivation (breakeven):</strong> $2,003,000/yr ÷ 12 = $166,917/mo. $166,917 ÷ $1.93/trade = 86,485 trades. 86,485 ÷ 250,000 users = <strong>0.35 trades/user/mo</strong> ✓</p><p><strong>Implication:</strong> Trade frequency can fall to <strong>5.7% of the base estimate</strong> before the company fails to cover Y1 operating expenses. At 50% of base (3.04 trades/mo), revenue is $17.6M — still 8.8× total expenses. The model is structurally robust against trade frequency assumptions because the zero-infrastructure-cost architecture means the breakeven bar is extraordinarily low.</p><a class="doc-ref" href="#sec-4-scenarios">§ Key Sensitivity: Trade Frequency</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s4_full_traction">
-                  <img src="img/diagrams/i3_s4_full_traction.png" alt="" loading="lazy">
-                  <div class="body"><p>Note: This applies ONLY to non-MSA franchise operators. In MSA markets, SSK is the sole operator (no split).</p><p>Using M18 parameters (⚡500 avg, $120 avg trade, 2.80% fee, 6.08 trades/user/mo):</p><p><strong>Derivation (breakeven):</strong> $2,500 ÷ $1.01 = <strong>2,475 trades/month needed</strong>. At 450 users × 6.08 = 2,736 → <strong>breakeven</strong> ✓</p><p><strong>Implication:</strong> At 6.08 trades/user/mo, non-MSA operators need only ~450 attributed users to break even. This is achievable by ~M15. The 6-month USD stipend bridges pre-breakeven.</p><a class="doc-ref" href="#sec-4-scenarios">§ Key Sensitivity: Non-MSA Operator Breakeven</a></div>
-                </div>
-                <div class="two-up" id="i3_s4_downside">
-                  <img src="img/diagrams/i3_s4_downside.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>1.1 General Tau Theory (David Lee)</strong></p><p>General Tau Theory (Lee, 1998, 2009) establishes that biological action systems are guided by the variable τ — the time-to-closure of a gap between the current state and a goal state. The key findings:</p><p>· <strong>τ_d(t)</strong> = time-to-closure of the gap in domain <em>d</em>. As the gap closes, τ → 0. At closure (rest), τ = 0.</p><p>· <strong>τ̇_d(t)</strong> = rate of closure. τ̇ = −1 means perfect constant-velocity approach. τ̇ < −1 means decelerative (soft landing). τ̇ > −1 means accelerative (hard arrival).</p><p>· <strong>τ-coupling:</strong> Skilled, coordinated action is characterized by the coupling equation τ₁ = k · τ₂^α, where multiple action systems maintain a power-law relationship such that they <strong>all reach zero at the same instant.</strong> The coupling exponent α determines the approach profile (smooth vs. abrupt), and the goodness of fit (R²) measures coordination quality.</p><p>· <strong>The harmony:</strong> When multiple τ profiles across different domains are coupled with R² → 1, all gaps close simultaneously. This is what Lee calls "τ-guided action" — the moment when everything converges to rest at once.</p><a class="doc-ref" href="#sec-4-scenarios">§ 1. Theoretical Foundation</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s4_trade_sensitivity">
-                  <img src="img/diagrams/i3_s4_trade_sensitivity.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>2.1 Per-User State</strong></p><p>For user <em>i</em>, the twin maintains continuous measurements across <em>D</em> sensor domains (cardiac, conversational, gestural, environmental, financial, social, spatial, creative — the 8 domain registers of Doc 03):</p><p>The raw units (bpm, ppm, Hz, $/trade) disappear at τ. Every domain is measured as a time-to-closure — how far is the current state from the goal state, expressed in units of the reference frame period. This is the key architectural insight: τ strips units, enabling cross-domain coupling measurement.</p><p><strong>2.2 Convergence Measure</strong></p><p>The <strong>convergence measure</strong> Ψ quantifies the instantaneous harmonic quality — how closely multiple domains are simultaneously approaching rest (τ → 0) in a coordinated manner:</p><p>Where:</p><a class="doc-ref" href="#sec-4-scenarios">§ 2. Definitions</a></div>
-                </div>
-                <div class="two-up" id="i3_s4_value_sensitivity">
-                  <img src="img/diagrams/i3_s4_value_sensitivity.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>3.1 Instantaneous Trade Probability</strong></p><p>The probability that user <em>i</em> initiates a trade in the interval [t, t + dt] is:</p><p>Where:</p><p><strong>Physical interpretation:</strong> When harmonic convergence Ψ_i exceeds the population median, the user trades more frequently than average. When Ψ_i is below median (domains uncoordinated, gaps far from closure), the user trades less. The exponent α captures whether trade response is proportional to convergence quality (α=1) or explosive above a threshold (α>1).</p><p><strong>3.2 Expected Monthly Trade Frequency</strong></p><p>The expected number of trades for user <em>i</em> in one month (T = 1 month):</p><a class="doc-ref" href="#sec-4-scenarios">§ 3. Layer 1: Individual Trade Rate</a></div>
-                </div>
-                <div class="sidebar-spread" id="i3_s4_all_profitable">
-                  <img src="img/diagrams/i3_s4_all_profitable.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>4.1 The Logistic-Desire Growth Equation</strong></p><p>The algebraic model:</p><p>The calculus model replaces constant k with a dynamic function:</p><p><strong>4.2 Three Regimes</strong></p><p>The growth equation has three distinct regimes:</p><p><strong>Regime 1: Early Growth (N << K, Ψ̄ moderate)</strong></p><a class="doc-ref" href="#sec-4-scenarios">§ 4. Layer 2: Network Growth</a></div>
-                </div><div class="sec-break" id="sec-5-survival-proof"><h2><a href="#sec-5-survival-proof" style="color:inherit;text-decoration:none">§5 Survival Proof</a></h2></div>
+</div>
+</div>
 
-                <div class="spread" id="i3_s5_kill_gates">
-                  <img src="img/diagrams/i3_s5_kill_gates.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>5.1 The Revenue Integral</strong></p><p>Where each component is itself a dynamic function:</p><p><strong>5.2 Trade Frequency F̄(t)</strong></p><p>The population mean of individual trade frequencies. NOT constant. It varies with:</p><p>· Seasonal effects (campus activity → more gaps opening and closing → higher Ψ̄ during academic year)</p><p>· Network density (denser mesh → more opportunities for simultaneous gap closure → higher Ψ̄)</p><a class="doc-ref" href="#sec-5-survival-proof">§ 5. Layer 3: Revenue</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s5_gate1_funding">
-                  <img src="img/diagrams/i3_s5_gate1_funding.png" alt="" loading="lazy">
-                  <div class="body"><p>The algebraic model is obtained by evaluating the calculus model at its steady-state fixed point and linearizing:</p><p><strong>When the approximation holds:</strong></p><p>· N << K (far from carrying capacity)</p><p>· Fee distribution at equilibrium (M6+)</p><p>· Population Ψ̄ near its long-run mean (no extreme convergence events)</p><p><strong>When it breaks:</strong></p><a class="doc-ref" href="#sec-5-survival-proof">§ 6. Algebraic Model as First-Order Approximation</a></div>
-                </div>
-                <div class="two-up" id="i3_s5_gate2_users">
-                  <img src="img/diagrams/i3_s5_gate2_users.png" alt="" loading="lazy">
-                  <div class="body"><p>The calculus model has <strong>five population-level parameters</strong> that must be calibrated empirically:</p><p><strong>Full parameter inventory:</strong> The five parameters above govern the population dynamics. The per-user Ψ computation introduces additional parameters: <em>D</em> domain weights w_d (8), up to <em>D(D-1)/2</em> coupling exponents α_{d,e} (28 for 8 domains), and the R² rolling window length <em>W</em>. These per-user parameters are either fixed a priori (if resolution path (a) is chosen for the circularity problem, §2.2) or learned online (if path (b) is proven). The fee integral (§5.4) adds the ramsey() and rawlsian() functional forms, which must be specified before calibration. <strong>Total effective parameter count: ~40+ per user when weights are learned, ~5 population-level when weights are fixed.</strong> The honest position: the model is parsimonious at the population level and high-dimensional at the individual level. Calibration requires sufficient trade events per user to constrain the individual parameters — the 1,000-user threshold assumes ~6,000 monthly trade observations.</p><p><em style="color:var(--dim);border-left:2px solid var(--border);padding-left:0.6rem;display:block;margin:0.3rem 0"><strong>Open item (stability):</strong> The coupled ODE system (N depends on Ψ̄, Ψ̄ depends on N through network density, φ depends on balance distribution which depends on N) contains positive feedback loops. Fixed-point analysis, stability conditions, and existence/uniqueness of solutions are required before this model can be submitted for formal review. <strong>Deferred to post-TLM review.</strong></em></p><p><strong>The verification hook applies here.</strong> The investor's onboarding IS the first empirical measurement of these parameters. Their interaction with the system produces a Ψ measurement — how many of their internal domains converge toward resolution during the experience. Their referral behavior (do they tell someone?) measures k₀. Their trade frequency measures λ₀. The proof is not in the equations. The proof is in what happens when a skeptical, high-agency individual encounters the system.</p><a class="doc-ref" href="#sec-5-survival-proof">§ 7. Empirical Calibration</a></div>
-                </div>
-                <div class="two-up flip" id="i3_s5_gate3_revenue">
-                  <img src="img/diagrams/i3_s5_gate3_revenue.png" alt="" loading="lazy">
-                  <div class="body"><p><em>This model is falsifiable. Calibrate λ₀, α, k₀, K, and Ψ_ref from the first 1,000 users and compare predicted N(t), F̄(t), and R(t) against observed values. If the model predicts accurately, the thesis holds. If it doesn't, the deviation tells you exactly which parameter was wrong and how to fix it.</em></p><p><em>"How do you know this maps to reality?"</em></p><p>Try it.</p><p><em>Sovereign Survival Kit — Series A Data Room. Document 12B. Confidential.</em></p><a class="doc-ref" href="#sec-5-survival-proof">§ 8. Notation Summary</a></div>
-                </div>
-                <div class="two-up" id="i3_s5_gate4_competition">
-                  <img src="img/diagrams/i3_s5_gate4_competition.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Total value of commerce that .kasset transactions could intermediate — US + Japan only.</strong></p><p>A .kasset formalizes three forms of human economic output. Each form maps to existing macro data with no overlap between segments. Two additional layers capture value that SSK creates or recaptures beyond existing commerce.</p><p><strong>Segment 1: Physical Objects — $7.8T</strong></p><p>Any physical good — manufactured anywhere, purchased with fiat, minted by the original owner as a provenance .kasset. Includes all retail, all consumer goods, all secondhand.</p></div>
-                </div>
-                <div class="sidebar-spread" id="i3_s5_alive_at_every_gate">
-                  <img src="img/diagrams/i3_s5_alive_at_every_gate.png" alt="" loading="lazy">
-                  <div class="body"><p><strong>Geographic filter: US + Japan. Demographic filter: age 15+.</strong></p><p>The TAM is already scoped to US + Japan. The SAM applies a single demographic gate: anyone aged 15 or older — the population legally eligible to participate in commerce.</p><p>At 15+, participants account for ~96% of consumer spending and ~100% of labor compensation. The SAM excludes only economic activity attributable to minors under 15.</p><p><strong>SAM = TAM × 0.96 = $31.2T</strong> — effectively the full US+Japan TAM, reduced marginally by the age gate.</p></div>
-                </div></div>
-<div class="bot-nav"><a href="issue_2.html">← Issue 2</a><a href="index.html">All Issues</a><a href="issue_4.html">Issue 4 →</a></div>
-<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
-</body></html>
+</div>
+
+<div class="issue-nav">
+  <a href="issue_2.html">← Issue 2</a>
+  <a href="index.html">All Issues</a>
+  <a href="issue_4.html">Issue 4 →</a>
+</div>
+<footer class="site-footer">Sovereign Survival Kit, Inc. · Series A Data Room · 2026</footer>
+</body>
+</html>
