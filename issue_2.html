@@ -1,1280 +1,492 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Issue 2: The Architecture of Trust — Sovereign Power Library</title>
-  <style>
-:root {
-  --bg-primary: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-section: #1a1a25;
-  --text-primary: #e8e6e3;
-  --text-secondary: #8a8a9a;
-  --text-muted: #5a5a6a;
-  --accent-magenta: #e84393;
-  --accent-blue: #0984e3;
-  --accent-green: #00b894;
-  --accent-gold: #fdcb6e;
-  --accent-purple: #6c5ce7;
-  --accent-red: #d63031;
-  --accent-orange: #e17055;
-  --border: #2a2a3a;
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Issue 2: The Architecture of Trust — Sovereign Power</title>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  line-height: 1.6;
-  min-height: 100vh;
+:root {
+  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
+  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
+  --border: #2a2a3a;
+  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
+  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
+  --font: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
 }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
 
 /* NAV */
-.topnav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0.75rem 2rem;
-  display: flex; align-items: center; gap: 1.5rem;
-}
-.topnav .logo {
-  font-weight: 900; font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.topnav a {
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
-  transition: color 0.2s;
-}
-.topnav a:hover { color: var(--text-primary); }
-.topnav a.active { color: var(--accent-magenta); }
-.topnav .spacer { flex: 1; }
-.topnav .alpha-badge {
-  font-size: 0.7rem; font-weight: 700;
-  background: var(--accent-red); color: white;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  letter-spacing: 0.1em;
-}
-.stale-badge {
-  display: inline-block;
-  font-size: 0.6rem; font-weight: 700;
-  background: #e17055; color: white;
-  padding: 0.1rem 0.4rem; border-radius: 2px;
-  margin-left: 0.5rem; vertical-align: middle;
-  letter-spacing: 0.05em;
-}
+.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
+  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
+.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
+.nav a:hover { color:var(--text); }
+.nav a.on { color:var(--magenta); }
+.nav .sp { flex:1; }
+.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
+  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 4rem 2rem 3rem;
-  border-bottom: 1px solid var(--border);
-}
-.hero h1 {
-  font-size: 3rem; font-weight: 900;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-}
-.hero .subtitle {
-  font-size: 1.1rem; color: var(--text-secondary);
-  font-weight: 300;
-}
-.hero .meta {
-  margin-top: 1rem; font-size: 0.8rem;
-  color: var(--text-muted); font-family: var(--font-mono);
-}
+/* FULL-BLEED COVER */
+.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
+.cover img { width:100%; height:100%; object-fit:cover; }
+.cover .overlay { position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
+.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
+.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
+  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
+.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
+.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
+  border-radius:4px; color:white; }
 
-/* ISSUE GRID */
-.issues-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.issue-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.issue-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-}
-.issue-card .card-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.issue-card .issue-num {
-  font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.issue-card h2 {
-  font-size: 1.4rem; font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-.issue-card .act {
-  font-size: 0.85rem; color: var(--text-secondary);
-}
-.issue-card .card-body {
-  padding: 1.25rem 1.5rem;
-}
-.issue-card .doc-list {
-  list-style: none;
-  font-size: 0.8rem; color: var(--text-secondary);
-}
-.issue-card .doc-list li {
-  padding: 0.2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.issue-card .doc-list li:last-child { border: none; }
-.issue-card .concept-count {
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
+/* EDITORIAL BODY */
+.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
 
-/* ISSUE PAGE */
-.issue-header {
-  padding: 3rem 2rem 2rem;
-  border-bottom: 1px solid var(--border);
-  max-width: 1200px; margin: 0 auto;
-}
-.issue-header .breadcrumb {
-  font-size: 0.8rem; color: var(--text-muted);
-  margin-bottom: 1rem;
-}
-.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
-.issue-header .breadcrumb a:hover { color: var(--text-primary); }
-.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
-.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+/* SECTION BREAK */
+.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
+.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
 
-.source-docs {
-  padding: 1.5rem 2rem;
-  max-width: 1200px; margin: 0 auto;
-  border-bottom: 1px solid var(--border);
-}
-.source-docs h3 {
-  font-size: 0.85rem; font-weight: 600;
-  color: var(--text-muted); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 0.75rem;
-}
-.doc-chips {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-}
-.doc-chip {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem; color: var(--text-secondary);
-  text-decoration: none;
-  transition: border-color 0.2s;
-}
-.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
-.doc-chip .doc-num {
-  font-weight: 700; font-family: var(--font-mono);
-  margin-right: 0.4rem;
-}
+/* SPREAD: full-width hero image + editorial text below */
+.spread { margin-bottom:3rem; }
+.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
+.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
+.spread .body p { margin-bottom:0.8rem; }
+.spread .body strong { color:var(--text); }
 
-.sections-container {
-  max-width: 1200px; margin: 0 auto;
-  padding: 2rem;
-}
-.section-block {
-  margin-bottom: 3rem;
-}
-.section-block h2 {
-  font-size: 1.3rem; font-weight: 700;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--border);
-}
-.concepts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.concept-card {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.concept-card:hover { border-color: var(--accent-blue); }
-.concept-card .img-placeholder {
-  width: 100%; aspect-ratio: 16/10;
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; color: var(--text-muted);
-  position: relative;
-}
-.concept-card .img-placeholder .role-tag {
-  position: absolute; top: 0.5rem; left: 0.5rem;
-  font-size: 0.6rem; font-weight: 700;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  text-transform: uppercase; letter-spacing: 0.1em;
-}
-.role-cover { background: var(--accent-magenta); color: white; }
-.role-hero { background: var(--accent-blue); color: white; }
-.role-spot { background: var(--accent-green); color: white; }
-.role-sidebar { background: var(--accent-purple); color: white; }
-.concept-card .card-info {
-  padding: 0.75rem 1rem;
-}
-.concept-card .concept-id {
-  font-family: var(--font-mono);
-  font-size: 0.7rem; color: var(--text-muted);
-  margin-bottom: 0.25rem;
-}
-.concept-card .concept-scene {
-  font-size: 0.8rem; color: var(--text-secondary);
-  line-height: 1.4;
-  display: -webkit-box; -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical; overflow: hidden;
-}
+/* TWO-UP: image left, text right (alternating) */
+.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  align-items:start; margin-bottom:2.5rem; }
+.two-up.flip { direction:rtl; }
+.two-up.flip > * { direction:ltr; }
+.two-up img { width:100%; border-radius:6px; }
+.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
+.two-up .body strong { color:var(--text); }
+.two-up .body p { margin-bottom:0.6rem; }
 
-/* STALENESS */
-.staleness-panel {
-  max-width: 1200px; margin: 2rem auto;
-  padding: 0 2rem;
-}
-.staleness-panel h3 {
-  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
-  letter-spacing: 0.1em; text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.staleness-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8rem;
-}
-.staleness-table th {
-  text-align: left; padding: 0.5rem 0.75rem;
-  border-bottom: 2px solid var(--border);
-  color: var(--text-muted); font-weight: 600;
-}
-.staleness-table td {
-  padding: 0.4rem 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  color: var(--text-secondary);
-}
-.staleness-table tr:hover td { color: var(--text-primary); }
+/* SIDEBAR: small img + text */
+.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
+.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
+.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
 
-@media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
-  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
-  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+/* DOC REF */
+.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
+  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
+.doc-ref:hover { color:var(--magenta); }
+
+/* SECTION TOC */
+.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
+.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
+  text-transform:uppercase; margin-bottom:0.6rem; }
+.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
+.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
+  color:var(--dim); background:var(--card); border:1px solid var(--border);
+  text-decoration:none; transition:all 0.2s; }
+.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
+
+/* BOTTOM NAV */
+.bot-nav { display:flex; justify-content:space-between; align-items:center;
+  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
+.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
+.bot-nav a:hover { color:var(--text); }
+.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
+
+/* INDEX COVERS */
+.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
+  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
+.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
+.mag-grid .card:first-child h2 { font-size:2.5rem; }
+.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
+  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
+.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
+.card:hover .bg { transform:scale(1.05); }
+.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
+.card:hover .grad { opacity:0.95; }
+.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
+.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
+.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
+  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
+.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
+.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
+
+/* HERO SECTION */
+.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
+  border-bottom:1px solid var(--border); overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
+  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
+.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
+.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
+.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
+.hero .stats .n { font-size:2rem; font-weight:900;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
+
+@media(max-width:768px) {
+  .hero h1 { font-size:2.2rem; }
+  .mag-grid { grid-template-columns:1fr; padding:1rem; }
+  .mag-grid .card:first-child { min-height:280px; }
+  .cover h1 { font-size:2rem; }
+  .cover { height:60vh; }
+  .two-up { grid-template-columns:1fr; }
+  .sidebar-spread { flex-direction:column; }
+  .sidebar-spread img { width:100%; }
 }
-</style>
-</head>
-<body>
-  <nav class="topnav">
-    <span class="logo">SOVEREIGN POWER</span>
-    <a href="index.html">Library</a>
-    <a href="issue_1.html">#1</a>
-<a href="issue_2.html" class="active">#2</a>
+</style></head><body>
+<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
+<a href="index.html">Library</a><a href="issue_1.html">#1</a>
+<a href="issue_2.html" class="on">#2</a>
 <a href="issue_3.html">#3</a>
 <a href="issue_4.html">#4</a>
 <a href="issue_5.html">#5</a>
 <a href="issue_6.html">#6</a>
 <a href="issue_7.html">#7</a>
+<span class="sp"></span><span class="badge">ALPHA</span></nav>
+<div class="cover">
+  <img src="img/diagrams/i2_cover.png" alt="">
+  <div class="overlay"></div>
+  <div class="pill" style="background:#0984e3">Issue 2 of 7</div>
+  <div class="text"><h1>The Architecture of Trust</h1>
+  <div class="sub">Act 2: Architecture + Infrastructure · 81 illustrations</div></div>
+</div>
+<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-cover">cover</a><a href="#sec-1-currency">§1 Currency σ</a><a href="#sec-2-sensors">§2 Sensors</a><a href="#sec-3-network-formation">§3 Network Formation</a><a href="#sec-4-revenue">§4 Revenue</a><a href="#sec-5-distribution">§5 Distribution</a><a href="#sec-6-edgcumbe-encoding">§6 Edgcumbe Encoding</a></div></div>
+<div class="editorial"><div class="sec-break" id="sec-cover"><h2><a href="#sec-cover" style="color:inherit;text-decoration:none">cover</a></h2></div>
+<div class="sec-break" id="sec-1-currency"><h2><a href="#sec-1-currency" style="color:inherit;text-decoration:none">§1 Currency σ</a></h2></div>
 
-    <span class="spacer"></span>
-    <span class="alpha-badge">ALPHA</span>
-  </nav>
+                <div class="spread" id="i2_s1_sigma_definition">
+                  <img src="img/diagrams/i2_s1_sigma_definition.png" alt="" loading="lazy">
+                  <div class="body"><p>The original design pegged .kasset values to gold via an algorithmic oracle. This was abandoned because:</p><p><strong>Gold is mutable.</strong> Central banks hold 35,000+ tonnes. Government gold sales/purchases move the price. A sovereign could manipulate .kasset values by manipulating gold markets.</p><p><strong>Gold is geographically asymmetric.</strong> South Africa, China, Russia, and Australia dominate production. σ's energy base is universal.</p><p><strong>Gold has no intrinsic utility in the digital context.</strong> Energy is the substrate of all computation. Pricing intelligence in energy units is philosophically coherent.</p><a class="doc-ref" href="#sec-1-currency">§ 1. Why Not Gold?</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_spark_coin">
+                  <img src="img/diagrams/i2_s1_spark_coin.png" alt="" loading="lazy">
+                  <div class="body"><p>1 σ ≡ 1 kilowatt-hour (kWh) = 3,600,000 joules (exact)</p><p><strong>Derived from:</strong> SI joule, defined by the Planck constant (exact since the 2019 BIPM redefinition of SI base units)</p><p><strong>Changes when:</strong> NIST redefines the joule (happens only when measurement precision improves — the unit itself is invariant)</p><p><strong>Cannot be:</strong> printed, inflated, sanctioned, debased</p><p>σ is a <strong>reference number</strong> — a unit-of-account label applied to the user's existing fiat balance. It is NOT:</p><p>A token, coin, or cryptocurrency (no blockchain, no chain, no wallet)</p><a class="doc-ref" href="#sec-1-currency">§ 2. The σ Definition</a></div>
+                </div>
+                <div class="two-up" id="i2_s1_why_not_gold">
+                  <img src="img/diagrams/i2_s1_why_not_gold.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>REC = Regional Energy Cost</strong></p><p>SSK publishes and open-sources a <strong>deterministic conversion function</strong> that converts σ to local currency using publicly available <strong>total delivered energy cost</strong> data — the all-in price a consumer pays per kWh, including production, transmission, distribution, storage, and applicable taxes/fees. This is the retail electricity price, not the levelized cost of energy (LCOE) or production cost alone.</p><p>The company publishes the formula <strong>once</strong>. It does NOT operate a centralized oracle, set prices, or update rates on behalf of users.</p><p>### Why Total Delivered Cost, Not Production Cost</p><p>The total delivered cost is the correct economic basis because it represents the <strong>actual price of energy as experienced by the user</strong> — the full cost of having 1 kWh available for computation at a specific place and time.</p><p>### Data Sources (User-Configurable)</p><a class="doc-ref" href="#sec-1-currency">§ 3. σ Conversion Formula</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_conversion_formula">
+                  <img src="img/diagrams/i2_s1_conversion_formula.png" alt="" loading="lazy">
+                  <div class="body"><p>There is no blockchain, no sequencer, and no smart contract. Trades settle bilaterally. Both devices must have their vaults open (foreground exclusivity — Doc 28 §0.7) to sign:</p><p>Buyer and seller connect via mesh (BLE/WiFi Direct)</p><p>A2A negotiation matches .kasset plaintext headers (type, domain, rarity) — no payload decryption required</p><p>Both devices exchange locally computed rates and agree on a common reference</p><p>Seller signs the .kasset transfer (HSM-bound P-256 ECDSA) from Compartment A</p><p>Buyer signs the acceptance (HSM-bound P-256 ECDSA); .kasset enters buyer's Compartment B</p><a class="doc-ref" href="#sec-1-currency">§ 5. Bilateral Settlement Protocol</a></div>
+                </div>
+                <div class="two-up" id="i2_s1_regional_prices">
+                  <img src="img/diagrams/i2_s1_regional_prices.png" alt="" loading="lazy">
+                  <div class="body"><p>⚡ 2,500</p><p>≈ $825.00 USD (NYC)</p><p>Source: EIA NYC $0.33/kWh (2026-04-15)</p><p><strong>Primary display:</strong> Spark ⚡ (always)</p><p><strong>Secondary:</strong> Local currency as reference (toggle-able), calculated from user's selected data source</p><p><strong>Source line:</strong> Explicit data source + timestamp (not "↑ 0.3% today" — SSK does not track rate movements)</p><a class="doc-ref" href="#sec-1-currency">§ 6. User-Facing Display</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_total_delivered_cost">
+                  <img src="img/diagrams/i2_s1_total_delivered_cost.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Trend</p><p>Global energy costs are shaped by two vectors moving in opposite directions:</p><p><strong>Production cost (LCOE) is in secular decline:</strong></p><p><strong>Net-positive milestones:</strong></p><p><strong>December 2022:</strong> National Ignition Facility (NIF) achieves fusion ignition — net energy gain for the first time in history</p><p><strong>2024:</strong> Helion Energy targets 2028 for commercial fusion pilot (production LCOE projected: $0.01–$0.05/kWh)</p><a class="doc-ref" href="#sec-1-currency">§ 8. Energy Convergence Thesis — σ Stability Under Declining Production Costs</a></div>
+                </div>
+                <div class="two-up" id="i2_s1_data_sources">
+                  <img src="img/diagrams/i2_s1_data_sources.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Thesis summary:</strong> σ is a metrological reference number defined by physics (1 kWh ≡ 3.6 MJ), not by policy. Its fiat-equivalent value is determined by publicly observable delivered energy costs and fluctuates with those costs — it can decrease as energy infrastructure becomes more efficient. Each device computes the conversion locally using a published, deterministic, open-source formula on user-selected data sources. No central oracle exists. Unlike a production-cost peg, the total-delivered-cost basis retains a durable non-zero fiat anchor through infrastructure costs, making σ a practical unit of account today. σ is not designed or marketed as an investment, a store of value, or an appreciating asset. Users are responsible for their own assessment of σ's utility and any applicable tax obligations.</p><a class="doc-ref" href="#sec-1-currency">§ 8. σ Conversion Formula Resilience Under Energy Convergence</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_local_computation">
+                  <img src="img/diagrams/i2_s1_local_computation.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>Edge-Native</strong> — All processing happens on-device. Sensors connect via BLE to the user's Sovereign Survival Kit instance, not to a cloud.</p><p><strong>Open Protocol</strong> — Sovereign Survival Kit defines a <code>SovSensor</code> protocol (JSON over BLE GATT) that any manufacturer can implement. The products below are reference designs, not a walled garden.</p><p><strong>Data as Input, Not Product</strong> — Sensor data is raw input for the twin's planning engines. These are NOT standalone health gadgets with their own apps. They are peripherals for the OS.</p><p><strong>.kasset Eligible</strong> — Anonymized, aggregated biometric trends can become .kasset data (e.g., "12 months of metabolic optimization protocols") for A2A commerce.</p><p><strong>Privacy by Architecture</strong> — Biometric data is the most sensitive personal data category. It stays in the PII vault with AES-256-GCM encryption. It is NEVER transmitted over a network.</p><a class="doc-ref" href="#sec-1-currency">§ 1. Design Principles</a></div>
+                </div>
+                <div class="two-up" id="i2_s1_no_appreciation">
+                  <img src="img/diagrams/i2_s1_no_appreciation.png" alt="" loading="lazy">
+                  <div class="body"><p>### Service UUID</p><p>SovSensor Primary Service: 0xSOV1 (custom 128-bit UUID TBD)</p><p>### Characteristic Format</p><p>Every sensor transmits a standardized JSON payload over BLE GATT notify:</p><p>{</p><p>"device_id": "sovbreath-001",</p><a class="doc-ref" href="#sec-1-currency">§ 3. SovSensor Protocol (JSON over BLE GATT)</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_decay_hourglass">
+                  <img src="img/diagrams/i2_s1_decay_hourglass.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Note:</strong> This architecture represents the Version 2.0 design, intended for release concurrently with the Lifestyle Sensors line.</p><p>As the sensor line streams continuous biometric and environmental data, the Sovereign Digital Cocoon evolves into a <strong>Universal Fact Engine</strong>. Every breath, heartbeat, and movement becomes a high-signal fact captured locally.</p><p>### 4.1 The Merkle Epoch (Local Minting)</p><p>Minting every individual data point via AES-256-GCM and ML-DSA-65 would destroy battery and storage. Instead, Version 2.0 utilizes a <strong>Layer 3 State Channel</strong> (The Merkle Epoch):</p><p><strong>The Accumulator:</strong> Every sensor reading and human-to-human message is hashed as a leaf in a local Merkle Tree.</p><p><strong>Producer-Free Minting:</strong> This local hashing runs on the user's hardware and is inherently free (costing only local electricity σ).</p><a class="doc-ref" href="#sec-1-currency">§ 4. Version 2.0: The Sovereign Fact Engine (Ambient Knowledge Capitalization)</a></div>
+                </div>
+                <div class="two-up" id="i2_s1_non_transferable">
+                  <img src="img/diagrams/i2_s1_non_transferable.png" alt="" loading="lazy">
+                  <div class="body"><p>┌──────────────┐     BLE GATT      ┌──────────────────┐</p><p>│  SovBreath   │ ──────────────────>│                  │</p><p>│  SovPulse    │                    │   Sovereign Survival Kit    │</p><p>│  SovLight    │   JSON payload     │   BLE Receiver   │</p><p>│  SovAir      │ ──────────────────>│   (Edge App)     │</p><p>│  SovScale    │                    │                  │</p><a class="doc-ref" href="#sec-1-currency">§ 5. Data Flow: Sensor → twin</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_bilateral_settlement">
+                  <img src="img/diagrams/i2_s1_bilateral_settlement.png" alt="" loading="lazy">
+                  <div class="body"><p>### Hardware Revenue</p><p>### Strategic Value (Not Revenue)</p><p>The primary value of the sensor line is NOT hardware margin. It is:</p><p><strong>Engagement flywheel</strong> — As biometric history accumulates, the twin becomes irreplaceable. 6 months of continuous HRV, sleep, and metabolic data creates a personal health baseline no competitor can replicate.</p><p><strong>Extreme switching cost</strong> — The biometric corpus is locked in the PII vault with the user's encryption key. Starting fresh with another platform means losing all historical context.</p><p><strong>Data network effect</strong> — Anonymized .kasset health patterns (opt-in via CIP) improve the twin's planning algorithms across the entire network.</p><a class="doc-ref" href="#sec-1-currency">§ 5. Business Model</a></div>
+                </div>
+                <div class="two-up" id="i2_s1_user_display">
+                  <img src="img/diagrams/i2_s1_user_display.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Note</strong>: Biometric sensor devices may trigger regulatory classification depending on jurisdiction. This section captures awareness; detailed analysis is deferred to Phase 2+.</p><a class="doc-ref" href="#sec-1-currency">§ 6. Regulatory Considerations</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_nist_governance">
+                  <img src="img/diagrams/i2_s1_nist_governance.png" alt="" loading="lazy">
+                  <div class="body"><p>The sensor product line complements, not replaces, the existing hardware roadmap:</p><a class="doc-ref" href="#sec-1-currency">§ 7. Relationship to Existing Hardware IP</a></div>
+                </div>
+                <div class="two-up" id="i2_s1_energy_convergence">
+                  <img src="img/diagrams/i2_s1_energy_convergence.png" alt="" loading="lazy">
+                  <div class="body"><p>The network begins with a dinner — and repeats no more than <strong>four times per year</strong>.</p><p>A small portion of the seed round funds an intimate, curated series of events in New York City — each seating 8 to 16 people drawn from local educational institutions, alumni networks, and creative communities. Each event targets a different community. The venue is site-specific (a private dining room, a gallery, a club library). The meal is catered. The invitation carries one instruction:</p><p><strong>"Bring a piece of digital media you made. You will mint it and trade it with the others at the table."</strong></p><p>The quarterly cadence is deliberate — scarcity creates gravity. These are not recurring meetups. Each Genesis dinner is a curated, invitation-only event that seeds a new community into the network. Four per year means four new communities, four new .kasset domains, four new local word-of-mouth waves.</p><p>### Why 8–16 People</p><p>### The Genesis Grant: ⚡500 Per Seat</p><a class="doc-ref" href="#sec-1-currency">§ 1. The Genesis Series</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s1_self_generator">
+                  <img src="img/diagrams/i2_s1_self_generator.png" alt="" loading="lazy">
+                  <div class="body"><p>The Genesis Event proves the mechanic works: people create, price, and trade digital media face-to-face. The next phase scales that mechanic through two channels that reinforce each other — one ambient, one event-driven.</p><p>### Vector A: The Sticker Drop (QR Street Distribution)</p><p>Local musicians and visual artists distribute their work by leaving pre-printed QR stickers in the streets. QR stickers are $0.05–$0.15/unit ambient awareness placements — they supplement mesh discovery and word-of-mouth, not replace them. See Doc 29 §4 for the full QR sticker specification.</p><p><strong>The sticker is a designed object.</strong> Each sticker is custom-printed with the artist's name, a thumbnail of the work (album art, a cropped image of the visual piece), Sovereign branding, and a QR code. The .kasset is pre-minted and the one-time claim token is encoded in the QR before the artist ever touches it. The artist's only job is to decide where to place them.</p><p><strong>Anti-cloning:</strong> One-time claim tokens replace hardware NFC MAC. Token is generated by the minting Mac, burned on first claim. A photographed QR is a race condition (first scan wins) — equivalent to finding a rare record first at a thrift store. See Doc 29 §4.</p><p><strong>The production pipeline:</strong></p><a class="doc-ref" href="#sec-1-currency">§ 2. Scaling the Table: Two Growth Vectors</a></div>
+                </div><div class="sec-break" id="sec-2-sensors"><h2><a href="#sec-2-sensors" style="color:inherit;text-decoration:none">§2 Sensors</a></h2></div>
 
-  <div class="issue-header">
-    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 2</div>
-    <h1 style="color:#0984e3">The Architecture of Trust</h1>
-    <div class="act-label">Act 2: Architecture + Infrastructure · 81 diagrams</div>
-  </div>
+                <div class="spread" id="i2_s2_sensor_lineup">
+                  <img src="img/diagrams/i2_s2_sensor_lineup.png" alt="" loading="lazy">
+                  <div class="body"><p>While the cultural track seeds the network through music and visual art, a parallel track runs simultaneously through academic institutions — starting with the <strong>Joseph Wharton Scholars (JWS)</strong> at the University of Pennsylvania.</p><p>The mechanic is the same. The medium is different. Instead of tracks and prints, students mint <strong>class papers, research projects, case analyses, and thesis work</strong> as .kassets and trade them with other students.</p><p>### Why JWS</p><p>### What Gets Minted</p><p>Students are already producing work that has value beyond the grade. The .kasset formalizes that value and makes it tradeable:</p><p>### How It Starts</p><a class="doc-ref" href="#sec-2-sensors">§ 3. The Academic Track (Parallel Channel)</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s2_compass">
+                  <img src="img/diagrams/i2_s2_compass.png" alt="" loading="lazy">
+                  <div class="body"><p>Every formation mechanic described above — the Genesis dinner, the sticker drop, the gathering, the academic workshop — is amplified by the <strong>mesh network</strong>. Devices running the Sovereign edge app passively broadcast and discover .kasset availability through physical proximity. No internet. No server. No catalog to browse. Geography is the search engine.</p><p>### How It Works</p><p>Three radio layers, each serving a different range:</p><p>> <strong>Pre-hardware (M1–M14):</strong> The mesh operates on BLE + WiFi-Direct only — both natively available on conforming mobile devices. This limits ambient discovery to ~100 meters, which is sufficient for events, campuses, and dense urban foot traffic. LoRa's neighborhood-scale range activates when Sovereign hardware ships at M15.</p><p>> [!NOTE]</p><p>> <strong>Mobile BLE throttling.</strong> Mobile platforms throttle background BLE scanning (e.g., ~15% duty cycle with service-filtered discovery). Continuous, real-time peer detection is not reliable in background mode on mobile devices. SSK's architecture accounts for this: the <strong>Echo mechanism</strong> (§4.1, 24-hour store-and-forward) is the primary discovery mode, not continuous BLE. BLE proximity triggers the trade handshake when two users are in foreground or semi-active mode; Echoes populate the browse catalog asynchronously from cached availability vectors left by prior visitors. Discovery does not depend on continuous BLE scanning — it depends on the accumulation of Echoes at high-traffic locations (storefronts, campuses, transit hubs).</p><a class="doc-ref" href="#sec-2-sensors">§ 4. The Mesh Layer (Ambient Discovery)</a></div>
+                </div>
+                <div class="two-up" id="i2_s2_tether">
+                  <img src="img/diagrams/i2_s2_tether.png" alt="" loading="lazy">
+                  <div class="body"><p>### Piggybacking the City's Infrastructure</p><p>New York City has ~2,000 LinkNYC kiosks deployed across Manhattan, Brooklyn, Queens, and the Bronx — each providing free public WiFi with a range of ~100–150 meters. This is an existing mesh backbone that Sovereign can ride for free.</p><p><strong>The mechanic:</strong> A Sovereign device within range of a LinkNYC kiosk briefly joins the open WiFi and broadcasts its availability vector via standard local network discovery (mDNS/multicast). Any other Sovereign device on the same kiosk's network receives it. The device then disconnects. Hit-and-run — a few seconds of WiFi contact is enough to exchange availability vectors.</p><p>This is not a hack. It is standard use of a public WiFi network for local service discovery. No terms of service are violated. No data leaves the local network. The kiosk is just a relay point.</p><p><strong>What this changes:</strong></p><p>The mesh math from Section 4 shifts dramatically. At 10,000 Sovereign users in NYC, LinkNYC extends the average encounter radius from 30m (BLE) to 150m (WiFi), increasing the coverage area by <strong>25×</strong> (from ~2,827 m² to ~70,686 m²). Daily organic encounters scale proportionally.</p><a class="doc-ref" href="#sec-2-sensors">§ 5. The LinkNYC Layer & The Introduction Economy</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s2_sentinel">
+                  <img src="img/diagrams/i2_s2_sentinel.png" alt="" loading="lazy">
+                  <div class="body"><p>Everything described in Sections 1–5 is grassroots — dinners, stickers, storefronts, campuses, mesh. It builds slowly, deliberately, and authentically. But there is a moment in the growth curve where a single high-amplitude signal converts organic traction into viral velocity. That signal is a <strong>one-time celebrity sponsorship.</strong></p><p>> No celebrity partnership is committed at time of writing. The celebrity activation is a channel option, not a growth dependency. All five scenarios in Doc 13 §5 produce cash-flow-positive outcomes with or without celebrity participation.</p><p>### Timing: M5–M6 (Not Before)</p><p>This does NOT happen at launch. The activation fires only after the following conditions are met:</p><p>If any of these are missing, the celebrity spend is wasted — you'd be driving traffic into an empty room.</p><p>### The Archetype: Cardi B</p><a class="doc-ref" href="#sec-2-sensors">§ 6. The Catalyst: Single Celebrity Activation</a></div>
+                </div>
+                <div class="two-up" id="i2_s2_beacon">
+                  <img src="img/diagrams/i2_s2_beacon.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Funnel Stack</p><p>Each formation layer feeds the next. They are not alternatives — they are sequential stages of a single acquisition funnel:</p><p>Layer 1: GENESIS SERIES (intimate, quarterly)</p><p>12 people sit at a table and trade .kassets face-to-face.</p><p>They leave with wallets, twins, and a story to tell.</p><p>│</p><a class="doc-ref" href="#sec-2-sensors">§ 7. Convergence: From 12 Users to Critical Mass</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s2_ble_gatt">
+                  <img src="img/diagrams/i2_s2_ble_gatt.png" alt="" loading="lazy">
+                  <div class="body"><p>At critical mass, the network flips the traditional data extraction model. As outlined in Doc 06, a user's data exhaust—traditionally harvested for free by platforms—is captured, encrypted, and retained entirely within the local Sovereign Cocoon.</p><p>Users can authorize their Twin to bundle and anonymize specific telemetry or behavioral exhaust into macro-level .kassets. The Sovereign network then acts as an arbitrageur, trading this aggregated intelligence back to corporate cloud processors, LLM training labs, and market researchers. The corporate entities pay for high-fidelity, verified data, and the economic value flows directly back to the users who generated it. The network transitions from a cost center to an income generator for its users.</p><a class="doc-ref" href="#sec-2-sensors">§ 8. Data Exhaust Monetization (Corporate Arbitrage)</a></div>
+                </div>
+                <div class="sidebar-spread" id="i2_s2_y2_locked">
+                  <img src="img/diagrams/i2_s2_y2_locked.png" alt="" loading="lazy">
+                  <div class="body"><p>With the mesh active and the user base engaged, SovereignOS replaces legacy "doom-scrolling" platforms (Facebook, Instagram, X) with a Twin-curated, asynchronous information architecture.</p><p><strong>Feed Inputs:</strong></p><p><strong>Authorized Broadcasts:</strong> Personalized messages sent by authorized individuals to <em>N</em> number of recipients (the Sovereign equivalent of a mailing list or group broadcast).</p><p><strong>The Public Record:</strong> Statements, votes, and actions by public officials and government representatives, ingested continuously via the Codex subscription.</p><p><strong>Curation by the Twin:</strong></p><p>The feed is not an infinite scroll engineered for engagement. It is a periodic briefing curated by the user's Twin. The primary filtering metrics are <strong>cognitive demand</strong> and the <strong>minimization of cognitive fragmentation</strong>. The Twin synthesizes the noise, presenting only what matters, when the user has the cognitive budget to process it</p><a class="doc-ref" href="#sec-2-sensors">§ 9. The Sovereign Feed (Cognitive Defense)</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s2_y1_phone_only">
+                  <img src="img/diagrams/i2_s2_y1_phone_only.png" alt="" loading="lazy">
+                  <div class="body"><p>The second pillar of delegation is about curating professional and experiential progression. Rather than relying on algorithmic serendipity or a purely autonomous AI, users actively choose to "lock in" the specific people and domain experts they want to work with on a daily basis.</p><p>The user delegates discovery authority to chosen human managers or curators. These managers sift through the global mesh and the Sovereign Feed to define a highly refined, high-signal set of choices, opportunities, or introductions. The user's Twin acts as the logistical executor—maintaining these trusted connections, filtering out unauthorized noise, and presenting the user only with the curated selections from their chosen human managers. The user remains the ultimate decision-maker, selecting from a menu populated entirely by people they have explicitly chosen to trust.</p><a class="doc-ref" href="#sec-2-sensors">§ 11. Curatorial Delegation (Locking in the Network)</a></div>
+                </div><div class="sec-break" id="sec-3-network-formation"><h2><a href="#sec-3-network-formation" style="color:inherit;text-decoration:none">§3 Network Formation</a></h2></div>
 
-  <div class="source-docs">
-    <h3>Source Documents</h3>
-    <div class="doc-chips">
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/05_Sigma_Oracle_Architecture.md" class="doc-chip" target="_blank">
-          <span class="doc-num">05</span>σ Conversion Architecture
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/06_Lifestyle_Sensor_Products.md" class="doc-chip" target="_blank">
-          <span class="doc-num">06</span>Lifestyle Sensor Products — The Physical Feedback Layer
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/07_Network_Formation_Strategy.md" class="doc-chip" target="_blank">
-          <span class="doc-num">07</span>Network Formation Strategy
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/08_Revenue_Generation_Matrix.md" class="doc-chip" target="_blank">
-          <span class="doc-num">08</span>Revenue Generation Matrix
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/29_Distribution_Architecture.md" class="doc-chip" target="_blank">
-          <span class="doc-num">29</span>Distribution Architecture
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/37_Edgcumbe_Encoding.md" class="doc-chip" target="_blank">
-          <span class="doc-num">37</span>Edgcumbe Encoding: Privacy-Preserving Methodology Transfer via Fiber Bundle Projection on τ-Dynamic Manifolds
-        </a>
-        </div>
-  </div>
+                <div class="spread" id="i2_s3_growth_overview">
+                  <img src="img/diagrams/i2_s3_growth_overview.png" alt="" loading="lazy">
+                  <div class="body"><p>Because the Twin perfectly models the user's preferences, and because it ingests the Codex public record continuously, public officials can no longer rely on political amnesia. The Twin instantly cross-references any new statement from a representative against their entire historical record. Politicians must stand by their full record in any given moment, as every user's Twin acts as an indefatigable, personalized fact-checker and context-provider.</p><a class="doc-ref" href="#sec-3-network-formation">§ 12. Absolute Political Accountability</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_genesis_dinner">
+                  <img src="img/diagrams/i2_s3_genesis_dinner.png" alt="" loading="lazy">
+                  <div class="body"><p>In Phase 3, the core mechanics of the .kasset exchange are adapted from economic trading to the democratic process.</p><p>Voting evolves from a discrete, low-information event (e.g., every two years) into a <strong>continuous process</strong> executed by agents.</p><p><strong>How it works:</strong></p><p><strong>Delegation .kassets:</strong> Users issue specific cryptographic mandates (delegations) to representatives or domain experts.</p><p><strong>Continuous Re-evaluation:</strong> The user's Twin monitors the representative's actions via the public record (Absolute Accountability).</p><p><strong>Fluid Authority:</strong> Authority is conferred from the group onto a person to make representative decisions for the people who they delegate to. If a representative deviates from the user's values, the agent automatically withdraws the delegation and re-assigns it.</p><a class="doc-ref" href="#sec-3-network-formation">§ 13. Agentic Voting & Liquid Authority</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_genesis_grant">
+                  <img src="img/diagrams/i2_s3_genesis_grant.png" alt="" loading="lazy">
+                  <div class="body"><p>Sovereign Survival Kit does not rely on legacy corporate entities to generate revenue. We are replacing that economic model and cannot be dependent on existing players.</p><p>Revenue derives from:</p><p>Network transaction fees (progressive, physics-anchored)</p><p>Hardware sales (margin on devices that enable the network)</p><p>Service fees (storage, logistics, certification, education)</p><p><strong>We do NOT monetize with:</strong> SaaS, data, excess compute leases, B2B licensing to enterprises, or API subscriptions.</p><a class="doc-ref" href="#sec-3-network-formation">§ Revenue Philosophy</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_what_happens_table">
+                  <img src="img/diagrams/i2_s3_what_happens_table.png" alt="" loading="lazy">
+                  <div class="body"><p>### 1A. Progressive Certification Fee</p><p><strong>What:</strong> Dynamic fee on every .kasset trade certified by SSK's certification service (notary model). Three layers: Ramsey pricing (efficiency), Rawlsian veil (equity), energy-proportional (physics constraint). Trades settle bilaterally on mesh; the fee is for certification and Codex archival.</p><p><strong>Variables:</strong> (1) measured asset rarity/novelty, (2) buyer's accumulated wealth profile</p><p><strong>Typical range:</strong> 1.0–6.0% depending on segment (see doc 11 §3 for segment breakdown)</p><p><strong>Weighted average:</strong> ~2.38% (M12) → ~3.25% (M36) as higher-value professional trades grow in share</p><p><strong>Regulatory Risk:</strong> 🟢 LOW — standard marketplace transaction fee</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 1: Core Revenue (Year 1)</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_sticker_qr">
+                  <img src="img/diagrams/i2_s3_sticker_qr.png" alt="" loading="lazy">
+                  <div class="body"><p>### 2A. Sovereign Vault (Identity Storage — Tiered)</p><p><strong>What:</strong> Encrypted identity storage with tiered membership. Sovereign Survival Kit never sees the contents (zero-knowledge custody).</p><p><strong>Tier 1 — Cold Storage:</strong> $60/year. Entry-level identity backup. Priced on safe deposit box analogy ($20-200/yr avg, TCBK/SmartAsset 2024).</p><p><strong>Tier 2 — Standard:</strong> $15/month. Full features: backup, freeze, marketplace tools.</p><p><strong>Tier 3 — Premium:</strong> $35/month + siloed education program fees ($23-70/mo, benchmarked to Adobe Creative Cloud). Premium effective: ~$80/mo.</p><p><strong>Conversion:</strong> 75% (Y1) → 95% (Y3). Source: FDIC 2023 — 95.8% of US households are banked. Vault IS the bank.</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 2: Premium Services (Year 2)</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_sticker_claim">
+                  <img src="img/diagrams/i2_s3_sticker_claim.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Founder directive (2026-04-15):</strong> "We do not rely on legacy corporate entities to generate revenue because we are replacing that economic model and cannot be dependent on existing players."</p><p>></p><p>> The following streams will NEVER be pursued: Biometric SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK Licensing, Constituent Intelligence Platform (Government SaaS). Enterprise API of any kind is prohibited.</p><p>></p><p>> <strong>Clarification:</strong> The Apex Oracle (Doc 26) serves individual buyers, not corporations. Every buyer is a named natural person acting through their own personal twin. There are no enterprise contracts, no corporate accounts, no B2B API, and no institutional integration. The "no B2B" constraint is absolute across all revenue tiers and all time horizons.</p><a class="doc-ref" href="#sec-3-network-formation">§ ~~Tier 3: B2B Licensing~~ — PERMANENTLY REJECTED</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_gathering_100">
+                  <img src="img/diagrams/i2_s3_gathering_100.png" alt="" loading="lazy">
+                  <div class="body"><p>### 4A. Volumetric Sphere (Ultra-Premium Hardware)</p><p><strong>What:</strong> White-glove venue installations of the 6-DOF gyroscopic control sphere. Distinct from the consumer Sphere/Rig ($2,499-$4,999 in doc 11) — this is a purpose-built, professionally installed system.</p><p><strong>Pricing:</strong> $50,000-$150,000 per unit</p><p><strong>Revenue:</strong> 50 units/year × $100K avg = $5M</p><p><strong>Margin:</strong> 65%+</p><p><strong>Regulatory Risk:</strong> 🟢 LOW — capital equipment sales</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 4: Sphere & Hardware Premium (Year 3+)</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_jws_workshop">
+                  <img src="img/diagrams/i2_s3_jws_workshop.png" alt="" loading="lazy">
+                  <div class="body"><p>### 5A. Expertise Certification Endorsements</p><p><strong>What:</strong> As the Provenance Engine builds verified expertise scores, professional organizations and industry guilds may pay to integrate or endorse Sovereign Survival Kit expertise ratings as an alternative to traditional credentialing.</p><p><strong>Pricing:</strong> Partnership/endorsement fees $50K-$200K/year</p><p><strong>Revenue:</strong> Long-term brand value play</p><p><strong>Regulatory Risk:</strong> 🟢 LOW — standard endorsement/partnership fees</p><a class="doc-ref" href="#sec-3-network-formation">§ Tier 5: Network & Ecosystem Revenue (Year 2+)</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_itp_workshop">
+                  <img src="img/diagrams/i2_s3_itp_workshop.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Note:</strong> Specific dollar amounts are NOT stated here to avoid inconsistency with the financial model. All revenue projections are calculated in doc 11 (Financial Model) and doc 12 (Scenario Analysis) using cited assumptions and shown work. This document defines WHAT we charge. Doc 11 defines HOW MUCH.</p><a class="doc-ref" href="#sec-3-network-formation">§ Revenue Roadmap Summary (Approved Streams Only)</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_cross_pollination">
+                  <img src="img/diagrams/i2_s3_cross_pollination.png" alt="" loading="lazy">
+                  <div class="body"><p>The Sovereign Survival Kit ships as two components:</p><p>### Component A: Desktop Application</p><p>A native desktop application distributed directly from the Company's website. Installable from a single package.</p><p><strong>Per-platform packaging:</strong></p><p>The desktop application contains:</p><p><strong>Vault</strong> — Two-compartment encrypted storage (Doc 28). <code>vault_key = Argon2id(passphrase) ⊕ HSM_key</code>. HSM, KDF, and encrypted storage coexist in the same native process — no boundary crossing.</p><a class="doc-ref" href="#sec-3-network-formation">§ §1. Two-Component Model</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_mesh_ble">
+                  <img src="img/diagrams/i2_s3_mesh_ble.png" alt="" loading="lazy">
+                  <div class="body"><p>The reference design (Doc 03, Doc 28) requires three platform capabilities:</p><p>### Mobile Browser — Available APIs</p><p>### Mobile Browser — Blocked APIs</p><a class="doc-ref" href="#sec-3-network-formation">§ §2. Capability Satisfaction</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_wifi_direct">
+                  <img src="img/diagrams/i2_s3_wifi_direct.png" alt="" loading="lazy">
+                  <div class="body"><p>Proximity discovery operates across four tiers. No company infrastructure participates in any tier. Zero middleman.</p><p>### Tier 1: BLE (Desktop-to-Desktop — Ambient)</p><p>When two desktops running SSK are in BLE range (~30m), they discover each other and exchange availability vectors automatically. No user action required.</p><p><strong>Scenarios:</strong> Coffee shops, coworking spaces, academic workshops, Genesis dinners — any setting where laptops are present. The desktops advertise and scan. The phone is not involved in Tier 1.</p><p>### Tier 2a: QR Exchange (Phone — Intentional, Zero Network)</p><p>Two people with phones. No WiFi. No BLE. No network of any kind. The camera is the radio:</p><a class="doc-ref" href="#sec-3-network-formation">§ §3. Four-Tier Discovery Model</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_storefront_qr">
+                  <img src="img/diagrams/i2_s3_storefront_qr.png" alt="" loading="lazy">
+                  <div class="body"><p>Physical distribution stickers use QR codes, not NFC tags. QR codes are 10× cheaper, universally compatible with any phone camera, and scannable from any mobile browser via <code>getUserMedia()</code> + jsQR.</p><p>### Two Modes</p><p><strong>Claim Sticker (single .kasset):</strong> QR encodes a one-time claim token + .kasset metadata. User scans → claims the asset. First scan wins. Token burned on claim. Works offline (claim queued, settled when desktop is reachable).</p><p><strong>Discovery Sticker (catalog):</strong> QR encodes an availability vector. User scans → sees what the artist has for sale. Browsing is fully offline. Purchase is queued until connectivity.</p><p>### Economics</p><p>### Anti-Cloning</p><a class="doc-ref" href="#sec-3-network-formation">§ §4. Sticker Distribution — QR Codes</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_echoes">
+                  <img src="img/diagrams/i2_s3_echoes.png" alt="" loading="lazy">
+                  <div class="body"><p>The vault locks when the user is not present. "Present" is a human state that technology can only approximate.</p><p><strong>Enforcement point:</strong> The desktop application. The phone contributes signals but does not enforce the lock.</p><p><strong>Candidate signals:</strong></p><p><strong>Design constraints:</strong></p><p>The desktop is the enforcement point</p><p>The vault locks when presence cannot be confirmed</p><a class="doc-ref" href="#sec-3-network-formation">§ §5. Presence Detection — Open Design Problem</a></div>
+                </div>
+                <div class="sidebar-spread" id="i2_s3_echo_density">
+                  <img src="img/diagrams/i2_s3_echo_density.png" alt="" loading="lazy">
+                  <div class="body"><p>Direct distribution replaces store trust with:</p><p><strong>Open source</strong> — the user can read the code</p><p><strong>Reproducible builds</strong> — the user can verify the binary matches the source</p><p><strong>Platform signing</strong> — automated security scans still run on each platform</p><p><strong>No phone app store involvement at all</strong> — the phone runs a web interface, not a native app</p><a class="doc-ref" href="#sec-3-network-formation">§ §6. Why Not App Stores?</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_linknyc">
+                  <img src="img/diagrams/i2_s3_linknyc.png" alt="" loading="lazy">
+                  <div class="body"><p>The vault key derivation requires an HSM abstraction layer:</p><p><strong>Linux single-factor note:</strong> Without a hardware HSM, Ubuntu installations rely on passphrase-only KDF. This is weaker than the two-factor model on macOS/Windows. Users who require two-factor vault security should use macOS or Windows, or add a USB HSM (YubiKey, Nitrokey) as a future hardware option.</p><a class="doc-ref" href="#sec-3-network-formation">§ §7. Platform HSM Abstraction</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_introduction_kasset">
+                  <img src="img/diagrams/i2_s3_introduction_kasset.png" alt="" loading="lazy">
+                  <div class="body"><p>### Open Source: The Vault (Layer 0)</p><p>The vault layer is open source. This is the transparency commitment. The user must be able to verify that the safe is real — that the encryption has no backdoor, the lock works, the burn credential destroys data, and the airgap check is honest.</p><p>The vault contains no novel algorithms. It composes well-known cryptographic primitives (AES-256-GCM, Argon2id, P-256 ECDSA, ML-DSA-65) into the two-compartment architecture. The novelty is in the <em>architecture</em> (what's stored where, why the compartments exist, how the lock triggers) — which is protected by defensive patent claims 11 and 13 (Doc 21). The <em>implementation</em> uses standard libraries that any cryptographer can audit.</p><p><strong>What's open source:</strong></p><p><strong>License:</strong> Apache 2.0. Separately buildable and auditable.</p><p>### Proprietary: Everything Above the Vault</p><a class="doc-ref" href="#sec-3-network-formation">§ §8. Source Code Licensing</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_serendipitous_intro">
+                  <img src="img/diagrams/i2_s3_serendipitous_intro.png" alt="" loading="lazy">
+                  <div class="body"><p>The desktop application runs as a native process on each platform. No Docker, Podman, or virtualization layer is used. This is a deliberate architectural decision.</p><p>### Rationale</p><p>The container's only advantage — a clean, flag-level network airgap — does not justify splitting the vault's security boundary across a process barrier. The airgap during minting is enforced by the minting code itself: it checks all network interfaces and refuses to proceed if any are reachable. This check is part of the open-source vault layer and is verified by the reproducible build.</p><p>### Cross-Platform Strategy</p><p>The application is not made cross-platform by a container. It is made cross-platform by the language stack:</p><p>The platform-specific surface is ~550 lines per platform. Everything else is shared.</p><a class="doc-ref" href="#sec-3-network-formation">§ §9. No Containerization</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_celebrity_drop">
+                  <img src="img/diagrams/i2_s3_celebrity_drop.png" alt="" loading="lazy">
+                  <div class="body"><p>A central problem in sovereign data architecture is the transfer of cognitive methodology between autonomous agents without transferring cognitive identity. A seller possesses expertise — a process for solving a class of problems. A buyer wishes to acquire that process. The transfer must preserve the <em>what</em> and <em>how</em> of the methodology while destroying the <em>who</em> — the cognitive fingerprint of the seller.</p><p>Linguistic translation fails this requirement. Authorship attribution survives translation across natural languages; stylometric features persist even under aggressive paraphrasing (Koppel, Schler, & Argamon, 2009). The translation must therefore be <strong>structural</strong>, operating on the topology and dynamics of the process itself rather than on its linguistic surface.</p><p><strong>Thesis.</strong> A methodology is a geodesic on a manifold. The seller's identity is the coordinate system. Minting strips the coordinates. Folding installs new coordinates. Privacy is geometry.</p><p>More precisely: any cognitive methodology can be encoded as a sequence of five process-algebraic operators (Milner, 1989) annotated with continuous temporal dynamics (Lee, 1998) in ℝ^∞. This encoding lives on an infinite-dimensional manifold whose curvature emerges from the collective behavior of all agents. The seller's idiolect defines a fiber over each point of the base trajectory; minting projects the trajectory onto the base manifold, discarding the fiber. The buyer's idiolect selects a new fiber, reconstructing the methodology in the buyer's personal cognitive space via energy minimization (Anfinsen, 1973). The projection is many-to-one: the seller's identity cannot be recovered. The methodology content is invariant: the buyer receives what was encoded. Privacy and fidelity are not competing objectives — they are dual consequences of the same geometric structure.</p><p>The encoding formalizes a fundamental epistemological distinction: the <strong>factual structure</strong> of a methodology (which operations, in what order, with what branching logic) is observer-independent — it lives on the base manifold. The <strong>opinion texture</strong> (the practitioner's personal rhythm, emphasis, confidence, and aesthetic weighting) is observer-dependent — it lives in the fiber. Minting extracts the fact and strips the opinion. Folding adds new opinion to the preserved fact. Lossiness and privacy are the same phenomenon measured from different sides: lossiness is the opinion that was stripped; privacy is the identity that was destroyed with it.</p><p>This paper derives the <strong>Edgcumbe calculus</strong> that formalizes this construction. The calculus generates cognitive encoding and economic dynamics as specializations of a single pair of equations: the geodesic equation (agent dynamics) and the mean-field emergence equation (manifold dynamics). §2 establishes the five independent first principles. §3 derives the calculus. §4 demonstrates domain specializations. §5 registers assumptions and limitations. Companion documents provide the physics onboarding (Internal: 37a) and technical specification with IP claims (Internal: 37b).</p><a class="doc-ref" href="#sec-3-network-formation">§ §1. Introduction</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s3_12_to_250k">
+                  <img src="img/diagrams/i2_s3_12_to_250k.png" alt="" loading="lazy">
+                  <div class="body"><p>The Edgcumbe encoding is derived from the intersection of five independent bodies of established theory. Each contributes one structural constraint. Their combination is novel; individually, each is well-established.</p><p>### §2.1 Complexity and Computational Equivalence</p><p>Wolfram (2002) demonstrated that simple rules iterated over simple elements produce arbitrary complexity. Rule 110 — a one-dimensional cellular automaton with 2 states and nearest-neighbor rules — is Turing-complete (Cook, 2004). The complexity resides not in the elements or the rules but in the iteration.</p><p><strong>Constraint derived:</strong> The encoding alphabet can be small. Expressiveness arises from the combinatorics of sequences, not from the richness of individual symbols. A base of 5 symbols is sufficient for universal process description if the iteration depth is unbounded.</p><p>### §2.2 Radix Economy</p><p>The most efficient integer radix — minimizing the product of base × digits required to represent a given range — is the integer nearest to Euler's number <em>e</em> ≈ 2.718 (Knuth, 1997, Vol. 2). That integer is 3. Base-3 is mathematically optimal for compact representation.</p><a class="doc-ref" href="#sec-3-network-formation">§ §2. First Principles</a></div>
+                </div>
+                <div class="two-up" id="i2_s3_cac_decline">
+                  <img src="img/diagrams/i2_s3_cac_decline.png" alt="" loading="lazy">
+                  <div class="body"><p>### §3.1 The Unified Equation</p><p>We define a complex adaptive system in the language of differential geometry.</p><p><strong>Definition 1 (State manifold).</strong> Let <strong>M</strong> be an infinite-dimensional differentiable manifold. Points on M represent states of the system. Curves on M represent trajectories (evolution over time).</p><p><strong>Definition 2 (Connection).</strong> A connection Γ on M specifies how tangent vectors at one point relate to tangent vectors at nearby points. Γ encodes the manifold's curvature — how the state space bends.</p><p><strong>Definition 3 (Geodesic equation).</strong> An agent's trajectory x(t) on M satisfies:</p><p>d²xᵘ/dt² + Γᵘᵥᵨ · (dxᵛ/dt)(dxᵨ/dt) = 0                    (1)</p><a class="doc-ref" href="#sec-3-network-formation">§ §3. The Edgcumbe Calculus</a></div>
+                </div><div class="sec-break" id="sec-4-revenue"><h2><a href="#sec-4-revenue" style="color:inherit;text-decoration:none">§4 Revenue</a></h2></div>
 
-  <div class="sections-container">
-    
-        <div class="section-block">
-          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i2_cover">
-              <div class="img-placeholder">
-                🎨
-                <span class="role-tag role-cover">cover</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_cover</div>
-                <div class="concept-scene">A massive ancient power plant built into a mountain, half-temple half-machine, with a colossal golden sigma symbol crackling with electricity above its central spire, energy beams radiating outward to distant settlements across a twilight desert landscape, engineers and mystics working together on the lower terraces, dramatic scale with tiny figures against enormous architecture, deep indigo sky with orange lightning</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§1 Currency σ <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(16 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i2_s1_sigma_definition">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_sigma_definition</div>
-                <div class="concept-scene">A monumental stone observatory where a beam of pure white energy passes through a prism and splits into exactly one kilowatt-hour of measurable light hitting a calibration target, scientists in robes recording the measurement on stone tablets, the sigma symbol etched into the floor in gold inlay, cathedral of measurement, solemn precision, warm amber instrument glow against cool stone</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_spark_coin">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_spark_coin</div>
-                <div class="concept-scene">Close-up of a single spark coin suspended in a magnetic field between two poles, the coin is not metal but compressed lightning in a crystalline shell, electric arcs dancing across its surface, laboratory setting with dark background, intense electric blue-white energy against black void, sense of contained power</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_why_not_gold">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_why_not_gold</div>
-                <div class="concept-scene">A gold ingot sitting on a scale slowly melting and deforming as political hands reach in to manipulate it from all sides, beside it an energy crystal remains perfectly stable and unchanged despite the same hands trying to grab it and failing — their fingers pass through the light, split comparison, warm gold corruption versus cool blue stability</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_conversion_formula">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_conversion_formula</div>
-                <div class="concept-scene">An elegant clockwork orrery where three rotating rings represent the conversion steps: outer ring carries government data scrolls, middle ring contains formula gears that mesh precisely, inner ring outputs a local price display — the whole device sits on a person's desk running autonomously with no wires to the outside, intimate mechanical beauty, brass and copper warmth</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_regional_prices">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_regional_prices</div>
-                <div class="concept-scene">A map table showing five miniature city dioramas at different positions — Manhattan with tall stacks of spark coins, rural Texas with modest stacks, Tokyo with yen-marked stacks, California with medium stacks — each city glowing a different color representing its energy cost, cartographic bird's eye view, varied warm and cool tones per region</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_total_delivered_cost">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_total_delivered_cost</div>
-                <div class="concept-scene">A cross-section diagram of an energy delivery system showing stacked layers like geological strata: bedrock production at bottom, transmission tower layer, distribution pipe layer, storage battery layer, tax and regulation layer at top — a single beam of energy traveling up through all layers accumulating cost at each, earthy geological colors deepening upward</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_data_sources">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_data_sources</div>
-                <div class="concept-scene">Two imposing government archive buildings on opposite sides of an ocean — one marked with American eagle motifs, one with Japanese chrysanthemum — each sending sealed data scrolls via carrier birds to waiting devices below, official and trustworthy mood, formal architecture, national colors contrasting</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_local_computation">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_local_computation</div>
-                <div class="concept-scene">A single device on a desk performing a calculation shown as visible gears turning inside its transparent case, a broken antenna lies disconnected on the floor nearby, a crossed-out cloud symbol on the wall, the device is fully self-sufficient, intimate workspace, warm desk lamp against grey disconnected exterior</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_no_appreciation">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_no_appreciation</div>
-                <div class="concept-scene">A perfectly flat horizon line stretching across a calm lake, sigma coins resting on the still water at the same level — not rising, not sinking — a measuring ruler standing upright beside them confirming the flatness, serene contemplative mood, pale dawn light on water, the beauty of stability not growth</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_decay_hourglass">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_decay_hourglass</div>
-                <div class="concept-scene">A certification seal on a document slowly fading like a photograph left in sunlight, golden particles drifting away from it into the air, an hourglass beside it with nearly empty top chamber, entropy and designed impermanence, warm amber fading to cool grey, bittersweet mood of graceful obsolescence</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_non_transferable">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_non_transferable</div>
-                <div class="concept-scene">A sigma coin embedded in a person's palm like a birthmark, another person reaching to take it but their hand passes through — the coin cannot leave its owner, the sigma is part of the person not a separable object, intimate close-up of hands, warm skin tones against cool coin glow, personal and non-transferable</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_bilateral_settlement">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_bilateral_settlement</div>
-                <div class="concept-scene">Two people sitting across from each other at a small cafe table, each holding a device, signed receipt scrolls passing between them simultaneously in a formal handshake ritual, the trade is direct and personal with no intermediary present, warm cafe afternoon light, human connection over technology</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_user_display">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_user_display</div>
-                <div class="concept-scene">Over-the-shoulder view of a person looking at their device screen showing a clean display: a large lightning bolt number at top, a smaller local currency equivalent below, and a tiny source attribution line at bottom — clean informational design rendered as a glowing interface, cool screen light on the person's face in dim room</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_nist_governance">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_nist_governance</div>
-                <div class="concept-scene">A circular stone amphitheater where a standards committee of diverse scholars reviews an enormous formula inscribed on the central floor, each scholar holding measuring instruments and checking each other's work, transparent governance in action, open-air daylight flooding in, academic dignity, warm sandstone and white marble</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_energy_convergence">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_energy_convergence</div>
-                <div class="concept-scene">A vast landscape showing the evolution of energy: distant smoking coal plants on the left horizon, wind turbines in the middle ground, solar arrays in the foreground, and at the very front a fusion reactor prototype glowing with promise — an arrow of progress pointing right, the delivered cost line above them declining but never reaching zero due to visible power lines and infrastructure, panoramic timeline, gradient from grey-brown past to brilliant white future</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s1_self_generator">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s1_self_generator</div>
-                <div class="concept-scene">A person standing on the roof of their home surrounded by solar panels and a battery wall, literally generating the substrate of the currency with their own equipment, they hold a freshly minted spark coin that cost them nothing, complete energy sovereignty, golden sunset backlighting the figure in silhouette, triumphant independence</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§2 Sensors <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(8 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i2_s2_sensor_lineup">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_sensor_lineup</div>
-                <div class="concept-scene">Four distinct sensor devices displayed on velvet-lined wooden shelves in a craftsman's showroom: a sleek wristband with environmental gauges, an elegant pendant with proximity detection rings, a home cube with ambient sensors glowing softly, and a portable relay puck — each device is unique in design and purpose, warm showroom lighting, pride of craftsmanship, each device a different material and color</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s2_compass">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_compass</div>
-                <div class="concept-scene">Close-up of a person's wrist wearing an ornate environmental sensor band, tiny gauges visible showing temperature, humidity, UV, and air quality readings as glowing dials, the person is outdoors in varied weather, the band adapts and measures, detailed mechanical-organic hybrid design, cool outdoor light with warm gauge glow</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s2_tether">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_tether</div>
-                <div class="concept-scene">A pendant sensor worn at the collarbone emitting subtle concentric proximity rings that detect nearby people as glowing silhouettes at different distances, crowded street scene, the wearer aware of social density around them, urban evening neon mixing with soft pendant glow, social awareness technology</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s2_sentinel">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_sentinel</div>
-                <div class="concept-scene">A home monitoring cube sitting on a bedroom shelf, softly glowing as it senses the sleeping person's breathing rhythm, room temperature, and ambient sound — subtle data streams rising from the cube like incense smoke, intimate nighttime bedroom scene, deep blue moonlight through curtains mixing with soft amber cube glow, guardian watching over rest</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s2_beacon">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_beacon</div>
-                <div class="concept-scene">A small portable relay puck placed on a park bench in a dense urban environment, amplifying mesh signals between passing devices shown as overlapping transparent signal spheres, the puck is the hub connecting strangers who don't know they're connected, busy city park at midday, bright social energy, greens and urban grey with electric blue signals</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s2_ble_gatt">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_ble_gatt</div>
-                <div class="concept-scene">A diagram-style illustration showing Bluetooth signal pathways as glowing threads connecting four different sensor devices to a central phone hub, the threads pulse with data like heartbeats, clean technical beauty against dark background, electric blue threads on deep navy, satisfying network topology</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s2_y2_locked">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_y2_locked</div>
-                <div class="concept-scene">A beautiful ornate treasure chest with a Year 2 wax seal keeping it locked, wooden scaffolding around it suggesting it's still being built, tools and blueprints scattered nearby, the chest contains something wonderful but it's not ready yet, construction site warmth, amber sawdust catching afternoon light, anticipation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s2_y1_phone_only">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s2_y1_phone_only</div>
-                <div class="concept-scene">A single smartphone standing upright like a monolith, its built-in sensors highlighted as glowing points: camera eye at top, microphone ear on side, accelerometer core in center, gyroscope ring — the phone is the Year 1 sensor array, all capabilities in one device, minimal dark background with the phone as hero object, clean cool light</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§3 Network Formation <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(21 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i2_s3_growth_overview">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_growth_overview</div>
-                <div class="concept-scene">A mountain trail viewed from below showing six base camps ascending to a peak: Camp 1 at bottom with 12 people around a fire, Camp 2 with 50, Camp 3 with 500, camps growing larger up the mountain with more tents and activity, the summit hidden in triumphant golden clouds, sense of a journey from intimate to massive, varied terrain and weather at each camp</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_genesis_dinner">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_genesis_dinner</div>
-                <div class="concept-scene">Twelve diverse people seated around a rough wooden table in a candlelit Brooklyn apartment, sharing a home-cooked meal, each person holding a glowing artifact they just received, wine bottles and dishes amid the glow, intimate founding moment, warm domestic candlelight, Caravaggio-like dramatic shadows on engaged faces, the birth of a movement over dinner</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_genesis_grant">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_genesis_grant</div>
-                <div class="concept-scene">Five hundred spark coins pouring from a ceremonial vessel into each of twelve outstretched hands at the genesis table, the coins cascade like liquid light, each person receiving their founding stake, generous abundance, warm golden coin-light illuminating faces from below, ritual of beginning</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_what_happens_table">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_what_happens_table</div>
-                <div class="concept-scene">A person at the dinner table pulling out their phone showing personal photos, the phone transforms the photos into a glowing kasset artifact in their hand, they slide it across the table to another guest who receives it with wonder, face-to-face trade in action, intimate and tangible, warm table-level candlelight</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_sticker_qr">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_sticker_qr</div>
-                <div class="concept-scene">A hooded street artist at 3am plastering luminous rune-like QR stickers onto lamp posts and subway walls in a sleeping city, the stickers glow faintly in the dark like breadcrumbs, guerrilla marketing as art installation, deep midnight blue urban scene with small warm sticker glows, clandestine and exciting</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_sticker_claim">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_sticker_claim</div>
-                <div class="concept-scene">A curious passerby on a sunny morning holding their phone up to a glowing QR sticker on a coffee shop wall, the sticker erupts into a floating holographic kasset artifact that downloads into their device, surprise and delight on their face, bright morning street scene, warm sunlight with cool holographic blue artifact</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_gathering_100">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_gathering_100</div>
-                <div class="concept-scene">A warehouse concert with a hundred people, a performing artist on stage minting their music into kassets in real-time shown as golden orbs floating out over the crowd, audience members catching and trading the orbs with each other, live art commerce, moody concert purple and red stage lighting with golden kasset glow, electric atmosphere</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_jws_workshop">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_jws_workshop</div>
-                <div class="concept-scene">A university seminar room at the Wharton School, business students in blazers minting their thesis research and case studies as kassets on their laptops, academic knowledge becoming tradeable artifacts, focused intellectual energy, warm wood-paneled room with cool laptop screen glow, prestigious and purposeful</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_itp_workshop">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_itp_workshop</div>
-                <div class="concept-scene">A chaotic creative lab at NYU ITP, art and technology students surrounded by prototypes and screens, minting interactive installations and code projects as kassets, creative mess with brilliant output, eclectic studio lighting mixing warm incandescent with cool fluorescent, raw creative energy</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_cross_pollination">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_cross_pollination</div>
-                <div class="concept-scene">A glowing bridge of knowledge connecting two university tower buildings across a gap, data streams flowing in both directions as students from each side cross and exchange, intellectual cross-pollination made visible, evening sky behind the bridge, warm amber knowledge flow against cool twilight</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_mesh_ble">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_mesh_ble</div>
-                <div class="concept-scene">Bird's-eye view of a city block at night with dozens of BLE signal circles overlapping between nearby devices carried by pedestrians, creating a spontaneous mesh network visible as interlocking luminous rings on the ground, organic network formation, deep night blue with warm overlapping signal circles in gold and green</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_wifi_direct">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_wifi_direct</div>
-                <div class="concept-scene">Two devices on a park bench connecting via a direct WiFi beam shown as a solid bridge of light between them, no router or tower needed, the beam carries kasset data, simple peer-to-peer elegance, sunny park setting, clean green and white with bright connection beam</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_storefront_qr">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_storefront_qr</div>
-                <div class="concept-scene">A Brooklyn street scene with fifty diverse storefronts each displaying a small QR sticker rack in their window, foot traffic flows past with some people stopping to scan, the stickers form a network of entry points across the neighborhood, lively urban commercial energy, warm brick and neon, afternoon bustle</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_echoes">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_echoes</div>
-                <div class="concept-scene">A ghostly translucent figure leaving a glowing catalog scroll hovering at a coffee shop doorway as they walk away, the next person entering discovers it like finding a message in a bottle, 24-hour store-and-forward kasset catalog, mysterious and delightful, early morning coffee shop warmth with ethereal blue ghost trail</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_echo_density">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_echo_density</div>
-                <div class="concept-scene">Aerial night view of Manhattan with hundreds of tiny echo markers creating a web of warm light across the city grid, each marker a dropped kasset catalog pulsing gently, the network feels populated even at 3am, stunning city-scale visualization, deep navy night with golden-orange echo constellation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_linknyc">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_linknyc</div>
-                <div class="concept-scene">A sleek street kiosk on a Manhattan sidewalk displaying a scrolling kasset catalog to a curious passerby who stops mid-stride, public infrastructure repurposed for sovereign commerce, urban daytime, modern kiosk blue-white screen glow against sunny street background</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_introduction_kasset">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_introduction_kasset</div>
-                <div class="concept-scene">Two strangers at a farmers market discovering their twins have found a compatible kasset match, their devices both lighting up simultaneously, the moment of mutual discovery, surprised smiles, outdoor market warmth with golden matched-signal glow between their pockets</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_serendipitous_intro">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_serendipitous_intro</div>
-                <div class="concept-scene">A person at a bar receiving a subtle notification glow from their pocket — a compatible user is nearby, they look up from their drink to scan the room with curiosity, the potential connection is theirs to choose or ignore, moody bar interior with warm amber and neon, moment of possibility</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_celebrity_drop">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_celebrity_drop</div>
-                <div class="concept-scene">A legendary performer on a colosseum-scale stage with a golden microphone, as they perform their music transforms into thousands of kasset stickers raining down on the ecstatic crowd below like confetti, each sticker a minted artifact, massive concert spectacle, dramatic stage pyro orange and gold against dark crowd</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_12_to_250k">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_12_to_250k</div>
-                <div class="concept-scene">A side-scrolling landscape showing exponential growth as a journey: a tiny campfire of 12 on the far left, growing through villages and towns to a sprawling city of 250,000 on the right, milestone flags at each checkpoint, the path curves upward, epic journey panorama, dawn light on left warming to full noon on right</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s3_cac_decline">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s3_cac_decline</div>
-                <div class="concept-scene">A series of progressively shrinking toll gates along a road: the first gate is enormous and expensive, each subsequent gate smaller and cheaper, the last one is barely a speed bump, cost-per-user declining as the network grows, road perspective from low angle, dramatic scale shift from imposing to negligible</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§4 Revenue <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(11 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i2_s4_revenue_overview">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_revenue_overview</div>
-                <div class="concept-scene">Six distinct treasure chests arranged in a semicircle in a grand vault, each chest unique: one overflowing with certification fee coins, one locked with subscription padlock, one frozen in ice, one carried by a courier, one inspected by a magnifying glass, one assembled from hardware parts — each represents a different revenue stream, rich vault interior, varied warm metallic tones</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_progressive_fee">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_progressive_fee</div>
-                <div class="concept-scene">A clever fairness machine: a small student places one tiny coin into a slot and passes through easily, behind them a wealthy merchant must stack heavy gold bars to pass — the fee scales with the buyer's balance, the machine enforces progressive pricing mechanically, whimsical steampunk fairness device, warm brass and copper, playful yet serious</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_ramsey_pricing">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_ramsey_pricing</div>
-                <div class="concept-scene">An auctioneer's podium where kasset rarity determines the fee: a common green gem triggers a tiny fee displayed on a meter, a rare amber gem triggers a moderate fee, a legendary gold gem triggers the maximum — the meter adjusts automatically, dramatic auction house with rich wood and velvet, spotlight on each gem tier</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_rawlsian_fairness">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_rawlsian_fairness</div>
-                <div class="concept-scene">A philosophical garden where a perfectly balanced fountain distributes water equally to all surrounding plants regardless of size — the quadratic fee curve visible as the fountain's flow pattern, smaller plants get proportionally more water per root, serene justice garden, soft green and blue, mathematical beauty in nature</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_vault_subscription">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_vault_subscription</div>
-                <div class="concept-scene">Three vault doors side by side in increasing grandeur: bronze basic vault (cold storage only), silver standard vault (with active features glowing), gold premium vault (with education scrolls and advanced tools visible inside) — each tier offers more, ascending value proposition, cool bronze to warm gold gradient left to right</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_vault_freeze">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_vault_freeze</div>
-                <div class="concept-scene">A vault encased in protective ice crystal, a death-trigger prevention mechanism visible as a frozen hourglass embedded in the ice, a small monthly fee meter ticking beside it keeping the ice maintained, preservation against catastrophe, cool blue-white ice with warm amber fee meter, solemn protection</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_courier_fees">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_courier_fees</div>
-                <div class="concept-scene">A nimble courier runner carrying a wrapped physical package through city streets between two trade parties waiting at opposite ends of a bridge, the courier wears a sash showing the 15% commission, physical goods delivery connecting digital trades, dynamic urban action scene, warm movement against cool city backdrop</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_verification_fees">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_verification_fees</div>
-                <div class="concept-scene">A quality inspector at a jeweler's workstation examining a kasset under a specialized seven-lens magnifying glass (the 7Vs), checking each dimension before stamping a grade seal, meticulous quality assurance, warm workshop light concentrated on the inspection point, precision and expertise</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_hardware_margins">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_hardware_margins</div>
-                <div class="concept-scene">A sensor device assembly workshop with finished products on a shelf, each with a visible price tag breaking down cost versus margin (55-75% margin highlighted), the devices are beautiful objects worth their premium, clean manufacturing environment, cool production light with warm product display</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_licensing_fees">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_licensing_fees</div>
-                <div class="concept-scene">An aerial map showing vault operator territories marked with franchise boundary lines, each territory has a miniature vault icon, revenue split ratios (70/30) displayed at key intersections, franchise expansion geography, cartographic style with warm territory colors on parchment</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s4_fee_compression">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s4_fee_compression</div>
-                <div class="concept-scene">A pressure gauge stuck in the low-fee zone with frost forming on its edges, a timeline marker showing M1-M6 early stage, the gauge will rise later but for now fees are compressed to encourage adoption, cold start patience, industrial gauge aesthetic, blue-grey frost with red danger zone ahead still distant</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§5 Distribution <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(9 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i2_s5_two_component">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_two_component</div>
-                <div class="concept-scene">A fortified desktop citadel on one side connected by a glowing BLE/WiFi bridge to a lightweight mobile mirror-shield on the other, the citadel runs the heavy computation while the mirror provides the portable interface, two-component architecture shown as complementary strongholds, dramatic bridge connection, warm fortress amber and cool mobile blue</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_no_appstore">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_no_appstore</div>
-                <div class="concept-scene">A massive walled garden with a locked gate bearing a fruit logo, an adventurer calmly walking around it through an open notarized field where their app runs freely without gatekeeping, bypassing the walled garden entirely, verdant open field versus constrained garden, liberating mood, warm open sunlight versus cool garden shadow</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_developer_id">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_developer_id</div>
-                <div class="concept-scene">A notary official at a formal desk carefully stamping a notarization seal onto an app package, the stamp glows with legitimacy, the app can now run on any device without store approval, official ceremony, warm parchment and gold seal against formal dark wood desk</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_safari_web">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_safari_web</div>
-                <div class="concept-scene">A phone browser window showing a kasset marketplace catalog beautifully rendered, connected via a subtle thread to a desktop app running the heavy vault operations in the background, web as lightweight window into the sovereign system, split view of phone foreground and desktop background, cool web interface with warm vault glow behind</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_four_tier_discovery">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_four_tier_discovery</div>
-                <div class="concept-scene">A radar display with four concentric rings of increasing reach: innermost BLE ring (30m, bright), WiFi ring (100m), LoRa ring (15km spanning city), outermost HF radio ring spanning the entire globe — each ring a different color, expanding discovery capability, dark radar screen with vivid concentric ring colors, military-precision aesthetic</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_ble_range">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_ble_range</div>
-                <div class="concept-scene">Two people standing close together on a sidewalk, their devices creating a small intimate BLE bubble around them visible as a soft blue sphere, inside the sphere data flows freely, outside it nothing leaks, personal proximity connection, warm street scene with cool intimate tech bubble</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_lora_range">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_lora_range</div>
-                <div class="concept-scene">A long-range signal arcing across an entire city skyline from a rooftop antenna to a distant tower fifteen kilometers away, the LoRa beam visible as a thin green line connecting two points over thousands of buildings, dramatic city panorama, sunset sky with cool green signal line cutting across warm cityscape</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_hf_radio">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_hf_radio</div>
-                <div class="concept-scene">A ham radio antenna array on a remote hilltop sending a signal that bounces off the ionosphere and reaches another continent, the signal path visible arcing through the upper atmosphere, global reach from simple equipment, dramatic Earth-curvature view, deep space blue-black with warm signal arc</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s5_qr_presence">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s5_qr_presence</div>
-                <div class="concept-scene">A coffee shop window with a small QR sticker pulsing gently with available kasset notifications, passersby notice the subtle glow, the shop participates in the mesh network passively, neighborhood commerce integration, warm morning coffee shop light with cool pulsing QR glow, inviting and unobtrusive</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§6 Edgcumbe Encoding <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(15 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i2_s6_encoding_overview">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_encoding_overview</div>
-                <div class="concept-scene">A grand five-station alchemical laboratory stretching across a long hall: Station 1 segments a continuous stream into phrases with golden scissors, Station 2 couples related phrases with silver chains, Station 3 compresses the coupled data through a press, Station 4 projects the 3D result onto a flat map, Station 5 folds the map into a sealed envelope — each station has a distinct look and operator, dramatic industrial-magical pipeline, varied lighting per station</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_unified_equation">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_unified_equation</div>
-                <div class="concept-scene">A massive mathematical equation carved into the wall of an ancient temple, golden light streaming through a roof opening illuminating each symbol, scholars standing below in awe of its elegance, the equation describes the entire encoding process in one line, monumental intellectual achievement, warm golden light on cool stone, reverence for mathematics</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_encoding_space">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_encoding_space</div>
-                <div class="concept-scene">An abstract geometric space showing a curved tau manifold surface with fiber bundle strands projecting downward from it, each fiber carrying encoded methodology, the space itself is the mathematical landscape where encoding happens, cool abstract blue-purple mathematical visualization with warm fiber bundle strands, otherworldly beauty</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_segmentation_phi">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_segmentation_phi</div>
-                <div class="concept-scene">A continuous ribbon of flowing text being cut at natural boundary points by a precise golden scissors, each cut piece becomes a self-contained phrase that retains meaning, the cuts happen at pauses and transitions like musical phrasing, rhythmic editorial precision, warm parchment ribbon against dark workspace, satisfying segmentation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_coupling_psi">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_coupling_psi</div>
-                <div class="concept-scene">Silver arrows connecting causally related decision phrases in a sequence displayed on a wall board, some phrases cause others creating a visible chain of reasoning, the causal structure is preserved while surface details dissolve, detective evidence board aesthetic, warm paper pinned to dark cork board with bright silver connection threads</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_compression_xi">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_compression_xi</div>
-                <div class="concept-scene">A large ornate data structure being fed into a compression press that squeezes it down to a fraction of its size while preserving the internal causal skeleton visible as glowing bones within, lossy but structure-preserving, dramatic industrial press scene, warm amber data being compressed into cool blue condensed form</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_projection_pi">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_projection_pi</div>
-                <div class="concept-scene">A complex three-dimensional crystal structure casting a shadow onto a flat surface below, the shadow retains the essential topology while losing the third dimension, deliberate dimensionality reduction, dramatic single-light-source scene, vivid 3D crystal casting simplified 2D shadow, loss and preservation in balance</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_folding_omega">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_folding_omega</div>
-                <div class="concept-scene">An origami master folding a complex flat pattern into a three-dimensional shape that preserves the structural relationships while hiding the surface text, the folded result is beautiful and functional but the original writing is invisible, Japanese paper folding aesthetic, warm paper tones with precise geometric shadows, craft mastery</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_privacy_guarantee">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_privacy_guarantee</div>
-                <div class="concept-scene">A person's detailed portrait being progressively stripped away layer by layer — first the face dissolves, then the voice, then the mannerisms — until only a pure skeleton of methodology remains, the methodology is intact but the person is unrecognizable, haunting and liberating, warm human tones fading to cool abstract structural blue</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_complementary_pairs">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_complementary_pairs</div>
-                <div class="concept-scene">Two puzzle pieces that fit together perfectly: one is the donor's encoded methodology (amber), the other is the receiver's context gap (blue) — when joined they create a complete picture that neither had alone, complementary trade value, split composition with satisfying junction, warm amber meets cool blue at the seam</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_dynamic_phrases">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_dynamic_phrases</div>
-                <div class="concept-scene">A musical score with phrases marked at natural pauses and transitions, each phrase has a tau-curve annotation showing its temporal dynamics, the music of decision-making made visible as notation, elegant musical manuscript on aged paper, warm candlelight on handwritten score, rhythmic beauty</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_domain_convergence">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_domain_convergence</div>
-                <div class="concept-scene">Multiple colored encoding streams from different life domains (health green, finance gold, career red, creativity purple) all converging into a single universal format funnel that produces standardized output, domain diversity becoming universal compatibility, colorful input streams merging into clean white output, centripetal composition</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_tau_theory">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_tau_theory</div>
-                <div class="concept-scene">An ancient mathematical tome lying open on a lectern showing tau curves and gap-closing dynamics diagrams, the pages glow faintly with understanding, a scholar's reading glasses resting on the page, deep theoretical foundation, warm leather tome with cool mathematical diagram glow, intellectual depth</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_worked_example">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_worked_example</div>
-                <div class="concept-scene">A step-by-step walkthrough displayed as five sequential panels on a wall: raw thought enters panel 1, gets segmented in panel 2, coupled in panel 3, compressed in panel 4, and emerges as a sealed kasset in panel 5 — each panel shows the transformation clearly, instructional comic strip layout, clean varied colors per panel, educational clarity</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i2_s6_mutation">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i2_s6_mutation</div>
-                <div class="concept-scene">An encoded kasset being absorbed by a receiver whose own context slightly modifies its expression — like a seed planted in different soil growing a slightly different plant, the methodology adapts to the receiver's unique cognitive landscape, biological metaphor, warm seed transforming in cool new soil, organic adaptation</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-  </div>
+                <div class="spread" id="i2_s4_revenue_overview">
+                  <img src="img/diagrams/i2_s4_revenue_overview.png" alt="" loading="lazy">
+                  <div class="body"><p>The unified equation pair — geodesic (1) and emergence (2) — generates mature scientific domains as specializations. Each is obtained by specifying the manifold, field, connection, and symmetry group. The physics specialization (quantum mechanics) is developed in the companion document (Internal: 37a); this section focuses on economics, where the structural correspondences are most directly testable.</p><p>### §4.1 Economics</p><p><strong>Key correspondences:</strong></p><p><strong>Superposition → Option value.</strong> Before exercise, a financial option encodes all possible payoffs weighted by probability (Black & Scholes, 1973). Exercise collapses the option to realized payoff. Before trade, a .kasset encodes all possible understandings. Folding collapses to one. The mathematical structure is identical — path integration over future states.</p><p><strong>Gauge invariance → Numéraire invariance.</strong> The choice of numéraire (which good denominates prices) does not affect economic outcomes, just as the choice of idiolect does not affect methodology content. Both are gauge invariances — the content is projection-invariant, the representation is observer-dependent.</p><p><strong>Information loss → Akerlof inverted.</strong> Akerlof (1970) showed that information asymmetry in markets destroys quality (only "lemons" are sold). In the Edgcumbe system, information loss is a <em>feature</em>: the encoding is designed to lose the seller's identity. The mechanism is strategy-proof — the seller cannot encode identity even intentionally, because minting is a many-to-one projection.</p><a class="doc-ref" href="#sec-4-revenue">§ §4. Domain Specializations</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s4_progressive_fee">
+                  <img src="img/diagrams/i2_s4_progressive_fee.png" alt="" loading="lazy">
+                  <div class="body"><p>### §5.1 Register of Assumptions</p><p>### §5.2 Relationship to Prior Frameworks</p><p>The Edgcumbe calculus synthesizes but does not replace its source theories. Wolfram (2002) provides the principle that small alphabets suffice. Lee (1998, 2009) provides the dynamic variables. Milner (1989) provides the structural operators. Anfinsen (1973) provides the folding model. Each is used within its established domain of validity; the novelty is in the combination.</p><p>The calculus does NOT claim to be a theory of consciousness, a replacement for quantum mechanics, or a general economic model. It is a framework for encoding cognitive methodology as a gauge-invariant sequence on an emergent manifold, with privacy as a geometric property.</p><p>### §5.3 Limitations</p><p><strong>No empirical validation.</strong> This is a theoretical paper that defines the formal structure and experimental predictions of the Edgcumbe encoding. Empirical data follows the experiment definition; this paper IS the experiment definition. The predictions in §5.5 are stated with sufficient precision to be tested against a deployed implementation. The relationship between theory and experiment is sequential, not concurrent — the theory must be internally consistent before measurement can confirm or refute it.</p><a class="doc-ref" href="#sec-4-revenue">§ §5. Discussion</a></div>
+                </div>
+                <div class="two-up" id="i2_s4_ramsey_pricing">
+                  <img src="img/diagrams/i2_s4_ramsey_pricing.png" alt="" loading="lazy">
+                  <div class="body"><p>The following companion documents contain material extracted from earlier drafts of this paper to separate the theoretical framework from implementation details and audience-specific onboarding:</p><p><strong>Internal: 37a — Physics Onboarding.</strong> Maps the Edgcumbe framework onto quantum mechanical structures (hydrogen atom reference, QM specialization, divergences, open research directions). For physicist onboarding.</p><p><strong>Internal: 37b — Technical Specification & IP Claims.</strong> System architecture, pipeline specifications, complementary pairing validator, domain convergence monitor, and defensible IP claim register. For engineering and patent counsel.</p><a class="doc-ref" href="#sec-4-revenue">§ §6. Companion Documents</a></div>
+                </div>
+                <div class="two-up flip" id="i2_s4_rawlsian_fairness">
+                  <img src="img/diagrams/i2_s4_rawlsian_fairness.png" alt="" loading="lazy">
+                  <div class="body"><p>Akerlof, G. A. (1970). The Market for "Lemons": Quality Uncertainty and the Market</p><p>Mechanism. Quarterly Journal of Economics, 84(3), 488–500.</p><p>Anfinsen, C. B. (1973). Principles that Govern the Folding of Protein Chains. Science,</p><p>181(4096), 223–230.</p><p>Arthur, W. B. (2015). Complexity and the Economy. Oxford University Press.</p><p>Berners-Lee, T., Hendler, J., & Lassila, O. (2001). The Semantic Web. Scientific</p><a class="doc-ref" href="#sec-4-revenue">§ §7. References</a></div>
+                </div>
+                <div class="two-up" id="i2_s4_vault_subscription">
+                  <img src="img/diagrams/i2_s4_vault_subscription.png" alt="" loading="lazy">
+                  <div class="body"><p>The original design pegged .kasset values to gold via an algorithmic oracle. This was abandoned because:</p><p><strong>Gold is mutable.</strong> Central banks hold 35,000+ tonnes. Government gold sales/purchases move the price. A sovereign could manipulate .kasset values by manipulating gold markets.</p><p><strong>Gold is geographically asymmetric.</strong> South Africa, China, Russia, and Australia dominate production. σ's energy base is universal.</p><p><strong>Gold has no intrinsic utility in the digital context.</strong> Energy is the substrate of all computation. Pricing intelligence in energy units is philosophically coherent.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s4_vault_freeze">
+                  <img src="img/diagrams/i2_s4_vault_freeze.png" alt="" loading="lazy">
+                  <div class="body"><p>1 σ ≡ 1 kilowatt-hour (kWh) = 3,600,000 joules (exact)</p><p><strong>Derived from:</strong> SI joule, defined by the Planck constant (exact since the 2019 BIPM redefinition of SI base units)</p><p><strong>Changes when:</strong> NIST redefines the joule (happens only when measurement precision improves — the unit itself is invariant)</p><p><strong>Cannot be:</strong> printed, inflated, sanctioned, debased</p></div>
+                </div>
+                <div class="two-up" id="i2_s4_courier_fees">
+                  <img src="img/diagrams/i2_s4_courier_fees.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>REC = Regional Energy Cost</strong></p><p>SSK publishes and open-sources a <strong>deterministic conversion function</strong> that converts σ to local currency using publicly available <strong>total delivered energy cost</strong> data — the all-in price a consumer pays per kWh, including production, transmission, distribution, storage, and applicable taxes/fees. This is the retail electricity price, not the levelized cost of energy (LCOE) or production cost alone.</p><p>The company publishes the formula <strong>once</strong>. It does NOT operate a centralized oracle, set prices, or update rates on behalf of users.</p><p>### Why Total Delivered Cost, Not Production Cost</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s4_verification_fees">
+                  <img src="img/diagrams/i2_s4_verification_fees.png" alt="" loading="lazy">
+                  <div class="body"><p>There is no blockchain, no sequencer, and no smart contract. Trades settle bilaterally. Both devices must have their vaults open (foreground exclusivity — Doc 28 §0.7) to sign:</p><p>Buyer and seller connect via mesh (BLE/WiFi Direct)</p><p>A2A negotiation matches .kasset plaintext headers (type, domain, rarity) — no payload decryption required</p><p>Both devices exchange locally computed rates and agree on a common reference</p></div>
+                </div>
+                <div class="two-up" id="i2_s4_hardware_margins">
+                  <img src="img/diagrams/i2_s4_hardware_margins.png" alt="" loading="lazy">
+                  <div class="body"><p>⚡ 2,500</p><p>≈ $825.00 USD (NYC)</p><p>Source: EIA NYC $0.33/kWh (2026-04-15)</p><p><strong>Primary display:</strong> Spark ⚡ (always)</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s4_licensing_fees">
+                  <img src="img/diagrams/i2_s4_licensing_fees.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Trend</p><p>Global energy costs are shaped by two vectors moving in opposite directions:</p><p><strong>Production cost (LCOE) is in secular decline:</strong></p><p><strong>Net-positive milestones:</strong></p></div>
+                </div>
+                <div class="sidebar-spread" id="i2_s4_fee_compression">
+                  <img src="img/diagrams/i2_s4_fee_compression.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Thesis summary:</strong> σ is a metrological reference number defined by physics (1 kWh ≡ 3.6 MJ), not by policy. Its fiat-equivalent value is determined by publicly observable delivered energy costs and fluctuates with those costs — it can decrease as energy infrastructure becomes more efficient. Each device computes the conversion locally using a published, deterministic, open-source formula on user-selected data sources. No central oracle exists. Unlike a production-cost peg, the total-delivered-cost basis retains a durable non-zero fiat anchor through infrastructure costs, making σ a practical unit of account today. σ is not designed or marketed as an investment, a store of value, or an appreciating asset. Users are responsible for their own assessment of σ's utility and any applicable tax obligations.</p></div>
+                </div><div class="sec-break" id="sec-5-distribution"><h2><a href="#sec-5-distribution" style="color:inherit;text-decoration:none">§5 Distribution</a></h2></div>
 
-  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
-    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
-  </footer>
-</body>
-</html>
+                <div class="spread" id="i2_s5_two_component">
+                  <img src="img/diagrams/i2_s5_two_component.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>Edge-Native</strong> — All processing happens on-device. Sensors connect via BLE to the user's Sovereign Survival Kit instance, not to a cloud.</p><p><strong>Open Protocol</strong> — Sovereign Survival Kit defines a <code>SovSensor</code> protocol (JSON over BLE GATT) that any manufacturer can implement. The products below are reference designs, not a walled garden.</p><p><strong>Data as Input, Not Product</strong> — Sensor data is raw input for the twin's planning engines. These are NOT standalone health gadgets with their own apps. They are peripherals for the OS.</p><p><strong>.kasset Eligible</strong> — Anonymized, aggregated biometric trends can become .kasset data (e.g., "12 months of metabolic optimization protocols") for A2A commerce.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s5_no_appstore">
+                  <img src="img/diagrams/i2_s5_no_appstore.png" alt="" loading="lazy">
+                  <div class="body"><p>### Service UUID</p><p>SovSensor Primary Service: 0xSOV1 (custom 128-bit UUID TBD)</p><p>### Characteristic Format</p><p>Every sensor transmits a standardized JSON payload over BLE GATT notify:</p></div>
+                </div>
+                <div class="two-up" id="i2_s5_developer_id">
+                  <img src="img/diagrams/i2_s5_developer_id.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Note:</strong> This architecture represents the Version 2.0 design, intended for release concurrently with the Lifestyle Sensors line.</p><p>As the sensor line streams continuous biometric and environmental data, the Sovereign Digital Cocoon evolves into a <strong>Universal Fact Engine</strong>. Every breath, heartbeat, and movement becomes a high-signal fact captured locally.</p><p>### 4.1 The Merkle Epoch (Local Minting)</p><p>Minting every individual data point via AES-256-GCM and ML-DSA-65 would destroy battery and storage. Instead, Version 2.0 utilizes a <strong>Layer 3 State Channel</strong> (The Merkle Epoch):</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s5_safari_web">
+                  <img src="img/diagrams/i2_s5_safari_web.png" alt="" loading="lazy">
+                  <div class="body"><p>┌──────────────┐     BLE GATT      ┌──────────────────┐</p><p>│  SovBreath   │ ──────────────────>│                  │</p><p>│  SovPulse    │                    │   Sovereign Survival Kit    │</p><p>│  SovLight    │   JSON payload     │   BLE Receiver   │</p></div>
+                </div>
+                <div class="two-up" id="i2_s5_four_tier_discovery">
+                  <img src="img/diagrams/i2_s5_four_tier_discovery.png" alt="" loading="lazy">
+                  <div class="body"><p>### Hardware Revenue</p><p>### Strategic Value (Not Revenue)</p><p>The primary value of the sensor line is NOT hardware margin. It is:</p><p><strong>Engagement flywheel</strong> — As biometric history accumulates, the twin becomes irreplaceable. 6 months of continuous HRV, sleep, and metabolic data creates a personal health baseline no competitor can replicate.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s5_ble_range">
+                  <img src="img/diagrams/i2_s5_ble_range.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Note</strong>: Biometric sensor devices may trigger regulatory classification depending on jurisdiction. This section captures awareness; detailed analysis is deferred to Phase 2+.</p></div>
+                </div>
+                <div class="two-up" id="i2_s5_lora_range">
+                  <img src="img/diagrams/i2_s5_lora_range.png" alt="" loading="lazy">
+                  <div class="body"><p>The sensor product line complements, not replaces, the existing hardware roadmap:</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s5_hf_radio">
+                  <img src="img/diagrams/i2_s5_hf_radio.png" alt="" loading="lazy">
+                  <div class="body"><p>The network begins with a dinner — and repeats no more than <strong>four times per year</strong>.</p><p>A small portion of the seed round funds an intimate, curated series of events in New York City — each seating 8 to 16 people drawn from local educational institutions, alumni networks, and creative communities. Each event targets a different community. The venue is site-specific (a private dining room, a gallery, a club library). The meal is catered. The invitation carries one instruction:</p><p><strong>"Bring a piece of digital media you made. You will mint it and trade it with the others at the table."</strong></p><p>The quarterly cadence is deliberate — scarcity creates gravity. These are not recurring meetups. Each Genesis dinner is a curated, invitation-only event that seeds a new community into the network. Four per year means four new communities, four new .kasset domains, four new local word-of-mouth waves.</p></div>
+                </div>
+                <div class="two-up" id="i2_s5_qr_presence">
+                  <img src="img/diagrams/i2_s5_qr_presence.png" alt="" loading="lazy">
+                  <div class="body"><p>The Genesis Event proves the mechanic works: people create, price, and trade digital media face-to-face. The next phase scales that mechanic through two channels that reinforce each other — one ambient, one event-driven.</p><p>### Vector A: The Sticker Drop (QR Street Distribution)</p><p>Local musicians and visual artists distribute their work by leaving pre-printed QR stickers in the streets. QR stickers are $0.05–$0.15/unit ambient awareness placements — they supplement mesh discovery and word-of-mouth, not replace them. See Doc 29 §4 for the full QR sticker specification.</p><p><strong>The sticker is a designed object.</strong> Each sticker is custom-printed with the artist's name, a thumbnail of the work (album art, a cropped image of the visual piece), Sovereign branding, and a QR code. The .kasset is pre-minted and the one-time claim token is encoded in the QR before the artist ever touches it. The artist's only job is to decide where to place them.</p></div>
+                </div><div class="sec-break" id="sec-6-edgcumbe-encoding"><h2><a href="#sec-6-edgcumbe-encoding" style="color:inherit;text-decoration:none">§6 Edgcumbe Encoding</a></h2></div>
+
+                <div class="spread" id="i2_s6_encoding_overview">
+                  <img src="img/diagrams/i2_s6_encoding_overview.png" alt="" loading="lazy">
+                  <div class="body"><p>While the cultural track seeds the network through music and visual art, a parallel track runs simultaneously through academic institutions — starting with the <strong>Joseph Wharton Scholars (JWS)</strong> at the University of Pennsylvania.</p><p>The mechanic is the same. The medium is different. Instead of tracks and prints, students mint <strong>class papers, research projects, case analyses, and thesis work</strong> as .kassets and trade them with other students.</p><p>### Why JWS</p><p>### What Gets Minted</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s6_unified_equation">
+                  <img src="img/diagrams/i2_s6_unified_equation.png" alt="" loading="lazy">
+                  <div class="body"><p>Every formation mechanic described above — the Genesis dinner, the sticker drop, the gathering, the academic workshop — is amplified by the <strong>mesh network</strong>. Devices running the Sovereign edge app passively broadcast and discover .kasset availability through physical proximity. No internet. No server. No catalog to browse. Geography is the search engine.</p><p>### How It Works</p><p>Three radio layers, each serving a different range:</p><p>> <strong>Pre-hardware (M1–M14):</strong> The mesh operates on BLE + WiFi-Direct only — both natively available on conforming mobile devices. This limits ambient discovery to ~100 meters, which is sufficient for events, campuses, and dense urban foot traffic. LoRa's neighborhood-scale range activates when Sovereign hardware ships at M15.</p></div>
+                </div>
+                <div class="two-up" id="i2_s6_encoding_space">
+                  <img src="img/diagrams/i2_s6_encoding_space.png" alt="" loading="lazy">
+                  <div class="body"><p>### Piggybacking the City's Infrastructure</p><p>New York City has ~2,000 LinkNYC kiosks deployed across Manhattan, Brooklyn, Queens, and the Bronx — each providing free public WiFi with a range of ~100–150 meters. This is an existing mesh backbone that Sovereign can ride for free.</p><p><strong>The mechanic:</strong> A Sovereign device within range of a LinkNYC kiosk briefly joins the open WiFi and broadcasts its availability vector via standard local network discovery (mDNS/multicast). Any other Sovereign device on the same kiosk's network receives it. The device then disconnects. Hit-and-run — a few seconds of WiFi contact is enough to exchange availability vectors.</p><p>This is not a hack. It is standard use of a public WiFi network for local service discovery. No terms of service are violated. No data leaves the local network. The kiosk is just a relay point.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s6_segmentation_phi">
+                  <img src="img/diagrams/i2_s6_segmentation_phi.png" alt="" loading="lazy">
+                  <div class="body"><p>Everything described in Sections 1–5 is grassroots — dinners, stickers, storefronts, campuses, mesh. It builds slowly, deliberately, and authentically. But there is a moment in the growth curve where a single high-amplitude signal converts organic traction into viral velocity. That signal is a <strong>one-time celebrity sponsorship.</strong></p><p>> No celebrity partnership is committed at time of writing. The celebrity activation is a channel option, not a growth dependency. All five scenarios in Doc 13 §5 produce cash-flow-positive outcomes with or without celebrity participation.</p><p>### Timing: M5–M6 (Not Before)</p><p>This does NOT happen at launch. The activation fires only after the following conditions are met:</p></div>
+                </div>
+                <div class="two-up" id="i2_s6_coupling_psi">
+                  <img src="img/diagrams/i2_s6_coupling_psi.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Funnel Stack</p><p>Each formation layer feeds the next. They are not alternatives — they are sequential stages of a single acquisition funnel:</p><p>Layer 1: GENESIS SERIES (intimate, quarterly)</p><p>12 people sit at a table and trade .kassets face-to-face.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s6_compression_xi">
+                  <img src="img/diagrams/i2_s6_compression_xi.png" alt="" loading="lazy">
+                  <div class="body"><p>At critical mass, the network flips the traditional data extraction model. As outlined in Doc 06, a user's data exhaust—traditionally harvested for free by platforms—is captured, encrypted, and retained entirely within the local Sovereign Cocoon.</p><p>Users can authorize their Twin to bundle and anonymize specific telemetry or behavioral exhaust into macro-level .kassets. The Sovereign network then acts as an arbitrageur, trading this aggregated intelligence back to corporate cloud processors, LLM training labs, and market researchers. The corporate entities pay for high-fidelity, verified data, and the economic value flows directly back to the users who generated it. The network transitions from a cost center to an income generator for its users.</p></div>
+                </div>
+                <div class="two-up" id="i2_s6_projection_pi">
+                  <img src="img/diagrams/i2_s6_projection_pi.png" alt="" loading="lazy">
+                  <div class="body"><p>With the mesh active and the user base engaged, SovereignOS replaces legacy "doom-scrolling" platforms (Facebook, Instagram, X) with a Twin-curated, asynchronous information architecture.</p><p><strong>Feed Inputs:</strong></p><p><strong>Authorized Broadcasts:</strong> Personalized messages sent by authorized individuals to <em>N</em> number of recipients (the Sovereign equivalent of a mailing list or group broadcast).</p><p><strong>The Public Record:</strong> Statements, votes, and actions by public officials and government representatives, ingested continuously via the Codex subscription.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s6_folding_omega">
+                  <img src="img/diagrams/i2_s6_folding_omega.png" alt="" loading="lazy">
+                  <div class="body"><p>The second pillar of delegation is about curating professional and experiential progression. Rather than relying on algorithmic serendipity or a purely autonomous AI, users actively choose to "lock in" the specific people and domain experts they want to work with on a daily basis.</p><p>The user delegates discovery authority to chosen human managers or curators. These managers sift through the global mesh and the Sovereign Feed to define a highly refined, high-signal set of choices, opportunities, or introductions. The user's Twin acts as the logistical executor—maintaining these trusted connections, filtering out unauthorized noise, and presenting the user only with the curated selections from their chosen human managers. The user remains the ultimate decision-maker, selecting from a menu populated entirely by people they have explicitly chosen to trust.</p></div>
+                </div>
+                <div class="two-up" id="i2_s6_privacy_guarantee">
+                  <img src="img/diagrams/i2_s6_privacy_guarantee.png" alt="" loading="lazy">
+                  <div class="body"><p>Because the Twin perfectly models the user's preferences, and because it ingests the Codex public record continuously, public officials can no longer rely on political amnesia. The Twin instantly cross-references any new statement from a representative against their entire historical record. Politicians must stand by their full record in any given moment, as every user's Twin acts as an indefatigable, personalized fact-checker and context-provider.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s6_complementary_pairs">
+                  <img src="img/diagrams/i2_s6_complementary_pairs.png" alt="" loading="lazy">
+                  <div class="body"><p>In Phase 3, the core mechanics of the .kasset exchange are adapted from economic trading to the democratic process.</p><p>Voting evolves from a discrete, low-information event (e.g., every two years) into a <strong>continuous process</strong> executed by agents.</p><p><strong>How it works:</strong></p><p><strong>Delegation .kassets:</strong> Users issue specific cryptographic mandates (delegations) to representatives or domain experts.</p></div>
+                </div>
+                <div class="two-up" id="i2_s6_dynamic_phrases">
+                  <img src="img/diagrams/i2_s6_dynamic_phrases.png" alt="" loading="lazy">
+                  <div class="body"><p>Sovereign Survival Kit does not rely on legacy corporate entities to generate revenue. We are replacing that economic model and cannot be dependent on existing players.</p><p>Revenue derives from:</p><p>Network transaction fees (progressive, physics-anchored)</p><p>Hardware sales (margin on devices that enable the network)</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s6_domain_convergence">
+                  <img src="img/diagrams/i2_s6_domain_convergence.png" alt="" loading="lazy">
+                  <div class="body"><p>### 1A. Progressive Certification Fee</p><p><strong>What:</strong> Dynamic fee on every .kasset trade certified by SSK's certification service (notary model). Three layers: Ramsey pricing (efficiency), Rawlsian veil (equity), energy-proportional (physics constraint). Trades settle bilaterally on mesh; the fee is for certification and Codex archival.</p><p><strong>Variables:</strong> (1) measured asset rarity/novelty, (2) buyer's accumulated wealth profile</p><p><strong>Typical range:</strong> 1.0–6.0% depending on segment (see doc 11 §3 for segment breakdown)</p></div>
+                </div>
+                <div class="sidebar-spread" id="i2_s6_tau_theory">
+                  <img src="img/diagrams/i2_s6_tau_theory.png" alt="" loading="lazy">
+                  <div class="body"><p>### 2A. Sovereign Vault (Identity Storage — Tiered)</p><p><strong>What:</strong> Encrypted identity storage with tiered membership. Sovereign Survival Kit never sees the contents (zero-knowledge custody).</p><p><strong>Tier 1 — Cold Storage:</strong> $60/year. Entry-level identity backup. Priced on safe deposit box analogy ($20-200/yr avg, TCBK/SmartAsset 2024).</p><p><strong>Tier 2 — Standard:</strong> $15/month. Full features: backup, freeze, marketplace tools.</p></div>
+                </div>
+                <div class="two-up flip" id="i2_s6_worked_example">
+                  <img src="img/diagrams/i2_s6_worked_example.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Founder directive (2026-04-15):</strong> "We do not rely on legacy corporate entities to generate revenue because we are replacing that economic model and cannot be dependent on existing players."</p><p>></p><p>> The following streams will NEVER be pursued: Biometric SDK Licensing, 7Vs Quality Grading API (white-label), Swarm Contract SDK Licensing, Constituent Intelligence Platform (Government SaaS). Enterprise API of any kind is prohibited.</p><p>></p></div>
+                </div>
+                <div class="two-up" id="i2_s6_mutation">
+                  <img src="img/diagrams/i2_s6_mutation.png" alt="" loading="lazy">
+                  <div class="body"><p>### 4A. Volumetric Sphere (Ultra-Premium Hardware)</p><p><strong>What:</strong> White-glove venue installations of the 6-DOF gyroscopic control sphere. Distinct from the consumer Sphere/Rig ($2,499-$4,999 in doc 11) — this is a purpose-built, professionally installed system.</p><p><strong>Pricing:</strong> $50,000-$150,000 per unit</p><p><strong>Revenue:</strong> 50 units/year × $100K avg = $5M</p></div>
+                </div></div>
+<div class="bot-nav"><a href="issue_1.html">← Issue 1</a><a href="index.html">All Issues</a><a href="issue_3.html">Issue 3 →</a></div>
+<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
+</body></html>

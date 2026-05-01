@@ -1,529 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Issue 4: The Execution Plan — Sovereign Power Library</title>
-  <style>
-:root {
-  --bg-primary: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-section: #1a1a25;
-  --text-primary: #e8e6e3;
-  --text-secondary: #8a8a9a;
-  --text-muted: #5a5a6a;
-  --accent-magenta: #e84393;
-  --accent-blue: #0984e3;
-  --accent-green: #00b894;
-  --accent-gold: #fdcb6e;
-  --accent-purple: #6c5ce7;
-  --accent-red: #d63031;
-  --accent-orange: #e17055;
-  --border: #2a2a3a;
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Issue 4: The Execution Plan — Sovereign Power</title>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  line-height: 1.6;
-  min-height: 100vh;
+:root {
+  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
+  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
+  --border: #2a2a3a;
+  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
+  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
+  --font: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
 }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
 
 /* NAV */
-.topnav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0.75rem 2rem;
-  display: flex; align-items: center; gap: 1.5rem;
-}
-.topnav .logo {
-  font-weight: 900; font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.topnav a {
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
-  transition: color 0.2s;
-}
-.topnav a:hover { color: var(--text-primary); }
-.topnav a.active { color: var(--accent-magenta); }
-.topnav .spacer { flex: 1; }
-.topnav .alpha-badge {
-  font-size: 0.7rem; font-weight: 700;
-  background: var(--accent-red); color: white;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  letter-spacing: 0.1em;
-}
-.stale-badge {
-  display: inline-block;
-  font-size: 0.6rem; font-weight: 700;
-  background: #e17055; color: white;
-  padding: 0.1rem 0.4rem; border-radius: 2px;
-  margin-left: 0.5rem; vertical-align: middle;
-  letter-spacing: 0.05em;
-}
+.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
+  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
+.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
+.nav a:hover { color:var(--text); }
+.nav a.on { color:var(--magenta); }
+.nav .sp { flex:1; }
+.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
+  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 4rem 2rem 3rem;
-  border-bottom: 1px solid var(--border);
-}
-.hero h1 {
-  font-size: 3rem; font-weight: 900;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-}
-.hero .subtitle {
-  font-size: 1.1rem; color: var(--text-secondary);
-  font-weight: 300;
-}
-.hero .meta {
-  margin-top: 1rem; font-size: 0.8rem;
-  color: var(--text-muted); font-family: var(--font-mono);
-}
+/* FULL-BLEED COVER */
+.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
+.cover img { width:100%; height:100%; object-fit:cover; }
+.cover .overlay { position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
+.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
+.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
+  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
+.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
+.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
+  border-radius:4px; color:white; }
 
-/* ISSUE GRID */
-.issues-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.issue-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.issue-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-}
-.issue-card .card-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.issue-card .issue-num {
-  font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.issue-card h2 {
-  font-size: 1.4rem; font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-.issue-card .act {
-  font-size: 0.85rem; color: var(--text-secondary);
-}
-.issue-card .card-body {
-  padding: 1.25rem 1.5rem;
-}
-.issue-card .doc-list {
-  list-style: none;
-  font-size: 0.8rem; color: var(--text-secondary);
-}
-.issue-card .doc-list li {
-  padding: 0.2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.issue-card .doc-list li:last-child { border: none; }
-.issue-card .concept-count {
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
+/* EDITORIAL BODY */
+.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
 
-/* ISSUE PAGE */
-.issue-header {
-  padding: 3rem 2rem 2rem;
-  border-bottom: 1px solid var(--border);
-  max-width: 1200px; margin: 0 auto;
-}
-.issue-header .breadcrumb {
-  font-size: 0.8rem; color: var(--text-muted);
-  margin-bottom: 1rem;
-}
-.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
-.issue-header .breadcrumb a:hover { color: var(--text-primary); }
-.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
-.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+/* SECTION BREAK */
+.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
+.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
 
-.source-docs {
-  padding: 1.5rem 2rem;
-  max-width: 1200px; margin: 0 auto;
-  border-bottom: 1px solid var(--border);
-}
-.source-docs h3 {
-  font-size: 0.85rem; font-weight: 600;
-  color: var(--text-muted); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 0.75rem;
-}
-.doc-chips {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-}
-.doc-chip {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem; color: var(--text-secondary);
-  text-decoration: none;
-  transition: border-color 0.2s;
-}
-.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
-.doc-chip .doc-num {
-  font-weight: 700; font-family: var(--font-mono);
-  margin-right: 0.4rem;
-}
+/* SPREAD: full-width hero image + editorial text below */
+.spread { margin-bottom:3rem; }
+.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
+.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
+.spread .body p { margin-bottom:0.8rem; }
+.spread .body strong { color:var(--text); }
 
-.sections-container {
-  max-width: 1200px; margin: 0 auto;
-  padding: 2rem;
-}
-.section-block {
-  margin-bottom: 3rem;
-}
-.section-block h2 {
-  font-size: 1.3rem; font-weight: 700;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--border);
-}
-.concepts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.concept-card {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.concept-card:hover { border-color: var(--accent-blue); }
-.concept-card .img-placeholder {
-  width: 100%; aspect-ratio: 16/10;
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; color: var(--text-muted);
-  position: relative;
-}
-.concept-card .img-placeholder .role-tag {
-  position: absolute; top: 0.5rem; left: 0.5rem;
-  font-size: 0.6rem; font-weight: 700;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  text-transform: uppercase; letter-spacing: 0.1em;
-}
-.role-cover { background: var(--accent-magenta); color: white; }
-.role-hero { background: var(--accent-blue); color: white; }
-.role-spot { background: var(--accent-green); color: white; }
-.role-sidebar { background: var(--accent-purple); color: white; }
-.concept-card .card-info {
-  padding: 0.75rem 1rem;
-}
-.concept-card .concept-id {
-  font-family: var(--font-mono);
-  font-size: 0.7rem; color: var(--text-muted);
-  margin-bottom: 0.25rem;
-}
-.concept-card .concept-scene {
-  font-size: 0.8rem; color: var(--text-secondary);
-  line-height: 1.4;
-  display: -webkit-box; -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical; overflow: hidden;
-}
+/* TWO-UP: image left, text right (alternating) */
+.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  align-items:start; margin-bottom:2.5rem; }
+.two-up.flip { direction:rtl; }
+.two-up.flip > * { direction:ltr; }
+.two-up img { width:100%; border-radius:6px; }
+.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
+.two-up .body strong { color:var(--text); }
+.two-up .body p { margin-bottom:0.6rem; }
 
-/* STALENESS */
-.staleness-panel {
-  max-width: 1200px; margin: 2rem auto;
-  padding: 0 2rem;
-}
-.staleness-panel h3 {
-  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
-  letter-spacing: 0.1em; text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.staleness-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8rem;
-}
-.staleness-table th {
-  text-align: left; padding: 0.5rem 0.75rem;
-  border-bottom: 2px solid var(--border);
-  color: var(--text-muted); font-weight: 600;
-}
-.staleness-table td {
-  padding: 0.4rem 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  color: var(--text-secondary);
-}
-.staleness-table tr:hover td { color: var(--text-primary); }
+/* SIDEBAR: small img + text */
+.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
+.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
+.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
 
-@media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
-  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
-  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+/* DOC REF */
+.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
+  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
+.doc-ref:hover { color:var(--magenta); }
+
+/* SECTION TOC */
+.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
+.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
+  text-transform:uppercase; margin-bottom:0.6rem; }
+.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
+.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
+  color:var(--dim); background:var(--card); border:1px solid var(--border);
+  text-decoration:none; transition:all 0.2s; }
+.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
+
+/* BOTTOM NAV */
+.bot-nav { display:flex; justify-content:space-between; align-items:center;
+  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
+.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
+.bot-nav a:hover { color:var(--text); }
+.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
+
+/* INDEX COVERS */
+.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
+  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
+.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
+.mag-grid .card:first-child h2 { font-size:2.5rem; }
+.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
+  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
+.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
+.card:hover .bg { transform:scale(1.05); }
+.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
+.card:hover .grad { opacity:0.95; }
+.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
+.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
+.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
+  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
+.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
+.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
+
+/* HERO SECTION */
+.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
+  border-bottom:1px solid var(--border); overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
+  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
+.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
+.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
+.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
+.hero .stats .n { font-size:2rem; font-weight:900;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
+
+@media(max-width:768px) {
+  .hero h1 { font-size:2.2rem; }
+  .mag-grid { grid-template-columns:1fr; padding:1rem; }
+  .mag-grid .card:first-child { min-height:280px; }
+  .cover h1 { font-size:2rem; }
+  .cover { height:60vh; }
+  .two-up { grid-template-columns:1fr; }
+  .sidebar-spread { flex-direction:column; }
+  .sidebar-spread img { width:100%; }
 }
-</style>
-</head>
-<body>
-  <nav class="topnav">
-    <span class="logo">SOVEREIGN POWER</span>
-    <a href="index.html">Library</a>
-    <a href="issue_1.html">#1</a>
+</style></head><body>
+<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
+<a href="index.html">Library</a><a href="issue_1.html">#1</a>
 <a href="issue_2.html">#2</a>
 <a href="issue_3.html">#3</a>
-<a href="issue_4.html" class="active">#4</a>
+<a href="issue_4.html" class="on">#4</a>
 <a href="issue_5.html">#5</a>
 <a href="issue_6.html">#6</a>
 <a href="issue_7.html">#7</a>
+<span class="sp"></span><span class="badge">ALPHA</span></nav>
+<div class="cover">
+  <img src="img/diagrams/i4_cover.png" alt="">
+  <div class="overlay"></div>
+  <div class="pill" style="background:#fdcb6e">Issue 4 of 7</div>
+  <div class="text"><h1>The Execution Plan</h1>
+  <div class="sub">Act 4: Plan + Team · 16 illustrations</div></div>
+</div>
+<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-cover">cover</a><a href="#sec-1-business-plan">§1 Business Plan</a><a href="#sec-2-founder">§2 Founder</a></div></div>
+<div class="editorial"><div class="sec-break" id="sec-cover"><h2><a href="#sec-cover" style="color:inherit;text-decoration:none">cover</a></h2></div>
+<div class="sec-break" id="sec-1-business-plan"><h2><a href="#sec-1-business-plan" style="color:inherit;text-decoration:none">§1 Business Plan</a></h2></div>
 
-    <span class="spacer"></span>
-    <span class="alpha-badge">ALPHA</span>
-  </nav>
+                <div class="spread" id="i4_s1_36_month_road">
+                  <img src="img/diagrams/i4_s1_36_month_road.png" alt="" loading="lazy">
+                  <div class="body"><p>Sovereign Survival Kit sells a zero-cloud AI operating environment where users train personal AI agents on hardware they own and trade formalized expertise (.kassets) via bilateral mesh settlement, certified by SSK's certification service (notary model). Revenue is a progressive network fee on every certified trade. The unit of account — σ (sigma) — is denominated in physics: 1 σ = 1 kWh = 3.6 MJ, converted to local fiat via a published deterministic formula (Regional Energy Cost — total delivered price of electricity) that each device runs locally on user-selected data sources (default: EIA/METI). σ is not a currency, token, or stored-value instrument; it is a reference number — a unit-of-account label applied to the user's existing fiat balance (Doc 05, Doc 22).</p><p>The architecture guarantees that the company cannot die at any growth rate above <strong>14,242 active trading users</strong> (19,000-22,700 during early-stage fee compression), because the marginal compute cost of each additional user is zero — the user's own hardware runs inference, training, minting, and signing. Core infrastructure is <strong>$7,150/month</strong>. Operational costs (support, compliance, chain ops) scale linearly but at a fraction of any cloud-hosted competitor (Doc 10 §1). These users are not globally distributed — they are concentrated in two MSAs (Brooklyn and Tokyo) where mesh density supports peer-to-peer discovery. Manhattan's 27,000 people/km² means 14,000 users in a single borough yields >2 encounters/user/day; the Echo mechanism (24-hour store-and-forward .kasset catalogs) fills gaps at lower density so the network feels populated before it actually is (Doc 07 §Mesh Density).</p><p><strong>The raise:</strong> $3M seed via YC Standard Post-Money SAFE at a $42.86M post-money valuation cap. Seed investors receive 7.0% ownership. The founder retains 93.0%. No option pool — employee compensation is cash salary plus ⚡ grants (Doc 15 §1, Doc 16 §5).</p><a class="doc-ref" href="#sec-1-business-plan">§ 1. What This Is</a></div>
+                </div>
+                <div class="two-up flip" id="i4_s1_y1_build">
+                  <img src="img/diagrams/i4_s1_y1_build.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Founder</p><p>Michael Edgcumbe. Joseph Wharton Scholar (Economics, University of Pennsylvania). MPS, Interactive Telecommunications Program, NYU Tisch School of the Arts. Eagle Scout.</p><p>30 years of cumulative work. Every role maps to a product requirement:</p><p>This is not a pivot. There is no team to hire for this combination. (Doc 14).</p><p>### The Twin as Co-Founder</p><p>The founder's twin is the same product every user gets — a personal AI agent trained on the founder's own cognitive data, running on his own hardware, managing the same 8 life domains: rest, nourishment, body, shelter, assets, income, bonds, and growth (Doc 03). It continuously rebuilds its understanding of his situation on every turn of conversation. The fact that the founder's daily work includes code review, investor preparation, and competitive analysis means the twin handles those tasks — not because it was special-cased, but because those activities fall within its domain coverage. The founder is user zero. The product works because he uses it every day. (Doc 03 §1).</p><a class="doc-ref" href="#sec-1-business-plan">§ 2. Why This Team, Why Now</a></div>
+                </div>
+                <div class="two-up" id="i4_s1_y2_scale">
+                  <img src="img/diagrams/i4_s1_y2_scale.png" alt="" loading="lazy">
+                  <div class="body"><p>### Use of Funds ($3M Seed)</p><p><strong>Total:</strong> $3,000,000 — fully allocated. No runway buffer as a line item. The 37-month survival runway ($3M / $80K/mo) emerges from the ability to cut discretionary spend (marketing, legal, expansion) if needed — not from a pre-allocated reserve (Doc 11 §1).</p><p>### Burn Rate</p><p>Revenue begins M6. The worst-case growth scenario (k=0.05) produces $215,600 MRR by M12 — above the $167K monthly burn (Cheat Sheet §Scenario 1).</p><p>### Team (Year 1)</p><p>Total Y1 people cost: $749K (salary + $24K agents + $125K benefits) (Doc 11 §7).</p><a class="doc-ref" href="#sec-1-business-plan">§ 3. How The Money Gets Spent</a></div>
+                </div>
+                <div class="two-up flip" id="i4_s1_y3_expand">
+                  <img src="img/diagrams/i4_s1_y3_expand.png" alt="" loading="lazy">
+                  <div class="body"><p>### Five Communities</p><p>The network launches in five distinct communities, each with a specific, articulable reason for adoption:</p><p><strong>1. MSM Community (Men Who Have Sex With Men) — The Introduction Economy.</strong> The primary growth engine. Grindr sells location data to advertisers and has been used by authoritarian governments to identify and arrest gay men. SSK's introduction exchange is mutual (both consent), contains no identity or location, expires on a timer, and physically cannot be intercepted because no server exists. Trade dynamics: near-zero friction, multiple exchanges per day. Engagement benchmark: Grindr 2024 — 14.2M MAU, 3M+ DAU, 130B chats/year (Cheat Sheet Appendix §Segment Distribution).</p><p><strong>2. Brooklyn Creatives — Musicians, Visual Artists, Photographers.</strong> The original .kasset minters. Musicians mint tracks that exist only on the mesh. Visual artists attach provenance to physical work. Genesis dinner series (12 people, quarterly) seeds this community directly. Sticker drop network (50 locations across Brooklyn) provides ambient discovery. Trade dynamics: higher-value, lower-frequency. Benchmark: Etsy 2024 10-K seller engagement (Cheat Sheet Appendix §Segment Distribution).</p><p><strong>3. JWS @ Wharton — Business and Finance.</strong> The founder's alumni network. Joseph Wharton Scholars program provides direct access to business students and alumni who understand unit economics and network effects.</p><p><strong>4. ITP @ NYU Tisch — Creative Technology.</strong> The founder's graduate program. Interactive Telecommunications Program students build hardware, software, and installations. Natural minters. Workshop format (50 students, near-zero venue cost) produces immediate .kasset creation from existing work.</p><a class="doc-ref" href="#sec-1-business-plan">§ 4. The Beachhead — How We Get The First 1,000 Users</a></div>
+                </div>
+                <div class="two-up" id="i4_s1_hiring_plan">
+                  <img src="img/diagrams/i4_s1_hiring_plan.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Formula</p><p>Doc 07 defines a bottoms-up acquisition funnel:</p><p><strong>N(t+1) = (1+k) × N(t) + C(t)</strong></p><p>Where:</p><p>N(t) = cumulative users at month t</p><p>k = viral coefficient (new users per existing user per month)</p><a class="doc-ref" href="#sec-1-business-plan">§ 5. The Growth Model — What Happens After 1,000</a></div>
+                </div>
+                <div class="two-up flip" id="i4_s1_milestones">
+                  <img src="img/diagrams/i4_s1_milestones.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Progressive Fee</p><p>Every .kasset trade incurs a dynamic certification fee from two variables: (1) measured asset rarity/novelty, and (2) buyer's accumulated ⚡ balance. Trades settle bilaterally on mesh; SSK certifies each trade via its certification service (notary model) in exchange for the fee. Three pricing layers: Ramsey (efficient), Rawlsian (progressive), energy-cost proportionality (physical). Range: ~0.5-6%. Weighted average: 2.38% at M12, rising to 3.25% at M36 (Doc 11 §3).</p><p>### Revenue Streams</p><p><strong>Not charged:</strong> Subscriptions, distribution channel fees (direct distribution), data monetization (impossible), content moderation headcount (Rule 2 is hardware-enforced).</p><p>### MSA vs. Non-MSA</p><p>SSK sole operator in MSA (NYC, Tokyo, Tier 1) — <strong>100% take</strong>. Non-MSA franchise: <strong>70/30</strong>. Y1 = 100% MSA. By M36: 60/40 mix, 88% effective take (Doc 11 §4).</p><a class="doc-ref" href="#sec-1-business-plan">§ 6. Revenue Architecture</a></div>
+                </div>
+                <div class="two-up" id="i4_s1_risk_matrix">
+                  <img src="img/diagrams/i4_s1_risk_matrix.png" alt="" loading="lazy">
+                  <div class="body"><p>Milestones assume Goldilocks (k=0.3).</p><p>### Phase 1: M1–M6 — Network Formation (Doc 07 §Combined Phase 1 Timeline)</p><p>Total Phase 1 spend: ~$144K + $100K celebrity = ~$244K. 69% of marketing budget. Remaining $111K funds M7–M18 (campus expansion, Ivy League cluster, continued sticker drops) (Doc 07 §Phase 1).</p><p>> Genesis dinners are quarterly (M1, M4, M7, M10). Sticker drops and gatherings fill the months between. (Doc 07 §Note).</p><p>### Phase 2: M7–M12 — Network Effects</p><p>Sticker racks (~750/mo) + campus expansion (~750/mo) = ~1,500 organized users/month. Organic mesh growth compounds on top. At Goldilocks k=0.3, organic exceeds organized by M8 (Cheat Sheet §Scenario 2).</p><a class="doc-ref" href="#sec-1-business-plan">§ 7. The First 12 Months</a></div>
+                </div>
+                <div class="sidebar-spread" id="i4_s1_contingency">
+                  <img src="img/diagrams/i4_s1_contingency.png" alt="" loading="lazy">
+                  <div class="body"><p>The financial model's strongest claim — that SSK is cash-flow positive in all five growth scenarios — is simultaneously the strongest argument against a traditional Series A growth round.</p><p>At Goldilocks (k=0.3), the company generates +$525K/month net cash flow by M12, growing. By M18, the revenue run-rate funds every Y2-Y3 line item organically — patent prosecution (~$30K for 10 defensive claims — Doc 21, Doc 24), franchise expansion, Foundation Model training (Doc 11 §9). The $3M seed provides 37 months of survival runway at zero revenue. The architecture eliminates the cost categories (cloud compute, trust & safety headcount, data compliance) that force traditional platforms to raise.</p><p><strong>The standard growth-round justification does not apply:</strong></p><p><strong>The Series A is contingent, not assumed.</strong> Justified only under specific conditions:</p><p><strong>Hardware manufacturing acceleration.</strong> If Tether/Compass/sensor timelines advance to M12-M15, upfront BOM/tooling/inventory could require $5-10M before organic revenue accumulates. This is the strongest trigger.</p><p><strong>Defensive war chest.</strong> An Apple/Google competitive entry into edge-AI sovereign infrastructure could require accelerated franchise deployment and patent prosecution.</p><a class="doc-ref" href="#sec-1-business-plan">§ 8. On the Series A — Why It May Not Be Necessary</a></div>
+                </div><div class="sec-break" id="sec-2-founder"><h2><a href="#sec-2-founder" style="color:inherit;text-decoration:none">§2 Founder</a></h2></div>
 
-  <div class="issue-header">
-    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 4</div>
-    <h1 style="color:#fdcb6e">The Execution Plan</h1>
-    <div class="act-label">Act 4: Plan + Team · 16 diagrams</div>
-  </div>
-
-  <div class="source-docs">
-    <h3>Source Documents</h3>
-    <div class="doc-chips">
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/13_Business_Plan.md" class="doc-chip" target="_blank">
-          <span class="doc-num">13</span>36-Month Business Plan
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/14_Founder_Bio.md" class="doc-chip" target="_blank">
-          <span class="doc-num">14</span>Founder: Michael Edgcumbe
-        </a>
-        </div>
-  </div>
-
-  <div class="sections-container">
-    
-        <div class="section-block">
-          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i4_cover">
-              <div class="img-placeholder">
-                🎨
-                <span class="role-tag role-cover">cover</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_cover</div>
-                <div class="concept-scene">A war council chamber inside a mountain fortress, a tactical map table at center showing a 36-month campaign with miniature figures positioned at key milestones, a diverse party of specialists assembled around the table — engineer, diplomat, scholar, scout — weapons and tools hanging on the walls behind them, torchlight illuminating intense planning faces, sense of strategic preparation before a great campaign, warm amber torchlight against cool stone walls</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§1 Business Plan <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(8 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i4_s1_36_month_road">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_36_month_road</div>
-                <div class="concept-scene">A winding mountain road stretching into the distance with 36 checkpoint flags marking each month, the road passes through three distinct terrain zones: Year 1 is rocky construction terrain with scaffolding, Year 2 is fertile farmland with growing operations, Year 3 is a golden empire with connected fortress cities — the full journey visible from an elevated vantage point, panoramic progression from rough beginnings to golden maturity, dawn on the left warming to full daylight on the right</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s1_y1_build">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_y1_build</div>
-                <div class="concept-scene">A construction site in the first months: workers laying foundation stones of a great fortress, scaffolding rising, blueprint scrolls unrolled on workbenches, raw materials being delivered by cart — the foundation is being built right, not fast, honest labor in morning light, warm earth tones and fresh-cut stone, sense of careful beginnings</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s1_y2_scale">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_y2_scale</div>
-                <div class="concept-scene">Year 2 operations at full capacity: multiple production lines running simultaneously in a grand workshop hall, workers expanding outward from a central hub, new wings being added to the building, output flowing from every door — the machine is working and growing, busy industrial energy, warm forge-light and cool production-line blue, productive momentum</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s1_y3_expand">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_y3_expand</div>
-                <div class="concept-scene">Year 3 empire view from a high tower: multiple fortress cities visible across a vast landscape, trade routes connecting them as glowing paths, ships in harbors, caravans on roads, the network has become an economy — continental scale achievement, golden afternoon light across a prosperous land, triumphant breadth</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s1_hiring_plan">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_hiring_plan</div>
-                <div class="concept-scene">A guild hall recruitment board covered with character silhouettes and role badges: Head of Engineering (sword and wrench), Head of Operations (compass and ledger), Research Lead (telescope and flask), Community Lead (megaphone and heart) — each position described with a small job scroll beneath, the team being assembled, warm wood-paneled guild hall with brass badge fixtures, organized talent acquisition</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s1_milestones">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_milestones</div>
-                <div class="concept-scene">An achievement trophy shelf built into a fortress wall, milestone badges displayed chronologically: First Trade (bronze sword), 1000 Users (silver shield), Revenue Target (gold crown), Patent Filed (crystal scroll), Storefront Open (iron key) — each badge earned and mounted with care, warm display lighting on each achievement, pride of progress</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s1_risk_matrix">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_risk_matrix</div>
-                <div class="concept-scene">A danger room in a training dungeon with three labeled hazard zones: Technical Risk shown as a trap floor, Market Risk as swinging blade pendulums, Regulatory Risk as fire jets — each zone has a threat level indicator from green to red, a warrior studying the room before entering, strategic caution, cool dungeon blues with warm hazard indicator colors</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s1_contingency">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s1_contingency</div>
-                <div class="concept-scene">An emergency supply cache hidden behind a false wall panel: backup plan scrolls in waterproof cases, emergency gold reserves, an escape route map with three alternate paths marked, survival rations — preparation for worst-case scenarios that may never come, cool hidden chamber with warm lantern revealing the cache, prudent paranoia</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§2 Founder <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(7 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i4_s2_founder_profile">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s2_founder_profile</div>
-                <div class="concept-scene">An elaborate RPG character sheet for the party leader rendered as a framed portrait with stat bars: Engineering 95, Music 88, Business 82, Research 90, Design 85 — each bar a different color, the character depicted as a systems architect holding both a code staff and a musical instrument, unique class: Polymath, warm parchment background with vivid stat bar colors, the multi-disciplinary builder</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s2_education">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s2_education</div>
-                <div class="concept-scene">A scholar ascending a tower of knowledge with degree scroll pedestals at each floor: ground floor Wharton School (business shield), second floor Berklee (musical note crest), third floor NYU ITP (creative spark badge), fourth floor National Lab (science crystal), roof level autodidact (open sky) — each floor a different architectural style representing the discipline, warm ascent from formal to free, varied educational palettes</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s2_career_path">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s2_career_path</div>
-                <div class="concept-scene">A timeline rendered as a dungeon corridor with doors opening to different career rooms along its length: a music studio with instruments, an Apple Store with devices, a Google Maps office with patent plaque, a Snapchat engineering lab with performance charts, a maker workshop with physical tools — the corridor connects all experiences into one path, warm varied room lighting spilling into cool corridor, journey of accumulation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s2_ip_portfolio">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s2_ip_portfolio</div>
-                <div class="concept-scene">A secure treasure vault with seventeen patent shields mounted on wall racks in a semicircle, each shield bearing a unique symbol representing a different invention: tau computation, idiolect extraction, mesh discovery, kasset encoding, vault architecture — the shields glow different colors, the collection represents years of original work, rich vault interior with varied shield colors against dark stone, defensive innovation arsenal</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s2_tech_stack">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s2_tech_stack</div>
-                <div class="concept-scene">A master craftsman's weapon rack displaying the tools of the trade: a Swift sword (sharp and precise), a Python staff (flexible and wise), a Rust hammer (heavy and safe), a CoreML wand (intelligent and local), an AVFoundation bow (capture and record) — each weapon unique and beautiful, warm workshop wall with cool metallic weapon gleams, the full-stack toolkit</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s2_know_maps">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s2_know_maps</div>
-                <div class="concept-scene">A magical map spread on a table that updates itself in real-time as the world changes, NLU comprehension runes glowing on its surface interpreting spoken queries, the map shows not geography but knowledge domains and their connections, a finger pointing at a query result, warm map parchment with cool blue NLU rune glow, intelligence made navigable</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i4_s2_tau_skeleton">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i4_s2_tau_skeleton</div>
-                <div class="concept-scene">A translucent skeletal framework of a human figure in motion, tau curve energy flowing through every joint as the figure moves — the skeleton captures the dynamics of movement not the appearance, motion capture grid lines in the background, the mathematical structure of human action made visible, cool wireframe skeleton with warm tau energy flowing through joints, biomechanical research visualization</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-  </div>
-
-  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
-    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
-  </footer>
-</body>
-</html>
+                <div class="spread" id="i4_s2_founder_profile">
+                  <img src="img/diagrams/i4_s2_founder_profile.png" alt="" loading="lazy">
+                  <div class="body"><p>$7,150/mo infra + zero marginal compute cost inverts kill-gate logic:</p><p><strong>Death requires three simultaneous failures:</strong> (1) < 19K users in 37 months, (2) k = 0, (3) acquisition < 500/mo. Any one false = company survives (Cheat Sheet §Kill Gates).</p><a class="doc-ref" href="#sec-2-founder">§ 10. The Kill-Gate Inversion</a></div>
+                </div>
+                <div class="two-up flip" id="i4_s2_education">
+                  <img src="img/diagrams/i4_s2_education.png" alt="" loading="lazy">
+                  <div class="body"><p>99.6% voting control. 9.3M Class B (20x). Investors: Class A (1x). 10M shares — irrevocable cap. Future rounds from Class B conversion — no new shares created (Doc 16).</p><p>2 of 2 voting board seats. Twin serves as charter-level architectural veto oracle — can permanently block any action that compromises zero-egress security or .kasset provenance (Doc 17 §4). Not a board seat (DGCL §141(b)); a charter enforcement mechanism.</p><p><strong>No option pool.</strong> All employee compensation is cash + spark grants. Zero equity dilution from hiring (Doc 16 §5).</p><p><strong>Investor access:</strong> Seed investors receive information rights only — no board seat, no observer seat. Series A receives a non-voting observer seat. No investor receives a voting board seat at any stage. If a board seat is a condition of investment, the deal is declined (Doc 17).</p><p><strong>Why:</strong> The airgap IS the product. Removable airgap = worthless signatures (Doc 17 §3).</p><p><strong>You are not betting on a founder. You are betting on an equation.</strong></p><a class="doc-ref" href="#sec-2-founder">§ 11. Governance</a></div>
+                </div>
+                <div class="two-up" id="i4_s2_career_path">
+                  <img src="img/diagrams/i4_s2_career_path.png" alt="" loading="lazy">
+                  <div class="body"><p>30+ years building at the intersection of Apple-native architecture, spatial computing, and machine learning. Solo architect of the Sovereign Survival Kit codebase (fully audited, 100% test passing). The only person on Earth currently running a local twin trained on their own cognitive data, airgapped, on their own hardware. Eagle Scout.</p><a class="doc-ref" href="#sec-2-founder">§ Summary</a></div>
+                </div>
+                <div class="two-up flip" id="i4_s2_ip_portfolio">
+                  <img src="img/diagrams/i4_s2_ip_portfolio.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>National Merit Scholar</strong></p><p><strong>Eagle Scout</strong>, Boy Scouts of America</p><p>Post-calculus thesis work at <strong>NOAA Atmospheric Turbulence and Diffusion Division</strong>, Oak Ridge National Laboratory (ORNL), Oak Ridge, TN (1996–1997) — evaluating and building VR environments on a <strong>Silicon Graphics Onyx rack</strong></p><p>Graduate thesis: <em>"Designing a Natural User Interface"</em> (2011) — applying General Tau Theory (David Lee) to gesture-driven interfaces. First software implementation built as a <strong>Processing/Kinect thesis demonstration prototype</strong> (Java) during ITP, later re-implemented in C++/Unreal Engine as TauSkeletonVisual. Proposed perception-in-action as the fundamental control mechanism for software, predating Apple Vision Pro's hand tracking by 12 years.</p><a class="doc-ref" href="#sec-2-founder">§ Education</a></div>
+                </div>
+                <div class="two-up" id="i4_s2_tech_stack">
+                  <img src="img/diagrams/i4_s2_tech_stack.png" alt="" loading="lazy">
+                  <div class="body"><p>### Headline Roles</p><p>### Complete Chronology</p><p>### Research & IP</p><p><strong>Graduate thesis (2011):</strong> Designed a gestural interface driven by tau-coupling (propriospecific, exterospecific, expropriospecific movement classes). Built a custom skeleton tracking rig to measure joint data relative to itself. The core insight — <em>your perception of your body in motion is the mechanism by which the user interface is controlled</em> — is the intellectual foundation for Sovereign Survival Kit's τ-metric implementation.</p><p><strong>TauSkeletonVisual:</strong> General Tau Theory implementation in C++/Unreal Engine (CC-BY-NC-ND 4.0). Defensive IP for Sovereign Survival Kit.</p><p><strong>TGI Sports:</strong> Metal + RealityKit pipeline achieving 100% frame synchronization.</p><a class="doc-ref" href="#sec-2-founder">§ Full Career History</a></div>
+                </div>
+                <div class="two-up flip" id="i4_s2_know_maps">
+                  <img src="img/diagrams/i4_s2_know_maps.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>Patent family:</strong> Methods for providing interactive audio information for geographic landmarks within 3D panoramic street-level imagery. Filed Aug 27, 2021 (App. 17/458,816). Assigned to Google LLC. Also published as US-11137976-B1, US-20220083309-A1.</p><p><strong>Relevance to Sovereign Survival Kit:</strong> These patents cover the spatial audio interaction paradigm that directly precedes Sovereign Survival Kit's τ-coupled voice interface — applying interactive audio information to navigable 3D environments. The founder designed the system described in these patents while at Google Maps.</p><a class="doc-ref" href="#sec-2-founder">§ Patents (Google-Assigned)</a></div>
+                </div>
+                <div class="two-up" id="i4_s2_tau_skeleton">
+                  <img src="img/diagrams/i4_s2_tau_skeleton.png" alt="" loading="lazy">
+                  <div class="body"><p>The Sovereign Survival Kit <code>clara-engine</code> codebase is <strong>not a prototype</strong>. It is production code:</p><p>All code runs on a single <strong>NVIDIA RTX 3080 Ti Laptop GPU</strong> (16 GB VRAM, SM 8.6 Ampere) with strict VRAM phase management. No cloud. No API calls. No egress.</p><a class="doc-ref" href="#sec-2-founder">§ Production Codebase (Owned & Audited)</a></div>
+                </div></div>
+<div class="bot-nav"><a href="issue_3.html">← Issue 3</a><a href="index.html">All Issues</a><a href="issue_5.html">Issue 5 →</a></div>
+<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
+</body></html>

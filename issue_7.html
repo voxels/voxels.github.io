@@ -1,679 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Issue 7: The Appendix Tower — Sovereign Power Library</title>
-  <style>
-:root {
-  --bg-primary: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-section: #1a1a25;
-  --text-primary: #e8e6e3;
-  --text-secondary: #8a8a9a;
-  --text-muted: #5a5a6a;
-  --accent-magenta: #e84393;
-  --accent-blue: #0984e3;
-  --accent-green: #00b894;
-  --accent-gold: #fdcb6e;
-  --accent-purple: #6c5ce7;
-  --accent-red: #d63031;
-  --accent-orange: #e17055;
-  --border: #2a2a3a;
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Issue 7: The Appendix Tower — Sovereign Power</title>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  line-height: 1.6;
-  min-height: 100vh;
+:root {
+  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
+  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
+  --border: #2a2a3a;
+  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
+  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
+  --font: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
 }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
 
 /* NAV */
-.topnav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0.75rem 2rem;
-  display: flex; align-items: center; gap: 1.5rem;
-}
-.topnav .logo {
-  font-weight: 900; font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.topnav a {
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
-  transition: color 0.2s;
-}
-.topnav a:hover { color: var(--text-primary); }
-.topnav a.active { color: var(--accent-magenta); }
-.topnav .spacer { flex: 1; }
-.topnav .alpha-badge {
-  font-size: 0.7rem; font-weight: 700;
-  background: var(--accent-red); color: white;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  letter-spacing: 0.1em;
-}
-.stale-badge {
-  display: inline-block;
-  font-size: 0.6rem; font-weight: 700;
-  background: #e17055; color: white;
-  padding: 0.1rem 0.4rem; border-radius: 2px;
-  margin-left: 0.5rem; vertical-align: middle;
-  letter-spacing: 0.05em;
-}
+.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
+  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
+.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
+.nav a:hover { color:var(--text); }
+.nav a.on { color:var(--magenta); }
+.nav .sp { flex:1; }
+.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
+  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 4rem 2rem 3rem;
-  border-bottom: 1px solid var(--border);
-}
-.hero h1 {
-  font-size: 3rem; font-weight: 900;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-}
-.hero .subtitle {
-  font-size: 1.1rem; color: var(--text-secondary);
-  font-weight: 300;
-}
-.hero .meta {
-  margin-top: 1rem; font-size: 0.8rem;
-  color: var(--text-muted); font-family: var(--font-mono);
-}
+/* FULL-BLEED COVER */
+.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
+.cover img { width:100%; height:100%; object-fit:cover; }
+.cover .overlay { position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
+.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
+.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
+  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
+.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
+.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
+  border-radius:4px; color:white; }
 
-/* ISSUE GRID */
-.issues-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.issue-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.issue-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-}
-.issue-card .card-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.issue-card .issue-num {
-  font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.issue-card h2 {
-  font-size: 1.4rem; font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-.issue-card .act {
-  font-size: 0.85rem; color: var(--text-secondary);
-}
-.issue-card .card-body {
-  padding: 1.25rem 1.5rem;
-}
-.issue-card .doc-list {
-  list-style: none;
-  font-size: 0.8rem; color: var(--text-secondary);
-}
-.issue-card .doc-list li {
-  padding: 0.2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.issue-card .doc-list li:last-child { border: none; }
-.issue-card .concept-count {
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
+/* EDITORIAL BODY */
+.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
 
-/* ISSUE PAGE */
-.issue-header {
-  padding: 3rem 2rem 2rem;
-  border-bottom: 1px solid var(--border);
-  max-width: 1200px; margin: 0 auto;
-}
-.issue-header .breadcrumb {
-  font-size: 0.8rem; color: var(--text-muted);
-  margin-bottom: 1rem;
-}
-.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
-.issue-header .breadcrumb a:hover { color: var(--text-primary); }
-.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
-.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+/* SECTION BREAK */
+.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
+.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
 
-.source-docs {
-  padding: 1.5rem 2rem;
-  max-width: 1200px; margin: 0 auto;
-  border-bottom: 1px solid var(--border);
-}
-.source-docs h3 {
-  font-size: 0.85rem; font-weight: 600;
-  color: var(--text-muted); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 0.75rem;
-}
-.doc-chips {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-}
-.doc-chip {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem; color: var(--text-secondary);
-  text-decoration: none;
-  transition: border-color 0.2s;
-}
-.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
-.doc-chip .doc-num {
-  font-weight: 700; font-family: var(--font-mono);
-  margin-right: 0.4rem;
-}
+/* SPREAD: full-width hero image + editorial text below */
+.spread { margin-bottom:3rem; }
+.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
+.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
+.spread .body p { margin-bottom:0.8rem; }
+.spread .body strong { color:var(--text); }
 
-.sections-container {
-  max-width: 1200px; margin: 0 auto;
-  padding: 2rem;
-}
-.section-block {
-  margin-bottom: 3rem;
-}
-.section-block h2 {
-  font-size: 1.3rem; font-weight: 700;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--border);
-}
-.concepts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.concept-card {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.concept-card:hover { border-color: var(--accent-blue); }
-.concept-card .img-placeholder {
-  width: 100%; aspect-ratio: 16/10;
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; color: var(--text-muted);
-  position: relative;
-}
-.concept-card .img-placeholder .role-tag {
-  position: absolute; top: 0.5rem; left: 0.5rem;
-  font-size: 0.6rem; font-weight: 700;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  text-transform: uppercase; letter-spacing: 0.1em;
-}
-.role-cover { background: var(--accent-magenta); color: white; }
-.role-hero { background: var(--accent-blue); color: white; }
-.role-spot { background: var(--accent-green); color: white; }
-.role-sidebar { background: var(--accent-purple); color: white; }
-.concept-card .card-info {
-  padding: 0.75rem 1rem;
-}
-.concept-card .concept-id {
-  font-family: var(--font-mono);
-  font-size: 0.7rem; color: var(--text-muted);
-  margin-bottom: 0.25rem;
-}
-.concept-card .concept-scene {
-  font-size: 0.8rem; color: var(--text-secondary);
-  line-height: 1.4;
-  display: -webkit-box; -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical; overflow: hidden;
-}
+/* TWO-UP: image left, text right (alternating) */
+.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  align-items:start; margin-bottom:2.5rem; }
+.two-up.flip { direction:rtl; }
+.two-up.flip > * { direction:ltr; }
+.two-up img { width:100%; border-radius:6px; }
+.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
+.two-up .body strong { color:var(--text); }
+.two-up .body p { margin-bottom:0.6rem; }
 
-/* STALENESS */
-.staleness-panel {
-  max-width: 1200px; margin: 2rem auto;
-  padding: 0 2rem;
-}
-.staleness-panel h3 {
-  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
-  letter-spacing: 0.1em; text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.staleness-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8rem;
-}
-.staleness-table th {
-  text-align: left; padding: 0.5rem 0.75rem;
-  border-bottom: 2px solid var(--border);
-  color: var(--text-muted); font-weight: 600;
-}
-.staleness-table td {
-  padding: 0.4rem 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  color: var(--text-secondary);
-}
-.staleness-table tr:hover td { color: var(--text-primary); }
+/* SIDEBAR: small img + text */
+.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
+.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
+.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
 
-@media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
-  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
-  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+/* DOC REF */
+.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
+  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
+.doc-ref:hover { color:var(--magenta); }
+
+/* SECTION TOC */
+.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
+.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
+  text-transform:uppercase; margin-bottom:0.6rem; }
+.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
+.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
+  color:var(--dim); background:var(--card); border:1px solid var(--border);
+  text-decoration:none; transition:all 0.2s; }
+.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
+
+/* BOTTOM NAV */
+.bot-nav { display:flex; justify-content:space-between; align-items:center;
+  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
+.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
+.bot-nav a:hover { color:var(--text); }
+.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
+
+/* INDEX COVERS */
+.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
+  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
+.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
+.mag-grid .card:first-child h2 { font-size:2.5rem; }
+.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
+  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
+.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
+.card:hover .bg { transform:scale(1.05); }
+.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
+.card:hover .grad { opacity:0.95; }
+.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
+.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
+.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
+  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
+.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
+.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
+
+/* HERO SECTION */
+.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
+  border-bottom:1px solid var(--border); overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
+  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
+.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
+.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
+.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
+.hero .stats .n { font-size:2rem; font-weight:900;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
+
+@media(max-width:768px) {
+  .hero h1 { font-size:2.2rem; }
+  .mag-grid { grid-template-columns:1fr; padding:1rem; }
+  .mag-grid .card:first-child { min-height:280px; }
+  .cover h1 { font-size:2rem; }
+  .cover { height:60vh; }
+  .two-up { grid-template-columns:1fr; }
+  .sidebar-spread { flex-direction:column; }
+  .sidebar-spread img { width:100%; }
 }
-</style>
-</head>
-<body>
-  <nav class="topnav">
-    <span class="logo">SOVEREIGN POWER</span>
-    <a href="index.html">Library</a>
-    <a href="issue_1.html">#1</a>
+</style></head><body>
+<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
+<a href="index.html">Library</a><a href="issue_1.html">#1</a>
 <a href="issue_2.html">#2</a>
 <a href="issue_3.html">#3</a>
 <a href="issue_4.html">#4</a>
 <a href="issue_5.html">#5</a>
 <a href="issue_6.html">#6</a>
-<a href="issue_7.html" class="active">#7</a>
+<a href="issue_7.html" class="on">#7</a>
+<span class="sp"></span><span class="badge">ALPHA</span></nav>
+<div class="cover">
+  <img src="img/diagrams/i7_cover.png" alt="">
+  <div class="overlay"></div>
+  <div class="pill" style="background:#e17055">Issue 7 of 7</div>
+  <div class="text"><h1>The Appendix Tower</h1>
+  <div class="sub">Appendix · 28 illustrations</div></div>
+</div>
+<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-cover">cover</a><a href="#sec-1-cheat-sheet">§1 Cheat Sheet</a><a href="#sec-2-appendix-deep-dives">§2 Appendix Deep Dives</a><a href="#sec-3-walkthrough">§3 Walkthrough</a><a href="#sec-4-background-reading">§4 Background Reading</a></div></div>
+<div class="editorial"><div class="sec-break" id="sec-cover"><h2><a href="#sec-cover" style="color:inherit;text-decoration:none">cover</a></h2></div>
+<div class="sec-break" id="sec-1-cheat-sheet"><h2><a href="#sec-1-cheat-sheet" style="color:inherit;text-decoration:none">§1 Cheat Sheet</a></h2></div>
 
-    <span class="spacer"></span>
-    <span class="alpha-badge">ALPHA</span>
-  </nav>
+                <div class="spread" id="i7_s1_cheat_sheet">
+                  <img src="img/diagrams/i7_s1_cheat_sheet.png" alt="" loading="lazy">
+                  <div class="body"><p>YOU (Terminal)</p><p>│</p><p>├─ CH 1 ─── Environment Setup ──────────────── docker-compose up</p><p>│</p><p>├─ CH 2 ─── The Questionnaire ──────────────── 120 psychometric questions</p><p>│             └→ questionnaire_responses.json</p><a class="doc-ref" href="#sec-1-cheat-sheet">§ World Map — The Pipeline at a Glance</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s1_kasset_quick">
+                  <img src="img/diagrams/i7_s1_kasset_quick.png" alt="" loading="lazy">
+                  <div class="body"><p>### 1.1 — Clone & Configure</p><p>cd D:\Documents\SovereignOS\src\legacy_intake\Thesis\AskMikeeHost</p><p>cp .env.example .env</p><p>Edit <code>.env</code> — the only required variable:</p><p>NEO4J_PASSWORD=changeme_local</p><p>If you plan to use Hugging Face gated models (Gemma), add <code>HF_TOKEN=hf_xxx</code> to <code>.env</code>.</p><a class="doc-ref" href="#sec-1-cheat-sheet">§ CHAPTER 1 — Environment Setup</a></div>
+                </div>
+                <div class="two-up" id="i7_s1_twin_quick">
+                  <img src="img/diagrams/i7_s1_twin_quick.png" alt="" loading="lazy">
+                  <div class="body"><p>Six psychometric batteries, ~120 questions total. This builds your Big Five personality profile, character strengths, attachment style, cognitive style, and communication patterns.</p><p>### Execute</p><p>python profiling/profile_questionnaire.py</p><p>### What You'll See</p><p>══════════════════════════════════════════════════════════════════════</p><p>AskMikeeHost — Personality Profiling Questionnaire</p><a class="doc-ref" href="#sec-1-cheat-sheet">§ CHAPTER 2 — The Questionnaire (BFI-44, Proust, VIA-24, ECR-R, NFC-18)</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s1_sigma_quick">
+                  <img src="img/diagrams/i7_s1_sigma_quick.png" alt="" loading="lazy">
+                  <div class="body"><p>The questionnaire captured <em>traits</em>. The deep interview captures <em>behavior</em> — how you actually talk, disagree, think, and operate. This is the highest-fidelity input to the system.</p><p>### Execute</p><p>python profiling/profile_deep_interview.py</p><p>### The Sections</p><p>### Pro Tips</p><p><strong>Auto-saves every 3 items.</strong> Resume with <code>--resume</code>.</p><a class="doc-ref" href="#sec-1-cheat-sheet">§ CHAPTER 3 — The Deep Interview (63 Probes)</a></div>
+                </div>
+                <div class="two-up" id="i7_s1_vault_quick">
+                  <img src="img/diagrams/i7_s1_vault_quick.png" alt="" loading="lazy">
+                  <div class="body"><p>### 4A — Voice Corpus (Your Actual Writing)</p><p>Instead of pasting text into the terminal, this script vacuums up your real communications from service exports.</p><p>#### Prepare Your Exports</p><p>Copy your data exports into the container's <code>/pii-vault/exports/</code> directory:</p><p>/pii-vault/exports/</p><p>├── imessage/chat.db          ← macOS Messages database</p><a class="doc-ref" href="#sec-1-cheat-sheet">§ CHAPTER 4 — Voice & Behavioral Ingestion</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s1_adaptor_quick">
+                  <img src="img/diagrams/i7_s1_adaptor_quick.png" alt="" loading="lazy">
+                  <div class="body"><p>### 5A — Generate Personality Profile (Psychometric Scores)</p><p>python profiling/generate_personality_profile.py</p><p>Converts raw questionnaire responses into scored dimensions:</p><p>── Big Five ──────────────────────────────</p><p>Extraversion           2.78  ████████████████████████████</p><p>Agreeableness          3.22  ████████████████████████████████</p><a class="doc-ref" href="#sec-1-cheat-sheet">§ CHAPTER 5 — Profile Compilation</a></div>
+                </div><div class="sec-break" id="sec-2-appendix-deep-dives"><h2><a href="#sec-2-appendix-deep-dives" style="color:inherit;text-decoration:none">§2 Appendix Deep Dives</a></h2></div>
 
-  <div class="issue-header">
-    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 7</div>
-    <h1 style="color:#e17055">The Appendix Tower</h1>
-    <div class="act-label">Appendix · 28 diagrams</div>
-  </div>
+                <div class="spread" id="i7_s2_encoding_detail">
+                  <img src="img/diagrams/i7_s2_encoding_detail.png" alt="" loading="lazy">
+                  <div class="body"><p>Before training, raw data must be formatted into stage-specific JSONL.</p><p># Enter the data-pipeline container</p><p>docker-compose exec data-pipeline bash</p><p># Stage 1 — Plain text completions (personal narrative)</p><p>python scripts/format_instruction.py</p><p># Stage 3 — Multi-turn conversations from session logs</p><a class="doc-ref" href="#sec-2-appendix-deep-dives">§ CHAPTER 6 — Data Pipeline (Format Training Data)</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s2_tau_math">
+                  <img src="img/diagrams/i7_s2_tau_math.png" alt="" loading="lazy">
+                  <div class="body"><p>All training runs within 16 GB VRAM via NF4 quantization + <code>paged_adamw_8bit</code>.</p><p>docker-compose exec clara-engine bash</p><p>### Stage 1 — Self-Contained Pretraining (SCP)</p><p><strong>Goal:</strong> Broad familiarity with your personal history, opinions, and writing style.</p><p>python training/train_stage1_scp.py</p><p>Base model: <code>google/gemma-4-e4b</code></p><a class="doc-ref" href="#sec-2-appendix-deep-dives">§ CHAPTER 7 — Training (The Three Stages)</a></div>
+                </div>
+                <div class="two-up" id="i7_s2_fiber_bundle">
+                  <img src="img/diagrams/i7_s2_fiber_bundle.png" alt="" loading="lazy">
+                  <div class="body"><p>### 8A — Start the Server</p><p>uvicorn inference.server:app --host 0.0.0.0 --port 8080</p><p>The server boots with VRAM phase management and health at <code>http://localhost:8080/v1/health</code>.</p><p>### 8B — Personality Evaluation (The Feedback Loop)</p><p>30 probe questions across 6 categories. You score each response and provide corrections.</p><p>python profiling/personality_eval.py</p><a class="doc-ref" href="#sec-2-appendix-deep-dives">§ CHAPTER 8 — Inference & The Eval Loop</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s2_process_algebra">
+                  <img src="img/diagrams/i7_s2_process_algebra.png" alt="" loading="lazy">
+                  <div class="body"><p>The entire pipeline culminates here:</p><p>Load captured reasoning payload</p><p><strong>Kill the network</strong> (PowerShell lockdown script)</p><p>Route through STT → Generator → PII Strip → DAG Builder → Merkle Tree</p><p>Encrypt with <strong>AES-256-GCM</strong></p><p>Sign with <strong>ML-DSA-65</strong> (post-quantum)</p><a class="doc-ref" href="#sec-2-appendix-deep-dives">§ CHAPTER 9 — The Airgap Mint (Final Boss)</a></div>
+                </div>
+                <div class="two-up" id="i7_s2_protein_folding">
+                  <img src="img/diagrams/i7_s2_protein_folding.png" alt="" loading="lazy">
+                  <div class="body"><p>AskMikeeHost/</p><p>├── clara-engine/</p><p>│   ├── inference/          ← FastAPI server, LLM, Whisper, RAG, VRAM manager</p><p>│   ├── profiling/          ← Questionnaire, interview, voice/behavioral ingesters</p><p>│   ├── training/           ← 3-stage QLoRA pipeline + merge</p><p>│   ├── mint/               ← DAG builder, Merkle tree, .kasset encryption</p><a class="doc-ref" href="#sec-2-appendix-deep-dives">§ Appendix A — Directory Map</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s2_privacy_proof">
+                  <img src="img/diagrams/i7_s2_privacy_proof.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>99.6% voting control.</strong> The founder holds 9,300,000 Class B shares with 20× voting rights. All investor shares are Class A (1×). The total authorized share count is permanently fixed at 10,000,000 — codified in the C-Corp charter as an irrevocable constraint. No board vote, shareholder action, or merger can change this number. Future rounds are funded by the founder voluntarily converting Class B shares. No new shares are ever created.</p><p>The founder holds both voting board seats (2 of 2). Series A investors receive a non-voting observer seat. The twin serves as a charter-level <strong>architectural veto oracle</strong> — it can permanently block any action that compromises zero-egress security, but does not hold a board seat (DGCL §141(b) requires natural persons).</p><p><strong>Why this is required:</strong> The airgap is the core value proposition. The airgap is encoded in the charter as an irrevocable constraint. If any future investor, board member, or acquirer could vote to remove the airgap, the cryptographic provenance chain breaks, every .kasset signature becomes meaningless, and the product has no value. The governance structure is not ego — it is a mathematical, fixed constraint on the security of the system.</p><p><strong>Investor type:</strong> This structure is designed for individuals who bet on the math. Institutional VCs who require board control as a fiduciary obligation will self-select out. That is intentional.</p><p><strong>You are not betting on a founder. You are betting on an equation.</strong></p><a class="doc-ref" href="#sec-2-appendix-deep-dives">§ Governance</a></div>
+                </div><div class="sec-break" id="sec-3-walkthrough"><h2><a href="#sec-3-walkthrough" style="color:inherit;text-decoration:none">§3 Walkthrough</a></h2></div>
 
-  <div class="source-docs">
-    <h3>Source Documents</h3>
-    <div class="doc-chips">
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/AskMikeeHost_Walkthrough.md" class="doc-chip" target="_blank">
-          <span class="doc-num">AskMikeeHost_Walkthrough</span>🎮 AskMikeeHost — The Complete Walkthrough
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/Cheat_Sheet.md" class="doc-chip" target="_blank">
-          <span class="doc-num">Cheat_Sheet</span>Break Glass
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/Cheat_Sheet_Appendix.md" class="doc-chip" target="_blank">
-          <span class="doc-num">Cheat_Sheet_Appendix</span>Break Glass — Appendix
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/Background_Reading.md" class="doc-chip" target="_blank">
-          <span class="doc-num">Background_Reading</span>Theoretical Foundations & Bibliography
-        </a>
-        </div>
-  </div>
+                <div class="spread" id="i7_s3_terminal_start">
+                  <img src="img/diagrams/i7_s3_terminal_start.png" alt="" loading="lazy">
+                  <div class="body"><p>The company does not need $3M to survive. At $80K/month survival burn, the existing runway extends to 37 months at zero revenue. Revenue begins M6.</p><p>The raise is for three things:</p><p><strong>Time compression.</strong> Accelerate the growth curve. The model produces the same outcomes at any k > 0; the money buys speed — collapsing a 36-month organic trajectory into 18 months of funded execution.</p><p><strong>Credibility through adversarial validation.</strong> Engage best-in-class white hats to stress-test the cryptographic pipeline, the bilateral signing protocol, and the growth model. If the model is sound, their findings confirm it. If it isn't, $356K in legal and security budget finds the flaw before the market does.</p><p><strong>Cognitive diversification.</strong> The founder is one mind. A small, selected group of operators — not a board, not advisors, but people who execute — expands the decision surface. This is #1 restated: more minds compress time.</p><a class="doc-ref" href="#sec-3-walkthrough">§ Why The Money</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s3_questionnaire">
+                  <img src="img/diagrams/i7_s3_questionnaire.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Formula</p><p>Doc 07 defines a bottoms-up acquisition funnel with two components:</p><p><strong>Organized acquisition C(t):</strong> Events, stickers, storefronts, workshops, celebrity drop — paid channels with known unit economics</p><p><strong>Organic growth k × N(t):</strong> Mesh encounters, echoes, introductions, word-of-mouth — viral coefficient applied to existing user base</p><p><strong>N(t+1) = (1+k) × N(t) + C(t)</strong></p><p>Where:</p><a class="doc-ref" href="#sec-3-walkthrough">§ The Proof</a></div>
+                </div>
+                <div class="two-up" id="i7_s3_data_import">
+                  <img src="img/diagrams/i7_s3_data_import.png" alt="" loading="lazy">
+                  <div class="body"><p>The investor's due diligence process IS the onboarding flow. When you sit down with the system running on local hardware, airgapped, you are not watching a demo. You are generating the first empirical measurement of k. Your interaction with the system produces a .kasset. Your reaction to that .kasset — whether you trade it, share it, or dismiss it — is a data point. The proof is not in the spreadsheet. The proof is in what happens when a skeptical, high-agency individual encounters the system for the first time.</p><a class="doc-ref" href="#sec-3-walkthrough">§ The Verification Hook</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s3_stage1_train">
+                  <img src="img/diagrams/i7_s3_stage1_train.png" alt="" loading="lazy">
+                  <div class="body"><p>See [Background_Reading.md](Background_Reading.md) for the six foundational works and their connection to SSK architecture:</p><a class="doc-ref" href="#sec-3-walkthrough">§ Background Reading</a></div>
+                </div>
+                <div class="two-up" id="i7_s3_stage2_dpo">
+                  <img src="img/diagrams/i7_s3_stage2_dpo.png" alt="" loading="lazy">
+                  <div class="body"><p>Three headlines from the last 12 months:</p><p><strong>1. "The Largest Data Breach in American History."</strong> That's what the class action lawsuit calls it (EPIC v. OPM, Feb 2025). Unvetted DOGE personnel — private citizens with no security clearances — were granted access to OPM databases containing the Social Security numbers, home addresses, medical records, and financial data of every federal employee in the United States. A federal judge ordered their access revoked in June 2025. The same government that fines companies for mishandling consumer data handed the keys to its own employees' PII to a team of twenty-somethings with laptops. Centralized data stores are structurally indefensible — not in theory, in court filings.</p><p><strong>2. Signalgate.</strong> In March 2025, the National Security Advisor accidentally added an Atlantic journalist to a Signal group chat where cabinet officials were discussing classified military strike plans against the Houthis. Signal downloads surged 700% in the following week. The lesson the public drew was not "Signal is insecure" — it was "even the people running the government know they need end-to-end encryption, and they can't use the government's own systems to get it." Consumer behavior has permanently shifted from "I have nothing to hide" to "I need infrastructure I can verify." SSK is the next step: not just encrypted messaging, but encrypted everything — with local inference, local minting, and local signing.</p><p><strong>3. Your phone is a tracking collar.</strong> The FTC's 2024 enforcement actions against X-Mode Social and InMarket — both real companies, both fined — confirmed that commercially available location data can identify specific individuals visiting abortion clinics, addiction treatment centers, houses of worship, and political rallies. Senator Wyden's investigation revealed that data brokers sell the movement patterns of US military and intelligence personnel to foreign adversaries for as little as $0.12 per device per month. The asking price for a senator's weekly schedule: $20. SSK's airgap eliminates the data broker supply chain at the hardware level — there is no data to broker because no server ever sees it.</p><a class="doc-ref" href="#sec-3-walkthrough">§ Why Now</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s3_stage3_e2e">
+                  <img src="img/diagrams/i7_s3_stage3_e2e.png" alt="" loading="lazy">
+                  <div class="body"><p>The network launches in five distinct communities, each with different trade dynamics:</p><p>### 1. MSM Community (Men Who Have Sex With Men) — The Introduction Economy</p><p>The primary growth engine. The introduction economy — passive social and dating discovery via mutual .kasset exchange — is architecturally designed for a community that has been systematically harmed by surveillance-based platforms. Grindr sells location data to advertisers and has been used by authoritarian governments to identify and arrest gay men. The Sovereign introduction exchange is mutual (both consent), contains no identity or location, expires on a timer, and physically cannot be intercepted by any server because no server exists.</p><p><strong>Trade dynamics:</strong> Introduction exchanges are near-zero-friction and can happen multiple times per day. An engaged user on the dance floor at Horse Meat Disco in Bushwick could execute 5-10 mutual exchanges in a single evening. These are bilateral mesh transactions — each one counts as a trade. The community most harmed by surveillance has the strongest incentive to adopt a sovereign alternative, and their trade frequency is the highest of any segment.</p><p>### 2. Brooklyn Creatives — Musicians, Visual Artists, Photographers, Filmmakers</p><p>The original .kasset minters. Musicians mint tracks that exist only on the mesh — not on Spotify, not on YouTube. Visual artists attach provenance to physical work. Photographers sell prints with full creation metadata. The Genesis dinner series (12 people, quarterly) seeds this community directly. The sticker drop network (50 locations across Brooklyn coffee shops, record stores, galleries) provides ambient discovery.</p><a class="doc-ref" href="#sec-3-walkthrough">§ Beachhead Communities</a></div>
+                </div>
+                <div class="two-up" id="i7_s3_airgap_demo">
+                  <img src="img/diagrams/i7_s3_airgap_demo.png" alt="" loading="lazy">
+                  <div class="body"><p>Everything depends on k — the viral coefficient. Let's not assume. Let's compute.</p><p>### Scenario 1: No Traction (k = 0.05)</p><p><em>The mesh doesn't spark. Introduction economy doesn't drive referrals. Organized channels carry the load.</em></p><p><strong>M12 users: ~18,400.</strong> Never reaches 60K. Organized channels carry the load.</p><p><strong>M12 settlement MRR:</strong> 18,400 × 6.08 × $81 × 2.38% = <strong>$215,600</strong></p><p><strong>vs. monthly burn:</strong> $166,917. <strong>Cash flow: +$48,700/month. Still positive.</strong></p><a class="doc-ref" href="#sec-3-walkthrough">§ Five Scenarios</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s3_mint_kasset">
+                  <img src="img/diagrams/i7_s3_mint_kasset.png" alt="" loading="lazy">
+                  <div class="body"><p>The scenarios above use constant k — an algebraic approximation. The real system is governed by τ convergence: by analogy, desire bends the multi-dimensional curve the way mass bends spacetime — the convergence point, not the extremes, triggers action (Doc 12B §3.3). Trade frequency is not 6.08/month for everyone — it is a function of each user's τ̇ profiles converging harmonically toward rest (Lee, 2009). A trade occurs when all participating gaps close simultaneously — not when readings spike, but when everything resolves at once. The algebraic model answers "when do we hit 60K?" The calculus model — the real one, Doc 12B — describes how the system actually behaves. Both are documented. The algebra is for spreadsheets. The calculus is for predictions.</p><p><em>Part 2: [Cheat_Sheet_Appendix.md](Cheat_Sheet_Appendix.md) — trade frequency analysis, software-only financials, risk assessment, and derivation proofs.</em></p><p><em>Sovereign Survival Kit — Series A Data Room. Confidential.</em></p><a class="doc-ref" href="#sec-3-walkthrough">§ Two Models</a></div>
+                </div>
+                <div class="two-up" id="i7_s3_verify_signature">
+                  <img src="img/diagrams/i7_s3_verify_signature.png" alt="" loading="lazy">
+                  <div class="body"><p>### The Base Case (6.08 trades/user/month)</p><p>The base case trade frequency (6.08/user/month) is derived from the SSK segment-weighted analysis below, which yields 6.5 blended. The 6.08 figure is a conservative rounding, cross-checked against Amazon's average purchase frequency (73/year, Capital One Shopping 2025). Is it appropriate?</p><p><strong>Arguments it's too high:</strong> Amazon has 1-click buy, next-day delivery, 30 years of habit formation. SSK is a new marketplace with a new currency and higher friction.</p><p><strong>Arguments it's too low for the beachhead segments:</strong> Introduction exchanges are near-zero-friction and happen multiple times per day. The MSM beachhead trades introductions the way Snapchat users trade snaps — ~11 per day for the average DAU (Snapchat 2025 Investor Metrics), with power users significantly higher — each a bilateral mesh transaction at micro-values. Students trade culture (music, art, social discovery) at 100× the rate they trade academic material.</p><p>### Segment-Based Trade Distribution</p><p>The segment splits below are derived from published engagement data for comparable platforms. Each table cites its benchmark source.</p><a class="doc-ref" href="#sec-3-walkthrough">§ Trade Frequency: Both Sides of the Curve</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s3_victory_screen">
+                  <img src="img/diagrams/i7_s3_victory_screen.png" alt="" loading="lazy">
+                  <div class="body"><p>Hardware revenue is separated. Timeline indeterminate. Courier uses Uber Direct integration (Doc 13 M7), not a proprietary fleet — SSK takes 15% commission on physical .kasset transport, average $60/delivery, with $99/year subscription voiding per-item fees (Doc 08).</p><p>### Software Revenue Streams (Full Traction Scenario)</p><p>### Revenue Under Each Growth Scenario (Software-Only, Settlement Only)</p><p>### Adding Vault + Courier + Verification</p><p>(Assume 60% of users subscribe to some Vault tier, 45% of trades involve courier via Uber Direct)</p><p>The zero-cloud cost structure means every scenario above ~14,200 users is profitable.</p><a class="doc-ref" href="#sec-3-walkthrough">§ Software-Only Financial Model</a></div>
+                </div><div class="sec-break" id="sec-4-background-reading"><h2><a href="#sec-4-background-reading" style="color:inherit;text-decoration:none">§4 Background Reading</a></h2></div>
 
-  <div class="sections-container">
-    
-        <div class="section-block">
-          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i7_cover">
-              <div class="img-placeholder">
-                🎨
-                <span class="role-tag role-cover">cover</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_cover</div>
-                <div class="concept-scene">A wizard's private library at the top of a tower, towering bookshelves curving along circular walls, magical scrolls and reference tomes floating gently in the air as if browsing themselves, a reading desk at center with an ancient knowledge artifact glowing on its surface, the room is the accumulated wisdom of an entire quest — the appendix, the reference, the permanent record, warm candlelight on aged wood and leather, cool magical scroll glow, scholarly sanctuary</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§1 Cheat Sheet <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i7_s1_cheat_sheet">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s1_cheat_sheet</div>
-                <div class="concept-scene">An adventurer's quick reference card pinned to the inside of a shield — all key game mechanics summarized as a dense grid of icons and shorthand: kasset types, twin pipeline, sigma conversion, vault structure, adaptor modes — everything a player needs at a glance during combat, practical and battle-worn, warm leather shield with cool icon grid, field reference</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s1_kasset_quick">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s1_kasset_quick</div>
-                <div class="concept-scene">Three kasset type icons displayed as weapon select options in a heads-up display: ambient orb (soft pulsing sphere), intentional cube (sharp geometric solid), composite cluster (fused multi-gem formation) — clean iconic design, minimal style for instant recognition, dark HUD background with three distinct warm-colored icons, quick identification</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s1_twin_quick">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s1_twin_quick</div>
-                <div class="concept-scene">The twin pipeline distilled to four sequential icons connected by arrows: an eye (observe), a wave gauge (measure), a grid (map), a brain (compute) — the entire architecture in four symbols, clean iconographic summary, warm amber icons on dark background with cool connecting arrows, elegant compression</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s1_sigma_quick">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s1_sigma_quick</div>
-                <div class="concept-scene">The energy-to-value conversion shown as one simple equation icon: a lightning bolt on the left equals a coin on the right, the simplest possible representation of the σ concept, clean and immediate, warm lightning bolt to cool coin, instant understanding</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s1_vault_quick">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s1_vault_quick</div>
-                <div class="concept-scene">The two-compartment vault simplified to a single icon: left sovereign box (warm amber), right acquired box (cool blue), thick wall line between them — the entire vault architecture in one pictogram, clean architectural icon on dark background, structural clarity in minimum strokes</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s1_adaptor_quick">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s1_adaptor_quick</div>
-                <div class="concept-scene">Four mode icons arranged in a diamond selector pattern: shield (Guardian, red), scales (Negotiator, blue), heart (Friend, green), compass (Partner, gold) — with a selector arrow pointing to one mode, character class selection at a glance, clean dark background with four vivid mode colors, modal clarity</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§2 Appendix Deep Dives <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i7_s2_encoding_detail">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s2_encoding_detail</div>
-                <div class="concept-scene">The five-step Edgcumbe encoding pipeline shown as a precision machine assembly line in extreme detail: each station (Φ segmentation scissors, Ψ coupling chains, Ξ compression press, Π projection lens, Ω folding origami) rendered with mathematical operator symbols engraved into the machinery — the full formal specification as industrial art, detailed mechanical beauty, warm brass machinery with cool mathematical symbol engravings, rigorous engineering</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s2_tau_math">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s2_tau_math</div>
-                <div class="concept-scene">A large chalkboard in a mathematics lecture hall covered with tau curves, their derivatives, and convergence diagrams — chalk dust visible in a shaft of light from a high window, a professor's pointer resting against the board, the deep theoretical foundation of the entire system, academic atmosphere, warm chalk on cool dark green board, mathematical depth</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s2_fiber_bundle">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s2_fiber_bundle</div>
-                <div class="concept-scene">A geometric fiber bundle visualization floating in abstract space: a curved base manifold surface with individual fibers projecting upward from each point, projection arrows descending from fibers back to the base — the mathematical structure that enables privacy-preserving methodology transfer, abstract mathematical beauty, cool blue manifold with warm gold fibers, topological elegance</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s2_process_algebra">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s2_process_algebra</div>
-                <div class="concept-scene">CCS process algebra operators rendered as interlocking mechanical gears: parallel composition (two gears meshing), choice (fork gear), restriction (blocked gear), relabeling (gear with changed teeth) — formal computer science as clockwork, precise mechanical metaphor, warm brass gears with cool steel axles, computational precision</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s2_protein_folding">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s2_protein_folding</div>
-                <div class="concept-scene">A protein molecule folding analogy: a linear amino acid sequence on the left progressively folding into a complex 3D shape on the right — the structural relationships are preserved but the sequence itself becomes hidden inside the fold, biological metaphor for encoding, warm linear sequence cooling into complex blue 3D structure, structure over sequence</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s2_privacy_proof">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s2_privacy_proof</div>
-                <div class="concept-scene">A person walking into the left side of an encoding machine as their full self — face, voice, mannerisms all visible — and exiting the right side as an anonymous methodology skeleton with no identifying features, the encoding strips identity while preserving intelligence, dramatic transformation corridor, warm human entering cool anonymous skeleton exiting, privacy by design</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§3 Walkthrough <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(10 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i7_s3_terminal_start">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_terminal_start</div>
-                <div class="concept-scene">A computer terminal sitting in a stone dungeon room, its screen glowing green with a command prompt blinking, a keyboard ready for input, cables running into the wall connecting to deeper systems — the beginning of the technical demo, the player sits down and types the first command, intimate tech-dungeon atmosphere, cool green terminal glow in warm torchlit stone room, the quest begins here</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_questionnaire">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_questionnaire</div>
-                <div class="concept-scene">Six psychometric test scrolls being completed one by one on a scholar's desk: BFI-44 personality assessment, Proust questionnaire, VIA-24 character strengths, ECR-R-12 attachment style, NFC-18 cognitive motivation, communication patterns — each scroll partially filled with answers, the profiling phase, warm desk lamp on cool parchment scrolls, self-discovery through measurement</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_data_import">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_data_import</div>
-                <div class="concept-scene">Multiple data streams flowing into an import hopper from different sources: an email archive (envelope stream), chat exports (speech bubble stream), calendar (clock stream), music history (note stream), health data (heartbeat stream) — all converging into a single processing funnel, data gathering as tributary rivers, varied warm stream colors merging into cool processing funnel, comprehensive ingestion</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_stage1_train">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_stage1_train</div>
-                <div class="concept-scene">Training forge Stage 1: personal narrative stories being fed into a furnace that burns them into the base model metal, a QLoRA adapter forming on the anvil from the heated material — the twin begins to take shape from raw personal data, intense forge heat, warm red-orange furnace fire with cool blue adapter crystallizing, personality forging</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_stage2_dpo">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_stage2_dpo</div>
-                <div class="concept-scene">Training forge Stage 2: preference pairs being presented side by side on an alignment anvil, a hammer selects the preferred response and drives it deeper into the metal while the rejected response falls away — personality sharpening through comparison, precise alignment work, warm preferred side versus cool rejected side, preference refinement</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_stage3_e2e">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_stage3_e2e</div>
-                <div class="concept-scene">Training forge Stage 3: a multi-turn conversation polishing wheel smoothing the twin's interactive surface, each rotation of the wheel removes rough edges from the twin's responses — the final refinement that makes the twin feel natural, grinding precision, cool polishing wheel with warm twin surface becoming smoother, conversational polish</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_airgap_demo">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_airgap_demo</div>
-                <div class="concept-scene">A network cable being physically unplugged from a device with dramatic emphasis — the cable drops to the floor, the device enters a golden isolation bubble, all external connections severed, the minting continues locally without any network, the airgap is real and physical, dramatic disconnection moment, warm golden isolation bubble against cool disconnected grey cable, sovereign independence</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_mint_kasset">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_mint_kasset</div>
-                <div class="concept-scene">The final kasset emerging from the minting press: a perfect crystalline artifact sealed with AES-256-GCM encryption and stamped with an ML-DSA-65 post-quantum signature — the first kasset ever minted on this device, birth of a tradeable knowledge asset, triumphant emergence, warm golden kasset from cool steel press, creation complete</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_verify_signature">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_verify_signature</div>
-                <div class="concept-scene">An inspector examining the kasset's dual signature under a specialized magnifying glass: left lens shows P-256 ECDSA signature verified (green check), right lens shows ML-DSA-65 post-quantum signature verified (green check) — both signatures valid, provenance confirmed, verification precision, cool inspector lens with warm verified green confirmations, cryptographic integrity</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s3_victory_screen">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s3_victory_screen</div>
-                <div class="concept-scene">A triumphant achievement screen: FIRST KASSET MINTED displayed in golden letters, AIRGAP VERIFIED in silver, TWIN OPERATIONAL in bronze — confetti and fanfare, the complete demo has succeeded, the system works end-to-end, celebratory completion, warm golden achievement text against dark victory screen, quest complete</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§4 Background Reading <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(5 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i7_s4_reading_list">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s4_reading_list</div>
-                <div class="concept-scene">A scholar's desk piled with stacked academic papers and reference books, each spine showing a different research domain — neuroscience, cryptography, economics, physics, computer science, psychology — the interdisciplinary foundations of the entire system, quiet study atmosphere, warm desk lamp on cool varied book spines, intellectual breadth</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s4_tau_theory_book">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s4_tau_theory_book</div>
-                <div class="concept-scene">An ancient leather-bound tome with the tau symbol embossed on its cover, opened to a page showing gap-closing dynamics diagrams with handwritten margin notes — the foundational theory that everything else builds on, warm aged leather with cool mathematical diagram ink, theoretical bedrock</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s4_complexity_book">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s4_complexity_book</div>
-                <div class="concept-scene">A visualization of computational equivalence: simple rules on the left generating increasingly complex emergent patterns on the right, a few lines of code producing galaxies of behavior — Wolfram's insight applied to cognitive modeling, abstract pattern generation, simple warm left expanding into complex cool right, emergence from simplicity</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s4_crypto_book">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s4_crypto_book</div>
-                <div class="concept-scene">A post-quantum cryptography reference showing lattice-based geometric structures and ML-DSA signature scheme diagrams — the mathematics that will survive quantum computing, forward-looking security, cool crystalline lattice structures against dark mathematical background, quantum-resistant architecture</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i7_s4_economics_book">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i7_s4_economics_book</div>
-                <div class="concept-scene">An energy economics textbook opened to the sigma derivation page: the chain from joule definition through kWh measurement to regional energy cost to local currency conversion — the full economic foundation, warm textbook pages with cool equation chains, economic first principles</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-  </div>
-
-  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
-    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
-  </footer>
-</body>
-</html>
+                <div class="spread" id="i7_s4_reading_list">
+                  <img src="img/diagrams/i7_s4_reading_list.png" alt="" loading="lazy">
+                  <div class="body"><p>Standard VC practice includes kill gates — predetermined milestones where the founder commits to shutting down if metrics aren't met. The implicit logic: "if the product hasn't worked by month X, cut losses."</p><p>That logic assumes a cost structure where the company bleeds money while searching for product-market fit. Every month of operation burns capital that cannot be recovered. Kill gates protect investors from a founder who throws good money after bad.</p><p><strong>SSK's cost structure inverts this premise.</strong></p><p>Monthly infrastructure: $7,150. Monthly survival burn (founder + twin): $80,000. The $3M raise provides 37 months of runway at survival burn with ZERO revenue.</p><p>But revenue begins M6. And breakeven requires only 14,200 active trading users (19,000-22,700 during the early-stage fee compression window). The worst-case growth scenario (k=0.05, No Traction) produces 18,382 users by M12 — above breakeven even when the viral coefficient is nearly zero and organized acquisition does all the work.</p><p><strong>At every standard kill gate milestone, the company is alive:</strong></p><a class="doc-ref" href="#sec-4-background-reading">§ Why You Cannot Kill This Company</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s4_tau_theory_book">
+                  <img src="img/diagrams/i7_s4_tau_theory_book.png" alt="" loading="lazy">
+                  <div class="body"><p>### 1. Zero-Cloud Cost Structure</p><p>Marginal <em>compute</em> cost per user = $0. The user's device runs inference, training, minting, and signing. Core infrastructure: $7,150/month. Operational costs (support, compliance, chain ops) scale linearly but at a fraction of cloud-hosted competitors. Breakeven at ~14,200 trading users (19,000-22,700 during early-stage fee compression).</p><p>No AI company in history has achieved this cost structure. OpenAI burns $4-7B/year on cloud compute. SSK's compute bill is zero — the user pays their own electricity. The structural advantage is permanent and unforkable because it is enforced by physics, not by pricing.</p><p>### 2. The Airgap Is a Mathematical, Fixed Constraint</p><p>Three enforcement layers:</p><p><strong>Architecture:</strong> Zero network egress. Private keys never leave the hardware security module. ML-DSA-65 + P-256 ECDSA dual-layer signing.</p><a class="doc-ref" href="#sec-4-background-reading">§ What Holds Under Pressure</a></div>
+                </div>
+                <div class="two-up" id="i7_s4_complexity_book">
+                  <img src="img/diagrams/i7_s4_complexity_book.png" alt="" loading="lazy">
+                  <div class="body"><p>### Risk 1: Introduction Economy Adoption</p><p>The growth model depends on k ≥ 0.3. Primary driver: introduction economy. If users don't find mutual, encrypted, ephemeral social discovery compelling, k drops toward 0.</p><p><strong>Counterargument:</strong> The MSM community has the strongest incentive. They've been burned by Grindr data breaches and government surveillance. The promise of "local, encrypted, ephemeral, mutual" is architecturally different — not a policy promise, but a physics guarantee.</p><p><strong>Pivot if wrong:</strong> Company is still cash-flow positive at k=0.05 (Scenario 1). Invest more in organized events and campus expansion.</p><p>### Risk 2: Trade Frequency</p><p>6.08 trades/month is derived from SSK segment-weighted analysis (§A5 above: blended 6.5, conservatively rounded). Breakeven at 1.47 trades/user/month (Goldilocks) and 4.71 (No Traction). Both achievable.</p><a class="doc-ref" href="#sec-4-background-reading">§ What's Genuinely Risky</a></div>
+                </div>
+                <div class="two-up flip" id="i7_s4_crypto_book">
+                  <img src="img/diagrams/i7_s4_crypto_book.png" alt="" loading="lazy">
+                  <div class="body"><p>### A1. Constants</p><p>### A2. Breakeven</p><p>$166,917 ÷ $11.72 = <strong>14,242 users</strong></p><p>Verification: 14,242 × 6.08 = 86,591 trades. 86,591 × $81 × 0.0238 = $166,917. ✓</p><p>### A3. Scenario 2 (Goldilocks, k=0.3) — Step Verification</p><p>### A4. Scenario 5 (Supercritical, k=1.5) — Step Verification</p><a class="doc-ref" href="#sec-4-background-reading">§ Derivation Proofs</a></div>
+                </div>
+                <div class="two-up" id="i7_s4_economics_book">
+                  <img src="img/diagrams/i7_s4_economics_book.png" alt="" loading="lazy">
+                  <div class="body"><p>### 1. Knowledge as Asset — Max Boisot</p><p>Boisot's I-Space (Information Space) framework formalizes how data moves through codification and abstraction before becoming actionable knowledge. The .kasset architecture is derived from this model: the individual owns the codification pipeline, and the progressive certification fee reflects Boisot's insight that the value of knowledge is a function of its scarcity and the cost of its reproduction.</p><p>### 2. Data Provenance — Jaron Lanier</p><p>Lanier's central argument is that the digital economy systematically appropriates individual value through centralized platforms ("Siren Servers"). His proposed solution is a micropayment system tracking provenance back to the originating human. The .kasset is the provenance-tracked unit. The twin is the agent that manages it. The airgap is the architectural guarantee that no intermediary can intercept the value stream.</p><p>### 3. Relational Time — Julian Barbour</p><p>Barbour argues that time does not exist as an independent dimension — what we experience as time is the relational configuration of all particles at each instant ("time capsules" or "Nows"). τ (tau) in the SSK framework is derived from this: τ measures the time-to-closure of a gap in the individual's own reference frame periods, not clock time. The frame rate of captured reality is determined by the sensor array's physical configuration at each moment, not by an external clock.</p><a class="doc-ref" href="#sec-4-background-reading">§ Theory Review</a></div>
+                </div></div>
+<div class="bot-nav"><a href="issue_6.html">← Issue 6</a><a href="index.html">All Issues</a><span></span></div>
+<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
+</body></html>

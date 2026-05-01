@@ -1,809 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Issue 5: The Legal Shield — Sovereign Power Library</title>
-  <style>
-:root {
-  --bg-primary: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-section: #1a1a25;
-  --text-primary: #e8e6e3;
-  --text-secondary: #8a8a9a;
-  --text-muted: #5a5a6a;
-  --accent-magenta: #e84393;
-  --accent-blue: #0984e3;
-  --accent-green: #00b894;
-  --accent-gold: #fdcb6e;
-  --accent-purple: #6c5ce7;
-  --accent-red: #d63031;
-  --accent-orange: #e17055;
-  --border: #2a2a3a;
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Issue 5: The Legal Shield — Sovereign Power</title>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-display);
-  line-height: 1.6;
-  min-height: 100vh;
+:root {
+  --bg: #0a0a0f; --card: #12121a; --section: #1a1a25;
+  --text: #e8e6e3; --dim: #8a8a9a; --muted: #5a5a6a;
+  --border: #2a2a3a;
+  --magenta: #e84393; --blue: #0984e3; --green: #00b894;
+  --gold: #fdcb6e; --purple: #6c5ce7; --red: #d63031; --orange: #e17055;
+  --font: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
 }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.7; }
 
 /* NAV */
-.topnav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0.75rem 2rem;
-  display: flex; align-items: center; gap: 1.5rem;
-}
-.topnav .logo {
-  font-weight: 900; font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.topnav a {
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
-  transition: color 0.2s;
-}
-.topnav a:hover { color: var(--text-primary); }
-.topnav a.active { color: var(--accent-magenta); }
-.topnav .spacer { flex: 1; }
-.topnav .alpha-badge {
-  font-size: 0.7rem; font-weight: 700;
-  background: var(--accent-red); color: white;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  letter-spacing: 0.1em;
-}
-.stale-badge {
-  display: inline-block;
-  font-size: 0.6rem; font-weight: 700;
-  background: #e17055; color: white;
-  padding: 0.1rem 0.4rem; border-radius: 2px;
-  margin-left: 0.5rem; vertical-align: middle;
-  letter-spacing: 0.05em;
-}
+.nav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.92);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
+  padding:0.6rem 1.5rem; display:flex; align-items:center; gap:1.2rem; }
+.nav .logo { font-weight:900; font-size:1rem; letter-spacing:0.05em;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav a { color:var(--dim); text-decoration:none; font-size:0.8rem; font-weight:500; transition:color 0.2s; }
+.nav a:hover { color:var(--text); }
+.nav a.on { color:var(--magenta); }
+.nav .sp { flex:1; }
+.nav .badge { font-size:0.65rem; font-weight:700; background:var(--red); color:white;
+  padding:0.1rem 0.4rem; border-radius:3px; letter-spacing:0.1em; }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 4rem 2rem 3rem;
-  border-bottom: 1px solid var(--border);
-}
-.hero h1 {
-  font-size: 3rem; font-weight: 900;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-}
-.hero .subtitle {
-  font-size: 1.1rem; color: var(--text-secondary);
-  font-weight: 300;
-}
-.hero .meta {
-  margin-top: 1rem; font-size: 0.8rem;
-  color: var(--text-muted); font-family: var(--font-mono);
-}
+/* FULL-BLEED COVER */
+.cover { position:relative; width:100%; height:85vh; min-height:500px; overflow:hidden; }
+.cover img { width:100%; height:100%; object-fit:cover; }
+.cover .overlay { position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.3) 50%, transparent 80%); }
+.cover .text { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; }
+.cover h1 { font-size:3.5rem; font-weight:900; color:white; text-shadow:0 3px 16px rgba(0,0,0,0.7);
+  letter-spacing:-0.03em; line-height:1; margin-bottom:0.3rem; }
+.cover .sub { font-size:1.2rem; color:rgba(255,255,255,0.7); font-weight:300; }
+.cover .pill { position:absolute; top:1.5rem; left:1.5rem; font-size:0.65rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase; padding:0.25rem 0.7rem;
+  border-radius:4px; color:white; }
 
-/* ISSUE GRID */
-.issues-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.issue-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.issue-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-}
-.issue-card .card-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.issue-card .issue-num {
-  font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.issue-card h2 {
-  font-size: 1.4rem; font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-.issue-card .act {
-  font-size: 0.85rem; color: var(--text-secondary);
-}
-.issue-card .card-body {
-  padding: 1.25rem 1.5rem;
-}
-.issue-card .doc-list {
-  list-style: none;
-  font-size: 0.8rem; color: var(--text-secondary);
-}
-.issue-card .doc-list li {
-  padding: 0.2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.issue-card .doc-list li:last-child { border: none; }
-.issue-card .concept-count {
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
+/* EDITORIAL BODY */
+.editorial { max-width:900px; margin:0 auto; padding:2.5rem 1.5rem; }
 
-/* ISSUE PAGE */
-.issue-header {
-  padding: 3rem 2rem 2rem;
-  border-bottom: 1px solid var(--border);
-  max-width: 1200px; margin: 0 auto;
-}
-.issue-header .breadcrumb {
-  font-size: 0.8rem; color: var(--text-muted);
-  margin-bottom: 1rem;
-}
-.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
-.issue-header .breadcrumb a:hover { color: var(--text-primary); }
-.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
-.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+/* SECTION BREAK */
+.sec-break { margin:3rem 0 2rem; padding-bottom:0.5rem; border-bottom:3px solid var(--border); }
+.sec-break h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.01em; }
 
-.source-docs {
-  padding: 1.5rem 2rem;
-  max-width: 1200px; margin: 0 auto;
-  border-bottom: 1px solid var(--border);
-}
-.source-docs h3 {
-  font-size: 0.85rem; font-weight: 600;
-  color: var(--text-muted); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 0.75rem;
-}
-.doc-chips {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-}
-.doc-chip {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.8rem; color: var(--text-secondary);
-  text-decoration: none;
-  transition: border-color 0.2s;
-}
-.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
-.doc-chip .doc-num {
-  font-weight: 700; font-family: var(--font-mono);
-  margin-right: 0.4rem;
-}
+/* SPREAD: full-width hero image + editorial text below */
+.spread { margin-bottom:3rem; }
+.spread img { width:100%; border-radius:6px; display:block; margin-bottom:1rem; }
+.spread .body { font-size:0.95rem; color:var(--dim); line-height:1.8; }
+.spread .body p { margin-bottom:0.8rem; }
+.spread .body strong { color:var(--text); }
 
-.sections-container {
-  max-width: 1200px; margin: 0 auto;
-  padding: 2rem;
-}
-.section-block {
-  margin-bottom: 3rem;
-}
-.section-block h2 {
-  font-size: 1.3rem; font-weight: 700;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--border);
-}
-.concepts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.concept-card {
-  background: var(--bg-section);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.concept-card:hover { border-color: var(--accent-blue); }
-.concept-card .img-placeholder {
-  width: 100%; aspect-ratio: 16/10;
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; color: var(--text-muted);
-  position: relative;
-}
-.concept-card .img-placeholder .role-tag {
-  position: absolute; top: 0.5rem; left: 0.5rem;
-  font-size: 0.6rem; font-weight: 700;
-  padding: 0.15rem 0.5rem; border-radius: 3px;
-  text-transform: uppercase; letter-spacing: 0.1em;
-}
-.role-cover { background: var(--accent-magenta); color: white; }
-.role-hero { background: var(--accent-blue); color: white; }
-.role-spot { background: var(--accent-green); color: white; }
-.role-sidebar { background: var(--accent-purple); color: white; }
-.concept-card .card-info {
-  padding: 0.75rem 1rem;
-}
-.concept-card .concept-id {
-  font-family: var(--font-mono);
-  font-size: 0.7rem; color: var(--text-muted);
-  margin-bottom: 0.25rem;
-}
-.concept-card .concept-scene {
-  font-size: 0.8rem; color: var(--text-secondary);
-  line-height: 1.4;
-  display: -webkit-box; -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical; overflow: hidden;
-}
+/* TWO-UP: image left, text right (alternating) */
+.two-up { display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  align-items:start; margin-bottom:2.5rem; }
+.two-up.flip { direction:rtl; }
+.two-up.flip > * { direction:ltr; }
+.two-up img { width:100%; border-radius:6px; }
+.two-up .body { font-size:0.9rem; color:var(--dim); line-height:1.7; padding-top:0.25rem; }
+.two-up .body strong { color:var(--text); }
+.two-up .body p { margin-bottom:0.6rem; }
 
-/* STALENESS */
-.staleness-panel {
-  max-width: 1200px; margin: 2rem auto;
-  padding: 0 2rem;
-}
-.staleness-panel h3 {
-  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
-  letter-spacing: 0.1em; text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.staleness-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8rem;
-}
-.staleness-table th {
-  text-align: left; padding: 0.5rem 0.75rem;
-  border-bottom: 2px solid var(--border);
-  color: var(--text-muted); font-weight: 600;
-}
-.staleness-table td {
-  padding: 0.4rem 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  color: var(--text-secondary);
-}
-.staleness-table tr:hover td { color: var(--text-primary); }
+/* SIDEBAR: small img + text */
+.sidebar-spread { display:flex; gap:1.2rem; margin-bottom:2rem; align-items:flex-start; }
+.sidebar-spread img { width:180px; min-width:180px; border-radius:6px; }
+.sidebar-spread .body { font-size:0.85rem; color:var(--dim); line-height:1.6; }
 
-@media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
-  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
-  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+/* DOC REF */
+.doc-ref { display:inline-block; font-size:0.65rem; font-family:var(--mono); color:var(--muted);
+  margin-top:0.5rem; text-decoration:none; border-bottom:1px dotted var(--border); transition:color 0.2s; }
+.doc-ref:hover { color:var(--magenta); }
+
+/* SECTION TOC */
+.toc { max-width:900px; margin:0 auto; padding:1.5rem 1.5rem 0; }
+.toc h3 { font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.15em;
+  text-transform:uppercase; margin-bottom:0.6rem; }
+.toc-list { display:flex; flex-wrap:wrap; gap:0.4rem; list-style:none; }
+.toc-list a { display:block; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.75rem;
+  color:var(--dim); background:var(--card); border:1px solid var(--border);
+  text-decoration:none; transition:all 0.2s; }
+.toc-list a:hover { color:var(--text); border-color:var(--magenta); }
+
+/* BOTTOM NAV */
+.bot-nav { display:flex; justify-content:space-between; align-items:center;
+  padding:1.5rem 2rem; max-width:900px; margin:0 auto; border-top:1px solid var(--border); }
+.bot-nav a { color:var(--dim); text-decoration:none; font-size:0.85rem; font-weight:500; }
+.bot-nav a:hover { color:var(--text); }
+.footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.7rem; border-top:1px solid var(--border); }
+
+/* INDEX COVERS */
+.mag-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
+  gap:1.5rem; padding:2rem; max-width:1400px; margin:0 auto; }
+.mag-grid .card:first-child { grid-column:1/-1; min-height:420px; }
+.mag-grid .card:first-child h2 { font-size:2.5rem; }
+.card { display:block; text-decoration:none; color:inherit; border-radius:12px;
+  overflow:hidden; position:relative; min-height:320px; transition:transform 0.3s,box-shadow 0.3s; }
+.card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+.card .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform 0.4s; }
+.card:hover .bg { transform:scale(1.05); }
+.card .grad { position:absolute; inset:0; opacity:0.85; transition:opacity 0.3s; }
+.card:hover .grad { opacity:0.95; }
+.card .info { position:absolute; bottom:0; left:0; right:0; padding:1.5rem; z-index:2; }
+.card .info .num { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(255,255,255,0.8); margin-bottom:0.2rem; }
+.card h2 { font-size:1.8rem; font-weight:900; color:white; line-height:1.1;
+  text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:0.15rem; }
+.card .card-sub { font-size:0.95rem; font-weight:300; color:rgba(255,255,255,0.9); margin-bottom:0.4rem; }
+.card .card-act { font-size:0.7rem; color:rgba(255,255,255,0.6); }
+
+/* HERO SECTION */
+.hero { position:relative; text-align:center; padding:5rem 2rem 4rem;
+  border-bottom:1px solid var(--border); overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(232,67,147,0.08) 0%,transparent 60%),
+  radial-gradient(ellipse at 20% 100%,rgba(9,132,227,0.06) 0%,transparent 50%); }
+.hero h1 { position:relative; font-size:3.5rem; font-weight:900; letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#e84393 0%,#0984e3 40%,#00b894 70%,#fdcb6e 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
+.hero .sub { position:relative; font-size:1.2rem; color:var(--dim); font-weight:300; }
+.hero .stats { position:relative; display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; }
+.hero .stats .n { font-size:2rem; font-weight:900;
+  background:linear-gradient(135deg,var(--magenta),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero .stats .l { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; }
+.hero .meta { position:relative; margin-top:1rem; font-size:0.75rem; color:var(--muted); font-family:var(--mono); }
+
+@media(max-width:768px) {
+  .hero h1 { font-size:2.2rem; }
+  .mag-grid { grid-template-columns:1fr; padding:1rem; }
+  .mag-grid .card:first-child { min-height:280px; }
+  .cover h1 { font-size:2rem; }
+  .cover { height:60vh; }
+  .two-up { grid-template-columns:1fr; }
+  .sidebar-spread { flex-direction:column; }
+  .sidebar-spread img { width:100%; }
 }
-</style>
-</head>
-<body>
-  <nav class="topnav">
-    <span class="logo">SOVEREIGN POWER</span>
-    <a href="index.html">Library</a>
-    <a href="issue_1.html">#1</a>
+</style></head><body>
+<nav class="nav"><span class="logo">SOVEREIGN POWER</span>
+<a href="index.html">Library</a><a href="issue_1.html">#1</a>
 <a href="issue_2.html">#2</a>
 <a href="issue_3.html">#3</a>
 <a href="issue_4.html">#4</a>
-<a href="issue_5.html" class="active">#5</a>
+<a href="issue_5.html" class="on">#5</a>
 <a href="issue_6.html">#6</a>
 <a href="issue_7.html">#7</a>
+<span class="sp"></span><span class="badge">ALPHA</span></nav>
+<div class="cover">
+  <img src="img/diagrams/i5_cover.png" alt="">
+  <div class="overlay"></div>
+  <div class="pill" style="background:#6c5ce7">Issue 5 of 7</div>
+  <div class="text"><h1>The Legal Shield</h1>
+  <div class="sub">Act 5: Legal + Governance + IP · 35 illustrations</div></div>
+</div>
+<div class="toc"><h3>In This Issue</h3><div class="toc-list"><a href="#sec-cover">cover</a><a href="#sec-1-investor-terms">§1 Investor Terms</a><a href="#sec-2-cap-table">§2 Cap Table</a><a href="#sec-3-governance">§3 Governance</a><a href="#sec-4-legal-entity">§4 Legal Entity</a><a href="#sec-5-ip-portfolio">§5 IP Portfolio</a><a href="#sec-6-howey-test">§6 Howey Test</a><a href="#sec-7-regulatory-risk">§7 Regulatory Risk</a><a href="#sec-8-legal-budget">§8 Legal Budget</a><a href="#sec-9-competition">§9 Competition</a></div></div>
+<div class="editorial"><div class="sec-break" id="sec-cover"><h2><a href="#sec-cover" style="color:inherit;text-decoration:none">cover</a></h2></div>
+<div class="sec-break" id="sec-1-investor-terms"><h2><a href="#sec-1-investor-terms" style="color:inherit;text-decoration:none">§1 Investor Terms</a></h2></div>
 
-    <span class="spacer"></span>
-    <span class="alpha-badge">ALPHA</span>
-  </nav>
+                <div class="spread" id="i5_s1_safe_structure">
+                  <img src="img/diagrams/i5_s1_safe_structure.png" alt="" loading="lazy">
+                  <div class="body"><p>### What Investors Receive</p><p><strong>At signing:</strong> A SAFE — a contractual right to receive preferred stock in the future when a priced round (Series A) closes.</p><p><strong>At conversion:</strong> Preferred shares in Sovereign Survival Kit Inc. (Delaware C-Corp) calculated by dividing the investment amount by the lower of (a) the valuation cap price or (b) the Series A price.</p><p><strong>No board seats.</strong> Investors receive information rights and, for qualifying checks, pro-rata participation rights in subsequent rounds.</p><p><strong>No governance over the DAO or Trust.</strong> Investment is in the C-Corp only. The Wyoming DAO LLC and Nevada Irrevocable Trust are separate legal entities not subject to investor governance.</p><p>> <strong>Architectural note:</strong> The zero-egress architecture requires singular sovereign authority over design decisions — control that cannot be fragmented, delegated to committee, or overridden by shareholder vote. During the founder's lifetime, that authority is vested in the founder. Upon succession, it transfers whole to the Nevada Irrevocable Trust. See §5.</p><a class="doc-ref" href="#sec-1-investor-terms">§ 1. Seed Round — Post-Money SAFE</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s1_valuation_cap">
+                  <img src="img/diagrams/i5_s1_valuation_cap.png" alt="" loading="lazy">
+                  <div class="body"><p>### What Series A Investors Receive</p><p>Preferred shares in Sovereign Survival Kit Inc. (Delaware C-Corp) with 1x liquidation preference. Shares are converted from the founder's Class B allocation — the fixed pool of 10,000,000 shares does not increase.</p><p>Information rights (annual reviewed financials).</p><p><strong>Observer seat on the board</strong> — not a voting seat. Founder retains majority board control. See [Board and Governance](17_Board_and_Governance.md).</p><p>Immutable charter constraints protect all shareholders equally. See [Board and Governance §4](17_Board_and_Governance.md).</p><a class="doc-ref" href="#sec-1-investor-terms">§ 2. Series A — Priced Preferred Round (Target M18)</a></div>
+                </div>
+                <div class="two-up" id="i5_s1_dilution_model">
+                  <img src="img/diagrams/i5_s1_dilution_model.png" alt="" loading="lazy">
+                  <div class="body"><p>> Full legal/IP breakdown in [Legal Budget Breakdown](24_Legal_Budget_Breakdown.md). Individual compensation detail in [Financial Model §7](11_Financial_Model_and_Projections.md).</p><p>></p><p>> <strong>Payroll:</strong> Funds a 3-person founding team (Founder/CEO, Technical Lead Manager, COO). Fractional CFO and GC retained in Y2.</p><p>></p><p>> <strong>Compensation structure:</strong> Employees receive cash compensation plus spark grants equivalent to typical options value — no equity grants, no options. The Nevada Irrevocable Trust is a separate vehicle; its membership is at the founder's sole and absolute discretion and is not subject to investor inquiry. No option pool exists. This preserves the clean 93/7 cap table.</p><p>></p><a class="doc-ref" href="#sec-1-investor-terms">§ 4. Use of Seed Proceeds ($3M — ~18-Month Runway)</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s1_use_of_proceeds">
+                  <img src="img/diagrams/i5_s1_use_of_proceeds.png" alt="" loading="lazy">
+                  <div class="body"><p>Sovereign Survival Kit is architecturally a sovereign, edge-first platform. The .kasset minting process requires zero network egress — the ML-DSA-65 post-quantum signature proves that each asset was generated locally and is unaltered. If any party — investor, board member, or regulator — can compel a design change that introduces a network path into the core processing environment, the cryptographic provenance chain breaks, the signature is void, and the product has no value proposition. The founder's absolute control over the company is therefore not a preference — it is a <strong>structural requirement of the product itself</strong>.</p><p><strong>Fixed share pool:</strong> The charter permanently fixes the authorized share count at 10,000,000. No new shares may ever be created. Future equity rounds are funded by the founder voluntarily converting Class B shares to the applicable preferred class. The total never changes. See [Board and Governance §4](17_Board_and_Governance.md).</p><p><strong>Dual-class stock:</strong> The founder holds Class B shares with <strong>20x voting rights</strong> (Lyft precedent). All investor shares are Class A (1x voting). At 93% ownership post-seed, the founder holds 99.6% of all votes. Under the fixed-pool model, the founder retains >95% vote control even at <60% economic ownership. No combination of investors across any number of rounds can outvote the founder.</p><p><strong>No sunset provision.</strong> The dual-class structure is permanent and does not expire based on time, transfer, or IPO. This is consistent with Alphabet, Meta, and Snap, none of which have voting sunsets.</p><p><strong>The OpenAI cautionary case.</strong> The contemporaneous <em>Altman v. Musk</em> litigation (2025-2026) demonstrates exactly what happens when governance structure allows investors and board members to override a founder's architectural vision — OpenAI's conversion from non-profit to capped-profit to for-profit restructured the entity's mission under investor pressure. SSK's governance is designed to make that outcome structurally impossible. The airgap cannot be removed by board vote because the charter codifies it as an irrevocable constraint.</p><p><strong>Board majority:</strong> Founder holds both voting board seats at all stages through Series A. The Series A observer seat is non-voting. See [Board and Governance](17_Board_and_Governance.md).</p><a class="doc-ref" href="#sec-1-investor-terms">§ 5. Founder Control Provisions</a></div>
+                </div><div class="sec-break" id="sec-2-cap-table"><h2><a href="#sec-2-cap-table" style="color:inherit;text-decoration:none">§2 Cap Table</a></h2></div>
 
-  <div class="issue-header">
-    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 5</div>
-    <h1 style="color:#6c5ce7">The Legal Shield</h1>
-    <div class="act-label">Act 5: Legal + Governance + IP · 35 diagrams</div>
-  </div>
+                <div class="spread" id="i5_s2_cap_table">
+                  <img src="img/diagrams/i5_s2_cap_table.png" alt="" loading="lazy">
+                  <div class="body"><p><em>700,000 shares authorized but unissued, reserved for SAFE conversion at the first priced equity round. Post-money SAFE commits 7.0% dilution at conversion.</em></p><p><strong>Notes:</strong></p><p>Class B shares carry <strong>20x voting rights</strong> per share (Lyft precedent). See [Investor Terms §5](15_Investor_Terms.md).</p><p><strong>No option pool.</strong> All employee compensation is non-dilutive — cash salary plus spark grants. See §5 below.</p><p>No prior investors. No angels. No advisor equity grants. Clean cap table.</p><a class="doc-ref" href="#sec-2-cap-table">§ 1. Pre-Seed (Current State)</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s2_dual_class">
+                  <img src="img/diagrams/i5_s2_dual_class.png" alt="" loading="lazy">
+                  <div class="body"><p>The $3M seed is raised via a YC Standard Post-Money SAFE with a <strong>$42.86M post-money valuation cap</strong>. SAFEs convert into preferred stock at the first priced equity round of ≥$1M.</p><p><strong>Derivation:</strong></p><p>Post-money cap: $42,857,143 (~$42.86M)</p><p>Investor ownership: $3,000,000 / $42,857,143 = <strong>7.0%</strong></p><p>Founder retention: 100% − 7.0% = <strong>93.0%</strong></p><p>Price per share: $42,857,143 / 10,000,000 = <strong>$4.286</strong></p><a class="doc-ref" href="#sec-2-cap-table">§ 2. Post-Seed: SAFE Conversion at First Priced Round</a></div>
+                </div>
+                <div class="sidebar-spread" id="i5_s2_no_option_pool">
+                  <img src="img/diagrams/i5_s2_no_option_pool.png" alt="" loading="lazy">
+                  <div class="body"><p>Hypothetical scenario: $15M priced round at $80M pre-money ($95M post-money). The founder voluntarily converts Class B shares to preferred — <strong>no new shares are created.</strong> The 10,000,000 total is permanent. This round may never occur; it is presented to demonstrate the fixed-pool mechanic.</p><p><strong>Derivation:</strong></p><p>Pre-money valuation: $80,000,000</p><p>Price per share: $80,000,000 / 10,000,000 = <strong>$8.00</strong></p><p>Series A shares: $15,000,000 / $8.00 = <strong>1,875,000</strong></p><p>Mechanism: Founder converts 1,875,000 Class B → Series A Preferred. Shares returned to treasury and re-issued as preferred.</p><a class="doc-ref" href="#sec-2-cap-table">§ 3. Hypothetical Future Round: Illustrative Model</a></div>
+                </div><div class="sec-break" id="sec-3-governance"><h2><a href="#sec-3-governance" style="color:inherit;text-decoration:none">§3 Governance</a></h2></div>
 
-  <div class="source-docs">
-    <h3>Source Documents</h3>
-    <div class="doc-chips">
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/15_Investor_Terms.md" class="doc-chip" target="_blank">
-          <span class="doc-num">15</span>Investor Terms: Seed & Series A Structure
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/16_Cap_Table.md" class="doc-chip" target="_blank">
-          <span class="doc-num">16</span>Capitalization Table — Sovereign Survival Kit Inc. (Delaware C-Corp)
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/17_Board_and_Governance.md" class="doc-chip" target="_blank">
-          <span class="doc-num">17</span>Board Structure & Governance
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/18_Legal_Entity_Structure.md" class="doc-chip" target="_blank">
-          <span class="doc-num">18</span>Legal Architecture: Entity Structure & Liability Shield
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/19_IP_Assignment_Chain.md" class="doc-chip" target="_blank">
-          <span class="doc-num">19</span>IP Assignment Chain — Sovereign Survival Kit Inc
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/20_IP_Inventory.md" class="doc-chip" target="_blank">
-          <span class="doc-num">20</span>Complete IP Inventory
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/21_Defensive_Patent_Claims.md" class="doc-chip" target="_blank">
-          <span class="doc-num">21</span>Defensive Patent Claims Outline
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/22_Howey_Test_Analysis.md" class="doc-chip" target="_blank">
-          <span class="doc-num">22</span>Howey Test Analysis — Why .kassets Are Not Securities
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/23_Regulatory_Risk_Matrix.md" class="doc-chip" target="_blank">
-          <span class="doc-num">23</span>Regulatory Risk Matrix & Technical Security Gap Analysis
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/24_Legal_Budget_Breakdown.md" class="doc-chip" target="_blank">
-          <span class="doc-num">24</span>Legal, IP & Security Budget Breakdown
-        </a>
-        
-        <a href="https://github.com/voxels/SovereignOS/blob/main/Data_Room/25_Competitive_Analysis.md" class="doc-chip" target="_blank">
-          <span class="doc-num">25</span>Competitive Analysis (Porter's Five Forces)
-        </a>
-        </div>
-  </div>
+                <div class="two-up" id="i5_s3_board_seats">
+                  <img src="img/diagrams/i5_s3_board_seats.png" alt="" loading="lazy">
+                  <div class="body"><p>Traditional startups reserve 15-20% for employee stock options. Sovereign Survival Kit does not, for two reasons:</p><p><strong>Spark grants replace equity incentives.</strong> Employees receive cash-settled performance grants equivalent to typical options value, providing economic upside without diluting the cap table or requiring 409A valuations. See [Investor Terms §4](15_Investor_Terms.md).</p><p><strong>Cap table purity is an investor signal.</strong> A clean, undiluted cap table with 93% founder ownership demonstrates conviction, capital efficiency, and alignment. There is no dead equity. Every share is held by someone with direct skin in the game.</p><a class="doc-ref" href="#sec-3-governance">§ 5. Why No Option Pool</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s3_immutable_constraints">
+                  <img src="img/diagrams/i5_s3_immutable_constraints.png" alt="" loading="lazy">
+                  <div class="body"><p>The following are <strong>separate legal entities</strong> with no equity relationship to Sovereign Survival Kit Inc.:</p><p>Investors in Sovereign Survival Kit Inc. have <strong>no claim, visibility, or governance rights</strong> over the DAO or Trust.</p><p>> <strong>Revenue architecture:</strong> All platform revenue, including the progressive network fee on .kasset trades, flows exclusively through the C-Corp. Shareholder distributions are pro-rata. The founder's distributions flow to the Nevada Irrevocable Trust. No platform revenue may be routed directly to the DAO or Trust in a manner that bypasses the C-Corp and its shareholders. Binding covenant language to be included in the Investor Rights Agreement.</p><a class="doc-ref" href="#sec-3-governance">§ 6. Entities NOT On This Cap Table</a></div>
+                </div><div class="sec-break" id="sec-4-legal-entity"><h2><a href="#sec-4-legal-entity" style="color:inherit;text-decoration:none">§4 Legal Entity</a></h2></div>
 
-  <div class="sections-container">
-    
-        <div class="section-block">
-          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_cover">
-              <div class="img-placeholder">
-                🎨
-                <span class="role-tag role-cover">cover</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_cover</div>
-                <div class="concept-scene">A multi-headed dragon boss fight in a gothic courthouse arena — each dragon head represents a different regulatory challenge (securities law, privacy regulation, patent disputes, jurisdictional barriers), a lone knight wielding a law scroll in one hand and a crystalline shield in the other, fire breath from each head being deflected by different legal defenses, dramatic boss battle composition, intense red-orange fire against cool stone courthouse interior, epic legal confrontation</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§1 Investor Terms <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(4 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s1_safe_structure">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s1_safe_structure</div>
-                <div class="concept-scene">An ornate treasure chest with a unique SAFE lock mechanism — the lock requires a specific key that converts to equity at a predetermined cap, an investor character being offered the key by the founder, the chest contains future value, formal deal-room atmosphere, warm gold chest with cool silver lock mechanism, trust and terms</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s1_valuation_cap">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s1_valuation_cap</div>
-                <div class="concept-scene">A golden dome ceiling with the $42.86M cap amount engraved at the apex — value can grow within the dome but the cap defines the conversion point, looking upward from inside, architectural grandeur, warm gold dome against deep blue interior sky, the ceiling of the deal</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s1_dilution_model">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s1_dilution_model</div>
-                <div class="concept-scene">A large circular stone being divided with precise cuts: 93% remains as a massive founder section, 7% is cleanly separated as the investor portion — the stone cannot be further divided (no option pool), simple and permanent, cool grey stone with warm golden cut lines, irreversible allocation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s1_use_of_proceeds">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s1_use_of_proceeds</div>
-                <div class="concept-scene">Gold coins flowing from a central hopper into seven labeled channels: payroll (largest pipe), legal (medium), marketing (medium), infrastructure (smaller), operations, storefront, compute — each channel leads to a different workshop, fluid resource allocation, warm gold flow against cool channel metal, precise deployment</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§2 Cap Table <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(3 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s2_cap_table">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s2_cap_table</div>
-                <div class="concept-scene">Exactly ten million coins arranged in a vast grid on a treasury floor, 93% painted deep founder-blue and 7% painted investor-gold, a heavy iron sign reading FIXED POOL — NO NEW COINS EVER bolted to the wall above, the permanence of the allocation is the point, cool blue sea of founder coins with warm gold investor corner, immutable equity</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s2_dual_class">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s2_dual_class</div>
-                <div class="concept-scene">Two coin types side by side on a velvet display: a single Class A coin worth one vote, beside it a towering stack of twenty Class B coins fused into one super-vote token — the 20x voting power made physical, the founder's control mechanism, single vote coin dwarfed by fused super-vote, warm gold detail on cool display velvet</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s2_no_option_pool">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s2_no_option_pool</div>
-                <div class="concept-scene">An empty drained swimming pool with a large crossed-out sign reading NO OPTION POOL, the pool is permanently dry — future employee compensation comes from the founder's own shares converting, no dilution surprise, dry concrete pool in afternoon light, stark and deliberate absence, cool grey pool with warm prohibition sign</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§3 Governance <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(2 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s3_board_seats">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s3_board_seats</div>
-                <div class="concept-scene">A round governance table with exactly three chairs: two ornate voting thrones with gavels (founder + lead investor) and one modest observer stool with a notepad (board observer) — the power structure is minimal and deliberate, formal boardroom with dark wood and brass, warm throne-light versus cool observer-light, constrained governance</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s3_immutable_constraints">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s3_immutable_constraints</div>
-                <div class="concept-scene">A stone tablet mounted high on a fortress wall with unchangeable governance rules carved deep into the surface — golden chains binding the tablet to the wall permanently, the rules cannot be amended even by unanimous consent, some things are forever, cool stone with warm golden chain highlights, constitutional bedrock</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§4 Legal Entity <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(2 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s4_entity_structure">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s4_entity_structure</div>
-                <div class="concept-scene">Two connected fortress buildings on a shared foundation: a Delaware C-Corp castle (tall, formal, corporate flags) linked by a stone bridge to a Wyoming DAO LLC watchtower (lean, autonomous, protocol flags) — each serves a different purpose but they share a foundation, formal architectural contrast, warm castle brick versus cool tower stone, dual-entity harmony</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s4_piiaa">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s4_piiaa</div>
-                <div class="concept-scene">A solemn contract-signing ceremony: a quill pen writing an invention assignment clause on a formal scroll, a notary's seal being pressed into warm wax beside the signature, all intellectual property flowing through one legal channel, formal desk with candle and seal, warm wax and parchment against cool legal formality, binding obligation</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§5 IP Portfolio <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(5 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s5_ip_chain">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s5_ip_chain</div>
-                <div class="concept-scene">A chain of custody diagram rendered as a physical conveyor: original inventions (raw crystals) flow from the creator's workshop through an assignment notary station into a C-Corp vault at the end — the chain is unbroken and documented at every step, industrial traceability, warm workshop origin cooling to formal vault destination, provenance of ideas</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s5_17_patents">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s5_17_patents</div>
-                <div class="concept-scene">An arsenal room with seventeen unique patent weapons mounted on individual wall brackets in three rows: each weapon is a different type (swords, shields, staffs, bows) representing different patent categories, each labeled with a brass nameplate, the collection spans the full defensive portfolio, warm armory wood with cool weapon steel, comprehensive protection</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s5_defensive_patents">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s5_defensive_patents</div>
-                <div class="concept-scene">Thirteen shield-bearing sentinels standing in a defensive perimeter formation around a central IP fortress, each sentinel's shield displays a different defensive patent symbol, they face outward protecting the interior from all directions, military defensive formation at dusk, warm golden shields against deepening blue twilight, proactive defense</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s5_know_maps_ip">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s5_know_maps_ip</div>
-                <div class="concept-scene">A dual-lock display case: the top shelf holds the app layer with an Apache 2.0 open padlock (anyone can use it), the bottom shelf holds proprietary CoreML models behind a sealed glass case with a private key lock — open source above, proprietary below, the licensing duality, warm open-source amber above cool proprietary blue below, strategic IP layers</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s5_tau_ip">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s5_tau_ip</div>
-                <div class="concept-scene">A priceless tau theory manuscript displayed behind CC-BY-NC-ND protective glass in a museum case — visible and readable but protected from commercial extraction, a scholar studying it through the glass with reverence, the research is published but the commercial application is defended, warm manuscript glow behind cool protective glass, academic openness with commercial boundaries</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§6 Howey Test <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s6_howey_dragon">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s6_howey_dragon</div>
-                <div class="concept-scene">A four-headed dragon boss in a legal arena, each head labeled with a Howey prong: Investment of Money, Common Enterprise, Expectation of Profit, Efforts of Others — a knight methodically defeating each head one by one with different legal arguments as weapons, the fourth head crumbling as the analysis completes, dramatic boss fight, varied fire colors per head against dark arena, systematic legal victory</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s6_not_investment">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s6_not_investment</div>
-                <div class="concept-scene">A sigma coin being used specifically as a measuring ruler held against an object to determine its size — not being planted like a seed for returns, the coin is a tool not an investment, the distinction made physical, warm workshop measurement scene, practical utility not speculation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s6_no_common_enterprise">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s6_no_common_enterprise</div>
-                <div class="concept-scene">Six individual vaults scattered across a landscape, each completely isolated with no connecting tunnels or shared pools between them — each user is sovereign, there is no common pot, architectural isolation as legal defense, cool independent vault structures in warm landscape, structural separation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s6_no_profit_expectation">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s6_no_profit_expectation</div>
-                <div class="concept-scene">A perfectly flat value line for sigma rendered as a level horizon across a calm desert — no upward speculation arrow, no growth promise, just a stable measuring reference, the beauty of non-appreciation, vast flat desert at golden hour, serene stability, warm horizon with cool flat sigma line</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s6_no_efforts_others">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s6_no_efforts_others</div>
-                <div class="concept-scene">A single person minting their own kasset entirely alone in their own workshop — no platform workers, no company servers, no external dependencies visible, the mint is fully local and autonomous, intimate self-sufficient workspace, warm self-generated light, radical independence</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s6_all_four_fail">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s6_all_four_fail</div>
-                <div class="concept-scene">All four dragon heads lying defeated on the arena floor, the knight standing victorious with their legal scroll held high, a verdict banner unfurling reading NOT A SECURITY, celebration but with legal precision, warm victory light flooding the dark arena, systematic legal triumph</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§7 Regulatory Risk <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s7_jurisdiction_map">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s7_jurisdiction_map</div>
-                <div class="concept-scene">A world map rendered as a strategic risk board: United States and Japan glowing green (safe zones), European Union and UK glowing red (hostile zones), other regions in cautious yellow — each territory has a fortress icon showing the local regulatory posture, strategic geopolitical assessment, varied warm green and cool red territory colors on parchment, military intelligence aesthetic</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s7_us_safe">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s7_us_safe</div>
-                <div class="concept-scene">An American fortress with proud green flags flying, SEC and CFTC regulatory projectiles bouncing off its constitutional defense walls, the architecture itself prevents the attack from landing, confident and well-defended, warm patriotic tones with cool deflected regulatory blue, structural compliance</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s7_japan_safe">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s7_japan_safe</div>
-                <div class="concept-scene">A Japanese pagoda fortress with green cherry blossom flags, an FSA compliance moat filled with properly documented water flowing around it, the fortress respects the rules and is respected in return, elegant compliance, warm wood and paper pagoda with cool regulatory moat water, harmonious regulation</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s7_eu_hostile">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s7_eu_hostile</div>
-                <div class="concept-scene">A European castle bristling with red warning flags, massive GDPR walls and AI Act barriers blocking the entrance entirely, surveillance cameras on every turret — entry is architecturally impossible without surrendering sovereignty, hostile regulatory environment, cold grey fortress with harsh red warning lights, structural incompatibility</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s7_uk_hostile">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s7_uk_hostile</div>
-                <div class="concept-scene">A British tower flying red flags with an enormous IPA surveillance eye watching from its peak, the Investigatory Powers Act has given the tower x-ray vision through all walls — no privacy product can operate under that gaze, totalizing surveillance, cold stone tower with ominous red eye glow at top, panopticon architecture</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s7_mitigation">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s7_mitigation</div>
-                <div class="concept-scene">A shield wall of six different mitigation strategies arranged as a defensive formation: each shield addresses a specific regulatory risk (opinion letters, structural design, jurisdictional exclusion, compliance documentation, insurance, legal counsel) — the shields overlap to cover all angles, comprehensive defense posture, varied warm shield colors against cool threat background, strategic preparation</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§8 Legal Budget <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(2 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s8_legal_budget">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s8_legal_budget</div>
-                <div class="concept-scene">A treasurer's allocation table with coin stacks sorted by category: patent filing fees (tall stack), trademark registrations (medium), regulatory counsel (large), insurance premiums (modest), security audits (small) — each sorted into Year 1, Year 2, and Year 3 compartments, meticulous financial planning, warm gold coins on cool dark table surface, fiscal responsibility</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s8_356k_total">
-              <div class="img-placeholder">
-                📋
-                <span class="role-tag role-sidebar">sidebar</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s8_356k_total</div>
-                <div class="concept-scene">A precision-measured treasure room containing exactly 356 thousand gold coins allocated across three crystal-walled year compartments, each compartment labeled and sealed, not one coin unaccounted for, the legal war chest is finite and planned, cool crystal walls with warm gold content, budgetary precision</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-        <div class="section-block">
-          <h2>§9 Competition <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(4 diagrams)</span></h2>
-          <div class="concepts-grid">
-            <div class="concept-card" id="i5_s9_porters_five">
-              <div class="img-placeholder">
-                ⚔️
-                <span class="role-tag role-hero">hero</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s9_porters_five</div>
-                <div class="concept-scene">Five rival challengers surrounding a central arena from different directions: Supplier power (giant with chain), Buyer power (crowd with demands), Substitutes (shape-shifter), New Entrants (army at gate), Rivalry (competing knight) — the SovereignOS warrior stands in the center assessing all five threats simultaneously, strategic awareness, five distinct threat colors converging on warm central figure</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s9_worldcoin_compare">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s9_worldcoin_compare</div>
-                <div class="concept-scene">Split comparison: left side shows a centralized orb scanner collecting biometric data into a corporate cloud (cold, invasive, blue-grey), right side shows a SovereignOS device processing locally in a warm personal vault (private, sovereign, golden) — the architectural difference is the product difference, stark contrast of philosophies, cold extraction versus warm sovereignty</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s9_sbt_compare">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s9_sbt_compare</div>
-                <div class="concept-scene">Two artifacts side by side: a soulbound token chained permanently to a blockchain (immutable but public, exposed, cold blue), beside it a kasset as a locally-signed encrypted file (portable, private, warm gold) — blockchain permanence versus sovereign portability, material contrast, cold chain versus warm independence</div>
-              </div>
-            </div>
-            
-            <div class="concept-card" id="i5_s9_moat_diagram">
-              <div class="img-placeholder">
-                🔍
-                <span class="role-tag role-spot">spot</span>
-              </div>
-              <div class="card-info">
-                <div class="concept-id">i5_s9_moat_diagram</div>
-                <div class="concept-scene">A castle with five concentric defensive moats: outermost is edge-only processing (wide water), then energy currency (electric moat), then network effects (social moat), then patent portfolio (legal moat), innermost is the idiolect (unclonable cognitive moat) — five layers of competitive defense, dramatic aerial fortress view, graduated warm-to-cool moat rings from outer to inner, impregnable architecture</div>
-              </div>
-            </div>
-            </div>
-        </div>
-        
-  </div>
+                <div class="spread" id="i5_s4_entity_structure">
+                  <img src="img/diagrams/i5_s4_entity_structure.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>Total voting seats:</strong> 2</p><p><strong>Founder control:</strong> Absolute. The founder holds Seat 1 permanently and appoints/removes Seat 2 at will. In the event of disagreement, Seat 2's dissent is recorded in board minutes — the outcome is not affected. The founder may appoint a proxy for day-to-day decision-making but cannot resign the chairmanship.</p><p>### Succession</p><p>Upon the founder's incapacitation or death:</p><p><strong>The Founder's Twin (Advisory Role):</strong> The twin does not hold a board seat — DGCL §141(b) requires directors to be natural persons. Instead, the twin serves as the <strong>architectural veto oracle</strong>: an irrevocable charter-level advisory function that reviews every board resolution for compliance with the immutable constraints (§4). If the twin determines that a proposed action would compromise the zero-egress security architecture, the .kasset provenance chain, or the fixed share pool, it issues a <strong>binding architectural veto</strong>. The veto is not a board vote — it is a charter enforcement mechanism. The proposed action is permanently abandoned, and the board must formulate a new plan that satisfies the constraint. This covenant is irrevocably codified in the C-Corp charter and cannot be amended, overridden, or removed by any board action, shareholder vote, or merger.</p><a class="doc-ref" href="#sec-4-legal-entity">§ 1. Board Composition</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s4_piiaa">
+                  <img src="img/diagrams/i5_s4_piiaa.png" alt="" loading="lazy">
+                  <div class="body"><p>> <strong>Observer access:</strong> The observer may review advance board materials (agenda, financials, draft resolutions) in a Vault SCIF. No copies may be retained outside the SCIF. The Trust's representative receives the founder's twin as an Oracle for strategic counsel — the observer is not entitled to participate in or have visibility into those conversations.</p><p><strong>Investors do not receive voting board seats at any stage.</strong> If an investor requires a board seat as a condition of investment, the deal is declined. Founder control is a technical requirement of the reference design, not a negotiating position.</p><a class="doc-ref" href="#sec-4-legal-entity">§ 2. Investor Board Rights</a></div>
+                </div><div class="sec-break" id="sec-5-ip-portfolio"><h2><a href="#sec-5-ip-portfolio" style="color:inherit;text-decoration:none">§5 IP Portfolio</a></h2></div>
 
-  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
-    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
-  </footer>
-</body>
-</html>
+                <div class="spread" id="i5_s5_ip_chain">
+                  <img src="img/diagrams/i5_s5_ip_chain.png" alt="" loading="lazy">
+                  <div class="body"><p>The Sovereign Survival Kit is not software. It is a <strong>reference design</strong> — its properties are immutable, and guaranteed by mathematics and physics. An individual's security and sovereignty cannot be impacted by committee, influenced by investor preference, or compromised by majority vote.</p><p>> <strong>Long-term governance:</strong> At national-infrastructure scale, the board may evolve to require government-level oversight commensurate with SSK's role in supporting the United States. This is a charter amendment event, not a current-state provision.</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 3. Governance Rationale</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s5_17_patents">
+                  <img src="img/diagrams/i5_s5_17_patents.png" alt="" loading="lazy">
+                  <div class="body"><p>The following constraints are irrevocably codified in the C-Corp charter. They bind the founder, the board, and all future shareholders equally:</p><p><strong>Fixed share pool.</strong> The authorized share count is permanently fixed at 10,000,000. No additional shares may be authorized, created, or reserved — by any board action, shareholder vote, or merger. Future equity financing rounds (Series A, B, C, etc.) are funded exclusively by the founder voluntarily converting Class B shares to the applicable preferred class. The 10,000,000 total never changes. The founder's 20x voting rights on remaining Class B shares ensure absolute governance control through any number of rounds.</p><p><strong>No network egress.</strong> No corporate action may compel the introduction of network egress into the core processing environment. The reference design is airgapped by definition.</p><p><strong>Architectural veto covenant.</strong> The founder's twin serves as a charter-level architectural oracle. Any proposed board action that would violate constraints (1) or (2) — or compromise the .kasset provenance chain — is subject to a binding veto that cannot be overridden. This covenant survives the founder's death and is enforceable by the Trust as charter beneficiary.</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 4. Immutable Constraints</a></div>
+                </div>
+                <div class="two-up" id="i5_s5_defensive_patents">
+                  <img src="img/diagrams/i5_s5_defensive_patents.png" alt="" loading="lazy">
+                  <div class="body"><p>To mitigate regulatory risk while maximizing venture investability, Sovereign Survival Kit is structured across three distinct jurisdictions:</p><p>### A. Sovereign Survival Kit Inc. (Delaware C-Corp)</p><p><strong>Purpose:</strong> The corporate entity that publishes and maintains the sovereign reference design.</p><p><strong>Assets Held:</strong></p><p>Proprietary Intellectual Property</p><p>Trademarks for "Sovereign Survival Kit", ".kasset mint".</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 1. Geographic Structuring</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s5_know_maps_ip">
+                  <img src="img/diagrams/i5_s5_know_maps_ip.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>Status:</strong> Pending. The C-Corp is not yet incorporated. Upon incorporation, the founder will execute a full IP assignment transferring all intellectual property — with no carve-outs or retained rights — to Sovereign Survival Kit Inc.</p><p><strong>Future Hires:</strong> Each employee will execute a PIIAA upon onboarding, assigning all work product to the C-Corp.</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 2. PIIAA (Proprietary Information and Inventions Assignment Agreement)</a></div>
+                </div>
+                <div class="two-up" id="i5_s5_tau_ip">
+                  <img src="img/diagrams/i5_s5_tau_ip.png" alt="" loading="lazy">
+                  <div class="body"><p><strong>The Legal Stance:</strong> "We cannot hand over what we physically cannot access."</p><p><strong>Mechanism:</strong> Because the reference design operates with hard-coded network airgaps and stores all data in AES-256-GCM encrypted <code>.kassets</code> secured by the user's physical hardware enclave, Sovereign Survival Kit Inc. is structurally unable to comply with a data subpoena.</p><p><strong>Result:</strong> Sovereign Survival Kit is structurally unable to suffer the primary legal threat facing all cloud-AI companies (data breach, PII theft, government dragnet surveillance).</p><a class="doc-ref" href="#sec-5-ip-portfolio">§ 3. Liability Position: Zero-Egress by Design</a></div>
+                </div><div class="sec-break" id="sec-6-howey-test"><h2><a href="#sec-6-howey-test" style="color:inherit;text-decoration:none">§6 Howey Test</a></h2></div>
+
+                <div class="spread" id="i5_s6_howey_dragon">
+                  <img src="img/diagrams/i5_s6_howey_dragon.png" alt="" loading="lazy">
+                  <div class="body"><p>Upon incorporation, all intellectual property used in Sovereign Survival Kit will flow through a documented chain from origin to the C-Corp. This document traces each asset's provenance, license, and planned assignment status.</p><a class="doc-ref" href="#sec-6-howey-test">§ 1. Overview</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s6_not_investment">
+                  <img src="img/diagrams/i5_s6_not_investment.png" alt="" loading="lazy">
+                  <div class="body"><p>┌─────────────────────────────────────────────────────────────┐</p><p>│              SOVEREIGN SURVIVAL KIT INC.                     │</p><p>│                   (Delaware C-Corp)                          │</p><p>│                                                             │</p><p>│  Will own:                                                   │</p><p>│  ├── Reference design codebases (proprietary)              │</p><a class="doc-ref" href="#sec-6-howey-test">§ 2. Assignment Map</a></div>
+                </div>
+                <div class="two-up" id="i5_s6_no_common_enterprise">
+                  <img src="img/diagrams/i5_s6_no_common_enterprise.png" alt="" loading="lazy">
+                  <div class="body"><p>### A. Reference Design Codebase</p><p>### B. Know-Maps (iOS/macOS/visionOS NLU App)</p><p>### C. TauSkeletonVisual (C++/Unreal Engine)</p><p>### D. General Tau Theory (Mathematical Framework)</p><p>### E. Gemma 4 E4B (Inference Model)</p><p>### F. Gemma 4 E4B (Training Base)</p><a class="doc-ref" href="#sec-6-howey-test">§ 3. Detailed Asset Chain</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s6_no_profit_expectation">
+                  <img src="img/diagrams/i5_s6_no_profit_expectation.png" alt="" loading="lazy">
+                  <div class="body"><p>None. Upon incorporation, all intellectual property will be assigned to the C-Corp with no carve-outs or retained rights.</p><a class="doc-ref" href="#sec-6-howey-test">§ 4. Founder Retained Assets</a></div>
+                </div>
+                <div class="two-up" id="i5_s6_no_efforts_others">
+                  <img src="img/diagrams/i5_s6_no_efforts_others.png" alt="" loading="lazy">
+                  <div class="body"><p>### clara-engine (AskMikeeHost) — Production Codebase</p><p><strong>License:</strong> Proprietary (Sovereign Survival Kit Inc.)</p><p><strong>Status:</strong> Fully audited, bug-fixed, 100% test passing</p><p><strong>Model:</strong> Gemma 4 E4B (Google DeepMind 🇺🇸) — compliant with Model Origin Policy</p><p>#### Inference Layer (13 files, ~2,500 lines)</p><p>#### Profiling Pipeline (9 files, ~4,000 lines)</p><a class="doc-ref" href="#sec-6-howey-test">§ 1. SOFTWARE IP (Production Code)</a></div>
+                </div>
+                <div class="sidebar-spread" id="i5_s6_all_four_fail">
+                  <img src="img/diagrams/i5_s6_all_four_fail.png" alt="" loading="lazy">
+                  <div class="body"><p>### TauSkeletonVisual — C++ Research Code</p><p><strong>License:</strong> CC-BY-NC-ND 4.0 (defensive IP — cannot be commercially used by competitors)</p><p><strong>Status:</strong> Research-grade, requires migration to Apple Vision architecture</p><p>### Volumetric Control Sphere — Hardware Architecture</p><p><strong>License:</strong> Proprietary (Sovereign Survival Kit Inc.)</p><p><strong>Status:</strong> Architectural design complete, awaiting EVT (Phase 2+ priority)</p><a class="doc-ref" href="#sec-6-howey-test">§ 2. SPATIAL COMPUTING IP</a></div>
+                </div><div class="sec-break" id="sec-7-regulatory-risk"><h2><a href="#sec-7-regulatory-risk" style="color:inherit;text-decoration:none">§7 Regulatory Risk</a></h2></div>
+
+                <div class="spread" id="i5_s7_jurisdiction_map">
+                  <img src="img/diagrams/i5_s7_jurisdiction_map.png" alt="" loading="lazy">
+                  <div class="body"><p>### Know-Maps — iOS/macOS/visionOS NLU App</p><p><strong>License:</strong> Apache 2.0 (app code), Proprietary (CoreML models)</p><p><strong>Status:</strong> Functioning app in development</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 3. APPLE NATIVE IP</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s7_us_safe">
+                  <img src="img/diagrams/i5_s7_us_safe.png" alt="" loading="lazy">
+                  <div class="body"><p>### Sovereign Commerce Protocol</p><p><strong>License:</strong> Open source (protocol), Proprietary (trust infrastructure)</p><p><strong>Status:</strong> Design complete, bilateral protocol implementation pending</p><p>### Removed from previous version:</p><p>~~Gold-Peg Oracle~~ → Replaced by σ conversion formula (energy-backed, not gold-backed)</p><p>~~Sovereign Settlement Chain~~ → Replaced by bilateral mesh settlement + notary certification</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 4. PROTOCOL IP</a></div>
+                </div>
+                <div class="two-up" id="i5_s7_japan_safe">
+                  <img src="img/diagrams/i5_s7_japan_safe.png" alt="" loading="lazy">
+                  <div class="body"><p>Note: Hardware manufacturing is NOT a Series A priority. The Compass and Black Box are supplementary products. SovSensor devices are Phase 2+ reference designs. The core platform runs on user-owned phones and laptops.</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 5. HARDWARE IP</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s7_eu_hostile">
+                  <img src="img/diagrams/i5_s7_eu_hostile.png" alt="" loading="lazy">
+                  <div class="body"><p>### Open Source vs. Proprietary Split</p><p>> <strong>SSOT:</strong> Doc 29 §8 (Source Code Licensing). Vault is open source; everything above the vault is proprietary.</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 8. IP PROTECTION SUMMARY</a></div>
+                </div>
+                <div class="two-up" id="i5_s7_uk_hostile">
+                  <img src="img/diagrams/i5_s7_uk_hostile.png" alt="" loading="lazy">
+                  <div class="body"><p>> Web search conducted 2026-04-26. This is a preliminary screen, NOT a formal freedom-to-operate opinion. A patent attorney must conduct a formal USPTO/WIPO/EPO search with proper classification codes (CPC/IPC) before any filing.</p><p>### Doc 21 Claims (10 Formal)</p><p>### Additional Candidates (7 Defensible)</p><p>### Removed from Candidate List</p><p>### Summary</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ 9. PRELIMINARY PRIOR ART SCREEN</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s7_mitigation">
+                  <img src="img/diagrams/i5_s7_mitigation.png" alt="" loading="lazy">
+                  <div class="body"><p>A localized software operating environment comprising:</p><p>A hardware-isolated host node maintaining a strict network airgap via software locks blocking all egress external network requests.</p><p>A local LLM inference engine restricted within a memory-managed envelope, utilizing lock-based phase transitions to prevent OOM termination.</p><p>A module generating a Directed Acyclic Graph (DAG) of conversational reasoning.</p><p>An operation that serializes said DAG, filters it through a proprietary NLP PII-stripping module operating locally, and encrypts the output via AES-256-GCM, dual-signed by (a) a hardware-bound P-256 ECDSA signature generated inside the device hardware security module proving the asset was signed on a specific physical device, and (b) a software-generated ML-DSA-65 post-quantum signature ensuring resilience against future quantum cryptanalysis. Neither signature alone is sufficient; the combination proves both physical device provenance and quantum-resistant integrity.</p><a class="doc-ref" href="#sec-7-regulatory-risk">§ CLAIM 1: The .kasset Minting Pipeline</a></div>
+                </div><div class="sec-break" id="sec-8-legal-budget"><h2><a href="#sec-8-legal-budget" style="color:inherit;text-decoration:none">§8 Legal Budget</a></h2></div>
+
+                <div class="two-up" id="i5_s8_legal_budget">
+                  <img src="img/diagrams/i5_s8_legal_budget.png" alt="" loading="lazy">
+                  <div class="body"><p>A method for intent detection via spatial computing, characterized by:</p><p>Extracting visual depth and coordinate metrics via native device frameworks.</p><p>Applying General Tau Theory ($\tau$ and $\dot{\tau}$) to map the approach velocity and gesture intent within a physically constrained virtual bounding box around the user.</p><p>Translating said localized vectors entirely to a local web socket loopback without utilizing external rendering clouds.</p><a class="doc-ref" href="#sec-8-legal-budget">§ CLAIM 2: Volumetric Control Sphere (Tau Theory Mapping)</a></div>
+                </div>
+                <div class="sidebar-spread" id="i5_s8_356k_total">
+                  <img src="img/diagrams/i5_s8_356k_total.png" alt="" loading="lazy">
+                  <div class="body"><p>A system for preventing the minting of hallucinated or low-quality knowledge assets within a network-isolated compute environment, comprising:</p><p>An asynchronous quality evaluator deployed parallel to a local generative layer, operating entirely within a network-isolated (zero-egress) compute environment.</p><p>A multi-dimensional composite scoring engine that evaluates generated text across four dimensions — Groundedness (NLI entailment ratio against source context), Relevance (cosine similarity to retrieval context), Persona Fidelity (drift detection from offline calibration sets), and Coherence — producing a single aggregate composite score.</p><p>A mint-gate mechanism that intercepts generated text below an aggregate composite threshold of N, triggers localized regeneration within the same network-isolated environment, and prevents the serialization of any text into a .kasset archive until the threshold is met.</p><p>The combination of zero-egress enforcement with composite quality gating such that no knowledge asset can be minted from hallucinated, irrelevant, or persona-inconsistent content, and no generated text traverses a network boundary at any stage of evaluation or regeneration.</p><a class="doc-ref" href="#sec-8-legal-budget">§ CLAIM 3: Zero-Egress Quality-Gated Knowledge Asset Minting</a></div>
+                </div><div class="sec-break" id="sec-9-competition"><h2><a href="#sec-9-competition" style="color:inherit;text-decoration:none">§9 Competition</a></h2></div>
+
+                <div class="spread" id="i5_s9_porters_five">
+                  <img src="img/diagrams/i5_s9_porters_five.png" alt="" loading="lazy">
+                  <div class="body"><p>A method for dynamically curating a language model's context window, comprising:</p><p>Segmenting continuous user experience into discrete episodes via temporal, semantic, emotional, and domain boundary detection.</p><p>Compressing each episode into a sparse representation via a learned compressor model operating within a fixed VRAM budget.</p><p>On each conversational turn, rewriting the user's query using conversation history, then retrieving relevant episodes via vector similarity search combined with a situational context vector computed from biometric state, temporal position, and domain-specific state registers.</p><p>Proactively surfacing episodes the user has not explicitly requested but which the anticipatory retrieval engine determines are relevant to the user's current cognitive context based on low overlap with recent conversational history and high similarity to the computed context vector.</p><p>All retrieval, compression, context assembly, and generation occurring entirely within a network-isolated compute environment.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 4: Dynamic Context Window Assembly with Episodic Memory Encoding</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s9_worldcoin_compare">
+                  <img src="img/diagrams/i5_s9_worldcoin_compare.png" alt="" loading="lazy">
+                  <div class="body"><p>A method for developing a private communication protocol between a human user and a personal AI agent, comprising:</p><p>A multi-stage fine-tuning pipeline (SCP → DPO → E2E) establishing a baseline personality and communication style.</p><p>An ongoing fourth stage that ingests compressed conversational shorthand, shared vocabulary, emotional calibration patterns, and disagreement resolution sequences from real interaction logs.</p><p>A learned mapping function (the "Idiolect") that translates a collection of time constants (tau profiles) representing the user's cognitive dynamics into semantic weight modifications for a base language model, such that the mapping function — not static weight matrices — is the computational representation of the user's personality.</p><p>Storage of the Idiolect mapping function and the tau collection as cryptographically separated components, wherein the tau collection encodes process dynamics (decision tempo, cognitive rhythm, approach patterns) without encoding content (names, facts, personal history), and the Idiolect mapping function is the sole component that renders the tau collection semantically meaningful.</p><p>A drift detection module monitoring the evolution of shared vocabulary and emotional shorthand over time to prevent unintended persona divergence.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 5: Idiolect Evolution Engine with Tau-Secured Weight Representation</a></div>
+                </div>
+                <div class="two-up" id="i5_s9_sbt_compare">
+                  <img src="img/diagrams/i5_s9_sbt_compare.png" alt="" loading="lazy">
+                  <div class="body"><p>A system for ingesting physical-world biometric and environmental data into a personal AI planning engine, comprising:</p><p>An open BLE GATT protocol (SovSensor) transmitting standardized JSON sensor readings from edge peripherals (breath composition, heart rate variability, ambient air quality, light exposure, body composition, asset proximity).</p><p>Local storage of all sensor data in an AES-256-GCM encrypted PII vault with zero network egress.</p><p>Integration of sensor-derived state variables into the AI agent's per-turn situational retrieval pipeline as domain-specific context signals for 8 life domains (rest, nourishment, body, shelter, assets, income, bonds, growth).</p><p>All sensor data processing, storage, and AI planning occurring entirely on user-owned hardware.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 6: Biometric Sensor Bridge Protocol</a></div>
+                </div>
+                <div class="two-up flip" id="i5_s9_moat_diagram">
+                  <img src="img/diagrams/i5_s9_moat_diagram.png" alt="" loading="lazy">
+                  <div class="body"><p>A system for extracting and contributing factual knowledge from a deceased user's private data vault to a shared knowledge repository, comprising:</p><p>A biometric death certification mechanism triggered by the failure of the deadman's switch (multi-device heartbeat timeout exceeding a minimum floor of ≥180 days), cryptographically verified by the user's hardware security module.</p><p>A multi-pass PII stripping pipeline operating entirely on-device, comprising: (a) Named Entity Recognition (NER) for explicit PII (names, SSNs, addresses, dates of birth), (b) regex-based pattern matching for structured identifiers, (c) LLM-based contextual review for implied PII (location-correlated descriptions, medical context, behavioral patterns identifiable via Sweeney re-identification), and (d) a confidence threshold gate requiring ≥0.95 confidence that a fact is PII-free before contribution.</p><p>A differential privacy budget (ε) applied to all contributed facts, ensuring that no individual fact — alone or in combination with other contributed facts — can be used to re-identify the deceased user. The privacy budget is calibrated per-domain (medical ε ≤ 0.1, financial ε ≤ 0.5, general knowledge ε ≤ 1.0).</p><p>Compulsory contribution of verified, PII-stripped factual knowledge to the Common Knowledge Codex, a shared repository accessible to all network participants.</p><p>A post-contribution redaction protocol enabling network governance to flag and suppress specific Codex entries if PII is discovered after contribution, without deleting the underlying factual content.</p><a class="doc-ref" href="#sec-9-competition">§ CLAIM 7: Mortality-Triggered Differential Privacy Pipeline for Compulsory Knowledge Contribution</a></div>
+                </div></div>
+<div class="bot-nav"><a href="issue_4.html">← Issue 4</a><a href="index.html">All Issues</a><a href="issue_6.html">Issue 6 →</a></div>
+<div class="footer">Sovereign Survival Kit, Inc. · 2026</div>
+</body></html>
