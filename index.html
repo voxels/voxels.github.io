@@ -290,7 +290,136 @@ body {
   .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
   .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
 }
-</style>
+
+    .issue-card-cover {
+      display: block; text-decoration: none; color: inherit;
+      border-radius: 12px; overflow: hidden;
+      position: relative; min-height: 320px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .issue-card-cover:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .cover-img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform 0.4s;
+    }
+    .issue-card-cover:hover .cover-img {
+      transform: scale(1.05);
+    }
+    .cover-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+    }
+    .cover-gradient {
+      position: absolute; inset: 0;
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+    .issue-card-cover:hover .cover-gradient { opacity: 0.95; }
+    .cover-content {
+      position: relative; z-index: 2;
+      padding: 1.5rem;
+    }
+    .cover-content .issue-num {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.8); margin-bottom: 0.3rem;
+    }
+    .cover-content h2 {
+      font-size: 1.8rem; font-weight: 900;
+      color: white; line-height: 1.1; margin-bottom: 0.2rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .cover-subtitle {
+      font-size: 1rem; font-weight: 300;
+      color: rgba(255,255,255,0.9); margin-bottom: 0.5rem;
+    }
+    .cover-act {
+      font-size: 0.75rem; font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.25rem;
+    }
+    .cover-stats {
+      font-family: var(--font-mono);
+      font-size: 0.7rem; color: rgba(255,255,255,0.5);
+    }
+    .issues-magazine {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    /* Feature first issue large */
+    .issues-magazine .issue-card-cover:first-child {
+      grid-column: 1 / -1;
+      min-height: 420px;
+    }
+    .issues-magazine .issue-card-cover:first-child h2 {
+      font-size: 2.5rem;
+    }
+    .hero-cinematic {
+      position: relative;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .hero-cinematic::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(232,67,147,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 100%, rgba(9,132,227,0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 100%, rgba(0,184,148,0.06) 0%, transparent 50%);
+    }
+    .hero-cinematic h1 {
+      position: relative;
+      font-size: 3.5rem; font-weight: 900;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #e84393 0%, #0984e3 40%, #00b894 70%, #fdcb6e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .hero-cinematic .subtitle {
+      position: relative;
+      font-size: 1.2rem; color: var(--text-secondary);
+      font-weight: 300;
+    }
+    .hero-cinematic .meta {
+      position: relative;
+      margin-top: 1rem; font-size: 0.8rem;
+      color: var(--text-muted); font-family: var(--font-mono);
+    }
+    .hero-cinematic .stats-row {
+      position: relative;
+      display: flex; justify-content: center; gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-item .stat-num {
+      font-size: 2rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-item .stat-label {
+      font-size: 0.7rem; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    @media (max-width: 768px) {
+      .hero-cinematic h1 { font-size: 2.2rem; }
+      .issues-magazine { grid-template-columns: 1fr; padding: 1rem; }
+      .issues-magazine .issue-card-cover:first-child { min-height: 300px; }
+      .issues-magazine .issue-card-cover:first-child h2 { font-size: 1.8rem; }
+      .hero-cinematic .stats-row { gap: 1rem; }
+    }
+    </style>
 </head>
 <body>
   <nav class="topnav">
@@ -300,134 +429,116 @@ body {
     <span class="alpha-badge">ALPHA</span>
   </nav>
 
-  <div class="hero">
+  <div class="hero-cinematic">
     <h1>Sovereign Power Library</h1>
-    <div class="subtitle">The Illustrated Data Room — 7 Issues, 301 Diagrams</div>
+    <div class="subtitle">The Illustrated Data Room</div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Issues</div></div>
+      <div class="stat-item"><div class="stat-num">301</div><div class="stat-label">Diagrams</div></div>
+      <div class="stat-item"><div class="stat-num">39</div><div class="stat-label">Source Docs</div></div>
+    </div>
     <div class="meta">
-      ALPHA BUILD · 2026-05-01 15:21
+      ALPHA BUILD · 2026-05-01 15:32
     </div>
   </div>
 
-  <div class="issues-grid">
+  <div class="issues-magazine">
     
-        <a href="issue_1.html" class="issue-card">
-          <div class="card-header" style="border-top: 3px solid #e84393">
-            <div class="issue-num" style="color: #e84393">Issue 1 of 7</div>
-            <h2>The Sovereign Cocoon</h2>
-            <div class="act">Act 1: Thesis + Product</div>
-          </div>
-          <div class="card-body">
-            <ul class="doc-list"><li>Doc 00: Data Room Guide</li>
-<li>Doc 01: Executive Summary</li>
-<li>Doc 02: The Knowledge Asset (.kasset) — Product Definition</li>
-<li>Doc 03: Twin Architecture — Layer 1 Specification</li>
-<li>Doc 04: The Twin Adaptor</li>
-</ul>
-            <div class="concept-count">73 diagrams → 6 sections</div>
+        <a href="issue_1.html" class="issue-card-cover" id="issue-1">
+          <div class="cover-img" style="background-image:url('img/cover_issue_1.png')"></div>
+          <div class="cover-overlay">
+            <div class="cover-gradient" style="background:linear-gradient(0deg, #e84393dd 0%, #e8439344 40%, transparent 70%)"></div>
+            <div class="cover-content">
+              <div class="issue-num">Issue 1 of 7</div>
+              <h2>The Sovereign Cocoon</h2>
+              <div class="cover-subtitle">What Is This?</div>
+              <div class="cover-act">Act 1: Thesis + Product</div>
+              <div class="cover-stats">73 diagrams · 5 source docs</div>
+            </div>
           </div>
         </a>
         
-        <a href="issue_2.html" class="issue-card">
-          <div class="card-header" style="border-top: 3px solid #0984e3">
-            <div class="issue-num" style="color: #0984e3">Issue 2 of 7</div>
-            <h2>The Architecture of Trust</h2>
-            <div class="act">Act 2: Architecture + Infrastructure</div>
-          </div>
-          <div class="card-body">
-            <ul class="doc-list"><li>Doc 05: σ Conversion Architecture</li>
-<li>Doc 06: Lifestyle Sensor Products — The Physical Feedback Layer</li>
-<li>Doc 07: Network Formation Strategy</li>
-<li>Doc 08: Revenue Generation Matrix</li>
-<li>Doc 29: Distribution Architecture</li>
-<li>Doc 37: Edgcumbe Encoding: Privacy-Preserving Methodology Transfer via Fiber Bundle Projection on τ-Dynamic Manifolds</li>
-</ul>
-            <div class="concept-count">81 diagrams → 7 sections</div>
+        <a href="issue_2.html" class="issue-card-cover" id="issue-2">
+          <div class="cover-img" style="background-image:url('img/cover_issue_2.png')"></div>
+          <div class="cover-overlay">
+            <div class="cover-gradient" style="background:linear-gradient(0deg, #0984e3dd 0%, #0984e344 40%, transparent 70%)"></div>
+            <div class="cover-content">
+              <div class="issue-num">Issue 2 of 7</div>
+              <h2>The Architecture of Trust</h2>
+              <div class="cover-subtitle">How Does It Work?</div>
+              <div class="cover-act">Act 2: Architecture + Infrastructure</div>
+              <div class="cover-stats">81 diagrams · 6 source docs</div>
+            </div>
           </div>
         </a>
         
-        <a href="issue_3.html" class="issue-card">
-          <div class="card-header" style="border-top: 3px solid #00b894">
-            <div class="issue-num" style="color: #00b894">Issue 3 of 7</div>
-            <h2>The Size of the Prize</h2>
-            <div class="act">Act 3: Market + Economics</div>
-          </div>
-          <div class="card-body">
-            <ul class="doc-list"><li>Doc 09: TAM / SAM / SOM Analysis</li>
-<li>Doc 10: Unit Economics</li>
-<li>Doc 11: Financial Model & Projections (36-Month Horizon)</li>
-<li>Doc 12: Scenario Analysis</li>
-<li>Doc 12B: Growth Dynamics: The Calculus Model</li>
-</ul>
-            <div class="concept-count">37 diagrams → 6 sections</div>
+        <a href="issue_3.html" class="issue-card-cover" id="issue-3">
+          <div class="cover-img" style="background-image:url('img/cover_issue_3.png')"></div>
+          <div class="cover-overlay">
+            <div class="cover-gradient" style="background:linear-gradient(0deg, #00b894dd 0%, #00b89444 40%, transparent 70%)"></div>
+            <div class="cover-content">
+              <div class="issue-num">Issue 3 of 7</div>
+              <h2>The Size of the Prize</h2>
+              <div class="cover-subtitle">How Big Is It?</div>
+              <div class="cover-act">Act 3: Market + Economics</div>
+              <div class="cover-stats">37 diagrams · 5 source docs</div>
+            </div>
           </div>
         </a>
         
-        <a href="issue_4.html" class="issue-card">
-          <div class="card-header" style="border-top: 3px solid #fdcb6e">
-            <div class="issue-num" style="color: #fdcb6e">Issue 4 of 7</div>
-            <h2>The Execution Plan</h2>
-            <div class="act">Act 4: Plan + Team</div>
-          </div>
-          <div class="card-body">
-            <ul class="doc-list"><li>Doc 13: 36-Month Business Plan</li>
-<li>Doc 14: Founder: Michael Edgcumbe</li>
-</ul>
-            <div class="concept-count">16 diagrams → 3 sections</div>
-          </div>
-        </a>
-        
-        <a href="issue_5.html" class="issue-card">
-          <div class="card-header" style="border-top: 3px solid #6c5ce7">
-            <div class="issue-num" style="color: #6c5ce7">Issue 5 of 7</div>
-            <h2>The Legal Shield</h2>
-            <div class="act">Act 5: Legal + Governance + IP</div>
-          </div>
-          <div class="card-body">
-            <ul class="doc-list"><li>Doc 15: Investor Terms: Seed & Series A Structure</li>
-<li>Doc 16: Capitalization Table — Sovereign Survival Kit Inc. (Delaware C-Corp)</li>
-<li>Doc 17: Board Structure & Governance</li>
-<li>Doc 18: Legal Architecture: Entity Structure & Liability Shield</li>
-<li>Doc 19: IP Assignment Chain — Sovereign Survival Kit Inc</li>
-<li>Doc 20: Complete IP Inventory</li>
-<li>Doc 21: Defensive Patent Claims Outline</li>
-<li>Doc 22: Howey Test Analysis — Why .kassets Are Not Securities</li>
-<li>Doc 23: Regulatory Risk Matrix & Technical Security Gap Analysis</li>
-<li>Doc 24: Legal, IP & Security Budget Breakdown</li>
-<li>Doc 25: Competitive Analysis (Porter's Five Forces)</li>
-</ul>
-            <div class="concept-count">35 diagrams → 10 sections</div>
+        <a href="issue_4.html" class="issue-card-cover" id="issue-4">
+          <div class="cover-img" style="background-image:url('img/cover_issue_4.png')"></div>
+          <div class="cover-overlay">
+            <div class="cover-gradient" style="background:linear-gradient(0deg, #fdcb6edd 0%, #fdcb6e44 40%, transparent 70%)"></div>
+            <div class="cover-content">
+              <div class="issue-num">Issue 4 of 7</div>
+              <h2>The Execution Plan</h2>
+              <div class="cover-subtitle">How Do We Execute?</div>
+              <div class="cover-act">Act 4: Plan + Team</div>
+              <div class="cover-stats">16 diagrams · 2 source docs</div>
+            </div>
           </div>
         </a>
         
-        <a href="issue_6.html" class="issue-card">
-          <div class="card-header" style="border-top: 3px solid #d63031">
-            <div class="issue-num" style="color: #d63031">Issue 6 of 7</div>
-            <h2>The Vault & The Long Game</h2>
-            <div class="act">Act 5b + Act 6</div>
-          </div>
-          <div class="card-body">
-            <ul class="doc-list"><li>Doc 26: The Apex Oracle — Product Definition</li>
-<li>Doc 27: Stiftung Fund Deployment & The Sovereign Campus</li>
-<li>Doc 28: Vault Architecture — Layer 0 Specification</li>
-<li>Doc 32: Content Enforcement Policy</li>
-</ul>
-            <div class="concept-count">31 diagrams → 5 sections</div>
+        <a href="issue_5.html" class="issue-card-cover" id="issue-5">
+          <div class="cover-img" style="background-image:url('img/cover_issue_5.png')"></div>
+          <div class="cover-overlay">
+            <div class="cover-gradient" style="background:linear-gradient(0deg, #6c5ce7dd 0%, #6c5ce744 40%, transparent 70%)"></div>
+            <div class="cover-content">
+              <div class="issue-num">Issue 5 of 7</div>
+              <h2>The Legal Shield</h2>
+              <div class="cover-subtitle">What Are the Terms?</div>
+              <div class="cover-act">Act 5: Legal + Governance + IP</div>
+              <div class="cover-stats">35 diagrams · 11 source docs</div>
+            </div>
           </div>
         </a>
         
-        <a href="issue_7.html" class="issue-card">
-          <div class="card-header" style="border-top: 3px solid #e17055">
-            <div class="issue-num" style="color: #e17055">Issue 7 of 7</div>
-            <h2>The Appendix Tower</h2>
-            <div class="act">Appendix</div>
+        <a href="issue_6.html" class="issue-card-cover" id="issue-6">
+          <div class="cover-img" style="background-image:url('img/cover_issue_6.png')"></div>
+          <div class="cover-overlay">
+            <div class="cover-gradient" style="background:linear-gradient(0deg, #d63031dd 0%, #d6303144 40%, transparent 70%)"></div>
+            <div class="cover-content">
+              <div class="issue-num">Issue 6 of 7</div>
+              <h2>The Vault & The Long Game</h2>
+              <div class="cover-subtitle">Security + Vision</div>
+              <div class="cover-act">Act 5b + Act 6</div>
+              <div class="cover-stats">31 diagrams · 4 source docs</div>
+            </div>
           </div>
-          <div class="card-body">
-            <ul class="doc-list"><li>Doc AskMikeeHost_Walkthrough: 🎮 AskMikeeHost — The Complete Walkthrough</li>
-<li>Doc Cheat_Sheet: Break Glass</li>
-<li>Doc Cheat_Sheet_Appendix: Break Glass — Appendix</li>
-<li>Doc Background_Reading: Theoretical Foundations & Bibliography</li>
-</ul>
-            <div class="concept-count">28 diagrams → 5 sections</div>
+        </a>
+        
+        <a href="issue_7.html" class="issue-card-cover" id="issue-7">
+          <div class="cover-img" style="background-image:url('img/cover_issue_7.png')"></div>
+          <div class="cover-overlay">
+            <div class="cover-gradient" style="background:linear-gradient(0deg, #e17055dd 0%, #e1705544 40%, transparent 70%)"></div>
+            <div class="cover-content">
+              <div class="issue-num">Issue 7 of 7</div>
+              <h2>The Appendix Tower</h2>
+              <div class="cover-subtitle">Reference & Walkthrough</div>
+              <div class="cover-act">Appendix</div>
+              <div class="cover-stats">28 diagrams · 4 source docs</div>
+            </div>
           </div>
         </a>
         
