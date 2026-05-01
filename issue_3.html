@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue 3: The Size of the Prize — Sovereign Power Library</title>
+  <style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-section: #1a1a25;
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6a;
+  --accent-magenta: #e84393;
+  --accent-blue: #0984e3;
+  --accent-green: #00b894;
+  --accent-gold: #fdcb6e;
+  --accent-purple: #6c5ce7;
+  --accent-red: #d63031;
+  --accent-orange: #e17055;
+  --border: #2a2a3a;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.topnav .logo {
+  font-weight: 900; font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.topnav a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.topnav a:hover { color: var(--text-primary); }
+.topnav a.active { color: var(--accent-magenta); }
+.topnav .spacer { flex: 1; }
+.topnav .alpha-badge {
+  font-size: 0.7rem; font-weight: 700;
+  background: var(--accent-red); color: white;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+.stale-badge {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  background: #e17055; color: white;
+  padding: 0.1rem 0.4rem; border-radius: 2px;
+  margin-left: 0.5rem; vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 3rem; font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  font-weight: 300;
+}
+.hero .meta {
+  margin-top: 1rem; font-size: 0.8rem;
+  color: var(--text-muted); font-family: var(--font-mono);
+}
+
+/* ISSUE GRID */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.issue-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.issue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.issue-card .card-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.issue-card .issue-num {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.issue-card h2 {
+  font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.issue-card .act {
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.issue-card .card-body {
+  padding: 1.25rem 1.5rem;
+}
+.issue-card .doc-list {
+  list-style: none;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.issue-card .doc-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.issue-card .doc-list li:last-child { border: none; }
+.issue-card .concept-count {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ISSUE PAGE */
+.issue-header {
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.issue-header .breadcrumb {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+.issue-header .breadcrumb a:hover { color: var(--text-primary); }
+.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
+.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+
+.source-docs {
+  padding: 1.5rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.source-docs h3 {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.doc-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.doc-chip {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem; color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.doc-chip .doc-num {
+  font-weight: 700; font-family: var(--font-mono);
+  margin-right: 0.4rem;
+}
+
+.sections-container {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2rem;
+}
+.section-block {
+  margin-bottom: 3rem;
+}
+.section-block h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.concept-card {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.concept-card:hover { border-color: var(--accent-blue); }
+.concept-card .img-placeholder {
+  width: 100%; aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--text-muted);
+  position: relative;
+}
+.concept-card .img-placeholder .role-tag {
+  position: absolute; top: 0.5rem; left: 0.5rem;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.role-cover { background: var(--accent-magenta); color: white; }
+.role-hero { background: var(--accent-blue); color: white; }
+.role-spot { background: var(--accent-green); color: white; }
+.role-sidebar { background: var(--accent-purple); color: white; }
+.concept-card .card-info {
+  padding: 0.75rem 1rem;
+}
+.concept-card .concept-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.concept-card .concept-scene {
+  font-size: 0.8rem; color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* STALENESS */
+.staleness-panel {
+  max-width: 1200px; margin: 2rem auto;
+  padding: 0 2rem;
+}
+.staleness-panel h3 {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.staleness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.staleness-table th {
+  text-align: left; padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted); font-weight: 600;
+}
+.staleness-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+}
+.staleness-table tr:hover td { color: var(--text-primary); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="logo">SOVEREIGN POWER</span>
+    <a href="index.html">Library</a>
+    <a href="issue_1.html">#1</a>
+<a href="issue_2.html">#2</a>
+<a href="issue_3.html" class="active">#3</a>
+<a href="issue_4.html">#4</a>
+<a href="issue_5.html">#5</a>
+<a href="issue_6.html">#6</a>
+<a href="issue_7.html">#7</a>
+
+    <span class="spacer"></span>
+    <span class="alpha-badge">ALPHA</span>
+  </nav>
+
+  <div class="issue-header">
+    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 3</div>
+    <h1 style="color:#00b894">The Size of the Prize</h1>
+    <div class="act-label">Act 3: Market + Economics · 37 diagrams</div>
+  </div>
+
+  <div class="source-docs">
+    <h3>Source Documents</h3>
+    <div class="doc-chips">
+        <a href="../../Data_Room/09_TAM_SAM_SOM_Analysis.md" class="doc-chip" target="_blank">
+          <span class="doc-num">09</span>TAM / SAM / SOM Analysis
+        </a>
+        
+        <a href="../../Data_Room/10_Unit_Economics.md" class="doc-chip" target="_blank">
+          <span class="doc-num">10</span>Unit Economics
+        </a>
+        
+        <a href="../../Data_Room/11_Financial_Model_and_Projections.md" class="doc-chip" target="_blank">
+          <span class="doc-num">11</span>Financial Model & Projections (36-Month Horizon)
+        </a>
+        
+        <a href="../../Data_Room/12_Scenario_Analysis.md" class="doc-chip" target="_blank">
+          <span class="doc-num">12</span>Scenario Analysis
+        </a>
+        
+        <a href="../../Data_Room/12B_Growth_Dynamics_Calculus_Model.md" class="doc-chip" target="_blank">
+          <span class="doc-num">12B</span>Growth Dynamics: The Calculus Model
+        </a>
+        </div>
+  </div>
+
+  <div class="sections-container">
+    
+        <div class="section-block">
+          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i3_cover">
+              <div class="img-placeholder">
+                🎨
+                <span class="role-tag role-cover">cover</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_cover</div>
+                <div class="concept-scene">A vast merchant's counting house built into a cliffside, golden coin towers stacked to the ceiling, an enormous leather-bound ledger open on a stone desk, an abacus the size of a door, through an arched window a thriving marketplace stretches to the horizon with thousands of traders, the counting house is where the economics of an entire civilization are tallied, rich amber and gold interior contrasting with busy colorful marketplace beyond, sense of wealth being measured not hoarded</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§1 TAM/SAM/SOM <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i3_s1_tam_overview">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s1_tam_overview</div>
+                <div class="concept-scene">Three enormous nested archery targets mounted on a hillside: the outer ring is a colossal TAM target spanning the entire horizon ($32.5 trillion carved into its frame), the middle SAM ring is the size of a castle, the innermost SOM bullseye is a single tower with a flag planted in its center — an archer on the ground aims at the bullseye while the scale of opportunity towers above them, dramatic perspective from low angle, warm gold target rings against blue sky</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s1_tam_globe">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s1_tam_globe</div>
+                <div class="concept-scene">A massive globe of the world carved from crystal, different sector segments glowing in different colors — physical goods in amber, services in blue, executable intelligence in violet, data recapture in green — the total $32.5T value visible as cumulative light intensity, the globe sits in an observatory, cool crystal blue with warm sector colors, planetary scale of opportunity</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s1_sam_nyc_tokyo">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s1_sam_nyc_tokyo</div>
+                <div class="concept-scene">Two city skylines facing each other across an ocean: Manhattan's jagged towers on the left and Tokyo's neon-lit skyline on the right, both highlighted as glowing beachhead markets while the rest of the world is dark, a golden bridge of commerce connecting them, night scene with the two cities as brilliant islands of light, strategic focus</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s1_som_first_year">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s1_som_first_year</div>
+                <div class="concept-scene">A tiny flag planted on a small but fertile territory on a vast unexplored map, the claimed area is green and growing while the surrounding map is blank parchment, the flag represents the first year's modest but real conquest, sense of a beginning that will expand, warm green territory against aged parchment, humble but confident</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s1_naics_segments">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s1_naics_segments</div>
+                <div class="concept-scene">A grand classification hall with industry sectors arranged as illuminated stained glass windows: healthcare glowing green, education blue, professional services amber, creative arts purple, finance gold — each window showing the NAICS code for that sector, cathedral of commerce, rich varied stained glass colors against dark stone, comprehensive taxonomy</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s1_penetration_proof">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s1_penetration_proof</div>
+                <div class="concept-scene">A mathematical proof being written on a long scroll by a scholar's hand, each line building logically on the last, the final line shows the penetration rate calculation with a triumphant QED flourish, the proof is the evidence that the market claim is falsifiable not aspirational, focused desk scene with warm candlelight on parchment, intellectual rigor</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§2 Unit Economics <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(8 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i3_s2_trade_receipt">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_trade_receipt</div>
+                <div class="concept-scene">An ornate brass cash register printing a detailed receipt on a long paper strip, each line item glowing as it prints: kasset value, certification fee, net to seller, gross margin — the receipt tells the story of one trade's economics, close-up mechanical detail, warm brass register with cool paper receipt, satisfying transaction breakdown</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s2_per_trade">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_per_trade</div>
+                <div class="concept-scene">A single trade transaction shown as an exploded-view mechanical assembly: the kasset value as a large gear, fee layers as smaller interlocking gears, net-to-seller as the output shaft — all visible working together as a precision economic machine, technical blueprint style on dark background with warm gear-glow, engineering elegance</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s2_fee_segments">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_fee_segments</div>
+                <div class="concept-scene">Four potion bottles on an alchemist's shelf arranged by size: a tiny green bottle for students (0.5% fee), medium yellow for professionals (2%), large orange for executives (4%), massive red for institutions (6%) — each bottle contains a different concentration of fee, the progressive pricing as physical objects, warm apothecary interior with colorful bottles catching light</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s2_per_user">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_per_user</div>
+                <div class="concept-scene">A detailed RPG character sheet for a typical user showing their economic stats: trades per month (3.2), average trade value (⚡154), lifetime value ($2,847), customer acquisition cost ($47) — each stat illustrated with a small icon, the user as an economic entity, warm parchment character sheet with colored stat bars, gamified economics</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s2_goldilocks_user">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_goldilocks_user</div>
+                <div class="concept-scene">A figure walking a perfectly balanced middle path between two extremes — on one side a hyperactive trader surrounded by chaotic transactions, on the other a dormant user with cobwebs — the balanced user glows golden with optimal trade frequency and value, Goldilocks walking confidently, warm golden middle path between cool blue extremes</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s2_cac_by_scenario">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_cac_by_scenario</div>
+                <div class="concept-scene">Five stone pillars of decreasing height, each representing a growth scenario's customer acquisition cost — the tallest pillar (pessimistic, high CAC) crumbles slightly while the shortest (optimistic, low CAC) gleams solid, all five still standing because all five are profitable, graduated warm-to-cool pillar colors, declining cost staircase</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s2_ltv_cac_ratio">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_ltv_cac_ratio</div>
+                <div class="concept-scene">An enormous treasure chest overflowing with lifetime value gold, beside it a single tiny coin representing the customer acquisition cost — the ratio is so favorable the tiny coin is almost invisible next to the chest, dramatic size contrast, warm gold treasure glow making the small coin cast a long shadow, healthy economics</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s2_gross_margin">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s2_gross_margin</div>
+                <div class="concept-scene">A massive pie on a feast table where 99% of the pie is rich golden filling (margin) and a razor-thin 1% sliver of crust is the only cost, a merchant marveling at how little the operation costs to run, absurdly favorable margin visualized as food, warm feast hall with golden pie dominating the table</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§3 Projections <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(10 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i3_s3_forecast_overview">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_forecast_overview</div>
+                <div class="concept-scene">A 36-month timeline rendered as a side-scrolling landscape journey: Month 1 begins at a modest campsite, Month 12 reaches a growing town with revenue milestone flags, Month 24 arrives at a thriving city, Month 36 culminates in a golden fortress — the terrain rises and enriches as time progresses, panoramic left-to-right journey, graduated dawn-to-noon lighting</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_goldilocks_scenario">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_goldilocks_scenario</div>
+                <div class="concept-scene">Three bowls of porridge on a rustic table: the left bowl steams dangerously hot (Full Traction, k=0.6), the right bowl has ice crystals (Pessimistic, k=0.05), the middle bowl glows perfectly warm and golden (Goldilocks, k=0.3) — the middle bowl is the operating plan, fairy tale economics, warm cottage kitchen with three distinct temperature colors</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_y1_revenue">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_y1_revenue</div>
+                <div class="concept-scene">Year 1 revenue streams as small but vigorous saplings growing from fertile soil in a garden plot, each sapling labeled with a different revenue type, the garden is new but everything is growing, spring morning light, fresh green saplings with morning dew, hopeful beginning</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_y2_revenue">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_y2_revenue</div>
+                <div class="concept-scene">Year 2 revenue streams as medium trees bearing visible fruit in a maturing orchard, the canopy is filling in, new trees have been planted between the originals, harvest baskets at the base, warm summer afternoon light through leafy canopy, productive growth</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_y3_revenue">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_y3_revenue</div>
+                <div class="concept-scene">Year 3 revenue streams as a mighty forest with golden canopy stretching to the horizon, the trees are massive and interconnected by root systems visible below ground, a sustainable ecosystem, warm autumn golden-hour light through cathedral-like forest, compounding maturity</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_all_streams">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_all_streams</div>
+                <div class="concept-scene">A geological cross-section showing revenue streams as layered strata: certification fees as the deepest bedrock layer, vault subscriptions above, hardware margins above that, licensing fees near the surface — each stratum a different color and thickness growing over time, geological time-scale economics, rich earth tones</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_use_of_funds">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_use_of_funds</div>
+                <div class="concept-scene">A master treasure chest being carefully divided into labeled compartments by a treasurer: payroll (largest), legal (medium), marketing (medium), infrastructure (smaller), operations (smaller) — each compartment glowing a different color, meticulous allocation, warm chest interior with cool categorization colors, responsible stewardship</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_burn_rate">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_burn_rate</div>
+                <div class="concept-scene">A tall candle with month markers carved into its side burning at a measured rate, the flame is steady and predictable, wax remaining clearly visible as 37 months of runway, the candle sits in a storm-proof lantern protecting it from wind, disciplined pacing, warm amber candlelight against dark room, controlled burn</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_breakeven">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_breakeven</div>
+                <div class="concept-scene">Two lines drawn on a wall chart crossing dramatically: a rising green revenue line climbing from the bottom left meeting a descending red burn line from the top left, at their intersection a triumphant flag is planted and bells ring, the moment the company becomes self-sustaining, dramatic X-marks-the-spot composition, warm green ascending into cool red descending</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s3_conservative">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s3_conservative</div>
+                <div class="concept-scene">A cautious but confident knight in heavy armor standing behind a thick fortress wall, shield raised but posture relaxed — the conservative scenario where the company survives even with minimal growth, preparation without panic, cool steel armor and warm torch light behind stone walls, quiet confidence</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§4 Scenarios <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i3_s4_scenario_tree">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s4_scenario_tree</div>
+                <div class="concept-scene">A massive branching skill tree carved into a cavern wall, five paths diverging from a central trunk: the leftmost path is thin and cautious (pessimistic), each path rightward grows thicker and more prosperous, the rightmost path is golden and abundant (full traction) — but crucially ALL five paths lead to green outcomes at their endpoints, no dead ends, varied branch thickness and warmth left to right</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s4_full_traction">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s4_full_traction</div>
+                <div class="concept-scene">The best case scenario rendered as a golden city thriving at maximum capacity — 250,000 users shown as a bustling metropolis with kasset trade happening on every corner, revenue flowing through aqueducts, the city practically builds itself, triumphant golden noon light, urban prosperity at full scale</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s4_downside">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s4_downside</div>
+                <div class="concept-scene">The worst case scenario rendered as a small but fully functional village — 18,000 users in a modest settlement with working infrastructure, gardens producing food, trades happening at the market square — not glamorous but alive and self-sustaining, cozy and resilient, warm afternoon village light, humble but unbreakable</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s4_trade_sensitivity">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s4_trade_sensitivity</div>
+                <div class="concept-scene">A large slider mechanism on a control panel: as the slider moves from left (low frequency) to right (high frequency), a revenue meter above it responds proportionally — the sensitivity of revenue to trade frequency made tangible, mechanical cause-and-effect, warm brass slider on dark panel with green meter response</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s4_value_sensitivity">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s4_value_sensitivity</div>
+                <div class="concept-scene">A dial like a radio tuner showing average trade value, as the dial turns clockwise the revenue gauge climbs — but even at low dial settings the gauge stays above the survival threshold marked in red, robust to value changes, vintage dial aesthetic, warm dial glow with cool gauge markings</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s4_all_profitable">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s4_all_profitable</div>
+                <div class="concept-scene">Five scenario flags planted in a row on a hillside, ALL standing in green territory — none in red, none fallen — the entire range of outcomes produces a surviving company, military victory flags in green field, five distinct flag designs all triumphant, warm golden sunlight on green grass, comprehensive success</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§5 Survival Proof <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i3_s5_kill_gates">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s5_kill_gates</div>
+                <div class="concept-scene">A side-scrolling fortress gauntlet with four massive stone gates, a determined knight running through as each gate crumbles behind them — their health bar remains full at every checkpoint, they cannot be killed because the architecture prevents death, dynamic action scene, dramatic gate destruction with warm explosion effects against cool stone</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s5_gate1_funding">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s5_gate1_funding</div>
+                <div class="concept-scene">The first gate: a massive wall with a $3M keyhole, the key turning and the wall splitting open, beyond it the path continues safely, funding secured, dramatic lock-and-key moment, warm golden key glow against cold stone wall, barrier overcome</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s5_gate2_users">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s5_gate2_users</div>
+                <div class="concept-scene">The second gate: a crowd of new users physically pushing through a user acquisition barrier, the barrier buckling under their collective weight, organic growth breaking through constraints, warm crowd energy against cool barrier wall, momentum</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s5_gate3_revenue">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s5_gate3_revenue</div>
+                <div class="concept-scene">The third gate: a revenue wall with coins flowing through widening cracks, the wall's own material dissolving into profit, the more it flows the weaker the barrier becomes, warm golden coin flow eroding cool grey wall, self-reinforcing economics</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s5_gate4_competition">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s5_gate4_competition</div>
+                <div class="concept-scene">The fourth gate: competitor monsters lying defeated at the base of a competition wall, the knight walks past them casually because the architectural moat (zero cloud costs, local compute) made the competitors irrelevant, defeated enemies cooling in blue shadow while the knight continues in warm light, structural advantage</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i3_s5_alive_at_every_gate">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i3_s5_alive_at_every_gate</div>
+                <div class="concept-scene">A full green health bar displayed at each of the four gate checkpoints shown in a vertical column, a victory celebration at the bottom with confetti and trumpets, the company survives every stress test, celebratory mood, bright green health bars against dark interface, triumphant gamification</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+  </div>
+
+  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
+    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
+  </footer>
+</body>
+</html>

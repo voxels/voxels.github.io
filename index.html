@@ -1,24 +1,442 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sovereign Power Library — Alpha</title>
+  <style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-section: #1a1a25;
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6a;
+  --accent-magenta: #e84393;
+  --accent-blue: #0984e3;
+  --accent-green: #00b894;
+  --accent-gold: #fdcb6e;
+  --accent-purple: #6c5ce7;
+  --accent-red: #d63031;
+  --accent-orange: #e17055;
+  --border: #2a2a3a;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
 
-<!-- Posts -->
-<div id="posts">
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
-	{% for post in paginator.posts %}
-	  <div class="post">
-	  	<h2><a href="{% if site.baseurl == "/" %}{{ post.url }}{% else %}{{ post.url | prepend: site.baseurl }}{% endif %}">{%if post.header %}{{ post.header }}{% else %}{{ post.title }}{% endif %}</a></h2>
-      <div class="by-line parent">
-        <time datetime="{{ post.date | date_to_xmlschema }}"> <i>{{ post.date | date_to_string }}</i> </time>
-        &nbsp;&nbsp; &middot; &nbsp;&nbsp;
-        <span><i>{{ post.duration }}</i> </span>
-      </div>
-      <p>{{ post.content | split:'<!--break-->' | first }}
-         {% if post.content contains '<!--break-->' %}
-             <a href="{{ post.url }}"></a>
-         {% endif %}</p>
-	  </div>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    {% endfor %}
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.6;
+  min-height: 100vh;
+}
 
-</div>
+/* NAV */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.topnav .logo {
+  font-weight: 900; font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.topnav a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.topnav a:hover { color: var(--text-primary); }
+.topnav a.active { color: var(--accent-magenta); }
+.topnav .spacer { flex: 1; }
+.topnav .alpha-badge {
+  font-size: 0.7rem; font-weight: 700;
+  background: var(--accent-red); color: white;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+.stale-badge {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  background: #e17055; color: white;
+  padding: 0.1rem 0.4rem; border-radius: 2px;
+  margin-left: 0.5rem; vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 3rem; font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  font-weight: 300;
+}
+.hero .meta {
+  margin-top: 1rem; font-size: 0.8rem;
+  color: var(--text-muted); font-family: var(--font-mono);
+}
+
+/* ISSUE GRID */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.issue-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.issue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.issue-card .card-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.issue-card .issue-num {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.issue-card h2 {
+  font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.issue-card .act {
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.issue-card .card-body {
+  padding: 1.25rem 1.5rem;
+}
+.issue-card .doc-list {
+  list-style: none;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.issue-card .doc-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.issue-card .doc-list li:last-child { border: none; }
+.issue-card .concept-count {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ISSUE PAGE */
+.issue-header {
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.issue-header .breadcrumb {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+.issue-header .breadcrumb a:hover { color: var(--text-primary); }
+.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
+.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+
+.source-docs {
+  padding: 1.5rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.source-docs h3 {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.doc-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.doc-chip {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem; color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.doc-chip .doc-num {
+  font-weight: 700; font-family: var(--font-mono);
+  margin-right: 0.4rem;
+}
+
+.sections-container {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2rem;
+}
+.section-block {
+  margin-bottom: 3rem;
+}
+.section-block h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.concept-card {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.concept-card:hover { border-color: var(--accent-blue); }
+.concept-card .img-placeholder {
+  width: 100%; aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--text-muted);
+  position: relative;
+}
+.concept-card .img-placeholder .role-tag {
+  position: absolute; top: 0.5rem; left: 0.5rem;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.role-cover { background: var(--accent-magenta); color: white; }
+.role-hero { background: var(--accent-blue); color: white; }
+.role-spot { background: var(--accent-green); color: white; }
+.role-sidebar { background: var(--accent-purple); color: white; }
+.concept-card .card-info {
+  padding: 0.75rem 1rem;
+}
+.concept-card .concept-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.concept-card .concept-scene {
+  font-size: 0.8rem; color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* STALENESS */
+.staleness-panel {
+  max-width: 1200px; margin: 2rem auto;
+  padding: 0 2rem;
+}
+.staleness-panel h3 {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.staleness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.staleness-table th {
+  text-align: left; padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted); font-weight: 600;
+}
+.staleness-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+}
+.staleness-table tr:hover td { color: var(--text-primary); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="logo">SOVEREIGN POWER</span>
+    <a href="index.html" class="active">Library</a>
+    <span class="spacer"></span>
+    <span class="alpha-badge">ALPHA</span>
+  </nav>
+
+  <div class="hero">
+    <h1>Sovereign Power Library</h1>
+    <div class="subtitle">The Illustrated Data Room — 7 Issues, 301 Diagrams</div>
+    <div class="meta">
+      ALPHA BUILD · 2026-05-01 15:12
+    </div>
+  </div>
+
+  <div class="issues-grid">
+    
+        <a href="issue_1.html" class="issue-card">
+          <div class="card-header" style="border-top: 3px solid #e84393">
+            <div class="issue-num" style="color: #e84393">Issue 1 of 7</div>
+            <h2>The Sovereign Cocoon</h2>
+            <div class="act">Act 1: Thesis + Product</div>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list"><li>Doc 00: Data Room Guide</li>
+<li>Doc 01: Executive Summary</li>
+<li>Doc 02: The Knowledge Asset (.kasset) — Product Definition</li>
+<li>Doc 03: Twin Architecture — Layer 1 Specification</li>
+<li>Doc 04: The Twin Adaptor</li>
+</ul>
+            <div class="concept-count">73 diagrams → 6 sections</div>
+          </div>
+        </a>
+        
+        <a href="issue_2.html" class="issue-card">
+          <div class="card-header" style="border-top: 3px solid #0984e3">
+            <div class="issue-num" style="color: #0984e3">Issue 2 of 7</div>
+            <h2>The Architecture of Trust</h2>
+            <div class="act">Act 2: Architecture + Infrastructure</div>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list"><li>Doc 05: σ Conversion Architecture</li>
+<li>Doc 06: Lifestyle Sensor Products — The Physical Feedback Layer</li>
+<li>Doc 07: Network Formation Strategy</li>
+<li>Doc 08: Revenue Generation Matrix</li>
+<li>Doc 29: Distribution Architecture</li>
+<li>Doc 37: Edgcumbe Encoding: Privacy-Preserving Methodology Transfer via Fiber Bundle Projection on τ-Dynamic Manifolds</li>
+</ul>
+            <div class="concept-count">81 diagrams → 7 sections</div>
+          </div>
+        </a>
+        
+        <a href="issue_3.html" class="issue-card">
+          <div class="card-header" style="border-top: 3px solid #00b894">
+            <div class="issue-num" style="color: #00b894">Issue 3 of 7</div>
+            <h2>The Size of the Prize</h2>
+            <div class="act">Act 3: Market + Economics</div>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list"><li>Doc 09: TAM / SAM / SOM Analysis</li>
+<li>Doc 10: Unit Economics</li>
+<li>Doc 11: Financial Model & Projections (36-Month Horizon)</li>
+<li>Doc 12: Scenario Analysis</li>
+<li>Doc 12B: Growth Dynamics: The Calculus Model</li>
+</ul>
+            <div class="concept-count">37 diagrams → 6 sections</div>
+          </div>
+        </a>
+        
+        <a href="issue_4.html" class="issue-card">
+          <div class="card-header" style="border-top: 3px solid #fdcb6e">
+            <div class="issue-num" style="color: #fdcb6e">Issue 4 of 7</div>
+            <h2>The Execution Plan</h2>
+            <div class="act">Act 4: Plan + Team</div>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list"><li>Doc 13: 36-Month Business Plan</li>
+<li>Doc 14: Founder: Michael Edgcumbe</li>
+</ul>
+            <div class="concept-count">16 diagrams → 3 sections</div>
+          </div>
+        </a>
+        
+        <a href="issue_5.html" class="issue-card">
+          <div class="card-header" style="border-top: 3px solid #6c5ce7">
+            <div class="issue-num" style="color: #6c5ce7">Issue 5 of 7</div>
+            <h2>The Legal Shield</h2>
+            <div class="act">Act 5: Legal + Governance + IP</div>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list"><li>Doc 15: Investor Terms: Seed & Series A Structure</li>
+<li>Doc 16: Capitalization Table — Sovereign Survival Kit Inc. (Delaware C-Corp)</li>
+<li>Doc 17: Board Structure & Governance</li>
+<li>Doc 18: Legal Architecture: Entity Structure & Liability Shield</li>
+<li>Doc 19: IP Assignment Chain — Sovereign Survival Kit Inc</li>
+<li>Doc 20: Complete IP Inventory</li>
+<li>Doc 21: Defensive Patent Claims Outline</li>
+<li>Doc 22: Howey Test Analysis — Why .kassets Are Not Securities</li>
+<li>Doc 23: Regulatory Risk Matrix & Technical Security Gap Analysis</li>
+<li>Doc 24: Legal, IP & Security Budget Breakdown</li>
+<li>Doc 25: Competitive Analysis (Porter's Five Forces)</li>
+</ul>
+            <div class="concept-count">35 diagrams → 10 sections</div>
+          </div>
+        </a>
+        
+        <a href="issue_6.html" class="issue-card">
+          <div class="card-header" style="border-top: 3px solid #d63031">
+            <div class="issue-num" style="color: #d63031">Issue 6 of 7</div>
+            <h2>The Vault & The Long Game</h2>
+            <div class="act">Act 5b + Act 6</div>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list"><li>Doc 26: The Apex Oracle — Product Definition</li>
+<li>Doc 27: Stiftung Fund Deployment & The Sovereign Campus</li>
+<li>Doc 28: Vault Architecture — Layer 0 Specification</li>
+<li>Doc 32: Content Enforcement Policy</li>
+</ul>
+            <div class="concept-count">31 diagrams → 5 sections</div>
+          </div>
+        </a>
+        
+        <a href="issue_7.html" class="issue-card">
+          <div class="card-header" style="border-top: 3px solid #e17055">
+            <div class="issue-num" style="color: #e17055">Issue 7 of 7</div>
+            <h2>The Appendix Tower</h2>
+            <div class="act">Appendix</div>
+          </div>
+          <div class="card-body">
+            <ul class="doc-list"><li>Doc AskMikeeHost_Walkthrough: 🎮 AskMikeeHost — The Complete Walkthrough</li>
+<li>Doc Cheat_Sheet: Break Glass</li>
+<li>Doc Cheat_Sheet_Appendix: Break Glass — Appendix</li>
+<li>Doc Background_Reading: Theoretical Foundations & Bibliography</li>
+</ul>
+            <div class="concept-count">28 diagrams → 5 sections</div>
+          </div>
+        </a>
+        
+  </div>
+
+  
+
+  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
+    Sovereign Survival Kit, Inc. · Series A Data Room Companion · 2026
+  </footer>
+</body>
+</html>

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue 7: The Appendix Tower — Sovereign Power Library</title>
+  <style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-section: #1a1a25;
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6a;
+  --accent-magenta: #e84393;
+  --accent-blue: #0984e3;
+  --accent-green: #00b894;
+  --accent-gold: #fdcb6e;
+  --accent-purple: #6c5ce7;
+  --accent-red: #d63031;
+  --accent-orange: #e17055;
+  --border: #2a2a3a;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.topnav .logo {
+  font-weight: 900; font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.topnav a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.topnav a:hover { color: var(--text-primary); }
+.topnav a.active { color: var(--accent-magenta); }
+.topnav .spacer { flex: 1; }
+.topnav .alpha-badge {
+  font-size: 0.7rem; font-weight: 700;
+  background: var(--accent-red); color: white;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+.stale-badge {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  background: #e17055; color: white;
+  padding: 0.1rem 0.4rem; border-radius: 2px;
+  margin-left: 0.5rem; vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 3rem; font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  font-weight: 300;
+}
+.hero .meta {
+  margin-top: 1rem; font-size: 0.8rem;
+  color: var(--text-muted); font-family: var(--font-mono);
+}
+
+/* ISSUE GRID */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.issue-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.issue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.issue-card .card-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.issue-card .issue-num {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.issue-card h2 {
+  font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.issue-card .act {
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.issue-card .card-body {
+  padding: 1.25rem 1.5rem;
+}
+.issue-card .doc-list {
+  list-style: none;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.issue-card .doc-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.issue-card .doc-list li:last-child { border: none; }
+.issue-card .concept-count {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ISSUE PAGE */
+.issue-header {
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.issue-header .breadcrumb {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+.issue-header .breadcrumb a:hover { color: var(--text-primary); }
+.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
+.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+
+.source-docs {
+  padding: 1.5rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.source-docs h3 {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.doc-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.doc-chip {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem; color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.doc-chip .doc-num {
+  font-weight: 700; font-family: var(--font-mono);
+  margin-right: 0.4rem;
+}
+
+.sections-container {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2rem;
+}
+.section-block {
+  margin-bottom: 3rem;
+}
+.section-block h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.concept-card {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.concept-card:hover { border-color: var(--accent-blue); }
+.concept-card .img-placeholder {
+  width: 100%; aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--text-muted);
+  position: relative;
+}
+.concept-card .img-placeholder .role-tag {
+  position: absolute; top: 0.5rem; left: 0.5rem;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.role-cover { background: var(--accent-magenta); color: white; }
+.role-hero { background: var(--accent-blue); color: white; }
+.role-spot { background: var(--accent-green); color: white; }
+.role-sidebar { background: var(--accent-purple); color: white; }
+.concept-card .card-info {
+  padding: 0.75rem 1rem;
+}
+.concept-card .concept-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.concept-card .concept-scene {
+  font-size: 0.8rem; color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* STALENESS */
+.staleness-panel {
+  max-width: 1200px; margin: 2rem auto;
+  padding: 0 2rem;
+}
+.staleness-panel h3 {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.staleness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.staleness-table th {
+  text-align: left; padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted); font-weight: 600;
+}
+.staleness-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+}
+.staleness-table tr:hover td { color: var(--text-primary); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="logo">SOVEREIGN POWER</span>
+    <a href="index.html">Library</a>
+    <a href="issue_1.html">#1</a>
+<a href="issue_2.html">#2</a>
+<a href="issue_3.html">#3</a>
+<a href="issue_4.html">#4</a>
+<a href="issue_5.html">#5</a>
+<a href="issue_6.html">#6</a>
+<a href="issue_7.html" class="active">#7</a>
+
+    <span class="spacer"></span>
+    <span class="alpha-badge">ALPHA</span>
+  </nav>
+
+  <div class="issue-header">
+    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 7</div>
+    <h1 style="color:#e17055">The Appendix Tower</h1>
+    <div class="act-label">Appendix · 28 diagrams</div>
+  </div>
+
+  <div class="source-docs">
+    <h3>Source Documents</h3>
+    <div class="doc-chips">
+        <a href="../../Data_Room/AskMikeeHost_Walkthrough.md" class="doc-chip" target="_blank">
+          <span class="doc-num">AskMikeeHost_Walkthrough</span>🎮 AskMikeeHost — The Complete Walkthrough
+        </a>
+        
+        <a href="../../Data_Room/Cheat_Sheet.md" class="doc-chip" target="_blank">
+          <span class="doc-num">Cheat_Sheet</span>Break Glass
+        </a>
+        
+        <a href="../../Data_Room/Cheat_Sheet_Appendix.md" class="doc-chip" target="_blank">
+          <span class="doc-num">Cheat_Sheet_Appendix</span>Break Glass — Appendix
+        </a>
+        
+        <a href="../../Data_Room/Background_Reading.md" class="doc-chip" target="_blank">
+          <span class="doc-num">Background_Reading</span>Theoretical Foundations & Bibliography
+        </a>
+        </div>
+  </div>
+
+  <div class="sections-container">
+    
+        <div class="section-block">
+          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i7_cover">
+              <div class="img-placeholder">
+                🎨
+                <span class="role-tag role-cover">cover</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_cover</div>
+                <div class="concept-scene">A wizard's private library at the top of a tower, towering bookshelves curving along circular walls, magical scrolls and reference tomes floating gently in the air as if browsing themselves, a reading desk at center with an ancient knowledge artifact glowing on its surface, the room is the accumulated wisdom of an entire quest — the appendix, the reference, the permanent record, warm candlelight on aged wood and leather, cool magical scroll glow, scholarly sanctuary</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§1 Cheat Sheet <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i7_s1_cheat_sheet">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s1_cheat_sheet</div>
+                <div class="concept-scene">An adventurer's quick reference card pinned to the inside of a shield — all key game mechanics summarized as a dense grid of icons and shorthand: kasset types, twin pipeline, sigma conversion, vault structure, adaptor modes — everything a player needs at a glance during combat, practical and battle-worn, warm leather shield with cool icon grid, field reference</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s1_kasset_quick">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s1_kasset_quick</div>
+                <div class="concept-scene">Three kasset type icons displayed as weapon select options in a heads-up display: ambient orb (soft pulsing sphere), intentional cube (sharp geometric solid), composite cluster (fused multi-gem formation) — clean iconic design, minimal style for instant recognition, dark HUD background with three distinct warm-colored icons, quick identification</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s1_twin_quick">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s1_twin_quick</div>
+                <div class="concept-scene">The twin pipeline distilled to four sequential icons connected by arrows: an eye (observe), a wave gauge (measure), a grid (map), a brain (compute) — the entire architecture in four symbols, clean iconographic summary, warm amber icons on dark background with cool connecting arrows, elegant compression</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s1_sigma_quick">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s1_sigma_quick</div>
+                <div class="concept-scene">The energy-to-value conversion shown as one simple equation icon: a lightning bolt on the left equals a coin on the right, the simplest possible representation of the σ concept, clean and immediate, warm lightning bolt to cool coin, instant understanding</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s1_vault_quick">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s1_vault_quick</div>
+                <div class="concept-scene">The two-compartment vault simplified to a single icon: left sovereign box (warm amber), right acquired box (cool blue), thick wall line between them — the entire vault architecture in one pictogram, clean architectural icon on dark background, structural clarity in minimum strokes</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s1_adaptor_quick">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s1_adaptor_quick</div>
+                <div class="concept-scene">Four mode icons arranged in a diamond selector pattern: shield (Guardian, red), scales (Negotiator, blue), heart (Friend, green), compass (Partner, gold) — with a selector arrow pointing to one mode, character class selection at a glance, clean dark background with four vivid mode colors, modal clarity</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§2 Appendix Deep Dives <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i7_s2_encoding_detail">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s2_encoding_detail</div>
+                <div class="concept-scene">The five-step Edgcumbe encoding pipeline shown as a precision machine assembly line in extreme detail: each station (Φ segmentation scissors, Ψ coupling chains, Ξ compression press, Π projection lens, Ω folding origami) rendered with mathematical operator symbols engraved into the machinery — the full formal specification as industrial art, detailed mechanical beauty, warm brass machinery with cool mathematical symbol engravings, rigorous engineering</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s2_tau_math">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s2_tau_math</div>
+                <div class="concept-scene">A large chalkboard in a mathematics lecture hall covered with tau curves, their derivatives, and convergence diagrams — chalk dust visible in a shaft of light from a high window, a professor's pointer resting against the board, the deep theoretical foundation of the entire system, academic atmosphere, warm chalk on cool dark green board, mathematical depth</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s2_fiber_bundle">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s2_fiber_bundle</div>
+                <div class="concept-scene">A geometric fiber bundle visualization floating in abstract space: a curved base manifold surface with individual fibers projecting upward from each point, projection arrows descending from fibers back to the base — the mathematical structure that enables privacy-preserving methodology transfer, abstract mathematical beauty, cool blue manifold with warm gold fibers, topological elegance</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s2_process_algebra">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s2_process_algebra</div>
+                <div class="concept-scene">CCS process algebra operators rendered as interlocking mechanical gears: parallel composition (two gears meshing), choice (fork gear), restriction (blocked gear), relabeling (gear with changed teeth) — formal computer science as clockwork, precise mechanical metaphor, warm brass gears with cool steel axles, computational precision</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s2_protein_folding">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s2_protein_folding</div>
+                <div class="concept-scene">A protein molecule folding analogy: a linear amino acid sequence on the left progressively folding into a complex 3D shape on the right — the structural relationships are preserved but the sequence itself becomes hidden inside the fold, biological metaphor for encoding, warm linear sequence cooling into complex blue 3D structure, structure over sequence</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s2_privacy_proof">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s2_privacy_proof</div>
+                <div class="concept-scene">A person walking into the left side of an encoding machine as their full self — face, voice, mannerisms all visible — and exiting the right side as an anonymous methodology skeleton with no identifying features, the encoding strips identity while preserving intelligence, dramatic transformation corridor, warm human entering cool anonymous skeleton exiting, privacy by design</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§3 Walkthrough <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(10 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i7_s3_terminal_start">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_terminal_start</div>
+                <div class="concept-scene">A computer terminal sitting in a stone dungeon room, its screen glowing green with a command prompt blinking, a keyboard ready for input, cables running into the wall connecting to deeper systems — the beginning of the technical demo, the player sits down and types the first command, intimate tech-dungeon atmosphere, cool green terminal glow in warm torchlit stone room, the quest begins here</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_questionnaire">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_questionnaire</div>
+                <div class="concept-scene">Six psychometric test scrolls being completed one by one on a scholar's desk: BFI-44 personality assessment, Proust questionnaire, VIA-24 character strengths, ECR-R-12 attachment style, NFC-18 cognitive motivation, communication patterns — each scroll partially filled with answers, the profiling phase, warm desk lamp on cool parchment scrolls, self-discovery through measurement</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_data_import">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_data_import</div>
+                <div class="concept-scene">Multiple data streams flowing into an import hopper from different sources: an email archive (envelope stream), chat exports (speech bubble stream), calendar (clock stream), music history (note stream), health data (heartbeat stream) — all converging into a single processing funnel, data gathering as tributary rivers, varied warm stream colors merging into cool processing funnel, comprehensive ingestion</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_stage1_train">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_stage1_train</div>
+                <div class="concept-scene">Training forge Stage 1: personal narrative stories being fed into a furnace that burns them into the base model metal, a QLoRA adapter forming on the anvil from the heated material — the twin begins to take shape from raw personal data, intense forge heat, warm red-orange furnace fire with cool blue adapter crystallizing, personality forging</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_stage2_dpo">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_stage2_dpo</div>
+                <div class="concept-scene">Training forge Stage 2: preference pairs being presented side by side on an alignment anvil, a hammer selects the preferred response and drives it deeper into the metal while the rejected response falls away — personality sharpening through comparison, precise alignment work, warm preferred side versus cool rejected side, preference refinement</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_stage3_e2e">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_stage3_e2e</div>
+                <div class="concept-scene">Training forge Stage 3: a multi-turn conversation polishing wheel smoothing the twin's interactive surface, each rotation of the wheel removes rough edges from the twin's responses — the final refinement that makes the twin feel natural, grinding precision, cool polishing wheel with warm twin surface becoming smoother, conversational polish</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_airgap_demo">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_airgap_demo</div>
+                <div class="concept-scene">A network cable being physically unplugged from a device with dramatic emphasis — the cable drops to the floor, the device enters a golden isolation bubble, all external connections severed, the minting continues locally without any network, the airgap is real and physical, dramatic disconnection moment, warm golden isolation bubble against cool disconnected grey cable, sovereign independence</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_mint_kasset">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_mint_kasset</div>
+                <div class="concept-scene">The final kasset emerging from the minting press: a perfect crystalline artifact sealed with AES-256-GCM encryption and stamped with an ML-DSA-65 post-quantum signature — the first kasset ever minted on this device, birth of a tradeable knowledge asset, triumphant emergence, warm golden kasset from cool steel press, creation complete</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_verify_signature">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_verify_signature</div>
+                <div class="concept-scene">An inspector examining the kasset's dual signature under a specialized magnifying glass: left lens shows P-256 ECDSA signature verified (green check), right lens shows ML-DSA-65 post-quantum signature verified (green check) — both signatures valid, provenance confirmed, verification precision, cool inspector lens with warm verified green confirmations, cryptographic integrity</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s3_victory_screen">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s3_victory_screen</div>
+                <div class="concept-scene">A triumphant achievement screen: FIRST KASSET MINTED displayed in golden letters, AIRGAP VERIFIED in silver, TWIN OPERATIONAL in bronze — confetti and fanfare, the complete demo has succeeded, the system works end-to-end, celebratory completion, warm golden achievement text against dark victory screen, quest complete</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§4 Background Reading <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(5 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i7_s4_reading_list">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s4_reading_list</div>
+                <div class="concept-scene">A scholar's desk piled with stacked academic papers and reference books, each spine showing a different research domain — neuroscience, cryptography, economics, physics, computer science, psychology — the interdisciplinary foundations of the entire system, quiet study atmosphere, warm desk lamp on cool varied book spines, intellectual breadth</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s4_tau_theory_book">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s4_tau_theory_book</div>
+                <div class="concept-scene">An ancient leather-bound tome with the tau symbol embossed on its cover, opened to a page showing gap-closing dynamics diagrams with handwritten margin notes — the foundational theory that everything else builds on, warm aged leather with cool mathematical diagram ink, theoretical bedrock</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s4_complexity_book">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s4_complexity_book</div>
+                <div class="concept-scene">A visualization of computational equivalence: simple rules on the left generating increasingly complex emergent patterns on the right, a few lines of code producing galaxies of behavior — Wolfram's insight applied to cognitive modeling, abstract pattern generation, simple warm left expanding into complex cool right, emergence from simplicity</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s4_crypto_book">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s4_crypto_book</div>
+                <div class="concept-scene">A post-quantum cryptography reference showing lattice-based geometric structures and ML-DSA signature scheme diagrams — the mathematics that will survive quantum computing, forward-looking security, cool crystalline lattice structures against dark mathematical background, quantum-resistant architecture</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i7_s4_economics_book">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i7_s4_economics_book</div>
+                <div class="concept-scene">An energy economics textbook opened to the sigma derivation page: the chain from joule definition through kWh measurement to regional energy cost to local currency conversion — the full economic foundation, warm textbook pages with cool equation chains, economic first principles</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+  </div>
+
+  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
+    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
+  </footer>
+</body>
+</html>

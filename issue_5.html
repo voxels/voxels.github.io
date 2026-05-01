@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue 5: The Legal Shield — Sovereign Power Library</title>
+  <style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-section: #1a1a25;
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6a;
+  --accent-magenta: #e84393;
+  --accent-blue: #0984e3;
+  --accent-green: #00b894;
+  --accent-gold: #fdcb6e;
+  --accent-purple: #6c5ce7;
+  --accent-red: #d63031;
+  --accent-orange: #e17055;
+  --border: #2a2a3a;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.topnav .logo {
+  font-weight: 900; font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.topnav a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.topnav a:hover { color: var(--text-primary); }
+.topnav a.active { color: var(--accent-magenta); }
+.topnav .spacer { flex: 1; }
+.topnav .alpha-badge {
+  font-size: 0.7rem; font-weight: 700;
+  background: var(--accent-red); color: white;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+.stale-badge {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  background: #e17055; color: white;
+  padding: 0.1rem 0.4rem; border-radius: 2px;
+  margin-left: 0.5rem; vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 3rem; font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  font-weight: 300;
+}
+.hero .meta {
+  margin-top: 1rem; font-size: 0.8rem;
+  color: var(--text-muted); font-family: var(--font-mono);
+}
+
+/* ISSUE GRID */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.issue-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.issue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.issue-card .card-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.issue-card .issue-num {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.issue-card h2 {
+  font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.issue-card .act {
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.issue-card .card-body {
+  padding: 1.25rem 1.5rem;
+}
+.issue-card .doc-list {
+  list-style: none;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.issue-card .doc-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.issue-card .doc-list li:last-child { border: none; }
+.issue-card .concept-count {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ISSUE PAGE */
+.issue-header {
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.issue-header .breadcrumb {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+.issue-header .breadcrumb a:hover { color: var(--text-primary); }
+.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
+.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+
+.source-docs {
+  padding: 1.5rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.source-docs h3 {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.doc-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.doc-chip {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem; color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.doc-chip .doc-num {
+  font-weight: 700; font-family: var(--font-mono);
+  margin-right: 0.4rem;
+}
+
+.sections-container {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2rem;
+}
+.section-block {
+  margin-bottom: 3rem;
+}
+.section-block h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.concept-card {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.concept-card:hover { border-color: var(--accent-blue); }
+.concept-card .img-placeholder {
+  width: 100%; aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--text-muted);
+  position: relative;
+}
+.concept-card .img-placeholder .role-tag {
+  position: absolute; top: 0.5rem; left: 0.5rem;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.role-cover { background: var(--accent-magenta); color: white; }
+.role-hero { background: var(--accent-blue); color: white; }
+.role-spot { background: var(--accent-green); color: white; }
+.role-sidebar { background: var(--accent-purple); color: white; }
+.concept-card .card-info {
+  padding: 0.75rem 1rem;
+}
+.concept-card .concept-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.concept-card .concept-scene {
+  font-size: 0.8rem; color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* STALENESS */
+.staleness-panel {
+  max-width: 1200px; margin: 2rem auto;
+  padding: 0 2rem;
+}
+.staleness-panel h3 {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.staleness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.staleness-table th {
+  text-align: left; padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted); font-weight: 600;
+}
+.staleness-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+}
+.staleness-table tr:hover td { color: var(--text-primary); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="logo">SOVEREIGN POWER</span>
+    <a href="index.html">Library</a>
+    <a href="issue_1.html">#1</a>
+<a href="issue_2.html">#2</a>
+<a href="issue_3.html">#3</a>
+<a href="issue_4.html">#4</a>
+<a href="issue_5.html" class="active">#5</a>
+<a href="issue_6.html">#6</a>
+<a href="issue_7.html">#7</a>
+
+    <span class="spacer"></span>
+    <span class="alpha-badge">ALPHA</span>
+  </nav>
+
+  <div class="issue-header">
+    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 5</div>
+    <h1 style="color:#6c5ce7">The Legal Shield</h1>
+    <div class="act-label">Act 5: Legal + Governance + IP · 35 diagrams</div>
+  </div>
+
+  <div class="source-docs">
+    <h3>Source Documents</h3>
+    <div class="doc-chips">
+        <a href="../../Data_Room/15_Investor_Terms.md" class="doc-chip" target="_blank">
+          <span class="doc-num">15</span>Investor Terms: Seed & Series A Structure
+        </a>
+        
+        <a href="../../Data_Room/16_Cap_Table.md" class="doc-chip" target="_blank">
+          <span class="doc-num">16</span>Capitalization Table — Sovereign Survival Kit Inc. (Delaware C-Corp)
+        </a>
+        
+        <a href="../../Data_Room/17_Board_and_Governance.md" class="doc-chip" target="_blank">
+          <span class="doc-num">17</span>Board Structure & Governance
+        </a>
+        
+        <a href="../../Data_Room/18_Legal_Entity_Structure.md" class="doc-chip" target="_blank">
+          <span class="doc-num">18</span>Legal Architecture: Entity Structure & Liability Shield
+        </a>
+        
+        <a href="../../Data_Room/19_IP_Assignment_Chain.md" class="doc-chip" target="_blank">
+          <span class="doc-num">19</span>IP Assignment Chain — Sovereign Survival Kit Inc
+        </a>
+        
+        <a href="../../Data_Room/20_IP_Inventory.md" class="doc-chip" target="_blank">
+          <span class="doc-num">20</span>Complete IP Inventory
+        </a>
+        
+        <a href="../../Data_Room/21_Defensive_Patent_Claims.md" class="doc-chip" target="_blank">
+          <span class="doc-num">21</span>Defensive Patent Claims Outline
+        </a>
+        
+        <a href="../../Data_Room/22_Howey_Test_Analysis.md" class="doc-chip" target="_blank">
+          <span class="doc-num">22</span>Howey Test Analysis — Why .kassets Are Not Securities
+        </a>
+        
+        <a href="../../Data_Room/23_Regulatory_Risk_Matrix.md" class="doc-chip" target="_blank">
+          <span class="doc-num">23</span>Regulatory Risk Matrix & Technical Security Gap Analysis
+        </a>
+        
+        <a href="../../Data_Room/24_Legal_Budget_Breakdown.md" class="doc-chip" target="_blank">
+          <span class="doc-num">24</span>Legal, IP & Security Budget Breakdown
+        </a>
+        
+        <a href="../../Data_Room/25_Competitive_Analysis.md" class="doc-chip" target="_blank">
+          <span class="doc-num">25</span>Competitive Analysis (Porter's Five Forces)
+        </a>
+        </div>
+  </div>
+
+  <div class="sections-container">
+    
+        <div class="section-block">
+          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_cover">
+              <div class="img-placeholder">
+                🎨
+                <span class="role-tag role-cover">cover</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_cover</div>
+                <div class="concept-scene">A multi-headed dragon boss fight in a gothic courthouse arena — each dragon head represents a different regulatory challenge (securities law, privacy regulation, patent disputes, jurisdictional barriers), a lone knight wielding a law scroll in one hand and a crystalline shield in the other, fire breath from each head being deflected by different legal defenses, dramatic boss battle composition, intense red-orange fire against cool stone courthouse interior, epic legal confrontation</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§1 Investor Terms <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(4 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s1_safe_structure">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s1_safe_structure</div>
+                <div class="concept-scene">An ornate treasure chest with a unique SAFE lock mechanism — the lock requires a specific key that converts to equity at a predetermined cap, an investor character being offered the key by the founder, the chest contains future value, formal deal-room atmosphere, warm gold chest with cool silver lock mechanism, trust and terms</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s1_valuation_cap">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s1_valuation_cap</div>
+                <div class="concept-scene">A golden dome ceiling with the $42.86M cap amount engraved at the apex — value can grow within the dome but the cap defines the conversion point, looking upward from inside, architectural grandeur, warm gold dome against deep blue interior sky, the ceiling of the deal</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s1_dilution_model">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s1_dilution_model</div>
+                <div class="concept-scene">A large circular stone being divided with precise cuts: 93% remains as a massive founder section, 7% is cleanly separated as the investor portion — the stone cannot be further divided (no option pool), simple and permanent, cool grey stone with warm golden cut lines, irreversible allocation</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s1_use_of_proceeds">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s1_use_of_proceeds</div>
+                <div class="concept-scene">Gold coins flowing from a central hopper into seven labeled channels: payroll (largest pipe), legal (medium), marketing (medium), infrastructure (smaller), operations, storefront, compute — each channel leads to a different workshop, fluid resource allocation, warm gold flow against cool channel metal, precise deployment</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§2 Cap Table <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(3 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s2_cap_table">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s2_cap_table</div>
+                <div class="concept-scene">Exactly ten million coins arranged in a vast grid on a treasury floor, 93% painted deep founder-blue and 7% painted investor-gold, a heavy iron sign reading FIXED POOL — NO NEW COINS EVER bolted to the wall above, the permanence of the allocation is the point, cool blue sea of founder coins with warm gold investor corner, immutable equity</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s2_dual_class">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s2_dual_class</div>
+                <div class="concept-scene">Two coin types side by side on a velvet display: a single Class A coin worth one vote, beside it a towering stack of twenty Class B coins fused into one super-vote token — the 20x voting power made physical, the founder's control mechanism, single vote coin dwarfed by fused super-vote, warm gold detail on cool display velvet</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s2_no_option_pool">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s2_no_option_pool</div>
+                <div class="concept-scene">An empty drained swimming pool with a large crossed-out sign reading NO OPTION POOL, the pool is permanently dry — future employee compensation comes from the founder's own shares converting, no dilution surprise, dry concrete pool in afternoon light, stark and deliberate absence, cool grey pool with warm prohibition sign</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§3 Governance <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(2 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s3_board_seats">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s3_board_seats</div>
+                <div class="concept-scene">A round governance table with exactly three chairs: two ornate voting thrones with gavels (founder + lead investor) and one modest observer stool with a notepad (board observer) — the power structure is minimal and deliberate, formal boardroom with dark wood and brass, warm throne-light versus cool observer-light, constrained governance</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s3_immutable_constraints">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s3_immutable_constraints</div>
+                <div class="concept-scene">A stone tablet mounted high on a fortress wall with unchangeable governance rules carved deep into the surface — golden chains binding the tablet to the wall permanently, the rules cannot be amended even by unanimous consent, some things are forever, cool stone with warm golden chain highlights, constitutional bedrock</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§4 Legal Entity <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(2 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s4_entity_structure">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s4_entity_structure</div>
+                <div class="concept-scene">Two connected fortress buildings on a shared foundation: a Delaware C-Corp castle (tall, formal, corporate flags) linked by a stone bridge to a Wyoming DAO LLC watchtower (lean, autonomous, protocol flags) — each serves a different purpose but they share a foundation, formal architectural contrast, warm castle brick versus cool tower stone, dual-entity harmony</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s4_piiaa">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s4_piiaa</div>
+                <div class="concept-scene">A solemn contract-signing ceremony: a quill pen writing an invention assignment clause on a formal scroll, a notary's seal being pressed into warm wax beside the signature, all intellectual property flowing through one legal channel, formal desk with candle and seal, warm wax and parchment against cool legal formality, binding obligation</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§5 IP Portfolio <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(5 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s5_ip_chain">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s5_ip_chain</div>
+                <div class="concept-scene">A chain of custody diagram rendered as a physical conveyor: original inventions (raw crystals) flow from the creator's workshop through an assignment notary station into a C-Corp vault at the end — the chain is unbroken and documented at every step, industrial traceability, warm workshop origin cooling to formal vault destination, provenance of ideas</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s5_17_patents">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s5_17_patents</div>
+                <div class="concept-scene">An arsenal room with seventeen unique patent weapons mounted on individual wall brackets in three rows: each weapon is a different type (swords, shields, staffs, bows) representing different patent categories, each labeled with a brass nameplate, the collection spans the full defensive portfolio, warm armory wood with cool weapon steel, comprehensive protection</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s5_defensive_patents">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s5_defensive_patents</div>
+                <div class="concept-scene">Thirteen shield-bearing sentinels standing in a defensive perimeter formation around a central IP fortress, each sentinel's shield displays a different defensive patent symbol, they face outward protecting the interior from all directions, military defensive formation at dusk, warm golden shields against deepening blue twilight, proactive defense</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s5_know_maps_ip">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s5_know_maps_ip</div>
+                <div class="concept-scene">A dual-lock display case: the top shelf holds the app layer with an Apache 2.0 open padlock (anyone can use it), the bottom shelf holds proprietary CoreML models behind a sealed glass case with a private key lock — open source above, proprietary below, the licensing duality, warm open-source amber above cool proprietary blue below, strategic IP layers</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s5_tau_ip">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s5_tau_ip</div>
+                <div class="concept-scene">A priceless tau theory manuscript displayed behind CC-BY-NC-ND protective glass in a museum case — visible and readable but protected from commercial extraction, a scholar studying it through the glass with reverence, the research is published but the commercial application is defended, warm manuscript glow behind cool protective glass, academic openness with commercial boundaries</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§6 Howey Test <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s6_howey_dragon">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s6_howey_dragon</div>
+                <div class="concept-scene">A four-headed dragon boss in a legal arena, each head labeled with a Howey prong: Investment of Money, Common Enterprise, Expectation of Profit, Efforts of Others — a knight methodically defeating each head one by one with different legal arguments as weapons, the fourth head crumbling as the analysis completes, dramatic boss fight, varied fire colors per head against dark arena, systematic legal victory</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s6_not_investment">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s6_not_investment</div>
+                <div class="concept-scene">A sigma coin being used specifically as a measuring ruler held against an object to determine its size — not being planted like a seed for returns, the coin is a tool not an investment, the distinction made physical, warm workshop measurement scene, practical utility not speculation</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s6_no_common_enterprise">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s6_no_common_enterprise</div>
+                <div class="concept-scene">Six individual vaults scattered across a landscape, each completely isolated with no connecting tunnels or shared pools between them — each user is sovereign, there is no common pot, architectural isolation as legal defense, cool independent vault structures in warm landscape, structural separation</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s6_no_profit_expectation">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s6_no_profit_expectation</div>
+                <div class="concept-scene">A perfectly flat value line for sigma rendered as a level horizon across a calm desert — no upward speculation arrow, no growth promise, just a stable measuring reference, the beauty of non-appreciation, vast flat desert at golden hour, serene stability, warm horizon with cool flat sigma line</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s6_no_efforts_others">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s6_no_efforts_others</div>
+                <div class="concept-scene">A single person minting their own kasset entirely alone in their own workshop — no platform workers, no company servers, no external dependencies visible, the mint is fully local and autonomous, intimate self-sufficient workspace, warm self-generated light, radical independence</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s6_all_four_fail">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s6_all_four_fail</div>
+                <div class="concept-scene">All four dragon heads lying defeated on the arena floor, the knight standing victorious with their legal scroll held high, a verdict banner unfurling reading NOT A SECURITY, celebration but with legal precision, warm victory light flooding the dark arena, systematic legal triumph</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§7 Regulatory Risk <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(6 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s7_jurisdiction_map">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s7_jurisdiction_map</div>
+                <div class="concept-scene">A world map rendered as a strategic risk board: United States and Japan glowing green (safe zones), European Union and UK glowing red (hostile zones), other regions in cautious yellow — each territory has a fortress icon showing the local regulatory posture, strategic geopolitical assessment, varied warm green and cool red territory colors on parchment, military intelligence aesthetic</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s7_us_safe">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s7_us_safe</div>
+                <div class="concept-scene">An American fortress with proud green flags flying, SEC and CFTC regulatory projectiles bouncing off its constitutional defense walls, the architecture itself prevents the attack from landing, confident and well-defended, warm patriotic tones with cool deflected regulatory blue, structural compliance</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s7_japan_safe">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s7_japan_safe</div>
+                <div class="concept-scene">A Japanese pagoda fortress with green cherry blossom flags, an FSA compliance moat filled with properly documented water flowing around it, the fortress respects the rules and is respected in return, elegant compliance, warm wood and paper pagoda with cool regulatory moat water, harmonious regulation</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s7_eu_hostile">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s7_eu_hostile</div>
+                <div class="concept-scene">A European castle bristling with red warning flags, massive GDPR walls and AI Act barriers blocking the entrance entirely, surveillance cameras on every turret — entry is architecturally impossible without surrendering sovereignty, hostile regulatory environment, cold grey fortress with harsh red warning lights, structural incompatibility</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s7_uk_hostile">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s7_uk_hostile</div>
+                <div class="concept-scene">A British tower flying red flags with an enormous IPA surveillance eye watching from its peak, the Investigatory Powers Act has given the tower x-ray vision through all walls — no privacy product can operate under that gaze, totalizing surveillance, cold stone tower with ominous red eye glow at top, panopticon architecture</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s7_mitigation">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s7_mitigation</div>
+                <div class="concept-scene">A shield wall of six different mitigation strategies arranged as a defensive formation: each shield addresses a specific regulatory risk (opinion letters, structural design, jurisdictional exclusion, compliance documentation, insurance, legal counsel) — the shields overlap to cover all angles, comprehensive defense posture, varied warm shield colors against cool threat background, strategic preparation</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§8 Legal Budget <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(2 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s8_legal_budget">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s8_legal_budget</div>
+                <div class="concept-scene">A treasurer's allocation table with coin stacks sorted by category: patent filing fees (tall stack), trademark registrations (medium), regulatory counsel (large), insurance premiums (modest), security audits (small) — each sorted into Year 1, Year 2, and Year 3 compartments, meticulous financial planning, warm gold coins on cool dark table surface, fiscal responsibility</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s8_356k_total">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s8_356k_total</div>
+                <div class="concept-scene">A precision-measured treasure room containing exactly 356 thousand gold coins allocated across three crystal-walled year compartments, each compartment labeled and sealed, not one coin unaccounted for, the legal war chest is finite and planned, cool crystal walls with warm gold content, budgetary precision</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§9 Competition <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(4 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i5_s9_porters_five">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s9_porters_five</div>
+                <div class="concept-scene">Five rival challengers surrounding a central arena from different directions: Supplier power (giant with chain), Buyer power (crowd with demands), Substitutes (shape-shifter), New Entrants (army at gate), Rivalry (competing knight) — the SovereignOS warrior stands in the center assessing all five threats simultaneously, strategic awareness, five distinct threat colors converging on warm central figure</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s9_worldcoin_compare">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s9_worldcoin_compare</div>
+                <div class="concept-scene">Split comparison: left side shows a centralized orb scanner collecting biometric data into a corporate cloud (cold, invasive, blue-grey), right side shows a SovereignOS device processing locally in a warm personal vault (private, sovereign, golden) — the architectural difference is the product difference, stark contrast of philosophies, cold extraction versus warm sovereignty</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s9_sbt_compare">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s9_sbt_compare</div>
+                <div class="concept-scene">Two artifacts side by side: a soulbound token chained permanently to a blockchain (immutable but public, exposed, cold blue), beside it a kasset as a locally-signed encrypted file (portable, private, warm gold) — blockchain permanence versus sovereign portability, material contrast, cold chain versus warm independence</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i5_s9_moat_diagram">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i5_s9_moat_diagram</div>
+                <div class="concept-scene">A castle with five concentric defensive moats: outermost is edge-only processing (wide water), then energy currency (electric moat), then network effects (social moat), then patent portfolio (legal moat), innermost is the idiolect (unclonable cognitive moat) — five layers of competitive defense, dramatic aerial fortress view, graduated warm-to-cool moat rings from outer to inner, impregnable architecture</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+  </div>
+
+  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
+    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
+  </footer>
+</body>
+</html>

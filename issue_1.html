@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue 1: The Sovereign Cocoon — Sovereign Power Library</title>
+  <style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-section: #1a1a25;
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6a;
+  --accent-magenta: #e84393;
+  --accent-blue: #0984e3;
+  --accent-green: #00b894;
+  --accent-gold: #fdcb6e;
+  --accent-purple: #6c5ce7;
+  --accent-red: #d63031;
+  --accent-orange: #e17055;
+  --border: #2a2a3a;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.topnav .logo {
+  font-weight: 900; font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.topnav a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.topnav a:hover { color: var(--text-primary); }
+.topnav a.active { color: var(--accent-magenta); }
+.topnav .spacer { flex: 1; }
+.topnav .alpha-badge {
+  font-size: 0.7rem; font-weight: 700;
+  background: var(--accent-red); color: white;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+.stale-badge {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  background: #e17055; color: white;
+  padding: 0.1rem 0.4rem; border-radius: 2px;
+  margin-left: 0.5rem; vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 3rem; font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  font-weight: 300;
+}
+.hero .meta {
+  margin-top: 1rem; font-size: 0.8rem;
+  color: var(--text-muted); font-family: var(--font-mono);
+}
+
+/* ISSUE GRID */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.issue-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.issue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.issue-card .card-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.issue-card .issue-num {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.issue-card h2 {
+  font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.issue-card .act {
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.issue-card .card-body {
+  padding: 1.25rem 1.5rem;
+}
+.issue-card .doc-list {
+  list-style: none;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.issue-card .doc-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.issue-card .doc-list li:last-child { border: none; }
+.issue-card .concept-count {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ISSUE PAGE */
+.issue-header {
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.issue-header .breadcrumb {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+.issue-header .breadcrumb a:hover { color: var(--text-primary); }
+.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
+.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+
+.source-docs {
+  padding: 1.5rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.source-docs h3 {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.doc-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.doc-chip {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem; color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.doc-chip .doc-num {
+  font-weight: 700; font-family: var(--font-mono);
+  margin-right: 0.4rem;
+}
+
+.sections-container {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2rem;
+}
+.section-block {
+  margin-bottom: 3rem;
+}
+.section-block h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.concept-card {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.concept-card:hover { border-color: var(--accent-blue); }
+.concept-card .img-placeholder {
+  width: 100%; aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--text-muted);
+  position: relative;
+}
+.concept-card .img-placeholder .role-tag {
+  position: absolute; top: 0.5rem; left: 0.5rem;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.role-cover { background: var(--accent-magenta); color: white; }
+.role-hero { background: var(--accent-blue); color: white; }
+.role-spot { background: var(--accent-green); color: white; }
+.role-sidebar { background: var(--accent-purple); color: white; }
+.concept-card .card-info {
+  padding: 0.75rem 1rem;
+}
+.concept-card .concept-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.concept-card .concept-scene {
+  font-size: 0.8rem; color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* STALENESS */
+.staleness-panel {
+  max-width: 1200px; margin: 2rem auto;
+  padding: 0 2rem;
+}
+.staleness-panel h3 {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.staleness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.staleness-table th {
+  text-align: left; padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted); font-weight: 600;
+}
+.staleness-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+}
+.staleness-table tr:hover td { color: var(--text-primary); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="logo">SOVEREIGN POWER</span>
+    <a href="index.html">Library</a>
+    <a href="issue_1.html" class="active">#1</a>
+<a href="issue_2.html">#2</a>
+<a href="issue_3.html">#3</a>
+<a href="issue_4.html">#4</a>
+<a href="issue_5.html">#5</a>
+<a href="issue_6.html">#6</a>
+<a href="issue_7.html">#7</a>
+
+    <span class="spacer"></span>
+    <span class="alpha-badge">ALPHA</span>
+  </nav>
+
+  <div class="issue-header">
+    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 1</div>
+    <h1 style="color:#e84393">The Sovereign Cocoon</h1>
+    <div class="act-label">Act 1: Thesis + Product · 73 diagrams</div>
+  </div>
+
+  <div class="source-docs">
+    <h3>Source Documents</h3>
+    <div class="doc-chips">
+        <a href="../../Data_Room/00_Data_Room_Guide.md" class="doc-chip" target="_blank">
+          <span class="doc-num">00</span>Data Room Guide
+        </a>
+        
+        <a href="../../Data_Room/01_Executive_Summary.md" class="doc-chip" target="_blank">
+          <span class="doc-num">01</span>Executive Summary
+        </a>
+        
+        <a href="../../Data_Room/02_Kasset_Product_Definition.md" class="doc-chip" target="_blank">
+          <span class="doc-num">02</span>The Knowledge Asset (.kasset) — Product Definition
+        </a>
+        
+        <a href="../../Data_Room/03_Twin_Architecture.md" class="doc-chip" target="_blank">
+          <span class="doc-num">03</span>Twin Architecture — Layer 1 Specification
+        </a>
+        
+        <a href="../../Data_Room/04_Twin_Adaptor.md" class="doc-chip" target="_blank">
+          <span class="doc-num">04</span>The Twin Adaptor
+        </a>
+        </div>
+  </div>
+
+  <div class="sections-container">
+    
+        <div class="section-block">
+          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i1_cover">
+              <div class="img-placeholder">
+                🎨
+                <span class="role-tag role-cover">cover</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_cover</div>
+                <div class="concept-scene">A lone figure in weathered traveling cloak stands at the edge of a cliff overlooking a vast continent of interconnected floating islands, each island glowing a different color, holding a pulsing crystalline artifact close to their chest, wind whipping their hair, dramatic dawn light breaking through storm clouds above, epic sense of scale and discovery</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§1 Data Room Map <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(9 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i1_s1_world_map">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_world_map</div>
+                <div class="concept-scene">Aerial birds-eye view of a sprawling archipelago of seven distinct islands connected by glowing bridges, each island has a completely different biome and architecture — volcanic fortress, ice citadel, jungle marketplace, desert encampment, gothic courthouse, underground crystal cavern, floating library tower — ocean between them shimmers with energy currents, cartographic style with compass rose, warm parchment tones</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_guide_open">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_guide_open</div>
+                <div class="concept-scene">Close-up of ancient leather-bound strategy guide lying open on rough-hewn oak table, pages glow with animated diagrams of machinery and creatures, a mug of ale and candle stub nearby, cozy tavern interior with stone walls, intimate warm firelight, sense of a player studying before a quest</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_act1_island">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_act1_island</div>
+                <div class="concept-scene">Gleaming white thesis tower rising from a green hilltop island, banners of different colors representing product lines flutter in the breeze, scholars and warriors gathering at its base, bright midday sun, optimistic blue sky with cumulus clouds, sense of a new beginning</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_act2_island">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_act2_island</div>
+                <div class="concept-scene">A massive mechanical fortress built into a cliff face, enormous brass gears turning, steam venting from pipes, engineers rappelling down the walls making adjustments, overcast industrial sky with amber forge-light glowing from every window, feeling of complex machinery in motion</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_act3_island">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_act3_island</div>
+                <div class="concept-scene">Bustling open-air marketplace on a tropical island, merchants under colorful awnings trading crystalline goods and scrolls, stacks of gold energy-coins on tables, a central fountain shooting liquid light, warm afternoon golden hour, lively crowd of diverse traders</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_act4_island">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_act4_island</div>
+                <div class="concept-scene">Intimate nighttime campfire scene on a mesa under a brilliant star field, a small party of five diverse adventurers sharing food and stories, their equipment and weapons laid down, warm orange firelight on faces contrasting with cool blue starlight, mood of camaraderie and planning</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_act5_island">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_act5_island</div>
+                <div class="concept-scene">Imposing gothic courthouse fortress perched on a storm-battered rocky island, four stone dragon gargoyles guarding the entrance, lightning illuminating dark purple clouds behind it, a narrow bridge leading to the massive iron doors, ominous and foreboding mood, cold blue-grey palette</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_act6_island">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_act6_island</div>
+                <div class="concept-scene">Vast underground cavern filled with enormous natural crystal formations in blues and greens, a small figure exploring with a lantern, underground river reflecting the crystal light, stalactites dripping, sense of hidden treasure and ancient secrets, cool teal and amethyst palette</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s1_act7_island">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s1_act7_island</div>
+                <div class="concept-scene">A wizard's tower library floating among clouds, spiral staircase visible through arched windows, thousands of scrolls and glowing orbs orbiting the structure, an elderly scholar reading on a balcony, serene twilight sky in pink and gold, sense of accumulated wisdom and peace</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§2 What Is SovereignOS? <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(8 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i1_s2_cloud_vs_edge">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_cloud_vs_edge</div>
+                <div class="concept-scene">Dramatic split composition: left half shows a dark industrial factory with tentacle-like pipes extracting glowing essence from helpless citizens below into a massive cloud-shaped machine above, cold steel blue palette; right half shows a single person standing confidently inside a warm golden protective dome on their own land, their own small forge glowing beside them, lush green landscape, complete contrast of oppression versus freedom</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s2_sovereignty_shield">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_sovereignty_shield</div>
+                <div class="concept-scene">A female knight in ornate armor kneeling to plant a crystalline shield into the ground, the shield projects a dome of golden light that deflects incoming dark energy bolts from a distant cloud fortress on the horizon, cracked barren earth outside the dome, flowering grass inside it, dramatic contrast of desolation and protection</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s2_edge_device">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_edge_device</div>
+                <div class="concept-scene">Cozy workshop interior: a glowing device sits on a wooden workbench surrounded by tools and personal artifacts, golden neural pathways visible inside a transparent case, no wires leaving the room, a closed and barred window showing stormy sky outside, warm candlelight interior, feeling of self-sufficient sanctuary</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s2_methodology_vs_identity">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_methodology_vs_identity</div>
+                <div class="concept-scene">An alchemist carefully separating two liquids with a centrifuge — amber liquid labeled with gear symbols (methodology) flows into a crystal vial, while the dark liquid containing a face silhouette (identity) drains away into a sealed waste container, clean laboratory setting with brass instruments, precision and care</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s2_no_cloud">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_no_cloud</div>
+                <div class="concept-scene">A colossal cloud-shaped fortress crumbling and falling from the sky in pieces while far below a modest but indestructible stone keep on a hilltop stands untouched, citizens calmly going about their day inside the keep walls, dust and debris raining down harmlessly outside, sardonic triumph mood</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s2_stat_block">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_stat_block</div>
+                <div class="concept-scene">Ornate RPG character sheet carved into a stone tablet propped against a wall, with colored bar graphs showing different resource levels — a nearly full green bar, a half-filled amber bar, a small red bar, and a growing blue bar — dice and quill pen beside it, torchlit dungeon alcove</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s2_mint_process">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_mint_process</div>
+                <div class="concept-scene">Side-view cutaway of a magical forge assembly line: raw swirling thoughts enter from the left as mist, pass through a grinding mill, then a purification bath, then a compression press, and finally emerge on the right as a small brilliant sealed gemstone on a velvet cushion, industrial-alchemical hybrid, warm forge glow transitioning to cool crystal light</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s2_consent_gate">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s2_consent_gate</div>
+                <div class="concept-scene">A person standing before an enormous ornate drawbridge mechanism, their hand firmly on a large brass lever, the drawbridge is half-lowered, beyond it a path leads to a glowing marketplace — but the gate only opens when the person chooses to pull, guards standing respectfully aside waiting for the decision, morning light, mood of deliberate personal choice</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§3 The .kasset <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(22 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i1_s3_kasset_gem">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_kasset_gem</div>
+                <div class="concept-scene">Enormous cross-section diagram of a five-layered gemstone floating in a dark void, each layer a different color and material — outer crust of encrypted crystal, signature bands of molten gold, provenance ring of linked chain, payload core of swirling knowledge-mist, metadata shell of inscribed runes — dramatic spotlight from above, jeweler's examination mood, deep black background</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_expertise_scroll">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_expertise_scroll</div>
+                <div class="concept-scene">Master craftsman's workbench in a sunlit workshop, a complex blueprint unrolled showing step-by-step methodology diagrams, specialized tools arranged precisely, half-finished artifact on a stand, sawdust and metal filings catching the light, feeling of earned expertise and meticulous work, warm natural daylight</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_work_attached">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_work_attached</div>
+                <div class="concept-scene">A glowing artifact hovering above an anvil, golden chains of provenance linking it back through time to the original creator's hands still visible as ghostly afterimages hammering at the forge, sense of unbreakable connection between maker and creation, deep warm forge-red and gold palette</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_time_committed">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_time_committed</div>
+                <div class="concept-scene">An hourglass where the falling sand transforms into golden crystal as it lands, the accumulated crystal at the bottom has formed into the shape of a small gemstone, a clock face visible in the background showing years passing, contemplative mood, rich amber and bronze tones</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_ambient_capture">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_ambient_capture</div>
+                <div class="concept-scene">A woman cooking dinner in a warm kitchen, completely unaware that above her head a constellation of tiny floating sensors detect a subtle decision-making moment — her choice of ingredient causes a brief golden pulse that one sensor captures and stores, domestic warmth below contrasting with ethereal technology above, cozy evening kitchen light</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_intentional_mint">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_intentional_mint</div>
+                <div class="concept-scene">A scholar at a desk in a moonlit tower study, deliberately inscribing a methodology into a glowing crystal using a special stylus, surrounded by reference books and completed crystals on shelves, intense concentration on their face, single desk lamp creating dramatic shadows, intellectual mood, cool blue moonlight mixing with warm lamp glow</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_composite_bundle">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_composite_bundle</div>
+                <div class="concept-scene">A magical forge where twelve small gems of different colors are being drawn together by magnetic force into a single large composite crystal, energy arcs connecting them as they merge, a forge-master controlling the process with careful hand gestures, dramatic industrial-magical scene, intense heat glow and sparks</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_three_types_display">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_three_types_display</div>
+                <div class="concept-scene">Museum display case with three distinct artifacts on separate pedestals: a soft ambient orb that pulses gently like breathing, a precise intentional cube with sharp geometric facets, and a rough composite cluster of fused smaller gems — each lit by a different colored spotlight, quiet gallery atmosphere, educational mood</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_sensor_array">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_sensor_array</div>
+                <div class="concept-scene">Top-down view of a person meditating in the center of a stone circle, surrounded by seven different sensor devices at cardinal points — a pendant, a wristband, a ring, a small home altar device, a pocket stone, ankle chain, and ear cuff — each emitting a thin beam of light toward the person, sacred geometry pattern, twilight purple and gold</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_tau_trigger">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_tau_trigger</div>
+                <div class="concept-scene">A seismograph-like instrument in a dim observatory, its needle suddenly spiking as multiple wave frequencies converge into a single sharp peak, an alarm bell ringing above, the operator rushing to capture the moment in a crystal vial before it passes, urgency and precision, green phosphor glow on instruments against dark room</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_frames_not_clocks">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_frames_not_clocks</div>
+                <div class="concept-scene">A mechanical clock lying shattered on the ground beside a flowing river where natural events mark time — a flower blooming, a bird landing, a wave cresting — each natural moment marked by a subtle golden pulse, nature's rhythm replacing artificial measurement, serene riverbank at dawn, soft greens and golds</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_harmonic_convergence">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_harmonic_convergence</div>
+                <div class="concept-scene">Multiple wave forms in different colors approaching each other across a dark sky like aurora borealis, at the center where they all intersect a brilliant white-gold flash erupts, the convergence point creating a new crystal in midair, cosmic scale, deep space indigo with vivid energy colors</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_merkle_epoch">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_merkle_epoch</div>
+                <div class="concept-scene">A chain of translucent crystal blocks stretching into the distance like a bridge across a chasm, each block contains a compressed snapshot of memories visible inside like frozen scenes, the chain is anchored at both ends to stone pillars, blue-white crystalline light, sense of immutable permanence</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_rental_valve">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_rental_valve</div>
+                <div class="concept-scene">A brass pipe valve mechanism on a stone wall controlling a flow of glowing liquid into a person's cup, a sand timer mounted on the valve ticking down, when the timer expires the valve will close automatically, steampunk-alchemical hybrid, warm copper and brass tones, mechanical precision</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_rarity_spectrum">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_rarity_spectrum</div>
+                <div class="concept-scene">A rainbow spectrum display in a collector's vault, gemstones arranged from common pale green on the left through rare amber in the middle to legendary deep gold on the right, each tier on a higher shelf, the legendary gems emit visible aura, museum-like reverence, rich graduated color</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_buyer_balance_scale">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_buyer_balance_scale</div>
+                <div class="concept-scene">A merchant's balance scale where a small mouse-sized buyer on one side pays a tiny coin while a giant-sized buyer on the other side must pile heavy gold bars, the scale tips to show fairness — the fee scales with the buyer's weight, whimsical marketplace scene, warm afternoon light, sense of progressive fairness</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_pricing_equation">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_pricing_equation</div>
+                <div class="concept-scene">An alchemist at a cluttered workbench combining three ingredients in a bubbling cauldron: a rarity crystal, a balance weight, and a spark of energy — the mixture produces a single perfect price tag that floats up from the steam, mysterious laboratory at night, green and amber chemical glow</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_certification_seal">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_certification_seal</div>
+                <div class="concept-scene">A notary figure in formal robes pressing an ornate wax seal stamp onto a finished kasset document, the hot wax glowing gold as it sets, a row of already-sealed artifacts on shelves behind them, official chamber with marble columns, dignified ceremony, warm gold and deep red</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_not_nft">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_not_nft</div>
+                <div class="concept-scene">A crumbling pixelated blockchain coin dissolving into worthless dust on one side of a shelf, while beside it a solid sealed physical scroll with unbroken wax seal sits pristine and permanent, dust motes in a shaft of light, commentary on permanence versus hype, muted tones with one warm highlight</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_death_inheritance">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_death_inheritance</div>
+                <div class="concept-scene">An ancient vault door slowly opening as the last grain falls in a life-sized hourglass, warm light spilling out onto a young heir who receives a golden key from a ghostly guardian figure, bittersweet mood of loss and legacy, soft amber light mixing with ethereal blue spirit-glow, cathedral-like space</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_kasset_layers_exploded">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_kasset_layers_exploded</div>
+                <div class="concept-scene">Technical exploded-view diagram of five concentric layers of a kasset floating apart in space, each layer rotating slowly — encryption shell, signature band, provenance chain, data payload, metadata wrapper — connecting lines show how they nest together, dark blueprint background with glowing wireframe style, engineering precision</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s3_zero_state">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s3_zero_state</div>
+                <div class="concept-scene">A completely dark empty stone chamber with a single unlit torch mounted on the wall, a small pile of kindling on the floor, one tiny spark floating down from above about to ignite it, extreme darkness with just that one point of potential light, mood of anticipation before creation, nearly monochrome with single warm spark</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§4 The Twin <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(23 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i1_s4_twin_pipeline">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_twin_pipeline</div>
+                <div class="concept-scene">Wide panoramic cutaway of a four-station production line built into a mountainside: Station 1 (observe) has massive sensor arrays scanning the landscape, Station 2 (measure) has tau waveform gauges and oscilloscopes, Station 3 (map) has eight glowing domain slots on a control panel, Station 4 (compute) has a crystalline brain producing output — conveyor belts connect each station, industrial cathedral scale, dramatic interior lighting</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_twin_birth">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_twin_birth</div>
+                <div class="concept-scene">A translucent humanoid form emerging from a chrysalis cocoon made of woven data streams, absorbing personal artifacts and memories that swirl around it like leaves in a vortex, the form is half-abstract half-defined, a base model pedestal beneath cracking open, birth metaphor, ethereal lavender and white light against dark void</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_layer0_requirement">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_layer0_requirement</div>
+                <div class="concept-scene">A twin entity sitting cross-legged atop a massive hardware vault, heavy chains anchoring the vault to bedrock, the twin cannot float away because it is physically bound to the local device, a failed attempt to pull the twin away shown by broken rope, grounded and immovable, earth tones with metallic accents</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_three_horizons">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_three_horizons</div>
+                <div class="concept-scene">Three concentric rings surrounding a central figure like planetary orbits: innermost ring glows urgent red (immediate context), middle ring warm yellow (recent weeks), outer ring cool blue (deep history) — memories and events visible as tiny scenes within each ring, cosmic personal scale, rich against black</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_eight_domains">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_eight_domains</div>
+                <div class="concept-scene">Eight ornate pedestals arranged in a circle in a grand hall, each holding a different glowing artifact representing a life domain: a sword (career), a bracelet (health), a heart (relationships), gold coins (finance), a paintbrush (creativity), a house (home), a compass (navigation), a candle (spirituality) — each casts a different colored light on the floor creating an overlapping rainbow pattern</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_cross_domain">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_cross_domain</div>
+                <div class="concept-scene">Golden threads of energy visibly connecting different domain orbs across a dark space, where threads cross they create sparks of insight — the relationship orb connected to the finance orb creates a new mini-crystal at the intersection, web-like neural network visualization, dark background with vivid energy threads</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_tau_collection">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_tau_collection</div>
+                <div class="concept-scene">A diligent collector figure walking through a village marketplace with a woven basket, gathering tiny glowing tau measurements that float up from everyday activities — a blacksmith's hammer strike releases one, a baker kneading dough releases another — patient harvest work, warm golden village afternoon</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_tau_sources">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_tau_sources</div>
+                <div class="concept-scene">A person at the center of a vortex of input streams spiraling inward: voice waves from above, gesture trails from the sides, typing patterns from below, movement paths from behind — all feeding into a central tau measurement device that pulses with each input, dynamic radial composition, electric blue energy on dark background</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_accumulation">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_accumulation</div>
+                <div class="concept-scene">Time-lapse montage showing a small crystal growing progressively larger across four panels from left to right: tiny seed, small nugget, substantial gem, enormous brilliant stone — each stage fed by more tau streams, the background ages from spring to winter, growth and compounding metaphor, graduated color warmth</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_surface_only">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_surface_only</div>
+                <div class="concept-scene">A figure watching another person through a frosted window from outside in the cold — they can see the silhouette and movements but none of the interior details, the inside glows warm and complex while the outside observer sees only shapes, metaphor for surface-level observation, cool blue exterior versus warm amber interior</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_idiolect_brain">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_idiolect_brain</div>
+                <div class="concept-scene">A unique golden brain with one-of-a-kind neural patterns visible as swirling fingerprint-like ridges, enclosed in a transparent armored box with a heavy padlock, the brain pulses with individual personality, placed in a secure vault alcove, precious and irreplaceable mood, rich gold against steel grey vault</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_idiolect_emerges">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_idiolect_emerges</div>
+                <div class="concept-scene">Raw data streams of many colors being woven on an ancient loom by skilled hands into a completely unique tapestry pattern — no two tapestries are alike, finished tapestries hanging on the wall behind show wildly different patterns, textile workshop in warm afternoon light, craft and individuality</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_mapping_function">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_mapping_function</div>
+                <div class="concept-scene">Input arrows of raw data entering a mysterious obsidian processing monolith from the left, emerging on the right as completely transformed output arrows in new colors and shapes, the monolith hums with internal energy visible through cracks, transformation metaphor, dark stone with inner fire glow</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_idiolect_learns">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_idiolect_learns</div>
+                <div class="concept-scene">A crystal brain suspended in fluid, new data arriving as individual droplets falling from above, each droplet causes the brain's internal pattern to subtly shift and evolve, ripples spreading through the fluid, quiet laboratory observation scene, cool scientific blue-green with warm data-drop highlights</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_never_leaves">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_never_leaves</div>
+                <div class="concept-scene">A golden brain locked inside a vault with attempted theft arrows and grappling hooks bouncing off the walls, a thief retreating defeated, the vault embedded deep in bedrock with no exits, impregnable security, dramatic action scene with cool stone and warm gold contrast</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_episodic_memory">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_episodic_memory</div>
+                <div class="concept-scene">A vast filing hall stretching into darkness, drawers labeled by time period each containing glowing memory spheres, a librarian carefully retrieving a specific sphere that shows a miniature scene playing inside it, cathedral-scale archive, warm amber library light with cool blue memory-glow</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_context_assembly">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_context_assembly</div>
+                <div class="concept-scene">A puzzle being assembled on a round table: pieces pulled from different memory spheres combine with a new incoming piece to form a complete picture — the picture shows a decision becoming clear as the last piece snaps into place, satisfying completion moment, warm mixed light, intellectual workshop</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_decision_log">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_decision_log</div>
+                <div class="concept-scene">A massive stone tablet being carved by an automated chisel, each line recording a decision that can never be erased, centuries of decisions visible above in smaller text growing upward, permanent and immutable, temple interior with shaft of light illuminating the current line being carved, solemn grey stone with gold lettering</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_twin_born">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_twin_born</div>
+                <div class="concept-scene">A dramatic forge scene: a questionnaire scroll feeds into one side while data imports feed into the other, both consumed by magical fire, from the flames a twin entity rises fully formed with arms outstretched, birth from fire metaphor, intense orange-red fire with cool blue twin emerging, transformational moment</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_twin_survives">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_twin_survives</div>
+                <div class="concept-scene">Multiple identical glowing backup copies of a twin stored in separate vault compartments across different locations shown in a split view — mountainside bunker, underwater chamber, desert vault — all synchronized with connecting energy beams, redundancy and survival, varied environment palettes connected by gold thread</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_moat_castle">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_moat_castle</div>
+                <div class="concept-scene">An island castle surrounded by a moat that flows with mathematical tau-curve waves instead of water, a robot army on the far shore unable to cross because they cannot compute the wave pattern to build a bridge, defenders watching calmly from the walls, clever defensive humor, afternoon light, green landscape with mathematical blue moat</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_relationship_moat">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_relationship_moat</div>
+                <div class="concept-scene">Two people facing each other with intricate golden threads of shared experience intertwined between them like a complex cat's cradle, an impersonator trying to grab the threads but they dissolve on contact, the genuine connection is unforgeable, intimate warm light, emotional depth, amber and rose palette</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s4_patent_garden">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s4_patent_garden</div>
+                <div class="concept-scene">A walled garden where seventeen ornate shields are mounted on the interior walls, each shield bearing a different defensive patent symbol, inside the walls a lush garden grows freely, outside the walls competitors peer in enviously unable to enter, sense of protected innovation, verdant greens inside contrasting with barren grey outside</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§5 The Adaptor <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(10 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i1_s5_four_modes">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_four_modes</div>
+                <div class="concept-scene">Four character class selection cards arranged in a fan like playing cards, each dramatically illustrated: Guardian (heavy armored figure with towering shield), Negotiator (robed diplomat with balanced scales), Friend (warm figure extending open hand by a hearth), Partner (navigator with compass and star charts) — card game selection screen aesthetic, dramatic individual portraits, rich distinct color per card</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_guardian_mode">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_guardian_mode</div>
+                <div class="concept-scene">A protective armored figure standing between a vulnerable person and a chaotic stormy world full of threats — scam arrows, misinformation fog, predatory creatures — the guardian's shield absorbs every impact while the person behind goes about their day peacefully, selfless protection mood, dramatic contrast of chaos and calm</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_negotiator_mode">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_negotiator_mode</div>
+                <div class="concept-scene">An elegant diplomat seated at a circular negotiation table across from multiple opposing parties, contract scrolls spread between them, the diplomat calmly weighing options on golden scales while opponents look frustrated, chess-like strategic mood, formal chamber with rich wood and green banker's lamp light</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_friend_mode">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_friend_mode</div>
+                <div class="concept-scene">Two companions sitting on a log by a crackling campfire at night, one listening attentively while the other speaks, mugs of warm drink in hand, forest around them peaceful and still, intimacy and trust, warm orange firelight on faces against cool blue night sky, no agenda just presence</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_partner_mode">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_partner_mode</div>
+                <div class="concept-scene">A strategist and a person together at a large map table covered in long-term plans, both pointing at a distant goal on the map, telescopes and compasses scattered around, windows showing a sunrise representing the future, collaborative long-range planning mood, warm morning light flooding the room</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_priority_sliders">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_priority_sliders</div>
+                <div class="concept-scene">An ornate control panel with four large slider levers, each labeled with a different symbol (shield, scale, heart, compass), a person's hand adjusting one slider which causes the corresponding mode to glow brighter on a display above, customization and personal control, steampunk control room aesthetic, warm brass and copper tones</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_adaptor_vs_idiolect">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_adaptor_vs_idiolect</div>
+                <div class="concept-scene">Split composition: left side shows a person at a control panel choosing settings deliberately (the adaptor - conscious choice), right side shows a crystal brain with patterns evolving autonomously from data (the idiolect - emergent learning), a dotted line between them showing they are complementary halves, clean comparison layout, blue-green versus warm gold</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_guardian_not_medical">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_guardian_not_medical</div>
+                <div class="concept-scene">A signpost at a crossroads: one path blocked by a red barrier leads to a medical clinic (crossed out), the other path open and inviting leads to a reminder bell tower ringing gently — the guardian reminds but never prescribes, clear boundary, rural crossroads at golden hour, simple clarity</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_embodiment">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_embodiment</div>
+                <div class="concept-scene">A twin avatar simultaneously displayed on five different devices arranged in a semicircle: a laptop, tablet, phone, smart watch, and home display — each showing the same entity but adapted to the screen size, the avatar waves identically on all screens, modern-ancient fusion devices, cool tech blue with warm personality glow</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i1_s5_ideological_tuning">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i1_s5_ideological_tuning</div>
+                <div class="concept-scene">A tuning fork being struck against a crystal, the vibration visibly adjusting the resonance pattern of a nearby twin entity whose aura shifts color in response, the user choosing which fork to strike from a rack of many, careful calibration mood, musical-scientific hybrid scene, rich harmonic color ripples</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+  </div>
+
+  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
+    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
+  </footer>
+</body>
+</html>

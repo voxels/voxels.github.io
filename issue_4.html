@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue 4: The Execution Plan — Sovereign Power Library</title>
+  <style>
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-section: #1a1a25;
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8a9a;
+  --text-muted: #5a5a6a;
+  --accent-magenta: #e84393;
+  --accent-blue: #0984e3;
+  --accent-green: #00b894;
+  --accent-gold: #fdcb6e;
+  --accent-purple: #6c5ce7;
+  --accent-red: #d63031;
+  --accent-orange: #e17055;
+  --border: #2a2a3a;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.topnav .logo {
+  font-weight: 900; font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.topnav a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.85rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.topnav a:hover { color: var(--text-primary); }
+.topnav a.active { color: var(--accent-magenta); }
+.topnav .spacer { flex: 1; }
+.topnav .alpha-badge {
+  font-size: 0.7rem; font-weight: 700;
+  background: var(--accent-red); color: white;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+.stale-badge {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  background: #e17055; color: white;
+  padding: 0.1rem 0.4rem; border-radius: 2px;
+  margin-left: 0.5rem; vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: 3rem; font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--accent-blue) 50%, var(--accent-green) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero .subtitle {
+  font-size: 1.1rem; color: var(--text-secondary);
+  font-weight: 300;
+}
+.hero .meta {
+  margin-top: 1rem; font-size: 0.8rem;
+  color: var(--text-muted); font-family: var(--font-mono);
+}
+
+/* ISSUE GRID */
+.issues-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.issue-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.issue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.issue-card .card-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.issue-card .issue-num {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.issue-card h2 {
+  font-size: 1.4rem; font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.issue-card .act {
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.issue-card .card-body {
+  padding: 1.25rem 1.5rem;
+}
+.issue-card .doc-list {
+  list-style: none;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.issue-card .doc-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.issue-card .doc-list li:last-child { border: none; }
+.issue-card .concept-count {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ISSUE PAGE */
+.issue-header {
+  padding: 3rem 2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  max-width: 1200px; margin: 0 auto;
+}
+.issue-header .breadcrumb {
+  font-size: 0.8rem; color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.issue-header .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+.issue-header .breadcrumb a:hover { color: var(--text-primary); }
+.issue-header h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.25rem; }
+.issue-header .act-label { font-size: 1rem; color: var(--text-secondary); font-weight: 300; }
+
+.source-docs {
+  padding: 1.5rem 2rem;
+  max-width: 1200px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.source-docs h3 {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.doc-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.doc-chip {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem; color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.doc-chip:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.doc-chip .doc-num {
+  font-weight: 700; font-family: var(--font-mono);
+  margin-right: 0.4rem;
+}
+
+.sections-container {
+  max-width: 1200px; margin: 0 auto;
+  padding: 2rem;
+}
+.section-block {
+  margin-bottom: 3rem;
+}
+.section-block h2 {
+  font-size: 1.3rem; font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.concept-card {
+  background: var(--bg-section);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.concept-card:hover { border-color: var(--accent-blue); }
+.concept-card .img-placeholder {
+  width: 100%; aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--text-muted);
+  position: relative;
+}
+.concept-card .img-placeholder .role-tag {
+  position: absolute; top: 0.5rem; left: 0.5rem;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.5rem; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.role-cover { background: var(--accent-magenta); color: white; }
+.role-hero { background: var(--accent-blue); color: white; }
+.role-spot { background: var(--accent-green); color: white; }
+.role-sidebar { background: var(--accent-purple); color: white; }
+.concept-card .card-info {
+  padding: 0.75rem 1rem;
+}
+.concept-card .concept-id {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.concept-card .concept-scene {
+  font-size: 0.8rem; color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* STALENESS */
+.staleness-panel {
+  max-width: 1200px; margin: 2rem auto;
+  padding: 0 2rem;
+}
+.staleness-panel h3 {
+  font-size: 0.85rem; font-weight: 600; color: var(--accent-orange);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.staleness-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.staleness-table th {
+  text-align: left; padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-muted); font-weight: 600;
+}
+.staleness-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+}
+.staleness-table tr:hover td { color: var(--text-primary); }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .issues-grid { grid-template-columns: 1fr; padding: 1rem; }
+  .topnav { padding: 0.5rem 1rem; gap: 0.75rem; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="logo">SOVEREIGN POWER</span>
+    <a href="index.html">Library</a>
+    <a href="issue_1.html">#1</a>
+<a href="issue_2.html">#2</a>
+<a href="issue_3.html">#3</a>
+<a href="issue_4.html" class="active">#4</a>
+<a href="issue_5.html">#5</a>
+<a href="issue_6.html">#6</a>
+<a href="issue_7.html">#7</a>
+
+    <span class="spacer"></span>
+    <span class="alpha-badge">ALPHA</span>
+  </nav>
+
+  <div class="issue-header">
+    <div class="breadcrumb"><a href="index.html">Library</a> → Issue 4</div>
+    <h1 style="color:#fdcb6e">The Execution Plan</h1>
+    <div class="act-label">Act 4: Plan + Team · 16 diagrams</div>
+  </div>
+
+  <div class="source-docs">
+    <h3>Source Documents</h3>
+    <div class="doc-chips">
+        <a href="../../Data_Room/13_Business_Plan.md" class="doc-chip" target="_blank">
+          <span class="doc-num">13</span>36-Month Business Plan
+        </a>
+        
+        <a href="../../Data_Room/14_Founder_Bio.md" class="doc-chip" target="_blank">
+          <span class="doc-num">14</span>Founder: Michael Edgcumbe
+        </a>
+        </div>
+  </div>
+
+  <div class="sections-container">
+    
+        <div class="section-block">
+          <h2>cover <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(1 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i4_cover">
+              <div class="img-placeholder">
+                🎨
+                <span class="role-tag role-cover">cover</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_cover</div>
+                <div class="concept-scene">A war council chamber inside a mountain fortress, a tactical map table at center showing a 36-month campaign with miniature figures positioned at key milestones, a diverse party of specialists assembled around the table — engineer, diplomat, scholar, scout — weapons and tools hanging on the walls behind them, torchlight illuminating intense planning faces, sense of strategic preparation before a great campaign, warm amber torchlight against cool stone walls</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§1 Business Plan <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(8 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i4_s1_36_month_road">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_36_month_road</div>
+                <div class="concept-scene">A winding mountain road stretching into the distance with 36 checkpoint flags marking each month, the road passes through three distinct terrain zones: Year 1 is rocky construction terrain with scaffolding, Year 2 is fertile farmland with growing operations, Year 3 is a golden empire with connected fortress cities — the full journey visible from an elevated vantage point, panoramic progression from rough beginnings to golden maturity, dawn on the left warming to full daylight on the right</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s1_y1_build">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_y1_build</div>
+                <div class="concept-scene">A construction site in the first months: workers laying foundation stones of a great fortress, scaffolding rising, blueprint scrolls unrolled on workbenches, raw materials being delivered by cart — the foundation is being built right, not fast, honest labor in morning light, warm earth tones and fresh-cut stone, sense of careful beginnings</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s1_y2_scale">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_y2_scale</div>
+                <div class="concept-scene">Year 2 operations at full capacity: multiple production lines running simultaneously in a grand workshop hall, workers expanding outward from a central hub, new wings being added to the building, output flowing from every door — the machine is working and growing, busy industrial energy, warm forge-light and cool production-line blue, productive momentum</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s1_y3_expand">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_y3_expand</div>
+                <div class="concept-scene">Year 3 empire view from a high tower: multiple fortress cities visible across a vast landscape, trade routes connecting them as glowing paths, ships in harbors, caravans on roads, the network has become an economy — continental scale achievement, golden afternoon light across a prosperous land, triumphant breadth</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s1_hiring_plan">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_hiring_plan</div>
+                <div class="concept-scene">A guild hall recruitment board covered with character silhouettes and role badges: Head of Engineering (sword and wrench), Head of Operations (compass and ledger), Research Lead (telescope and flask), Community Lead (megaphone and heart) — each position described with a small job scroll beneath, the team being assembled, warm wood-paneled guild hall with brass badge fixtures, organized talent acquisition</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s1_milestones">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_milestones</div>
+                <div class="concept-scene">An achievement trophy shelf built into a fortress wall, milestone badges displayed chronologically: First Trade (bronze sword), 1000 Users (silver shield), Revenue Target (gold crown), Patent Filed (crystal scroll), Storefront Open (iron key) — each badge earned and mounted with care, warm display lighting on each achievement, pride of progress</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s1_risk_matrix">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_risk_matrix</div>
+                <div class="concept-scene">A danger room in a training dungeon with three labeled hazard zones: Technical Risk shown as a trap floor, Market Risk as swinging blade pendulums, Regulatory Risk as fire jets — each zone has a threat level indicator from green to red, a warrior studying the room before entering, strategic caution, cool dungeon blues with warm hazard indicator colors</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s1_contingency">
+              <div class="img-placeholder">
+                📋
+                <span class="role-tag role-sidebar">sidebar</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s1_contingency</div>
+                <div class="concept-scene">An emergency supply cache hidden behind a false wall panel: backup plan scrolls in waterproof cases, emergency gold reserves, an escape route map with three alternate paths marked, survival rations — preparation for worst-case scenarios that may never come, cool hidden chamber with warm lantern revealing the cache, prudent paranoia</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="section-block">
+          <h2>§2 Founder <span style="color:var(--text-muted);font-size:0.85rem;font-weight:400">(7 diagrams)</span></h2>
+          <div class="concepts-grid">
+            <div class="concept-card" id="i4_s2_founder_profile">
+              <div class="img-placeholder">
+                ⚔️
+                <span class="role-tag role-hero">hero</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s2_founder_profile</div>
+                <div class="concept-scene">An elaborate RPG character sheet for the party leader rendered as a framed portrait with stat bars: Engineering 95, Music 88, Business 82, Research 90, Design 85 — each bar a different color, the character depicted as a systems architect holding both a code staff and a musical instrument, unique class: Polymath, warm parchment background with vivid stat bar colors, the multi-disciplinary builder</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s2_education">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s2_education</div>
+                <div class="concept-scene">A scholar ascending a tower of knowledge with degree scroll pedestals at each floor: ground floor Wharton School (business shield), second floor Berklee (musical note crest), third floor NYU ITP (creative spark badge), fourth floor National Lab (science crystal), roof level autodidact (open sky) — each floor a different architectural style representing the discipline, warm ascent from formal to free, varied educational palettes</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s2_career_path">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s2_career_path</div>
+                <div class="concept-scene">A timeline rendered as a dungeon corridor with doors opening to different career rooms along its length: a music studio with instruments, an Apple Store with devices, a Google Maps office with patent plaque, a Snapchat engineering lab with performance charts, a maker workshop with physical tools — the corridor connects all experiences into one path, warm varied room lighting spilling into cool corridor, journey of accumulation</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s2_ip_portfolio">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s2_ip_portfolio</div>
+                <div class="concept-scene">A secure treasure vault with seventeen patent shields mounted on wall racks in a semicircle, each shield bearing a unique symbol representing a different invention: tau computation, idiolect extraction, mesh discovery, kasset encoding, vault architecture — the shields glow different colors, the collection represents years of original work, rich vault interior with varied shield colors against dark stone, defensive innovation arsenal</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s2_tech_stack">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s2_tech_stack</div>
+                <div class="concept-scene">A master craftsman's weapon rack displaying the tools of the trade: a Swift sword (sharp and precise), a Python staff (flexible and wise), a Rust hammer (heavy and safe), a CoreML wand (intelligent and local), an AVFoundation bow (capture and record) — each weapon unique and beautiful, warm workshop wall with cool metallic weapon gleams, the full-stack toolkit</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s2_know_maps">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s2_know_maps</div>
+                <div class="concept-scene">A magical map spread on a table that updates itself in real-time as the world changes, NLU comprehension runes glowing on its surface interpreting spoken queries, the map shows not geography but knowledge domains and their connections, a finger pointing at a query result, warm map parchment with cool blue NLU rune glow, intelligence made navigable</div>
+              </div>
+            </div>
+            
+            <div class="concept-card" id="i4_s2_tau_skeleton">
+              <div class="img-placeholder">
+                🔍
+                <span class="role-tag role-spot">spot</span>
+              </div>
+              <div class="card-info">
+                <div class="concept-id">i4_s2_tau_skeleton</div>
+                <div class="concept-scene">A translucent skeletal framework of a human figure in motion, tau curve energy flowing through every joint as the figure moves — the skeleton captures the dynamics of movement not the appearance, motion capture grid lines in the background, the mathematical structure of human action made visible, cool wireframe skeleton with warm tau energy flowing through joints, biomechanical research visualization</div>
+              </div>
+            </div>
+            </div>
+        </div>
+        
+  </div>
+
+  <footer style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.75rem; border-top:1px solid var(--border);">
+    <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← Back to Library</a>
+  </footer>
+</body>
+</html>
